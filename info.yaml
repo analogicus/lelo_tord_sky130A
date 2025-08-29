@@ -1,13 +1,13 @@
 library: LELO_TORD_SKY130A
 cell: LELO_TORD
 # Your name
-author: Anonymous
+author: Tord Olsen Sætermo
 # Your github username
-github: analogicus
+github: Tordnado
 # Something funny and descriptive
-tagline: The answer is 42
+tagline: Work related to my specialization project and master thesis
 # Your email, if you so wish
-email: anon@anon.com
+email: tord.saetermo@gmail.com
 # Your github site, usually <github username>.github.io
 url: analogicus.github.io
 doc:
