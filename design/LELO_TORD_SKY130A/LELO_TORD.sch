@@ -1,4 +1,4 @@
-v {xschem version=3.0.0 file_version=1.2 }
+v {xschem version=3.4.6 file_version=1.2}
 G {}
 K {}
 V {}
@@ -11,7 +11,7 @@ R                 Rotate
 F                 Full view
 
 Manual: https://xschem.sourceforge.io/stefan/xschem_man/xschem_man.pdf
-} -460 -630 0 0 0.6 0.6 {}
+} -110 -870 0 0 0.6 0.6 {}
 C {cborder/border_s.sym} 520 0 0 0 {
 user="wulff"
 company="wulff"}
