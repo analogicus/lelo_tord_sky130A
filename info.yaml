@@ -5,11 +5,11 @@ author: Tord Olsen Sætermo
 # Your github username
 github: Tordnado
 # Something funny and descriptive
-tagline: Work related to my specialization project and master thesis
+tagline: Work related to my specialization project and master thesis on bandgap reference circuits at the Norwegian University of Science and Technology, in collaboration with Nordic Semiconductor
 # Your email, if you so wish
 email: tord.saetermo@gmail.com
 # Your github site, usually <github username>.github.io
-url: analogicus.github.io
+url: tordnado.github.io/lelo_tord_sky130a/
 doc:
   # Make docs
   #libraries:
