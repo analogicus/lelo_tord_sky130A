@@ -40,8 +40,8 @@ The circuit was designed and simulated using open source tools such as Xschem, M
 
 | Signal       | Direction | Domain  | Description                               |
 | :---         | :---:     | :---:   | :---                                      |
-| VDD_1V8      | Input     | VDD_1V8 | Main supply                               |
-| VSS          | Input     | Ground  |                                           |
+| VDD_1V8      | Input     | VDD_1V8 | Main supply voltage                               |
+| VSS          | Input     | Ground  | Ground                                          |
 | PWRUP_1V8    | Input     | VDD_1V8 | Power up the circuit                      |
 
 
