@@ -1,0 +1,68 @@
+magic
+tech sky130A
+magscale 1 2
+timestamp 1756731965
+<< locali >>
+rect 104 198 296 624
+rect 1250 198 1442 628
+rect 104 166 1442 198
+rect 104 6 488 166
+rect 668 6 1442 166
+<< viali >>
+rect 488 -14 668 166
+<< metal1 >>
+rect 354 2773 418 4420
+rect 347 2707 353 2773
+rect 419 2707 425 2773
+rect 354 506 418 2707
+rect 482 438 674 4332
+rect 866 4142 1414 4334
+rect 1222 3538 1414 4142
+rect 866 3346 1414 3538
+rect 977 2773 1043 2779
+rect 977 2701 1043 2707
+rect 1222 1936 1414 3346
+rect 866 1744 1414 1936
+rect 1222 1158 1414 1744
+rect 874 966 1414 1158
+rect 384 436 674 438
+rect 384 166 736 436
+rect 384 -14 488 166
+rect 668 -14 736 166
+rect 384 -114 736 -14
+<< via1 >>
+rect 353 2707 419 2773
+rect 977 2707 1043 2773
+<< metal2 >>
+rect 353 2773 419 2779
+rect 419 2707 977 2773
+rect 1043 2707 1049 2773
+rect 353 2701 419 2707
+use JNWATR_NCH_4C5F0  JNWATR_NCH_4C5F0_0 ~/pro/aicex/ip/lelo_tord_sky130A/design/JNW_ATR_SKY130A
+timestamp 1756731965
+transform 1 0 194 0 1 3674
+box -184 -128 1336 928
+use JNWATR_NCH_4C5F0  JNWATR_NCH_4C5F0_1
+timestamp 1756731965
+transform 1 0 194 0 1 466
+box -184 -128 1336 928
+use JNWATR_NCH_4C5F0  JNWATR_NCH_4C5F0_2
+timestamp 1756731965
+transform 1 0 194 0 1 1264
+box -184 -128 1336 928
+use JNWATR_NCH_4C5F0  JNWATR_NCH_4C5F0_3
+timestamp 1756731965
+transform 1 0 194 0 1 2068
+box -184 -128 1336 928
+use JNWATR_NCH_4C5F0  JNWATR_NCH_4C5F0_4
+timestamp 1756731965
+transform 1 0 194 0 1 2870
+box -184 -128 1336 928
+<< labels >>
+flabel metal1 1222 3346 1414 3538 0 FreeSans 1600 0 0 0 IBNS_20U
+port 0 nsew
+flabel metal1 354 2600 418 2664 0 FreeSans 1600 0 0 0 IBPS_5U
+port 3 nsew
+flabel metal1 482 12 674 204 0 FreeSans 1600 0 0 0 VSS
+port 1 nsew
+<< end >>

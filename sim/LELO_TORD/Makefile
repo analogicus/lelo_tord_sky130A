@@ -1,12 +1,12 @@
 
 
-all: typical etc mc summary
+all: typical etc mc summary slide
 
 
 
 TB=tran
-VIEW=Sch
-#VIEW=Lay
+#VIEW=Sch
+VIEW=Lay
 CELL=LELO_TORD
 LIB =LELO_TORD_SKY130A
 OPT=
