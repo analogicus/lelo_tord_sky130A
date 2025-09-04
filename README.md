@@ -33,7 +33,7 @@ The circuit was designed and simulated using open source tools such as Xschem, M
 # Changelog/Plan
 
 | Version | Status | Comment             |
-| :---    | :---   | :---                |
+| :---:   | :---   | :---                |
 | 0.1.0   | :v:    | Make something      |
 | 0.1.1   | :x:    | Make something else |
 
@@ -41,7 +41,7 @@ The circuit was designed and simulated using open source tools such as Xschem, M
 # Signal interface
 
 | Signal       | Direction | Domain  | Description                               |
-| :---         | :---:     | :---:   | :---                                      |
+| :---:        | :---:     | :---:   | :---                                      |
 | VDD_1V8      | Input     | VDD_1V8 | Main supply voltage                       |
 | VSS          | Input     | Ground  | Ground                                    |
 | PWRUP_1V8    | Input     | VDD_1V8 | Power up the circuit                      |
