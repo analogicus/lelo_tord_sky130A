@@ -31,9 +31,10 @@ The circuit was designed and simulated using open source tools such as Xschem, M
 
 # Changelog/Plan
 
-| Version | Status | Comment        |
-| :---    | :---   | :---           |
-|0.1.0    | :x:    | Make something |
+| Version | Status | Comment             |
+| :---    | :---   | :---                |
+| 0.1.0   | :v:    | Make something      |
+| 0.1.1   | :x:    | Make something else |
 
 
 # Signal interface
