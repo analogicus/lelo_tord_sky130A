@@ -23,7 +23,7 @@ The circuit was designed and simulated using open source tools such as Xschem, M
 # What
 
 | What            | Cell/Name |
-| :----           | :----:       |
+| :---            | :---      |
 | Schematic       | design/LELO_TORD_SKY130A/LELO_TORD.sch |
 | Layout          | design/LELO_TORD_SKY130A/LELO_TORD.mag |
 
@@ -31,15 +31,15 @@ The circuit was designed and simulated using open source tools such as Xschem, M
 # Changelog/Plan
 
 | Version | Status | Comment             |
-| :---:   | :---   | :---                |
-| 0.1.0   | :v:    | Make something      |
-| 0.1.1   | :x:    | Make something else |
+| :---    | :---:  | :---                |
+| 0.1.0   | :✅:   | Make something      |
+| 0.1.1   | :❌:   | Make something else |
 
 
 # Signal interface
 
 | Signal       | Direction | Domain  | Description                               |
-| :---:        | :---:     | :---:   | :---                                      |
+| :---         | :---:     | :---:   | :---                                      |
 | VDD_1V8      | Input     | VDD_1V8 | Main supply voltage                       |
 | VSS          | Input     | Ground  | Ground                                    |
 | PWRUP_1V8    | Input     | VDD_1V8 | Power up the circuit                      |
@@ -48,7 +48,7 @@ The circuit was designed and simulated using open source tools such as Xschem, M
 # Key parameters
 
 | Parameter  | Min   | Typ             | Max   | Unit  |
-| :---:      | :---: | :---:           | :---: | :---: |
+| :---       | :---: | :---:           | :---: | :---: |
 | Technology |       | Skywater 130 nm |       |       |
 | AVDD       | 1.7   | 1.8             | 1.9   | V     |
 | Temperatur | -40   | 27              | 125   | C     |
