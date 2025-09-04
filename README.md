@@ -47,8 +47,8 @@ The circuit was designed and simulated using open source tools such as Xschem, M
 
 # Key parameters
 
-| Parameter           | Min     | Typ             | Max     | Unit  |
-| :---                | :---:   | :---:           | :---:   | :---: |
-| Technology          |         | Skywater 130 nm |         |       |
-| AVDD                | 1.7     | 1.8             | 1.9     | V     |
-| Temperature         | -40     | 27              | 125     | C     |
+| Parameter  | Min   | Typ             | Max   | Unit  |
+| :---:      | :---: | :---:           | :---: | :---: |
+| Technology |       | Skywater 130 nm |       |       |
+| AVDD       | 1.7   | 1.8             | 1.9   | V     |
+| Temperatur | -40   | 27              | 125   | C     |
