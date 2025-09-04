@@ -15,7 +15,6 @@ Manual: https://xschem.sourceforge.io/stefan/xschem_man/xschem_man.pdf
 N -150 -10 -130 -10 {lab=IBPS_5U}
 N -150 10 -130 10 {lab=VSS}
 N 170 -10 190 -10 {lab=IBNS_20U}
-N -150 -10 -150 10 {lab=#net1}
 C {devices/ipin.sym} -150 -10 0 0 {name=p1 lab=IBPS_5U}
 C {devices/ipin.sym} -150 10 0 0 {name=p2 lab=VSS}
 C {LELO_TORD_SKY130A/test_ex.sym} 20 0 0 0 {name=x1}
