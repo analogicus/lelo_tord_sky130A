@@ -13,11 +13,19 @@ def main(name):
 #    obj = yaml.safe_load(fi)
 
   # Do something to parameters
+#  print(f"obj type: {type(obj)}")
+#  print(f"obj length: {len(obj)}")
+
+#  for k, v in obj.items():
+#    if isinstance(v, list):
+#      print(f"{k}: length {len(v)}")
+#    else:
+#      print(f"{k}: type {type(v)}")
 
   # Save new yaml file
 #  with open(yamlfile,"w") as fo:
 #    yaml.dump(obj,fo)
 
-	fname = name + ".png"
-	print(f"Saving {fname}")
-	cs.rawplot(name + ".raw", "time", "v(ibps_5u),i(v0)", ptype="", fname=fname)
+  fname = name + ".png"
+  print(f"Saving {fname}")
+  cs.rawplot(name + ".raw", "time", "v(ibps_5u),i(v0)", ptype="", fname=fname)

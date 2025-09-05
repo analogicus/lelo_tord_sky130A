@@ -1,8 +1,8 @@
 #<name>:
 #  src:
 #    - <paramters>
-#  typ: <typical spec value>
 #  name: <long name>
+#  typ: <typical spec value>
 #  min: <minimum spec value>
 #  max: <maximum spec value>
 #  scale: <scale, multiply result by scale>
@@ -20,13 +20,13 @@ iout:
   digits: 3
   unit: uA
 
-#vgs:
-#  src:
-#    - vgs_m1
-#  name: Gate-Source voltage
-#  typ: 0.6
-#  min: 0.3
-#  max: 0.7
-#  scale: 1
-#  digits: 3
-#  unit: V
+vgate:
+  src:
+    - vgate
+  name: Gate voltage
+  typ: 1.3
+  min: 1.0
+  max: 1.6
+  scale: 1
+  digits: 3
+  unit: V

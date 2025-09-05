@@ -25,7 +25,6 @@
 *-----------------------------------------------------------------
 VSS  VSS  0     dc 0
 * VDD  VDD_1V8  VSS  pwl 0 0 10n {AVDD}
-
 IBP 0 IBPS_5U dc 5u
 V0  IBNS_20U 0 dc 1
 
