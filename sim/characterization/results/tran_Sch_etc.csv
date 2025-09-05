@@ -1,0 +1,17 @@
+,iout,name,type,time,OK
+0,2.334936,tran_SchGtKfsTlVh,Sch,Thu Sep  4 16:07:16 2025,True
+1,1.8483070000000001,tran_SchGtKsfTlVh,Sch,Thu Sep  4 16:07:14 2025,True
+2,2.492637,tran_SchGtKffTlVh,Sch,Thu Sep  4 16:07:13 2025,True
+3,1.7532739999999998,tran_SchGtKssTlVh,Sch,Thu Sep  4 16:07:11 2025,False
+4,2.802805,tran_SchGtKfsThVh,Sch,Thu Sep  4 16:07:10 2025,False
+5,2.220895,tran_SchGtKsfThVh,Sch,Thu Sep  4 16:07:08 2025,True
+6,2.966947,tran_SchGtKffThVh,Sch,Thu Sep  4 16:07:07 2025,False
+7,2.140961,tran_SchGtKssThVh,Sch,Thu Sep  4 16:07:05 2025,True
+8,2.334936,tran_SchGtKfsTlVl,Sch,Thu Sep  4 16:07:04 2025,True
+9,1.8483070000000001,tran_SchGtKsfTlVl,Sch,Thu Sep  4 16:07:02 2025,True
+10,2.492637,tran_SchGtKffTlVl,Sch,Thu Sep  4 16:07:01 2025,True
+11,1.7532739999999998,tran_SchGtKssTlVl,Sch,Thu Sep  4 16:06:59 2025,False
+12,2.802805,tran_SchGtKfsThVl,Sch,Thu Sep  4 16:06:58 2025,False
+13,2.220895,tran_SchGtKsfThVl,Sch,Thu Sep  4 16:06:56 2025,True
+14,2.966947,tran_SchGtKffThVl,Sch,Thu Sep  4 16:06:55 2025,False
+15,2.140961,tran_SchGtKssThVl,Sch,Thu Sep  4 16:06:53 2025,True

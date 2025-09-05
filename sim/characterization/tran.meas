@@ -1,0 +1,11 @@
+* Measure characterization
+.control
+
+load {cicname}.raw
+
+echo "MEAS_START"
+
+meas tran iout find i(v0) at=5n
+
+echo "MEAS_END"
+.endc
