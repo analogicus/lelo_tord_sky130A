@@ -25,5 +25,5 @@ C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} 20 -70 0 0 {name=x2}
 C {JNW_TR_SKY130A/JNWTR_RPPO2.sym} -60 0 1 0 {name=x3 }
 C {devices/ipin.sym} -140 100 0 0 {name=p1 lab=VSS}
 C {devices/ipin.sym} -140 -120 0 0 {name=p2 lab=VDD}
-C {devices/opin.sym} 60 0 1 0 {name=p3 lab=IBIAS}
+C {devices/opin.sym} 60 0 1 0 {name=p3 lab=IOUT}
 C {devices/lab_wire.sym} 0 -20 2 0 {name=p4 sig_type=std_logic lab=VGATE}
