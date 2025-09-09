@@ -36,7 +36,7 @@ V0 IBIAS VSS dc 0.95
 * PROBE
 *----------------------------------------------------------------
 #.save all
-.save i(v0) v(xdut.vgate) i(vdd)
+.save i(v0) v(xdut.vgate) i(vss)
 
 *----------------------------------------------------------------
 * NGSPICE control

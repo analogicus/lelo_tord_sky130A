@@ -25,7 +25,7 @@ iref:
     - iref
   name: Reference current
   min: 20%
-  typ: -46.9
+  typ: -23.9
   max: -20%
   scale: 1e6
   digits: 3
