@@ -17,15 +17,15 @@ This repository contains work related to my specialization project and master th
 
 # How
 
-The circuit was designed and simulated using open source tools such as Xschem, Magic and ngspice, as well as the open source 130 nm process from Skywater and Google.
+The circuit was designed and simulated using open source tools such as Xschem, Magic and ngspice, as well as the open source 130 nm process technology from Skywater and Google.
 
 
 # What
 
-| What            | Cell/Name |
-| :---            | :---      |
-| Schematic       | design/LELO_TORD_SKY130A/LELO_TORD.sch |
-| Layout          | design/LELO_TORD_SKY130A/LELO_TORD.mag |
+| What                | Cell/Name			       |
+| :---                | :---     			       |
+| Top level schematic | design/LELO_TORD_SKY130A/LELO_TORD.sch |
+| Top level layout    | design/LELO_TORD_SKY130A/LELO_TORD.mag |
 
 
 # Changelog/Plan
