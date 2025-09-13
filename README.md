@@ -31,7 +31,7 @@ The circuit was designed and simulated using open source tools such as Xschem, M
 # Changelog/Plan
 
 | Version | Status | Comment             |
-| :---    | :---:  | :---                |
+| :---:   | :---:  | :---                |
 | 0.1.0   | :✅:   | Make something      |
 | 0.1.1   | :❌:   | Make something else |
 
