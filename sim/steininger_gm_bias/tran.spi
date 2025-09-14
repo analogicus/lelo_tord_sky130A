@@ -3,9 +3,9 @@
 * Include
 *----------------------------------------------------------------
 #ifdef Lay
-.include ../../../work/lpe/characterization_lpe.spi
+.include ../../../work/lpe/steininger_gm_bias_lpe.spi
 #else
-.include ../../../work/xsch/characterization.spice
+.include ../../../work/xsch/steininger_gm_bias.spice
 #endif
 
 *-----------------------------------------------------------------
@@ -23,9 +23,8 @@
 *-----------------------------------------------------------------
 * FORCE
 *-----------------------------------------------------------------
-VSS VSS 0 dc 0
-VDD VDD VSS dc 1.8
-V0 IOUT VSS dc 0.367
+VSS  VSS  0     dc 0
+VDD  VDD_1V8  VSS  pwl 0 0 10n {AVDD}
 
 *-----------------------------------------------------------------
 * DUT
@@ -35,8 +34,8 @@ V0 IOUT VSS dc 0.367
 *----------------------------------------------------------------
 * PROBE
 *----------------------------------------------------------------
-#.save all
-.save i(V0) v(xdut.vgate) i(vdd)
+.save all
+
 
 *----------------------------------------------------------------
 * NGSPICE control

@@ -10,17 +10,17 @@ N 100 -190 100 -30 {lab=VSS}
 N 140 -50 140 -30 {lab=VSS}
 N 80 -30 280 -30 {lab=VSS}
 N 140 -250 140 -230 {lab=VDD}
-N 180 -80 220 -80 {lab=#net1}
-N 140 -150 140 -110 {lab=#net1}
+N 180 -80 220 -80 {lab=VGATE}
+N 140 -150 140 -110 {lab=VGATE}
 N 260 -50 260 -30 {lab=VSS}
-N 140 -130 200 -130 {lab=#net1}
-N 200 -130 200 -80 {lab=#net1}
+N 140 -130 200 -130 {lab=VGATE}
+N 200 -130 200 -80 {lab=VGATE}
 N 260 -180 260 -110 {lab=IBIAS}
 N 120 -80 140 -80 {lab=VSS}
 N 120 -80 120 -30 {lab=VSS}
 N 260 -80 280 -80 {lab=VSS}
 N 280 -80 280 -30 {lab=VSS}
-C {JNW_TR_SKY130A/JNWTR_RPPO2.sym} 140 -230 1 0 {name=x3 }
+C {JNW_TR_SKY130A/JNWTR_RPPO2.sym} 140 -150 1 1 {name=x3 }
 C {devices/ipin.sym} 80 -30 0 0 {name=p1 lab=VSS}
 C {devices/ipin.sym} 80 -250 0 0 {name=p2 lab=VDD}
 C {devices/ipin.sym} 260 -180 3 1 {name=p3 lab=IBIAS}

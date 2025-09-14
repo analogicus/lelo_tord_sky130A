@@ -6,4 +6,4 @@ corner:
   Sch: ''
 ngspice:
   library: LELO_TORD_SKY130A
-  cell: characterization
+  cell: simple_nmos_current_sink

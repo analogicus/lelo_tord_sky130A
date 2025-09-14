@@ -3,9 +3,9 @@
 * Include
 *----------------------------------------------------------------
 #ifdef Lay
-.include ../../../work/lpe/simple_nmos_current_source_lpe.spi
+.include ../../../work/lpe/simple_nmos_current_sink_lpe.spi
 #else
-.include ../../../work/xsch/simple_nmos_current_source.spice
+.include ../../../work/xsch/simple_nmos_current_sink.spice
 #endif
 
 *-----------------------------------------------------------------
@@ -23,9 +23,8 @@
 *-----------------------------------------------------------------
 * FORCE
 *-----------------------------------------------------------------
-VSS VSS 0 dc 0
-VDD VDD VSS	dc 1.8
-V0 IBIAS VSS dc 0.95
+VSS  VSS  0     dc 0
+VDD  VDD_1V8  VSS  pwl 0 0 10n {AVDD}
 
 *-----------------------------------------------------------------
 * DUT
@@ -35,8 +34,8 @@ V0 IBIAS VSS dc 0.95
 *----------------------------------------------------------------
 * PROBE
 *----------------------------------------------------------------
-#.save all
-.save i(v0) v(xdut.vgate) i(vdd) 
+.save all
+
 
 *----------------------------------------------------------------
 * NGSPICE control

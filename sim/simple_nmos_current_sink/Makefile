@@ -7,7 +7,7 @@ all: typical etc mc summary
 TB=tran
 VIEW=Sch
 #VIEW=Lay
-CELL=simple_nmos_current_source
+CELL=simple_nmos_current_sink
 LIB =LELO_TORD_SKY130A
 OPT=
 
