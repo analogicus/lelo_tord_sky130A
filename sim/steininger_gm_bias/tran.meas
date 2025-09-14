@@ -5,5 +5,8 @@ load {cicname}.raw
 
 echo "MEAS_START"
 
+meas tran ibias find i(v0) at=5n
+meas tran vg3 find v(xdut.vg3) at=5n
+
 echo "MEAS_END"
 .endc

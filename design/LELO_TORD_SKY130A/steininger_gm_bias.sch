@@ -18,7 +18,7 @@ N 240 -160 240 -100 {lab=VS1}
 N 120 -160 120 -100 {lab=VG3}
 N 160 -70 200 -70 {lab=VG3}
 N 180 -120 180 -70 {lab=VG3}
-N 240 -40 240 0 {lab=VS1}
+N 240 -40 240 0 {lab=VS2}
 N 240 80 240 100 {lab=VSS}
 N 120 -40 120 100 {lab=VSS}
 N 80 100 380 100 {lab=VSS}
@@ -42,7 +42,6 @@ C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} 160 -310 0 1 {name=x2 }
 C {JNW_ATR_SKY130A/JNWATR_NCH_4C5F0.sym} 200 -190 0 0 {name=x3 }
 C {JNW_ATR_SKY130A/JNWATR_NCH_4C5F0.sym} 160 -190 0 1 {name=x4 }
 C {JNW_ATR_SKY130A/JNWATR_NCH_4C5F0.sym} 200 -70 0 0 {name=x5[3:0]}
-C {JNW_TR_SKY130A/JNWTR_RPPO16.sym} 240 0 3 1 {name=x7 }
 C {devices/ipin.sym} 80 -360 0 0 {name=p1 lab=VDD}
 C {devices/ipin.sym} 80 100 0 0 {name=p2 lab=VSS}
 C {JNW_ATR_SKY130A/JNWATR_NCH_4C5F0.sym} 160 -70 0 1 {name=x6}
@@ -61,3 +60,4 @@ C {devices/lab_wire.sym} 170 -240 2 1 {name=p13 sig_type=std_logic lab=VG2}
 C {devices/lab_wire.sym} 170 -120 2 1 {name=p14 sig_type=std_logic lab=VG3}
 C {devices/lab_wire.sym} 240 -30 2 1 {name=p15 sig_type=std_logic lab=VS2}
 C {devices/lab_wire.sym} 240 -150 2 1 {name=p16 sig_type=std_logic lab=VS1}
+C {JNW_TR_SKY130A/JNWTR_RPPO2.sym} 240 80 3 0 {name=x7}
