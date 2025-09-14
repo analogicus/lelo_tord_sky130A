@@ -16,9 +16,9 @@ ibias:
   min: -20%
   typ: 20
   max: 20%
-  scale: 1e6
-  digits: 3
-  unit: uA
+  scale: 1e9
+  digits: 6
+  unit: nA
 
 vg3:
   src:
