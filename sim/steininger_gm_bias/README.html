@@ -14,6 +14,7 @@
     div.column{display: inline-block; vertical-align: top; width: 50%;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" type="text/css" media="screen, projection, print"
     href="https://www.w3.org/Talks/Tools/Slidy2/styles/slidy.css" />
@@ -29,6 +30,16 @@
 <h1>Transient analysis (tran)</h1>
 <p>Check transient operation</p>
 <table>
+<colgroup>
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+<col width="14%" />
+<col width="14%" />
+<col width="14%" />
+<col width="11%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th align="left"><strong>Name</strong></th>
@@ -43,8 +54,9 @@
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left"><strong>Bias current</strong></td>
-<td align="left"><strong>ibias</strong></td>
+<td align="left"><strong>Current through voltage source V2 (branch with
+resistor)</strong></td>
+<td align="left"><strong>iv6</strong></td>
 <td align="left"></td>
 <td align="right"><strong>Spec</strong></td>
 <td align="center"><strong>16.000000</strong></td>
@@ -56,9 +68,11 @@
 <td align="left"></td>
 <td align="left"></td>
 <td align="left"></td>
-<td align="right"><a href='results/tran_Sch_typical.html'>Sch_typ</a></td>
+<td
+align="right"><a href='results/tran_Sch_typical.html'>Sch_typ</a></td>
 <td align="center"></td>
-<td align="center"><span style="color:red"><strong>0.630108</strong></span></td>
+<td align="center"><span
+style="color:red"><strong>-7.613241</strong></span></td>
 <td align="center"></td>
 <td align="right"></td>
 </tr>
@@ -67,9 +81,12 @@
 <td align="left"></td>
 <td align="left"></td>
 <td align="right"><a href='results/tran_Sch_etc.html'>Sch_etc</a></td>
-<td align="center"><span style="color:red"><strong>-1.474091</strong></span></td>
-<td align="center"><span style="color:red"><strong>0.333353</strong></span></td>
-<td align="center"><span style="color:red"><strong>1.291220</strong></span></td>
+<td align="center"><span
+style="color:red"><strong>-9.780560</strong></span></td>
+<td align="center"><span
+style="color:red"><strong>-5.760936</strong></span></td>
+<td align="center"><span
+style="color:red"><strong>10.000410</strong></span></td>
 <td align="right"></td>
 </tr>
 <tr class="even">
@@ -77,28 +94,278 @@
 <td align="left"></td>
 <td align="left"></td>
 <td align="right"><a href='results/tran_Sch_mc.html'>Sch_3std</a></td>
-<td align="center"><span style="color:red"><strong>0.628292</strong></span></td>
-<td align="center"><span style="color:red"><strong>0.630108</strong></span></td>
-<td align="center"><span style="color:red"><strong>0.631924</strong></span></td>
+<td align="center"><span
+style="color:red"><strong>-7.640138</strong></span></td>
+<td align="center"><span
+style="color:red"><strong>-7.610648</strong></span></td>
+<td align="center"><span
+style="color:red"><strong>-7.581158</strong></span></td>
 <td align="right"></td>
 </tr>
 <tr class="odd">
-<td align="left"><strong>Gate voltage of bottom nmos pair</strong></td>
-<td align="left"><strong>vg3</strong></td>
+<td align="left"><strong>Current thorugh voltage source V1 (branch
+without resistor)</strong></td>
+<td align="left"><strong>iv5</strong></td>
 <td align="left"></td>
 <td align="right"><strong>Spec</strong></td>
-<td align="center"><strong>12.000</strong></td>
-<td align="center"><strong>15.000</strong></td>
-<td align="center"><strong>18.000</strong></td>
+<td align="center"><strong>16.000000</strong></td>
+<td align="center"><strong>20.000000</strong></td>
+<td align="center"><strong>24.000000</strong></td>
+<td align="right"><strong>nA</strong></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td
+align="right"><a href='results/tran_Sch_typical.html'>Sch_typ</a></td>
+<td align="center"></td>
+<td align="center"><span
+style="color:red"><strong>-3.755428</strong></span></td>
+<td align="center"></td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="right"><a href='results/tran_Sch_etc.html'>Sch_etc</a></td>
+<td align="center"><span
+style="color:red"><strong>-5.130785</strong></span></td>
+<td align="center"><span
+style="color:red"><strong>-3.687883</strong></span></td>
+<td align="center"><span
+style="color:red"><strong>4.718626</strong></span></td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="right"><a href='results/tran_Sch_mc.html'>Sch_3std</a></td>
+<td align="center"><span
+style="color:red"><strong>-3.768041</strong></span></td>
+<td align="center"><span
+style="color:red"><strong>-3.756015</strong></span></td>
+<td align="center"><span
+style="color:red"><strong>-3.743990</strong></span></td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Current through voltage source V2 (branch with
+resistor)</strong></td>
+<td align="left"><strong>iv4</strong></td>
+<td align="left"></td>
+<td align="right"><strong>Spec</strong></td>
+<td align="center"><strong>16.000000</strong></td>
+<td align="center"><strong>20.000000</strong></td>
+<td align="center"><strong>24.000000</strong></td>
+<td align="right"><strong>nA</strong></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td
+align="right"><a href='results/tran_Sch_typical.html'>Sch_typ</a></td>
+<td align="center"></td>
+<td align="center"><span
+style="color:red"><strong>6.975442</strong></span></td>
+<td align="center"></td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="right"><a href='results/tran_Sch_etc.html'>Sch_etc</a></td>
+<td align="center"><span
+style="color:red"><strong>-8.487378</strong></span></td>
+<td align="center"><span
+style="color:red"><strong>5.439160</strong></span></td>
+<td align="center"><span
+style="color:red"><strong>9.299643</strong></span></td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="right"><a href='results/tran_Sch_mc.html'>Sch_3std</a></td>
+<td align="center"><span
+style="color:red"><strong>6.947791</strong></span></td>
+<td align="center"><span
+style="color:red"><strong>6.973794</strong></span></td>
+<td align="center"><span
+style="color:red"><strong>6.999796</strong></span></td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Current thorugh voltage source V1 (branch
+without resistor)</strong></td>
+<td align="left"><strong>iv3</strong></td>
+<td align="left"></td>
+<td align="right"><strong>Spec</strong></td>
+<td align="center"><strong>16.000000</strong></td>
+<td align="center"><strong>20.000000</strong></td>
+<td align="center"><strong>24.000000</strong></td>
+<td align="right"><strong>nA</strong></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td
+align="right"><a href='results/tran_Sch_typical.html'>Sch_typ</a></td>
+<td align="center"></td>
+<td align="center"><span
+style="color:red"><strong>6.914105</strong></span></td>
+<td align="center"></td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="right"><a href='results/tran_Sch_etc.html'>Sch_etc</a></td>
+<td align="center"><span
+style="color:red"><strong>-7.789638</strong></span></td>
+<td align="center"><span
+style="color:red"><strong>5.876644</strong></span></td>
+<td align="center"><span
+style="color:red"><strong>8.971975</strong></span></td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="right"><a href='results/tran_Sch_mc.html'>Sch_3std</a></td>
+<td align="center"><span
+style="color:red"><strong>6.863923</strong></span></td>
+<td align="center"><span
+style="color:red"><strong>6.910006</strong></span></td>
+<td align="center"><span
+style="color:red"><strong>6.956089</strong></span></td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Current through voltage source V2 (branch with
+resistor)</strong></td>
+<td align="left"><strong>iv2</strong></td>
+<td align="left"></td>
+<td align="right"><strong>Spec</strong></td>
+<td align="center"><strong>16.000000</strong></td>
+<td align="center"><strong>20.000000</strong></td>
+<td align="center"><strong>24.000000</strong></td>
+<td align="right"><strong>nA</strong></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td
+align="right"><a href='results/tran_Sch_typical.html'>Sch_typ</a></td>
+<td align="center"></td>
+<td align="center"><span
+style="color:red"><strong>0.001963</strong></span></td>
+<td align="center"></td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="right"><a href='results/tran_Sch_etc.html'>Sch_etc</a></td>
+<td align="center"><span
+style="color:red"><strong>-0.000012</strong></span></td>
+<td align="center"><span
+style="color:red"><strong>0.029187</strong></span></td>
+<td align="center"><span
+style="color:red"><strong>0.280467</strong></span></td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="right"><a href='results/tran_Sch_mc.html'>Sch_3std</a></td>
+<td align="center"><span
+style="color:red"><strong>0.001326</strong></span></td>
+<td align="center"><span
+style="color:red"><strong>0.001987</strong></span></td>
+<td align="center"><span
+style="color:red"><strong>0.002648</strong></span></td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Current thorugh voltage source V1 (branch
+without resistor)</strong></td>
+<td align="left"><strong>iv1</strong></td>
+<td align="left"></td>
+<td align="right"><strong>Spec</strong></td>
+<td align="center"><strong>16.000000</strong></td>
+<td align="center"><strong>20.000000</strong></td>
+<td align="center"><strong>24.000000</strong></td>
+<td align="right"><strong>nA</strong></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td
+align="right"><a href='results/tran_Sch_typical.html'>Sch_typ</a></td>
+<td align="center"></td>
+<td align="center"><span
+style="color:red"><strong>-0.413550</strong></span></td>
+<td align="center"></td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="right"><a href='results/tran_Sch_etc.html'>Sch_etc</a></td>
+<td align="center"><span
+style="color:red"><strong>-0.407551</strong></span></td>
+<td align="center"><span
+style="color:red"><strong>-0.363608</strong></span></td>
+<td align="center"><span
+style="color:red"><strong>0.366350</strong></span></td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="right"><a href='results/tran_Sch_mc.html'>Sch_3std</a></td>
+<td align="center"><span
+style="color:red"><strong>-0.415772</strong></span></td>
+<td align="center"><span
+style="color:red"><strong>-0.413562</strong></span></td>
+<td align="center"><span
+style="color:red"><strong>-0.411352</strong></span></td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Gate voltage of top PMOS pair</strong></td>
+<td align="left"><strong>vg1</strong></td>
+<td align="left"></td>
+<td align="right"><strong>Spec</strong></td>
+<td align="center"><strong>1296.000</strong></td>
+<td align="center"><strong>1620.000</strong></td>
+<td align="center"><strong>1944.000</strong></td>
 <td align="right"><strong>mV</strong></td>
 </tr>
 <tr class="even">
 <td align="left"></td>
 <td align="left"></td>
 <td align="left"></td>
-<td align="right"><a href='results/tran_Sch_typical.html'>Sch_typ</a></td>
+<td
+align="right"><a href='results/tran_Sch_typical.html'>Sch_typ</a></td>
 <td align="center"></td>
-<td align="center">14.371</td>
+<td align="center"><span
+style="color:red"><strong>7.370</strong></span></td>
 <td align="center"></td>
 <td align="right"></td>
 </tr>
@@ -107,9 +374,12 @@
 <td align="left"></td>
 <td align="left"></td>
 <td align="right"><a href='results/tran_Sch_etc.html'>Sch_etc</a></td>
-<td align="center"><span style="color:red"><strong>11.170</strong></span></td>
-<td align="center">17.443</td>
-<td align="center"><span style="color:red"><strong>34.875</strong></span></td>
+<td align="center"><span
+style="color:red"><strong>4.284</strong></span></td>
+<td align="center"><span
+style="color:red"><strong>11.265</strong></span></td>
+<td align="center"><span
+style="color:red"><strong>31.949</strong></span></td>
 <td align="right"></td>
 </tr>
 <tr class="even">
@@ -117,9 +387,241 @@
 <td align="left"></td>
 <td align="left"></td>
 <td align="right"><a href='results/tran_Sch_mc.html'>Sch_3std</a></td>
-<td align="center">14.213</td>
-<td align="center">14.376</td>
-<td align="center">14.539</td>
+<td align="center"><span
+style="color:red"><strong>7.136</strong></span></td>
+<td align="center"><span
+style="color:red"><strong>7.374</strong></span></td>
+<td align="center"><span
+style="color:red"><strong>7.613</strong></span></td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Gate voltage of middle NMOS pair</strong></td>
+<td align="left"><strong>vg2</strong></td>
+<td align="left"></td>
+<td align="right"><strong>Spec</strong></td>
+<td align="center"><strong>154.400</strong></td>
+<td align="center"><strong>193.000</strong></td>
+<td align="center"><strong>231.600</strong></td>
+<td align="right"><strong>mV</strong></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td
+align="right"><a href='results/tran_Sch_typical.html'>Sch_typ</a></td>
+<td align="center"></td>
+<td align="center">193.195</td>
+<td align="center"></td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="right"><a href='results/tran_Sch_etc.html'>Sch_etc</a></td>
+<td align="center"><span
+style="color:red"><strong>152.665</strong></span></td>
+<td align="center">175.286</td>
+<td align="center">207.617</td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="right"><a href='results/tran_Sch_mc.html'>Sch_3std</a></td>
+<td align="center">192.650</td>
+<td align="center">193.156</td>
+<td align="center">193.661</td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Gate voltage of bottom NMOS pair</strong></td>
+<td align="left"><strong>vg3</strong></td>
+<td align="left"></td>
+<td align="right"><strong>Spec</strong></td>
+<td align="center"><strong>5.896</strong></td>
+<td align="center"><strong>7.370</strong></td>
+<td align="center"><strong>8.844</strong></td>
+<td align="right"><strong>mV</strong></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td
+align="right"><a href='results/tran_Sch_typical.html'>Sch_typ</a></td>
+<td align="center"></td>
+<td align="center"><span
+style="color:red"><strong>1620.220</strong></span></td>
+<td align="center"></td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="right"><a href='results/tran_Sch_etc.html'>Sch_etc</a></td>
+<td align="center"><span
+style="color:red"><strong>1558.134</strong></span></td>
+<td align="center"><span
+style="color:red"><strong>1598.237</strong></span></td>
+<td align="center"><span
+style="color:red"><strong>1659.914</strong></span></td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="right"><a href='results/tran_Sch_mc.html'>Sch_3std</a></td>
+<td align="center"><span
+style="color:red"><strong>1618.621</strong></span></td>
+<td align="center"><span
+style="color:red"><strong>1620.040</strong></span></td>
+<td align="center"><span
+style="color:red"><strong>1621.458</strong></span></td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Current drawn from VDD</strong></td>
+<td align="left"><strong>ivdd</strong></td>
+<td align="left"></td>
+<td align="right"><strong>Spec</strong></td>
+<td align="center"><strong>8.000</strong></td>
+<td align="center"><strong>10.000</strong></td>
+<td align="center"><strong>12.000</strong></td>
+<td align="right"><strong>nA</strong></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td
+align="right"><a href='results/tran_Sch_typical.html'>Sch_typ</a></td>
+<td align="center"></td>
+<td align="center">11.369</td>
+<td align="center"></td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="right"><a href='results/tran_Sch_etc.html'>Sch_etc</a></td>
+<td align="center"><span
+style="color:red"><strong>-14.719</strong></span></td>
+<td align="center">9.574</td>
+<td align="center"><span
+style="color:red"><strong>14.911</strong></span></td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="right"><a href='results/tran_Sch_mc.html'>Sch_3std</a></td>
+<td align="center">11.334</td>
+<td align="center">11.367</td>
+<td align="center">11.399</td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Current drawn into VSS</strong></td>
+<td align="left"><strong>ivss</strong></td>
+<td align="left"></td>
+<td align="right"><strong>Spec</strong></td>
+<td align="center"><strong>0.800</strong></td>
+<td align="center"><strong>1.000</strong></td>
+<td align="center"><strong>1.200</strong></td>
+<td align="right"><strong>fA</strong></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td
+align="right"><a href='results/tran_Sch_typical.html'>Sch_typ</a></td>
+<td align="center"></td>
+<td align="center"><span
+style="color:red"><strong>-3.846</strong></span></td>
+<td align="center"></td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="right"><a href='results/tran_Sch_etc.html'>Sch_etc</a></td>
+<td align="center"><span
+style="color:red"><strong>-10.485</strong></span></td>
+<td align="center"><span
+style="color:red"><strong>-5.617</strong></span></td>
+<td align="center"><span
+style="color:red"><strong>4.912</strong></span></td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="right"><a href='results/tran_Sch_mc.html'>Sch_3std</a></td>
+<td align="center"><span
+style="color:red"><strong>-14.623</strong></span></td>
+<td align="center"><span
+style="color:red"><strong>-0.814</strong></span></td>
+<td align="center"><span
+style="color:red"><strong>12.995</strong></span></td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Voltage over the biasing resistor</strong></td>
+<td align="left"><strong>vr</strong></td>
+<td align="left"></td>
+<td align="right"><strong>Spec</strong></td>
+<td align="center"><strong>0.800</strong></td>
+<td align="center"><strong>1.000</strong></td>
+<td align="center"><strong>1.200</strong></td>
+<td align="right"><strong>nV</strong></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td
+align="right"><a href='results/tran_Sch_typical.html'>Sch_typ</a></td>
+<td align="center"></td>
+<td align="center"><span
+style="color:red"><strong>62.343</strong></span></td>
+<td align="center"></td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="right"><a href='results/tran_Sch_etc.html'>Sch_etc</a></td>
+<td align="center"><span
+style="color:red"><strong>-29.645</strong></span></td>
+<td align="center"><span
+style="color:red"><strong>483.071</strong></span></td>
+<td align="center"><span
+style="color:red"><strong>4711.163</strong></span></td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="right"><a href='results/tran_Sch_mc.html'>Sch_3std</a></td>
+<td align="center"><span
+style="color:red"><strong>52.723</strong></span></td>
+<td align="center"><span
+style="color:red"><strong>62.815</strong></span></td>
+<td align="center"><span
+style="color:red"><strong>72.908</strong></span></td>
 <td align="right"></td>
 </tr>
 </tbody>

@@ -5,8 +5,24 @@ load {cicname}.raw
 
 echo "MEAS_START"
 
-meas tran ibias find i(v0) at=5n
+meas tran iv1 find i(v.xdut.v1) at=5n
+meas tran iv2 find i(v.xdut.v2) at=5n
+meas tran iv3 find i(v.xdut.v3) at=5n
+meas tran iv4 find i(v.xdut.v4) at=5n
+meas tran iv5 find i(v.xdut.v5) at=5n
+meas tran iv6 find i(v.xdut.v6) at=5n
+
+meas tran ivdd find i(vdd) at=5n
+meas tran ivss find i(vss) at=5n
+
+meas tran vg1 find v(xdut.vg1) at=5n
+meas tran vg2 find v(xdut.vg2) at=5n
 meas tran vg3 find v(xdut.vg3) at=5n
 
+echo echo echo echo echo echo
+
+meas tran vr find v(xdut.vr) at=5n
+
 echo "MEAS_END"
+
 .endc

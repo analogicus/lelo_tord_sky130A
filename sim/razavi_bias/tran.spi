@@ -3,9 +3,9 @@
 * Include
 *----------------------------------------------------------------
 #ifdef Lay
-.include ../../../work/lpe/steininger_gm_bias_lpe.spi
+.include ../../../work/lpe/razavi_bias_lpe.spi
 #else
-.include ../../../work/xsch/steininger_gm_bias.spice
+.include ../../../work/xsch/razavi_bias.spice
 #endif
 
 *-----------------------------------------------------------------
@@ -17,6 +17,7 @@
 * PARAMETERS
 *-----------------------------------------------------------------
 .param TRF = 10p
+
 .param AVDD = {vdda}
 
 *-----------------------------------------------------------------
@@ -34,6 +35,7 @@ VDD  VDD  VSS  dc  1.8
 * PROBE
 *----------------------------------------------------------------
 .save all
+
 
 *----------------------------------------------------------------
 * NGSPICE control

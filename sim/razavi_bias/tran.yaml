@@ -1,0 +1,55 @@
+#<name>:
+#  src:
+#    - <paramters>
+#  typ: <typical spec value>
+#  name: <long name>
+#  min: <minimum spec value>
+#  max: <maximum spec value>
+#  scale: <scale, multiply result by scale>
+#  digits: <significant digits>
+#  unit: Unit
+
+iv1:
+  src: 
+    - iv1
+  name: Current through branch 1
+  min: -20%
+  typ: 1
+  max: 20%
+  scale: 1e9
+  digits: 3
+  unit: nA
+
+iv2:
+  src: 
+    - iv2
+  name: Current through branch 2
+  min: -20%
+  typ: 1
+  max: 20%
+  scale: 1e9
+  digits: 3
+  unit: nA
+
+ivdd:
+  src: 
+    - ivdd
+  name: Total current thorugh vdd
+  min: -20%
+  typ: 1
+  max: 20%
+  scale: 1e9
+  digits: 3
+  unit: nA
+
+ivss:
+  src: 
+    - ivss
+  name: Total current through vss
+  min: -20%
+  typ: 1
+  max: 20%
+  scale: 1e9
+  digits: 3
+  unit: nA
+
