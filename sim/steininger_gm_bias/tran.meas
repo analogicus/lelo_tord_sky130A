@@ -22,6 +22,8 @@ meas tran vg3 find v(xdut.vg3) at=5n
 echo echo echo echo echo echo
 
 meas tran vr find v(xdut.vr) at=5n
+meas tran vdd find v(vdd) at=5n
+meas tran vss find v(vss) at=5n
 
 echo "MEAS_END"
 

@@ -19,6 +19,9 @@ test:
 typical: netlist
 	cicsim run --name ${VIEW}_typical ${TB} ${OPT} ${VIEW} Gt Ktt Tt Vt
 
+supply: netlist
+	cicsim run --name ${VIEW}_supply ${TB} ${OPT} ${VIEW} Gt Ktt Tt "Vl,Vt,Vh"
+
 slow: netlist
 	cicsim run --name ${VIEW}_slow ${TB} ${OPT} ${VIEW} Gt Kss "Th,Tl" Vl
 

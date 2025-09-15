@@ -12,7 +12,7 @@
 iv6:
   src:
     - iv6
-  name: Current through voltage source V2 (branch with resistor)
+  name: Current through voltage source V6 (branch with resistor)
   min: -20%
   typ: 20
   max: 20%
@@ -23,7 +23,7 @@ iv6:
 iv5:
   src:
     - iv5
-  name: Current thorugh voltage source V1 (branch without resistor)
+  name: Current thorugh voltage source V5 (branch without resistor)
   min: -20%
   typ: 20
   max: 20%
@@ -34,7 +34,7 @@ iv5:
 iv4:
   src:
     - iv4
-  name: Current through voltage source V2 (branch with resistor)
+  name: Current through voltage source V4 (branch with resistor)
   min: -20%
   typ: 20
   max: 20%
@@ -45,7 +45,7 @@ iv4:
 iv3:
   src:
     - iv3
-  name: Current thorugh voltage source V1 (branch without resistor)
+  name: Current thorugh voltage source V3 (branch without resistor)
   min: -20%
   typ: 20
   max: 20%
@@ -75,9 +75,9 @@ iv1:
   digits: 6
   unit: nA
 
-vg1:
+vg3:
   src:
-    - vg1
+    - vg3
   name: Gate voltage of top PMOS pair
   min: -20%
   typ: 1620
@@ -97,9 +97,9 @@ vg2:
   digits: 3
   unit: mV
 
-vg3:
+vg1:
   src:
-    - vg3
+    - vg1
   name: Gate voltage of bottom NMOS pair
   min: -20%
   typ: 7.37
