@@ -1,0 +1,143 @@
+#<name>:
+#  src:
+#    - <paramters>
+#  typ: <typical spec value>
+#  name: <long name>
+#  min: <minimum spec value>
+#  max: <maximum spec value>
+#  scale: <scale, multiply result by scale>
+#  digits: <significant digits>
+#  unit: Unit
+
+iv6:
+  src:
+    - iv6
+  name: Current through voltage source V6 (branch with resistor)
+  min: -20%
+  typ: 20
+  max: 20%
+  scale: 1e9
+  digits: 6
+  unit: nA
+
+iv5:
+  src:
+    - iv5
+  name: Current thorugh voltage source V5 (branch without resistor)
+  min: -20%
+  typ: 20
+  max: 20%
+  scale: 1e9
+  digits: 6
+  unit: nA
+
+iv4:
+  src:
+    - iv4
+  name: Current through voltage source V4 (branch with resistor)
+  min: -20%
+  typ: 20
+  max: 20%
+  scale: 1e9
+  digits: 6
+  unit: nA
+
+iv3:
+  src:
+    - iv3
+  name: Current thorugh voltage source V3 (branch without resistor)
+  min: -20%
+  typ: 20
+  max: 20%
+  scale: 1e9
+  digits: 6
+  unit: nA
+
+iv2:
+  src:
+    - iv2
+  name: Current through voltage source V2 (branch with resistor)
+  min: -20%
+  typ: 20
+  max: 20%
+  scale: 1e9
+  digits: 6
+  unit: nA
+
+iv1:
+  src:
+    - iv1
+  name: Current thorugh voltage source V1 (branch without resistor)
+  min: -20%
+  typ: 20
+  max: 20%
+  scale: 1e9
+  digits: 6
+  unit: nA
+
+vg3:
+  src:
+    - vg3
+  name: Gate voltage of top PMOS pair
+  min: -20%
+  typ: 1620
+  max: 20%
+  scale: 1e3
+  digits: 3
+  unit: mV
+
+vg2:
+  src:
+    - vg2
+  name: Gate voltage of middle NMOS pair
+  min: -20%
+  typ: 193
+  max: 20%
+  scale: 1e3
+  digits: 3
+  unit: mV
+
+vg1:
+  src:
+    - vg1
+  name: Gate voltage of bottom NMOS pair
+  min: -20%
+  typ: 7.37
+  max: 20%
+  scale: 1e3
+  digits: 3
+  unit: mV
+
+ivdd:
+  src:
+    - ivdd
+  name: Current drawn from VDD
+  min: -20%
+  typ: 10
+  max: 20%
+  scale: 1e9
+  digits: 3
+  unit: nA
+
+ivss:
+  src:
+    - ivss
+  name: Current drawn into VSS
+  min: -20%
+  typ: 1
+  max: 20%
+  scale: 1e15
+  digits: 3
+  unit: fA
+
+vr:
+  src:
+    - vr
+  name: Voltage over the biasing resistor
+  min: -20%
+  typ: 1
+  max: 20%
+  scale: 1e9
+  digits: 3
+  unit: nV
+

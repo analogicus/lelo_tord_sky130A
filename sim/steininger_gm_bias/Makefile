@@ -22,6 +22,18 @@ typical: netlist
 supply: netlist
 	cicsim run --name ${VIEW}_supply ${TB} ${OPT} ${VIEW} Gt Ktt Tt "Vl,Vt,Vh"
 
+supply_fs: netlist
+	cicsim run --name ${VIEW}_supply_fs ${TB} ${OPT} ${VIEW} Gt Kfs Tt "Vl,Vt,Vh"
+
+supply_sf: netlist
+	cicsim run --name ${VIEW}_supply_sf ${TB} ${OPT} ${VIEW} Gt Ksf Tt "Vl,Vt,Vh"
+
+supply_ss: netlist
+	cicsim run --name ${VIEW}_supply_ss ${TB} ${OPT} ${VIEW} Gt Kss Tt "Vl,Vt,Vh"
+
+supply_ff: netlist
+	cicsim run --name ${VIEW}_supply_ff ${TB} ${OPT} ${VIEW} Gt Kff Tt "Vl,Vt,Vh"
+
 slow: netlist
 	cicsim run --name ${VIEW}_slow ${TB} ${OPT} ${VIEW} Gt Kss "Th,Tl" Vl
 

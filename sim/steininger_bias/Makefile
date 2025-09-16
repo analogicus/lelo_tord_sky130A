@@ -7,7 +7,7 @@ all: typical etc mc summary
 TB=tran
 VIEW=Sch
 #VIEW=Lay
-CELL=test_ex
+CELL=steininger_bias
 LIB =LELO_TORD_SKY130A
 OPT=
 

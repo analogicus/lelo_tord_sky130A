@@ -1,0 +1,30 @@
+* Measure steininger_bias
+.control
+
+load {cicname}.raw
+
+echo "MEAS_START"
+
+meas tran iv1 find i(v.xdut.v1) at=20n
+meas tran iv2 find i(v.xdut.v2) at=20n
+
+echo echo echo echo echo
+
+meas tran iv3 find i(v.xdut.v3) at=20n
+meas tran iv4 find i(v.xdut.v4) at=20n
+meas tran iv5 find i(v.xdut.v5) at=20n
+meas tran iv6 find i(v.xdut.v6) at=20n
+
+meas tran ivdd find i(vdd) at=20n
+meas tran ivss find i(vss) at=20n
+
+meas tran vg1 find v(xdut.vg1) at=20n
+meas tran vg2 find v(xdut.vg2) at=20n
+meas tran vg3 find v(xdut.vg3) at=20n
+
+meas tran vr find v(xdut.vr) at=20n
+meas tran vdd find v(vdd) at=20n
+meas tran vss find v(vss) at=20n
+
+echo "MEAS_END"
+.endc

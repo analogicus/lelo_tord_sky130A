@@ -7,8 +7,19 @@ echo "MEAS_START"
 
 meas tran iv1 find i(v.xdut.v1) at=5n
 meas tran iv2 find i(v.xdut.v2) at=5n
+
+meas tran vg1 find v(xdut.vg1) at=5n
+meas tran vg2 find v(xdut.vg2) at=5n
+
+meas tran v1 find v(xdut.v1) at=5n
+meas tran v2 find v(xdut.v2) at=5n
+meas tran vr find v(xdut.vr) at=5n
+
 meas tran ivdd find i(vdd) at=5n
 meas tran ivss find i(vss) at=5n
+
+meas tran vdd find v(vdd) at=5n
+meas tran vss find v(vss) at=5n
 
 echo "MEAS_END"
 .endc

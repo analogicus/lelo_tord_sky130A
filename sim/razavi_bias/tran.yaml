@@ -31,6 +31,61 @@ iv2:
   digits: 3
   unit: nA
 
+vg1:
+  src: 
+    - vg1
+  name: Voltage at gate of transistor x2 and x1
+  min: -20%
+  typ: 1
+  max: 20%
+  scale: 1
+  digits: 3
+  unit: V
+
+vg2:
+  src: 
+    - vg2
+  name: Voltage at gate of transistor x4 and x3
+  min: -20%
+  typ: 1
+  max: 20%
+  scale: 1
+  digits: 3
+  unit: V
+
+vr:
+  src: 
+    - vr
+  name: Voltage drop across resistor x5
+  min: -20%
+  typ: 1
+  max: 20%
+  scale: 1e3
+  digits: 3
+  unit: mV
+
+v1:
+  src: 
+    - v1
+  name: Voltage drop over voltage source 1 (should be zero)
+  min: -0%
+  typ: 0
+  max: 0%
+  scale: 1
+  digits: 3
+  unit: V
+
+v2:
+  src: 
+    - v2
+  name: Voltage drop over voltage source 2 (should be zero)
+  min: -0%
+  typ: 0
+  max: 0%
+  scale: 1
+  digits: 3
+  unit: V
+
 ivdd:
   src: 
     - ivdd
@@ -50,6 +105,29 @@ ivss:
   typ: 1
   max: 20%
   scale: 1e9
-  digits: 3
+  digits: 6
   unit: nA
+
+vdd:
+  src: 
+    - vdd
+  name: Voltage supply
+  min: -20%
+  typ: 1.8
+  max: 20%
+  scale: 1
+  digits: 3
+  unit: V
+
+vss:
+  src: 
+    - vss
+  name: Ground
+  min: 0%
+  typ: 0
+  max: 0%
+  scale: 1
+  digits: 3
+  unit: V
+
 

@@ -3,9 +3,9 @@
 * Include
 *----------------------------------------------------------------
 #ifdef Lay
-.include ../../../work/lpe/test_ex_lpe.spi
+.include ../../../work/lpe/steininger_bias_lpe.spi
 #else
-.include ../../../work/xsch/test_ex.spice
+.include ../../../work/xsch/steininger_bias.spice
 #endif
 
 *-----------------------------------------------------------------
@@ -17,17 +17,14 @@
 * PARAMETERS
 *-----------------------------------------------------------------
 .param TRF = 10p
-
 .param AVDD = {vdda}
 
 *-----------------------------------------------------------------
 * FORCE
 *-----------------------------------------------------------------
-VSS  VSS  0     dc 0
-* VDD  VDD_1V8  VSS  pwl 0 0 10n {AVDD}
-
-IBP 0 IBPS_5U dc 5u
-V0 IBNS_20U 0 dc 1
+VSS     VSS    0    dc  0
+VDD     VDD    VSS  dc  {AVDD}
+VSPARK  SPARK  VSS  pwl 0 0 0.5n {AVDD} 1n 0
 
 *-----------------------------------------------------------------
 * DUT
@@ -37,8 +34,7 @@ V0 IBNS_20U 0 dc 1
 *----------------------------------------------------------------
 * PROBE
 *----------------------------------------------------------------
-* .save all
-.save i(V0) v(IBPS_5U)
+.save all
 
 *----------------------------------------------------------------
 * NGSPICE control
@@ -52,7 +48,7 @@ unset askquit
 optran 0 0 0 1n 1u 0
 
 
-tran 1n 10n 1p
+tran 1n 20n 1p
 write
 quit
 
@@ -60,3 +56,4 @@ quit
 .endc
 
 .end
+

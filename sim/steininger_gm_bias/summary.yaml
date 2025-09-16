@@ -14,3 +14,6 @@ simulations:
       - name: Sch_3std
         src: results/tran_Sch_mc
         method: 3std
+      - name: Sch_sup
+        src: results/tran_Sch_supply
+        method: minmax

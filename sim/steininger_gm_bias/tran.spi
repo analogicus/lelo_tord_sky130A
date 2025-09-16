@@ -16,9 +16,6 @@
 *-----------------------------------------------------------------
 * PARAMETERS
 *-----------------------------------------------------------------
-
-* Skal det inkluderes noe her som etter vdda basert på Vl, Vt, Vh?
-
 .param TRF = 10p
 .param AVDD = {vdda}
 
