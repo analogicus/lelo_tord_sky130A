@@ -25,6 +25,7 @@
 *-----------------------------------------------------------------
 VSS  VSS  0    dc  0
 VDD  VDD  VSS  dc  {AVDD}
+VSPARK SPARK VSS pwl 0 0 0.5n {AVDD} 1n 0
 
 *-----------------------------------------------------------------
 * DUT
@@ -49,7 +50,7 @@ unset askquit
 optran 0 0 0 1n 1u 0
 
 
-tran 1n 10n 1p
+tran 1n 20n 1p
 write
 quit
 

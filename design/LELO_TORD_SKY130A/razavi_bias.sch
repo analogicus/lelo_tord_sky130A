@@ -4,52 +4,53 @@ K {}
 V {}
 S {}
 E {}
-N 400 -700 600 -700 {lab=VG1}
-N 640 -670 640 -510 {lab=VG1}
-N 360 -670 360 -510 {lab=VG2}
-N 640 -450 640 -380 {lab=V3}
-N 360 -760 360 -730 {lab=VDD}
-N 640 -760 640 -730 {lab=VDD}
-N 570 -700 570 -630 {lab=VG1}
-N 570 -630 640 -630 {lab=VG1}
-N 360 -550 430 -550 {lab=VG2}
-N 430 -550 430 -480 {lab=VG2}
-N 360 -180 360 -160 {lab=VSS}
-N 640 -180 640 -160 {lab=VSS}
-N 320 -700 360 -700 {lab=VDD}
-N 320 -760 320 -700 {lab=VDD}
-N 640 -700 680 -700 {lab=VDD}
-N 680 -760 680 -700 {lab=VDD}
-N 320 -480 360 -480 {lab=VSS}
-N 640 -480 680 -480 {lab=VSS}
-N 680 -480 680 -160 {lab=VSS}
-N 280 -160 680 -160 {lab=VSS}
-N 400 -480 600 -480 {lab=VG2}
-N 640 -300 640 -240 {lab=V1}
-N 360 -450 360 -240 {lab=V2}
-N 660 -340 680 -340 {lab=VSS}
-N 320 -480 320 -160 {lab=VSS}
-N 280 -760 680 -760 {lab=VDD}
-N 500 -560 500 -480 {lab=VG2}
-N 440 -590 460 -590 {lab=VG1}
-N 440 -660 440 -590 {lab=VG1}
-N 440 -660 500 -660 {lab=VG1}
-N 540 -640 540 -590 {lab=VG1}
-N 500 -590 540 -590 {lab=VG1}
-N 500 -640 540 -640 {lab=VG1}
-N 500 -700 500 -620 {lab=VG1}
-C {devices/ipin.sym} 280 -160 0 0 {name=p1 lab=VSS}
-C {devices/ipin.sym} 280 -760 0 0 {name=p2 lab=VDD}
-C {devices/lab_wire.sym} 570 -630 0 1 {name=p3 sig_type=std_logic lab=VG1}
-C {devices/lab_wire.sym} 430 -550 2 1 {name=p4 sig_type=std_logic lab=VG2}
-C {devices/lab_wire.sym} 360 -280 2 0 {name=p5 sig_type=std_logic lab=V2}
-C {devices/lab_wire.sym} 640 -280 2 0 {name=p6 sig_type=std_logic lab=V1}
-C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} 600 -700 0 0 {name=x1[3:0]}
-C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} 400 -700 0 1 {name=x2 }
-C {JNW_ATR_SKY130A/JNWATR_NCH_4C5F0.sym} 600 -480 0 0 {name=x3}
-C {JNW_ATR_SKY130A/JNWATR_NCH_4C5F0.sym} 400 -480 0 1 {name=x4 }
-C {devices/vsource.sym} 640 -210 0 1 {name=V1 value=0 savecurrent=true}
-C {devices/vsource.sym} 360 -210 0 0 {name=V2 value=0 savecurrent=true}
-C {JNW_TR_SKY130A/JNWTR_RPPO2.sym} 640 -300 3 0 {name=x5}
-C {JNW_ATR_SKY130A/JNWATR_NCH_4C5F0.sym} 460 -590 0 0 {name=x6}
-C {devices/lab_wire.sym} 640 -420 2 0 {name=p7 sig_type=std_logic lab=VR}
+N 620 -700 820 -700 {lab=VG1}
+N 860 -670 860 -510 {lab=VG1}
+N 580 -670 580 -510 {lab=VG2}
+N 860 -450 860 -380 {lab=VR}
+N 580 -760 580 -730 {lab=VDD}
+N 860 -760 860 -730 {lab=VDD}
+N 790 -700 790 -630 {lab=VG1}
+N 790 -630 860 -630 {lab=VG1}
+N 580 -550 650 -550 {lab=VG2}
+N 650 -550 650 -480 {lab=VG2}
+N 580 -180 580 -160 {lab=VSS}
+N 860 -180 860 -160 {lab=VSS}
+N 540 -700 580 -700 {lab=VDD}
+N 540 -760 540 -700 {lab=VDD}
+N 860 -700 900 -700 {lab=VDD}
+N 900 -760 900 -700 {lab=VDD}
+N 540 -480 580 -480 {lab=VSS}
+N 860 -480 900 -480 {lab=VSS}
+N 900 -480 900 -160 {lab=VSS}
+N 500 -160 900 -160 {lab=VSS}
+N 620 -480 820 -480 {lab=VG2}
+N 860 -300 860 -240 {lab=V1}
+N 580 -450 580 -240 {lab=V2}
+N 880 -340 900 -340 {lab=VSS}
+N 540 -480 540 -160 {lab=VSS}
+N 500 -760 900 -760 {lab=VDD}
+N 220 -590 260 -590 {lab=SPARK}
+N 300 -660 300 -620 {lab=VG1}
+N 300 -560 300 -500 {lab=VSS}
+N 300 -590 350 -590 {lab=VSS}
+N 350 -590 350 -540 {lab=VSS}
+N 300 -540 350 -540 {lab=VSS}
+C {devices/ipin.sym} 500 -160 0 0 {name=p1 lab=VSS}
+C {devices/ipin.sym} 500 -760 0 0 {name=p2 lab=VDD}
+C {devices/lab_wire.sym} 790 -630 0 1 {name=p3 sig_type=std_logic lab=VG1}
+C {devices/lab_wire.sym} 650 -550 2 1 {name=p4 sig_type=std_logic lab=VG2}
+C {devices/lab_wire.sym} 580 -280 2 0 {name=p5 sig_type=std_logic lab=V2}
+C {devices/lab_wire.sym} 860 -280 2 0 {name=p6 sig_type=std_logic lab=V1}
+C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} 820 -700 0 0 {name=x1[3:0]}
+C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} 620 -700 0 1 {name=x2 }
+C {JNW_ATR_SKY130A/JNWATR_NCH_4C5F0.sym} 820 -480 0 0 {name=x3}
+C {JNW_ATR_SKY130A/JNWATR_NCH_4C5F0.sym} 620 -480 0 1 {name=x4 }
+C {devices/vsource.sym} 860 -210 0 1 {name=V1 value=0 savecurrent=true}
+C {devices/vsource.sym} 580 -210 0 0 {name=V2 value=0 savecurrent=true}
+C {JNW_TR_SKY130A/JNWTR_RPPO2.sym} 860 -300 3 0 {name=x5}
+C {devices/lab_wire.sym} 860 -420 2 0 {name=p7 sig_type=std_logic lab=VR}
+C {JNW_ATR_SKY130A/JNWATR_NCH_4C5F0.sym} 260 -590 0 0 {name=x8}
+C {devices/lab_wire.sym} 300 -500 2 1 {name=p23 sig_type=std_logic lab=VSS}
+C {devices/lab_wire.sym} 300 -660 0 0 {name=p8 sig_type=std_logic lab=VG1}
+C {devices/ipin.sym} 220 -590 0 0 {name=p21 lab=SPARK}

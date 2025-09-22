@@ -4,27 +4,27 @@ For details see <a href='tran_Sch_typical.html'>tran_Sch_typical.html</a>
 
 |**Name**|**Parameter**|**View**|**Min** | **Typ** | **Max**|
 |:---|:---|:---:|:---:|:---:|:---:|
-|Current through voltage source V6 (branch with resistor)|iv6 | Spec | 16.000000 nA | 20.000000 nA | 24.000000 nA |
-| | | Sch|3792.528000 nA | 3792.528000 nA | 3792.528000 nA |
-|Current thorugh voltage source V5 (branch without resistor)|iv5 | Spec | 16.000000 nA | 20.000000 nA | 24.000000 nA |
-| | | Sch|3046.297000 nA | 3046.297000 nA | 3046.297000 nA |
-|Current through voltage source V4 (branch with resistor)|iv4 | Spec | 16.000000 nA | 20.000000 nA | 24.000000 nA |
-| | | Sch|3067.307000 nA | 3067.307000 nA | 3067.307000 nA |
-|Current thorugh voltage source V3 (branch without resistor)|iv3 | Spec | 16.000000 nA | 20.000000 nA | 24.000000 nA |
-| | | Sch|3051.273000 nA | 3051.273000 nA | 3051.273000 nA |
-|Current through voltage source V2 (branch with resistor)|iv2 | Spec | 16.000000 nA | 20.000000 nA | 24.000000 nA |
-| | | Sch|3398.244000 nA | 3398.244000 nA | 3398.244000 nA |
-|Current thorugh voltage source V1 (branch without resistor)|iv1 | Spec | 16.000000 nA | 20.000000 nA | 24.000000 nA |
-| | | Sch|3040.125000 nA | 3040.125000 nA | 3040.125000 nA |
-|Gate voltage of top PMOS pair|vg3 | Spec | 1296.000 mV | 1620.000 mV | 1944.000 mV |
-| | | Sch|676.650 mV | 676.650 mV | 676.650 mV |
-|Gate voltage of middle NMOS pair|vg2 | Spec | 154.400 mV | 193.000 mV | 231.600 mV |
-| | | Sch|1437.396 mV | 1437.396 mV | 1437.396 mV |
-|Gate voltage of bottom NMOS pair|vg1 | Spec | 5.896 mV | 7.370 mV | 8.844 mV |
-| | | Sch|654.250 mV | 654.250 mV | 654.250 mV |
-|Current drawn from VDD|ivdd | Spec | 8.000 nA | 10.000 nA | 12.000 nA |
-| | | Sch|-6821.753 nA | -6821.753 nA | -6821.753 nA |
-|Current drawn into VSS|ivss | Spec | 0.800 fA | 1.000 fA | 1.200 fA |
-| | | Sch|-6.517 fA | -6.517 fA | -6.517 fA |
-|Voltage over the biasing resistor|vr | Spec | 0.800 nV | 1.000 nV | 1.200 nV |
-| | | Sch|53425140.000 nV | 53425140.000 nV | 53425140.000 nV |
+|Current through voltage source V6 (branch with resistor)|iv6 | Spec | 2.400 mA | 3.000 mA | 3.600 mA |
+| | | ('Sch',)|3.793 mA | 3.793 mA | 3.793 mA |
+|Current thorugh voltage source V5 (branch without resistor)|iv5 | Spec | 2.400 mA | 3.000 mA | 3.600 mA |
+| | | ('Sch',)|3.046 mA | 3.046 mA | 3.046 mA |
+|Current through voltage source V4 (branch with resistor)|iv4 | Spec | 2.400 mA | 3.000 mA | 3.600 mA |
+| | | ('Sch',)|3.067 mA | 3.067 mA | 3.067 mA |
+|Current thorugh voltage source V3 (branch without resistor)|iv3 | Spec | 2.400 mA | 3.000 mA | 3.600 mA |
+| | | ('Sch',)|3.051 mA | 3.051 mA | 3.051 mA |
+|Current through voltage source V2 (branch with resistor)|iv2 | Spec | 2.400 mA | 3.000 mA | 3.600 mA |
+| | | ('Sch',)|3.398 mA | 3.398 mA | 3.398 mA |
+|Current thorugh voltage source V1 (branch without resistor)|iv1 | Spec | 2.400 mA | 3.000 mA | 3.600 mA |
+| | | ('Sch',)|3.040 mA | 3.040 mA | 3.040 mA |
+|Gate voltage of top PMOS pair|vg3 | Spec | 0.536 V | 0.670 V | 0.804 V |
+| | | ('Sch',)|0.677 V | 0.677 V | 0.677 V |
+|Gate voltage of middle NMOS pair|vg2 | Spec | 1.120 V | 1.400 V | 1.680 V |
+| | | ('Sch',)|1.437 V | 1.437 V | 1.437 V |
+|Gate voltage of bottom NMOS pair|vg1 | Spec | 0.520 V | 0.650 V | 0.780 V |
+| | | ('Sch',)|0.654 V | 0.654 V | 0.654 V |
+|Current drawn from VDD|ivdd | Spec | -7200.000 mA | -6000.000 mA | -4800.000 mA |
+| | | ('Sch',)|-6.822 mA | -6.822 mA | -6.822 mA |
+|Current drawn into VSS|ivss | Spec | 4800.000 mA | 6000.000 mA | 7200.000 mA |
+| | | ('Sch',)|0.000 mA | 0.000 mA | 0.000 mA |
+|Voltage over the biasing resistor|vr | Spec | 0.040 V | 0.050 V | 0.060 V |
+| | | ('Sch',)|0.053 V | 0.053 V | 0.053 V |

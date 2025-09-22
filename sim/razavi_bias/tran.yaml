@@ -10,29 +10,29 @@
 #  unit: Unit
 
 iv1:
-  src: 
+  src:
     - iv1
   name: Current through branch 1
   min: -20%
-  typ: 1
+  typ: 200
   max: 20%
   scale: 1e9
   digits: 3
   unit: nA
 
 iv2:
-  src: 
+  src:
     - iv2
   name: Current through branch 2
   min: -20%
-  typ: 1
+  typ: 200
   max: 20%
   scale: 1e9
   digits: 3
   unit: nA
 
 vg1:
-  src: 
+  src:
     - vg1
   name: Voltage at gate of transistor x2 and x1
   min: -20%
@@ -43,29 +43,29 @@ vg1:
   unit: V
 
 vg2:
-  src: 
+  src:
     - vg2
   name: Voltage at gate of transistor x4 and x3
   min: -20%
-  typ: 1
+  typ: 0.5
   max: 20%
   scale: 1
   digits: 3
   unit: V
 
 vr:
-  src: 
+  src:
     - vr
   name: Voltage drop across resistor x5
   min: -20%
-  typ: 1
+  typ: 3
   max: 20%
   scale: 1e3
   digits: 3
   unit: mV
 
 v1:
-  src: 
+  src:
     - v1
   name: Voltage drop over voltage source 1 (should be zero)
   min: -0%
@@ -76,7 +76,7 @@ v1:
   unit: V
 
 v2:
-  src: 
+  src:
     - v2
   name: Voltage drop over voltage source 2 (should be zero)
   min: -0%
@@ -87,29 +87,29 @@ v2:
   unit: V
 
 ivdd:
-  src: 
+  src:
     - ivdd
   name: Total current thorugh vdd
   min: -20%
-  typ: 1
+  typ: 400
   max: 20%
   scale: 1e9
   digits: 3
   unit: nA
 
 ivss:
-  src: 
+  src:
     - ivss
   name: Total current through vss
   min: -20%
-  typ: 1
+  typ: 400
   max: 20%
   scale: 1e9
   digits: 6
   unit: nA
 
 vdd:
-  src: 
+  src:
     - vdd
   name: Voltage supply
   min: -20%
@@ -120,7 +120,7 @@ vdd:
   unit: V
 
 vss:
-  src: 
+  src:
     - vss
   name: Ground
   min: 0%
@@ -129,5 +129,3 @@ vss:
   scale: 1
   digits: 3
   unit: V
-
-
