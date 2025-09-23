@@ -10,8 +10,8 @@ N 40 40 40 90 {lab=VDD}
 N 0 40 40 40 {lab=VDD}
 N 0 0 0 60 {lab=VDD}
 N -80 90 -40 90 {lab=VCTRL}
-N 0 220 0 260 {lab=IPTAT}
-N -300 260 -300 300 {lab=IPTAT}
+N 0 220 0 260 {lab=IOUT}
+N -300 260 -300 300 {lab=IOUT}
 N -300 360 -300 400 {lab=#net2}
 N 300 360 300 400 {lab=#net3}
 N 300 880 300 940 {lab=#net4}
@@ -33,8 +33,8 @@ N 220 480 260 480 {lab=VDD}
 N 220 450 260 450 {lab=SW2}
 N 520 870 520 1040 {lab=VSS}
 N 520 660 520 800 {lab=V2}
-N 300 260 300 300 {lab=IPTAT}
-N -720 260 300 260 {lab=IPTAT}
+N 300 260 300 300 {lab=IOUT}
+N -300 260 720 260 {lab=IOUT}
 N -300 500 -300 650 {lab=#net7}
 N -520 870 -520 1040 {lab=VSS}
 N -300 760 -300 940 {lab=#net8}
@@ -153,7 +153,7 @@ C {devices/lab_wire.sym} 360 480 0 1 {name=p2 sig_type=std_logic lab=VSS}
 C {devices/lab_wire.sym} 250 450 0 0 {name=p24 sig_type=std_logic lab=SW2}
 C {devices/lab_wire.sym} 250 480 0 0 {name=p25 sig_type=std_logic lab=VDD}
 C {devices/opin.sym} -720 660 0 1 {name=p26 lab=V1}
-C {devices/opin.sym} -720 260 0 1 {name=p5 lab=IPTAT}
+C {devices/opin.sym} 720 260 0 0 {name=p5 lab=IOUT}
 C {devices/vsource.sym} -300 330 0 0 {name=V2 value=0 savecurrent=true}
 C {devices/vsource.sym} 300 330 0 0 {name=V3 value=0 savecurrent=true}
 C {devices/vsource.sym} -300 730 0 0 {name=V4 value=0 savecurrent=true}
