@@ -12,6 +12,7 @@
 * OPTIONS
 *-----------------------------------------------------------------
 .option TNOM=27 GMIN=1e-15 reltol=1e-3
+* .option method=gear
 
 *-----------------------------------------------------------------
 * PARAMETERS
@@ -22,16 +23,16 @@
 *-----------------------------------------------------------------
 * FORCE
 *-----------------------------------------------------------------
-VSS   VSS       0   DC  0V
-VDD   VDD       VSS DC  {AVDD}
-VCTRL CTRL      VSS PWL 0ns 0V 10ns {AVDD}
-VSW1  SWBRANCH1 VSS PULSE(0V {AVDD} 1ns 1ps 1ps 999ps 2ns)
-VSW2  SWBRANCH2 VSS PULSE({AVDD} 0V 1ns 1ps 1ps 999ps 2ns)
-VCAP1 SWCAP1    VSS DC  {AVDD}
-VCAP2 SWCAP2    VSS DC  {AVDD}
-VREF1 SWREF1    VSS DC  0V
-VREF2 SWREF2    VSS DC  0V
-VDRAIN SWDRAIN  VSS PWL 0ns {AVDD} 900ps 0V
+VDD    VDD       VSS DC  {AVDD}
+VCTRL  CTRL      VSS PWL 0ns 0V 10ns {AVDD}
+VSW1   SWBRANCH1 VSS PULSE(0V {AVDD} 1ns 1ps 1ps 999ps 2ns)
+VSW2   SWBRANCH2 VSS PULSE({AVDD} 0V 1ns 1ps 1ps 999ps 2ns)
+VCAP1  SWCAP1    VSS DC  {AVDD}
+VCAP2  SWCAP2    VSS DC  {AVDD}
+VREF1  SWREF1    VSS DC  0V
+VREF2  SWREF2    VSS DC  0V
+VDRAIN SWDRAIN   VSS PWL 0ns {AVDD} 900ps 0V
+VSS    VSS       0   DC  0V
 
 *-----------------------------------------------------------------
 * DUT
@@ -41,7 +42,7 @@ VDRAIN SWDRAIN  VSS PWL 0ns {AVDD} 900ps 0V
 *----------------------------------------------------------------
 * PROBE
 *----------------------------------------------------------------
-*.savecurrents
+.options savecurrents
 .save all
 
 *----------------------------------------------------------------
