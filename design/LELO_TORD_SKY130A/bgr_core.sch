@@ -89,10 +89,10 @@ N 480 830 520 830 {lab=VSS}
 N 480 830 480 880 {lab=VSS}
 N 480 880 520 880 {lab=VSS}
 N 560 830 600 830 {lab=SWDRAIN2}
-N -520 240 -480 240 {lab=IOUT}
+N -520 240 -480 240 {lab=IPTAT}
 N -460 290 -460 330 {lab=VSS}
 N -460 160 -460 200 {lab=VDD}
-N -430 160 -430 200 {lab=SWOUT}
+N -430 160 -430 200 {lab=SWPTAT}
 N -380 240 -220 240 {lab=#net1}
 N -0 240 220 240 {lab=#net1}
 N 660 840 680 840 {lab=VSS}
@@ -121,10 +121,10 @@ N 1020 500 1020 660 {lab=#net5}
 N 1180 500 1180 660 {lab=#net6}
 N 1070 480 1130 480 {lab=VSS}
 N 960 480 1000 480 {lab=VDD}
-N 960 450 1000 450 {lab=SWPB}
+N 960 450 1000 450 {lab=SWCAPL}
 N 1020 240 1020 400 {lab=#net7}
 N 1220 480 1260 480 {lab=VDD}
-N 1220 450 1260 450 {lab=SWPC}
+N 1220 450 1260 450 {lab=SWCAPH}
 N 1180 240 1180 400 {lab=#net7}
 N 1020 240 1180 240 {lab=#net7}
 N 1360 830 1400 830 {lab=SWDRAIN4}
@@ -135,16 +135,16 @@ N 220 40 240 40 {lab=VSS}
 N 580 290 580 330 {lab=VSS}
 N 580 160 580 200 {lab=VDD}
 N 600 240 800 240 {lab=#net4}
-N 1480 240 1480 800 {lab=VOUT}
+N 1480 240 1480 800 {lab=BGR}
 N 1480 870 1480 1040 {lab=VSS}
 N 1320 1040 1480 1040 {lab=VSS}
 N 880 290 880 330 {lab=VSS}
 N 880 160 880 200 {lab=VDD}
-N 850 120 850 200 {lab=SWPA}
-N 1480 240 1520 240 {lab=VOUT}
-N 550 120 850 120 {lab=SWPA}
-N 700 80 700 120 {lab=SWPA}
-N 550 120 550 200 {lab=SWPA}
+N 850 120 850 200 {lab=SWOUT}
+N 1480 240 1520 240 {lab=BGR}
+N 550 120 850 120 {lab=SWOUT}
+N 700 80 700 120 {lab=SWOUT}
+N 550 120 550 200 {lab=SWOUT}
 N 900 240 1020 240 {lab=#net7}
 N -260 660 -230 660 {lab=V1A}
 N -210 660 -180 660 {lab=V1A}
@@ -156,14 +156,14 @@ N 220 240 500 240 {lab=#net1}
 N 1360 290 1360 330 {lab=VSS}
 N 1360 160 1360 200 {lab=VDD}
 N 1180 240 1280 240 {lab=#net7}
-N 1380 240 1480 240 {lab=VOUT}
-N 1330 160 1330 200 {lab=SWPD}
+N 1380 240 1480 240 {lab=BGR}
+N 1330 160 1330 200 {lab=SWAVG}
 N 1620 860 1620 1040 {lab=VSS}
-N 1620 660 1620 800 {lab=VOUT}
+N 1620 660 1620 800 {lab=BGR}
 N 1580 830 1620 830 {lab=VSS}
 N 1580 830 1580 880 {lab=VSS}
 N 1580 880 1620 880 {lab=VSS}
-N 1480 660 1620 660 {lab=VOUT}
+N 1480 660 1620 660 {lab=BGR}
 N 1480 1040 1620 1040 {lab=VSS}
 N 1660 830 1700 830 {lab=SWDRAIN5}
 C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} -40 70 0 0 {name=x1 }
@@ -212,7 +212,7 @@ C {devices/lab_wire.sym} 280 480 0 1 {name=p2 sig_type=std_logic lab=VSS}
 C {devices/lab_wire.sym} 170 450 0 0 {name=p24 sig_type=std_logic lab=SWBRANCH2}
 C {devices/lab_wire.sym} 170 480 0 0 {name=p25 sig_type=std_logic lab=VDD}
 C {devices/opin.sym} -560 660 2 0 {name=p26 lab=V1}
-C {devices/opin.sym} -520 240 0 1 {name=p5 lab=IOUT}
+C {devices/opin.sym} -520 240 0 1 {name=p5 lab=IPTAT}
 C {devices/ipin.sym} -680 450 0 0 {name=p27 lab=SWBRANCH1}
 C {devices/ipin.sym} -680 480 0 0 {name=p28 lab=SWBRANCH2}
 C {devices/ipin.sym} -680 630 0 0 {name=p30 lab=SWCAP1}
@@ -233,7 +233,7 @@ C {devices/lab_wire.sym} 220 920 0 0 {name=p42 sig_type=std_logic lab=V2C}
 C {JNW_TR_SKY130A/JNWTR_RPPO16.sym} 40 920 3 1 {name=x14[1:0]}
 C {JNW_TR_SKY130A/JNWTR_RPPO16.sym} -40 920 1 0 {name=x15[1:0]}
 C {JNW_TR_SKY130A/JNWTR_TGX2_CV.sym} -370 240 0 1 {name=x10 }
-C {devices/lab_wire.sym} -430 190 0 1 {name=p43 sig_type=std_logic lab=SWOUT}
+C {devices/lab_wire.sym} -430 190 0 1 {name=p43 sig_type=std_logic lab=SWPTAT}
 C {devices/lab_wire.sym} -460 190 0 0 {name=p44 sig_type=std_logic lab=VDD}
 C {devices/lab_wire.sym} -460 320 0 0 {name=p45 sig_type=std_logic lab=VSS}
 C {devices/ipin.sym} -680 240 0 0 {name=p46 lab=SWOUT}
@@ -244,17 +244,17 @@ C {JNW_ATR_SKY130A/JNWATR_NCH_2C5F0.sym} 840 830 0 0 {name=x13 }
 C {JNW_ATR_SKY130A/JNWATR_NCH_2C5F0.sym} 1360 830 0 1 {name=x14 }
 C {JNW_TR_SKY130A/JNWTR_TGX2_CV.sym} 1020 390 3 1 {name=x15 }
 C {devices/lab_wire.sym} 1090 480 0 1 {name=p36 sig_type=std_logic lab=VSS}
-C {devices/lab_wire.sym} 970 450 0 0 {name=p47 sig_type=std_logic lab=SWPB}
+C {devices/lab_wire.sym} 970 450 0 0 {name=p47 sig_type=std_logic lab=SWCAPL}
 C {devices/lab_wire.sym} 970 480 0 0 {name=p48 sig_type=std_logic lab=VDD}
 C {JNW_TR_SKY130A/JNWTR_TGX2_CV.sym} 1180 390 1 0 {name=x16 }
-C {devices/lab_wire.sym} 1230 450 0 1 {name=p50 sig_type=std_logic lab=SWPC}
+C {devices/lab_wire.sym} 1230 450 0 1 {name=p50 sig_type=std_logic lab=SWCAPH}
 C {devices/lab_wire.sym} 1230 480 0 1 {name=p51 sig_type=std_logic lab=VDD}
 C {devices/lab_wire.sym} 830 830 0 0 {name=p49 sig_type=std_logic lab=SWDRAIN3}
 C {devices/lab_wire.sym} 1370 830 0 1 {name=p52 sig_type=std_logic lab=SWDRAIN4}
 C {JNW_TR_SKY130A/JNWTR_RPPO2.sym} 240 40 1 0 {name=x17 }
 C {devices/lab_wire.sym} 220 100 2 1 {name=p53 sig_type=std_logic lab=VSS}
 C {JNW_TR_SKY130A/JNWTR_TGX2_CV.sym} 490 240 0 0 {name=x18 }
-C {devices/lab_wire.sym} 700 80 0 1 {name=p54 sig_type=std_logic lab=SWPA}
+C {devices/lab_wire.sym} 700 80 0 1 {name=p54 sig_type=std_logic lab=SWOUT}
 C {devices/lab_wire.sym} 580 190 0 1 {name=p55 sig_type=std_logic lab=VDD}
 C {devices/lab_wire.sym} 580 320 0 1 {name=p56 sig_type=std_logic lab=VSS}
 C {JNW_TR_SKY130A/JNWTR_CAPX4.sym} 1480 860 0 0 {name=x19[11:0]}
@@ -264,12 +264,12 @@ C {devices/lab_wire.sym} 880 320 0 1 {name=p59 sig_type=std_logic lab=VSS}
 C {JNW_TR_SKY130A/JNWTR_TGX2_CV.sym} 1270 240 0 0 {name=x21}
 C {devices/lab_wire.sym} 1360 190 0 1 {name=p57 sig_type=std_logic lab=VDD}
 C {devices/lab_wire.sym} 1360 320 0 1 {name=p60 sig_type=std_logic lab=VSS}
-C {devices/opin.sym} 1520 240 0 0 {name=p61 lab=VOUT}
+C {devices/opin.sym} 1520 240 0 0 {name=p61 lab=BGR}
 C {devices/ipin.sym} -680 860 0 0 {name=p62 lab=SWDRAIN2}
 C {devices/ipin.sym} -680 890 0 0 {name=p63 lab=SWDRAIN3}
 C {devices/ipin.sym} -680 920 0 0 {name=p64 lab=SWDRAIN4}
 C {devices/ipin.sym} -680 950 0 0 {name=p65 lab=SWDRAIN5}
-C {devices/lab_wire.sym} 1330 180 0 0 {name=p66 sig_type=std_logic lab=SWPD}
+C {devices/lab_wire.sym} 1330 180 0 0 {name=p66 sig_type=std_logic lab=SWAVG}
 C {JNW_ATR_SKY130A/JNWATR_NCH_2C5F0.sym} 1660 830 0 1 {name=x22 }
 C {devices/lab_wire.sym} 1670 830 0 1 {name=p67 sig_type=std_logic lab=SWDRAIN5}
 C {devices/ipin.sym} -680 270 0 0 {name=p68 lab=SWPA}
