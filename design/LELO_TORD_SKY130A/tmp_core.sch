@@ -61,7 +61,7 @@ C {JNW_TR_SKY130A/JNWTR_CAPX4.sym} 780 575 0 1 {name=x1[1:0]}
 C {JNW_TR_SKY130A/JNWTR_CAPX4.sym} 940 575 0 0 {name=x2[1:0]}
 C {JNW_ATR_SKY130A/JNWATR_NCH_2C1F2.sym} 600 550 0 0 {name=x1 }
 C {JNW_ATR_SKY130A/JNWATR_NCH_2C1F2.sym} 1120 550 0 1 {name=x2 }
-C {devices/lab_wire.sym} 860 160 0 0 {name=p4 sig_type=std_logic lab=IPTAT}
+C {devices/lab_wire.sym} 860 170 0 0 {name=p4 sig_type=std_logic lab=IPTAT}
 C {devices/lab_wire.sym} 810 230 0 0 {name=p5 sig_type=std_logic lab=RST}
 C {JNW_TR_SKY130A/JNWTR_ORX1_CV.sym} 410 560 0 0 {name=x6 }
 C {devices/lab_wire.sym} 370 540 0 0 {name=p7 sig_type=std_logic lab=RST}

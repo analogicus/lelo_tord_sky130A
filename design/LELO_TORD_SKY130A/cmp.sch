@@ -68,7 +68,7 @@ N 350 -1030 570 -1030 {
 lab=CMP_P1G}
 N 570 -1030 570 -990 {
 lab=CMP_P1G}
-N 1230 -620 1270 -620 {lab=IPSHIFTED}
+N 1230 -620 1270 -620 {lab=VIPSHIFTED}
 N 260 -950 260 -830 {
 lab=VIP}
 N 1650 -620 1690 -620 {lab=INSHIFTED}
@@ -89,12 +89,12 @@ N 580 -510 620 -510 {lab=IN}
 N 580 -370 580 -320 {lab=VSS}
 N 340 -320 580 -320 {lab=VSS}
 N 340 -370 340 -320 {lab=VSS}
-N 310 -440 380 -440 {lab=IPSHIFTED}
-N 540 -440 600 -440 {lab=INSHIFTED}
-N 540 -480 540 -440 {lab=INSHIFTED}
-N 380 -480 380 -440 {lab=IPSHIFTED}
-N 540 -440 540 -400 {lab=INSHIFTED}
-N 380 -440 380 -400 {lab=IPSHIFTED}
+N 310 -440 380 -440 {lab=VIPSHIFTED}
+N 540 -440 600 -440 {lab=VINSHIFTED}
+N 540 -480 540 -440 {lab=VINSHIFTED}
+N 380 -480 380 -440 {lab=VIPSHIFTED}
+N 540 -440 540 -400 {lab=VINSHIFTED}
+N 380 -440 380 -400 {lab=VIPSHIFTED}
 N 240 -830 260 -830 {lab=VIP}
 N 1060 -1140 1100 -1140 {lab=SLEEP}
 N 1180 -1140 1240 -1140 {lab=SLEEP_N}
@@ -325,10 +325,10 @@ C {JNW_ATR_SKY130A/JNWATR_NCH_2C5F0.sym} 420 -370 0 1 {name=x20 }
 C {JNW_ATR_SKY130A/JNWATR_NCH_2C5F0.sym} 500 -370 0 0 {name=x21 }
 C {devices/lab_wire.sym} 450 -320 0 1 {name=p17 sig_type=std_logic lab=VSS}
 C {devices/lab_wire.sym} 440 -370 0 1 {name=p24 sig_type=std_logic lab=NBIAS}
-C {devices/lab_wire.sym} 370 -440 0 0 {name=p25 sig_type=std_logic lab=IPSHIFTED}
-C {devices/lab_wire.sym} 550 -440 0 1 {name=p26 sig_type=std_logic lab=INSHIFTED}
-C {devices/lab_wire.sym} 1660 -620 0 1 {name=p27 sig_type=std_logic lab=INSHIFTED}
-C {devices/lab_wire.sym} 1260 -620 0 0 {name=p28 sig_type=std_logic lab=IPSHIFTED}
+C {devices/lab_wire.sym} 370 -440 0 0 {name=p25 sig_type=std_logic lab=VIPSHIFTED}
+C {devices/lab_wire.sym} 550 -440 0 1 {name=p26 sig_type=std_logic lab=VINSHIFTED}
+C {devices/lab_wire.sym} 1660 -620 0 1 {name=p27 sig_type=std_logic lab=VINSHIFTED}
+C {devices/lab_wire.sym} 1260 -620 0 0 {name=p28 sig_type=std_logic lab=VIPSHIFTED}
 C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} 1650 -620 0 1 {name=x1[3:0]}
 C {JNW_TR_SKY130A/JNWTR_IVX1_CV.sym} 1100 -1140 0 0 {name=x22 }
 C {devices/lab_wire.sym} 1190 -1140 0 1 {name=p50 sig_type=std_logic lab=SLEEP_N}

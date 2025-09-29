@@ -19,18 +19,21 @@ N 190 -300 230 -300 {lab=IPTAT}
 N 190 -320 230 -320 {lab=VDD}
 N 630 -340 630 -320 {lab=VDD}
 N 650 -360 650 -310 {lab=SLEEP}
-N 670 -380 670 -300 {lab=PBIAS}
-N 690 -400 690 -290 {lab=NBIAS}
+N 690 -380 690 -300 {lab=#net2}
+N 670 -400 670 -290 {lab=#net3}
 N 670 -160 670 -80 {lab=CMP_P2}
 N 650 -150 650 -100 {lab=CMP_P1}
 N 630 -140 630 -120 {lab=VSS}
-N 630 -400 690 -400 {lab=NBIAS}
-N 630 -380 670 -380 {lab=PBIAS}
-N 630 -360 650 -360 {lab=SLEEP}
+N 620 -360 650 -360 {lab=SLEEP}
 N 630 -100 650 -100 {lab=CMP_P1}
 N 630 -80 670 -80 {lab=CMP_P2}
 N 620 -120 630 -120 {lab=VSS}
 N 620 -340 630 -340 {lab=VDD}
+N 350 -400 670 -400 {lab=#net3}
+N 350 -380 690 -380 {lab=#net2}
+N 190 -410 230 -410 {lab=VDD}
+N 190 -390 230 -390 {lab=SLEEP}
+N 190 -370 230 -370 {lab=VSS}
 C {LELO_TORD_SKY130A/tmp_core.sym} 310 -270 0 0 {name=x1}
 C {LELO_TORD_SKY130A/cmp.sym} 670 -230 0 0 {name=x2}
 C {devices/ipin.sym} 190 -320 2 1 {name=p1 lab=VDD}
@@ -41,10 +44,12 @@ C {devices/ipin.sym} 190 -240 0 0 {name=p5 lab=RST}
 C {devices/ipin.sym} 190 -220 0 0 {name=p6 lab=VSS}
 C {devices/ipin.sym} 190 -160 0 0 {name=p7 lab=REF}
 C {devices/opin.sym} 830 -230 0 0 {name=p15 lab=CMP}
-C {devices/ipin.sym} 630 -360 2 1 {name=p9 lab=SLEEP}
-C {devices/ipin.sym} 630 -380 2 1 {name=p16 lab=PBIAS}
-C {devices/ipin.sym} 630 -400 2 1 {name=p17 lab=NBIAS}
 C {devices/ipin.sym} 630 -100 2 1 {name=p10 lab=CMP_P1}
 C {devices/ipin.sym} 630 -80 2 1 {name=p11 lab=CMP_P2}
 C {devices/lab_pin.sym} 620 -120 0 0 {name=p12 sig_type=std_logic lab=VSS}
 C {devices/lab_pin.sym} 620 -340 0 0 {name=p8 sig_type=std_logic lab=VDD}
+C {LELO_TORD_SKY130A/bias.sym} 290 -390 0 0 {name=x3}
+C {devices/lab_pin.sym} 190 -410 0 0 {name=p13 sig_type=std_logic lab=VDD}
+C {devices/lab_pin.sym} 190 -370 0 0 {name=p14 sig_type=std_logic lab=VSS}
+C {devices/ipin.sym} 190 -390 0 0 {name=p16 lab=SLEEP}
+C {devices/lab_pin.sym} 620 -360 0 0 {name=p9 sig_type=std_logic lab=SLEEP}
