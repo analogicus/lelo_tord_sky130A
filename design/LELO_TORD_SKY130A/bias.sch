@@ -4,7 +4,7 @@ K {}
 V {}
 S {}
 E {}
-N 340 130 380 130 {lab=PWRUP_N}
+N 340 130 380 130 {lab=SLEEP}
 N 420 160 420 200 {lab=V1}
 N 420 130 460 130 {lab=VDD}
 N 460 80 460 130 {lab=VDD}
@@ -46,7 +46,7 @@ N 200 320 240 320 {lab=SLEEP_N}
 N 700 260 740 260 {lab=PBIAS}
 N 700 280 740 280 {lab=NBIAS}
 N 160 140 200 140 {lab=VDD}
-N 160 160 200 160 {lab=PWRUP}
+N 160 160 200 160 {lab=SLEEP}
 N 160 180 200 180 {lab=VSS}
 N 480 660 520 660 {lab=SLEEP}
 C {JNW_ATR_SKY130A/JNWATR_PCH_2C5F0.sym} 380 130 0 0 {name=x1 }
@@ -68,7 +68,7 @@ C {devices/lab_wire.sym} 110 320 0 0 {name=p7 sig_type=std_logic lab=SLEEP}
 C {devices/lab_wire.sym} 210 320 0 1 {name=p8 sig_type=std_logic lab=SLEEP_N}
 C {devices/lab_wire.sym} 160 390 0 0 {name=p9 sig_type=std_logic lab=VSS}
 C {devices/lab_wire.sym} 160 270 0 0 {name=p10 sig_type=std_logic lab=VDD}
-C {devices/lab_wire.sym} 370 130 0 0 {name=p11 sig_type=std_logic lab=PWRUP_N}
+C {devices/lab_wire.sym} 370 130 0 0 {name=p11 sig_type=std_logic lab=SLEEP}
 C {devices/opin.sym} 740 260 0 0 {name=p13 lab=PBIAS}
 C {devices/opin.sym} 740 280 0 0 {name=p14 lab=NBIAS}
 C {devices/lab_wire.sym} 500 540 0 1 {name=p15 sig_type=std_logic lab=NBIAS}

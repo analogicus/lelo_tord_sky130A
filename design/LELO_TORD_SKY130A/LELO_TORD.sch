@@ -29,13 +29,6 @@ N 280 -630 320 -630 {lab=BGR_STATE}
 N 300 -630 300 -610 {lab=BGR_STATE}
 N 620 -850 780 -850 {lab=IPTAT}
 N 620 -490 1040 -490 {lab=V1}
-N 430 -940 1380 -940 {lab=#net1}
-N 1380 -940 1380 -740 {lab=#net1}
-N 430 -920 1400 -920 {lab=#net2}
-N 1400 -920 1400 -730 {lab=#net2}
-N 280 -950 320 -950 {lab=VDD}
-N 280 -930 320 -930 {lab=SLEEP_STATE}
-N 280 -910 320 -910 {lab=VSS}
 N 300 -610 320 -610 {lab=BGR_STATE}
 N 620 -610 1040 -610 {lab=VAVG}
 N 620 -730 1040 -730 {lab=V2}
@@ -49,7 +42,7 @@ N 760 -830 780 -830 {lab=SEL_TMP_CAP1}
 N 760 -810 780 -810 {lab=SEL_TMP_CAP2}
 N 760 -790 780 -790 {lab=RST_TMP_CAPS}
 N 1340 -800 1340 -760 {lab=VDD}
-N 1360 -840 1360 -750 {lab=SLEEP_STATE}
+N 1360 -820 1360 -750 {lab=#net1}
 N 1120 -650 1160 -650 {lab=VDD}
 N 1120 -680 1160 -680 {lab=VSS}
 N 1120 -770 1160 -770 {lab=VDD}
@@ -72,10 +65,9 @@ N 1200 -610 1200 -490 {lab=VIN}
 N 1200 -640 1200 -610 {lab=VIN}
 N 1200 -640 1280 -640 {lab=VIN}
 N 1200 -700 1280 -700 {lab=VIP}
-N 940 -850 1040 -850 {lab=#net3}
+N 940 -850 1040 -850 {lab=#net2}
 N 1360 -550 1360 -520 {lab=CMP_P1}
 N 1380 -560 1380 -500 {lab=CMP_P2}
-C {LELO_TORD_SKY130A/bias.sym} 380 -930 0 0 {name=x1}
 C {LELO_TORD_SKY130A/cmp.sym} 1380 -670 0 0 {name=x2}
 C {LELO_TORD_SKY130A/bgr_core.sym} 470 -670 0 0 {name=x3}
 C {LELO_TORD_SKY130A/tmp_core.sym} 860 -820 0 0 {name=x4}
@@ -110,9 +102,7 @@ C {devices/lab_wire.sym} 1130 -800 0 1 {name=p28 sig_type=std_logic lab=VSS}
 C {devices/lab_wire.sym} 1130 -680 0 1 {name=p29 sig_type=std_logic lab=VSS}
 C {devices/lab_wire.sym} 1130 -560 0 1 {name=p30 sig_type=std_logic lab=VSS}
 C {devices/lab_wire.sym} 1130 -440 0 1 {name=p31 sig_type=std_logic lab=VSS}
-C {devices/lab_wire.sym} 310 -950 0 0 {name=p40 sig_type=std_logic lab=VDD}
-C {devices/lab_wire.sym} 310 -910 0 0 {name=p41 sig_type=std_logic lab=VSS}
-C {devices/ipin.sym} 280 -930 0 0 {name=p42 lab=SLEEP_STATE}
+C {devices/ipin.sym} 1360 -820 0 0 {name=p42 lab=SLEEP}
 C {devices/lab_wire.sym} 1030 -730 0 0 {name=p43 sig_type=std_logic lab=V2}
 C {devices/lab_wire.sym} 1030 -610 0 0 {name=p44 sig_type=std_logic lab=VAVG}
 C {devices/lab_wire.sym} 1030 -490 0 0 {name=p45 sig_type=std_logic lab=V1}
@@ -127,6 +117,5 @@ C {devices/ipin.sym} 760 -810 0 0 {name=p33 lab=SEL_TMP_CAP2}
 C {devices/ipin.sym} 760 -830 0 0 {name=p34 lab=SEL_TMP_CAP1}
 C {devices/lab_wire.sym} 1340 -570 2 1 {name=p20 sig_type=std_logic lab=VSS}
 C {devices/lab_wire.sym} 1340 -770 0 0 {name=p21 sig_type=std_logic lab=VDD}
-C {devices/lab_wire.sym} 1360 -810 0 0 {name=p22 sig_type=std_logic lab=SLEEP_STATE}
 C {devices/ipin.sym} 1360 -520 0 0 {name=p35 lab=CMP_P1}
 C {devices/ipin.sym} 1380 -500 0 0 {name=p47 lab=CMP_P2}

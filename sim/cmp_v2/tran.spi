@@ -3,9 +3,9 @@
 * Include
 *----------------------------------------------------------------
 #ifdef Lay
-.include ../../../work/lpe/TB_tmp_core_and_cmp_lpe.spi
+.include ../../../work/lpe/cmp_v2_lpe.spi
 #else
-.include ../../../work/xsch/TB_tmp_core_and_cmp.spice
+.include ../../../work/xsch/cmp_v2.spice
 #endif
 
 *-----------------------------------------------------------------
@@ -17,18 +17,21 @@
 * PARAMETERS
 *-----------------------------------------------------------------
 .param TRF = 10p
+
 .param AVDD = {vdda}
 
 *-----------------------------------------------------------------
 * FORCE
 *-----------------------------------------------------------------
-VSS     VSS    0   dc 0V
-VDD     VDD    VSS dc {AVDD}
-IPTAT   VSS    IPTAT dc 750nA
-*VSEL_C1 SEL_C1 VSS pulse(0V {AVDD} 1us 1ns 1ns 430ns 860ns)
-*VSEL_C2 SEL_C2 VSS pulse({AVDD} 0V 1us 1ns 1ns 430ns 860ns)
-VRST    RST    VSS pulse({AVDD} 0V 1us 1ns 1ns 1us 2us)
-VREF    REF    VSS dc 1V
+VSS  VSS  0    dc 0
+VDD  VDD  VSS  dc {AVDD}
+VIP  VIP  VSS  pwl 0s 0V 0.5us 0V 1.5us {AVDD} 4.5us 0V 9.5us {AVDD}
+VIN  VIN  VSS  dc 0.9V
+*Vip  vip   VSS   pwl 0 0.89 1u 0.91 2u 0.89 3u 0.91 4u 0.89
+*Vin  vin   VSS   pwl 0 0.91 1u 0.89 2u 0.91 3u 0.89 4u 0.91
+*VIP VIP VSS SIN(0.9V 0.9V 1MEG 0s 0)
+*VIN VIN VSS SIN(0.9V 0.9V 1MEG 0.5us 0)
+ROUT VOUT VSS 10MEGOHM
 
 *-----------------------------------------------------------------
 * DUT
@@ -38,28 +41,9 @@ VREF    REF    VSS dc 1V
 *----------------------------------------------------------------
 * PROBE
 *----------------------------------------------------------------
-.option savecurrents
 .save all
+.option savecurrents
 
-* Save the voltages 
-*.save v(VDD)
-*.save v(VSS)
-*.save v(IPTAT)
-*.save v(SEL_C1)
-*.save v(SEL_C2)
-*.save v(RST)
-*.save v(REF)
-*.save v(VPTAT)
-*.save v(CMP)
-
-* Save the currents
-*.save i(VDD)
-*.save i(VSS)
-*.save i(IPTAT)
-*.save i(VSEL_C1)
-*.save i(VSEL_C2)
-*.save i(VRST)
-*.save i(VREF)
 
 *----------------------------------------------------------------
 * NGSPICE control
@@ -70,10 +54,10 @@ set color0=white
 set color1=black
 unset askquit
 
-optran 0 0 0 1n 10u 0
+optran 0 0 0 1n 1u 0
 
 
-tran 1n 10u
+tran 1n 10u 1p
 write
 quit
 

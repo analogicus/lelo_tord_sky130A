@@ -4,52 +4,34 @@ K {}
 V {}
 S {}
 E {}
-N 390 -300 480 -300 {lab=#net1}
-N 790 -230 830 -230 {lab=CMP}
-N 480 -200 570 -200 {lab=REF}
-N 480 -200 480 -160 {lab=REF}
-N 190 -160 480 -160 {lab=REF}
-N 480 -300 480 -260 {lab=#net1}
-N 480 -260 570 -260 {lab=#net1}
-N 190 -220 230 -220 {lab=VSS}
-N 190 -240 230 -240 {lab=RST}
-N 190 -260 230 -260 {lab=SEL_C2}
-N 190 -280 230 -280 {lab=SEL_C1}
-N 190 -300 230 -300 {lab=IPTAT}
-N 190 -320 230 -320 {lab=VDD}
-N 630 -340 630 -320 {lab=VDD}
-N 650 -360 650 -310 {lab=SLEEP}
-N 690 -380 690 -300 {lab=#net2}
-N 670 -400 670 -290 {lab=#net3}
-N 670 -160 670 -80 {lab=CMP_P2}
-N 650 -150 650 -100 {lab=CMP_P1}
-N 630 -140 630 -120 {lab=VSS}
-N 620 -360 650 -360 {lab=SLEEP}
-N 630 -100 650 -100 {lab=CMP_P1}
-N 630 -80 670 -80 {lab=CMP_P2}
-N 620 -120 630 -120 {lab=VSS}
-N 620 -340 630 -340 {lab=VDD}
-N 350 -400 670 -400 {lab=#net3}
-N 350 -380 690 -380 {lab=#net2}
-N 190 -410 230 -410 {lab=VDD}
-N 190 -390 230 -390 {lab=SLEEP}
-N 190 -370 230 -370 {lab=VSS}
-C {LELO_TORD_SKY130A/tmp_core.sym} 310 -270 0 0 {name=x1}
-C {LELO_TORD_SKY130A/cmp.sym} 670 -230 0 0 {name=x2}
-C {devices/ipin.sym} 190 -320 2 1 {name=p1 lab=VDD}
-C {devices/ipin.sym} 190 -300 0 0 {name=p2 lab=IPTAT}
-C {devices/ipin.sym} 190 -280 0 0 {name=p3 lab=SEL_C1}
-C {devices/ipin.sym} 190 -260 0 0 {name=p4 lab=SEL_C2}
-C {devices/ipin.sym} 190 -240 0 0 {name=p5 lab=RST}
-C {devices/ipin.sym} 190 -220 0 0 {name=p6 lab=VSS}
-C {devices/ipin.sym} 190 -160 0 0 {name=p7 lab=REF}
-C {devices/opin.sym} 830 -230 0 0 {name=p15 lab=CMP}
-C {devices/ipin.sym} 630 -100 2 1 {name=p10 lab=CMP_P1}
-C {devices/ipin.sym} 630 -80 2 1 {name=p11 lab=CMP_P2}
-C {devices/lab_pin.sym} 620 -120 0 0 {name=p12 sig_type=std_logic lab=VSS}
-C {devices/lab_pin.sym} 620 -340 0 0 {name=p8 sig_type=std_logic lab=VDD}
-C {LELO_TORD_SKY130A/bias.sym} 290 -390 0 0 {name=x3}
-C {devices/lab_pin.sym} 190 -410 0 0 {name=p13 sig_type=std_logic lab=VDD}
-C {devices/lab_pin.sym} 190 -370 0 0 {name=p14 sig_type=std_logic lab=VSS}
-C {devices/ipin.sym} 190 -390 0 0 {name=p16 lab=SLEEP}
-C {devices/lab_pin.sym} 620 -360 0 0 {name=p9 sig_type=std_logic lab=SLEEP}
+N 880 -260 920 -260 {lab=CMP}
+N 480 -220 580 -220 {lab=REF}
+N 480 -220 480 -160 {lab=REF}
+N 180 -160 480 -160 {lab=REF}
+N 480 -340 480 -240 {lab=IPTAT}
+N 480 -240 580 -240 {lab=IPTAT}
+N 540 -260 580 -260 {lab=VDD}
+N 540 -200 580 -200 {lab=VSS}
+N 180 -340 480 -340 {lab=IPTAT}
+N 400 -220 400 -200 {lab=VSS}
+N 400 -200 540 -200 {lab=VSS}
+N 400 -340 400 -290 {lab=IPTAT}
+N 180 -260 240 -260 {lab=RST}
+N 280 -260 320 -260 {lab=VSS}
+N 320 -260 320 -210 {lab=VSS}
+N 280 -210 320 -210 {lab=VSS}
+N 280 -210 280 -190 {lab=VSS}
+N 280 -230 280 -210 {lab=VSS}
+N 280 -340 280 -330 {lab=IPTAT}
+N 280 -330 280 -290 {lab=IPTAT}
+C {devices/ipin.sym} 180 -160 0 0 {name=p7 lab=REF}
+C {devices/opin.sym} 920 -260 0 0 {name=p15 lab=CMP}
+C {LELO_TORD_SKY130A/cmp_v2.sym} 730 -230 0 0 {name=x2}
+C {devices/lab_wire.sym} 570 -200 2 1 {name=p8 sig_type=std_logic lab=VSS}
+C {devices/lab_wire.sym} 570 -260 0 0 {name=p9 sig_type=std_logic lab=VDD}
+C {JNW_TR_SKY130A/JNWTR_CAPX4.sym} 400 -230 0 1 {name=x1[1:0]}
+C {devices/ipin.sym} 280 -190 0 0 {name=p1 lab=VSS}
+C {devices/ipin.sym} 160 -390 0 0 {name=p2 lab=VDD}
+C {devices/ipin.sym} 180 -340 0 0 {name=p3 lab=IPTAT}
+C {devices/ipin.sym} 180 -260 0 0 {name=p4 lab=RST}
+C {JNW_ATR_SKY130A/JNWATR_NCH_4C5F0.sym} 240 -260 0 0 {name=x1 }
