@@ -96,8 +96,8 @@ N 380 -480 380 -440 {lab=IPSHIFTED}
 N 540 -440 540 -400 {lab=INSHIFTED}
 N 380 -440 380 -400 {lab=IPSHIFTED}
 N 240 -830 260 -830 {lab=VIP}
-N 1060 -1140 1100 -1140 {lab=PWRUP}
-N 1180 -1140 1240 -1140 {lab=PWRUP_N}
+N 1060 -1140 1100 -1140 {lab=SLEEP}
+N 1180 -1140 1240 -1140 {lab=SLEEP_N}
 N 1600 -900 1600 -860 {lab=#net1}
 N 1080 -860 1840 -860 {
 lab=#net1}
@@ -160,8 +160,8 @@ lab=VDD}
 N 1790 -1140 1830 -1140 {lab=CMP_P2G}
 N 1510 -1140 1550 -1140 {lab=CMP_P1G}
 N 1370 -1150 1420 -1150 {lab=CMP_P1}
-N 1370 -1130 1420 -1130 {lab=PWRUP}
-N 1660 -1130 1700 -1130 {lab=PWRUP}
+N 1370 -1130 1420 -1130 {lab=SLEEP_N}
+N 1660 -1130 1700 -1130 {lab=SLEEP_N}
 N 1660 -1150 1700 -1150 {lab=CMP_P2}
 N 1140 -1180 1740 -1180 {lab=VDD}
 N 1140 -1100 1740 -1100 {lab=VSS}
@@ -205,7 +205,7 @@ N 1180 -830 1180 -790 {lab=VDD}
 N 1180 -700 1180 -660 {lab=VSS}
 N 1739.614593087707 -830 1739.614593087707 -790 {lab=VDD}
 N 1739.614593087707 -700 1739.614593087707 -660 {lab=VSS}
-N 820 -860 860 -860 {lab=PWRUP}
+N 820 -860 860 -860 {lab=SLEEP_N}
 N 1420 -760 1460 -760 {lab=VDD}
 N 1420 -810 1420 -760 {lab=VDD}
 N 1420 -810 1460 -810 {lab=VDD}
@@ -213,8 +213,8 @@ N 2130 -570 2130 -530 {lab=VSS}
 N 2130 -700 2130 -660 {lab=VDD}
 N 1960 -700 1960 -660 {lab=VDD}
 N 1960 -580 1960 -540 {lab=VSS}
-N 2060 -860 2100 -860 {lab=PWRUP}
-N 1520 -930 1560 -930 {lab=PWRUP}
+N 2060 -860 2100 -860 {lab=SLEEP_N}
+N 1520 -930 1560 -930 {lab=SLEEP_N}
 N 1800 -410 1840 -410 {lab=VSS}
 N 1800 -380 1800 -340 {lab=VSS}
 N 1080 -410 1120 -410 {lab=VSS}
@@ -240,8 +240,8 @@ N 1310 -590 1310 -550 {lab=VipDrain}
 N 1610 -590 1610 -550 {lab=VinDrain}
 N 1000 -480 1040 -480 {lab=VSS}
 N 1040 -450 1040 -340 {lab=VSS}
-N 1720 -410 1760 -410 {lab=PWRUP_N}
-N 1160 -410 1200 -410 {lab=PWRUP_N}
+N 1720 -410 1760 -410 {lab=SLEEP}
+N 1160 -410 1200 -410 {lab=SLEEP}
 N 1310 -620 1350 -620 {lab=VDD}
 N 1570 -620 1610 -620 {lab=VDD}
 N 1880 -830 1880 -510 {lab=pre_vout}
@@ -331,17 +331,17 @@ C {devices/lab_wire.sym} 1660 -620 0 1 {name=p27 sig_type=std_logic lab=INSHIFTE
 C {devices/lab_wire.sym} 1260 -620 0 0 {name=p28 sig_type=std_logic lab=IPSHIFTED}
 C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} 1650 -620 0 1 {name=x1[3:0]}
 C {JNW_TR_SKY130A/JNWTR_IVX1_CV.sym} 1100 -1140 0 0 {name=x22 }
-C {devices/lab_wire.sym} 1080 -1140 0 0 {name=p50 sig_type=std_logic lab=PWRUP}
-C {devices/lab_wire.sym} 1190 -1140 0 1 {name=p55 sig_type=std_logic lab=PWRUP_N}
+C {devices/lab_wire.sym} 1190 -1140 0 1 {name=p50 sig_type=std_logic lab=SLEEP_N}
+C {devices/lab_wire.sym} 1090 -1140 0 0 {name=p55 sig_type=std_logic lab=SLEEP}
 C {devices/lab_wire.sym} 1170 -1100 2 1 {name=p56 sig_type=std_logic lab=VSS}
 C {devices/lab_wire.sym} 1170 -1180 0 0 {name=p57 sig_type=std_logic lab=VDD}
 C {JNW_ATR_SKY130A/JNWATR_PCH_2C5F0.sym} 1560 -930 0 0 {name=x23 }
-C {devices/lab_wire.sym} 1550 -930 0 0 {name=p58 sig_type=std_logic lab=PWRUP}
+C {devices/lab_wire.sym} 1550 -930 0 0 {name=p58 sig_type=std_logic lab=SLEEP_N}
 C {JNW_ATR_SKY130A/JNWATR_NCH_2C5F0.sym} 1160 -410 0 1 {name=x24 }
-C {devices/lab_wire.sym} 1170 -410 0 1 {name=p59 sig_type=std_logic lab=PWRUP_N}
+C {devices/lab_wire.sym} 1170 -410 0 1 {name=p59 sig_type=std_logic lab=SLEEP}
 C {JNW_ATR_SKY130A/JNWATR_NCH_2C5F0.sym} 1760 -410 0 0 {name=x25 }
-C {devices/lab_wire.sym} 1750 -410 0 0 {name=p60 sig_type=std_logic lab=PWRUP_N}
-C {devices/ipin.sym} 860 -1040 0 0 {name=p61 lab=PWRUP
+C {devices/lab_wire.sym} 1750 -410 0 0 {name=p60 sig_type=std_logic lab=SLEEP}
+C {devices/ipin.sym} 860 -1040 0 0 {name=p61 lab=SLEEP
 }
 C {JNW_TR_SKY130A/JNWTR_TGX2_CV.sym} 1090 -750 0 0 {name=x40 }
 C {devices/lab_wire.sym} 1180 -690 2 0 {name=p66 sig_type=std_logic lab=VSS}
@@ -357,8 +357,8 @@ C {devices/lab_wire.sym} 800 -560 2 1 {name=p101 sig_type=std_logic lab=VSS}
 C {devices/lab_wire.sym} 755 -620 0 0 {name=p103 sig_type=std_logic lab=VOUT}
 C {JNW_TR_SKY130A/JNWTR_ANX1_CV.sym} 1420 -1130 0 0 {name=x1 }
 C {JNW_TR_SKY130A/JNWTR_ANX1_CV.sym} 1700 -1130 0 0 {name=x11 }
-C {devices/lab_wire.sym} 1410 -1130 0 0 {name=p18 sig_type=std_logic lab=PWRUP}
-C {devices/lab_wire.sym} 1690 -1130 0 0 {name=p49 sig_type=std_logic lab=PWRUP}
+C {devices/lab_wire.sym} 1410 -1130 0 0 {name=p18 sig_type=std_logic lab=SLEEP_N}
+C {devices/lab_wire.sym} 1690 -1130 0 0 {name=p49 sig_type=std_logic lab=SLEEP_N}
 C {devices/lab_wire.sym} 1410 -1150 0 0 {name=p51 sig_type=std_logic lab=CMP_P1}
 C {devices/lab_wire.sym} 1690 -1150 0 0 {name=p52 sig_type=std_logic lab=CMP_P2}
 C {devices/lab_wire.sym} 1800 -1140 0 1 {name=p53 sig_type=std_logic lab=CMP_P2G}
@@ -369,8 +369,8 @@ C {devices/lab_wire.sym} 1150 -800 0 0 {name=p64 sig_type=std_logic lab=CMP_P1G}
 C {devices/lab_wire.sym} 2100 -670 0 0 {name=p22 sig_type=std_logic lab=CMP_P1G}
 C {JNW_ATR_SKY130A/JNWATR_PCH_2C5F0.sym} 860 -860 0 0 {name=x13 }
 C {JNW_ATR_SKY130A/JNWATR_PCH_2C5F0.sym} 2060 -860 0 1 {name=x15 }
-C {devices/lab_wire.sym} 850 -860 0 0 {name=p67 sig_type=std_logic lab=PWRUP}
-C {devices/lab_wire.sym} 2070 -860 0 1 {name=p68 sig_type=std_logic lab=PWRUP}
+C {devices/lab_wire.sym} 850 -860 0 0 {name=p67 sig_type=std_logic lab=SLEEP_N}
+C {devices/lab_wire.sym} 2070 -860 0 1 {name=p68 sig_type=std_logic lab=SLEEP_N}
 C {devices/lab_wire.sym} 480 -800 0 0 {name=p69 sig_type=std_logic lab=CMP_P2G}
 C {devices/lab_wire.sym} 480 -1030 0 0 {name=p70 sig_type=std_logic lab=CMP_P1G}
 C {devices/lab_wire.sym} 1180 -800 0 1 {name=p45 sig_type=std_logic lab=VDD}
