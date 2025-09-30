@@ -25,8 +25,9 @@
 *-----------------------------------------------------------------
 VSS  VSS  0    dc 0
 VDD  VDD  VSS  dc {AVDD}
-VIP  VIP  VSS  pwl 0ns 0V 0.5us 0V 2us {AVDD} 5.1us 0V 7.5us {AVDD}
-VIN  VIN  VSS  dc 1V
+VIP  VIP  VSS  pwl 0s 0V 1us {AVDD} 2us 0V 3us {AVDD} 4us 0V 4.5us {AVDD}
+VIN  VIN  VSS  pwl 0s {AVDD} 1us 0V 2us {AVDD} 3us 0V 4us {AVDD} 4.5us 0V
+*VIN  VIN  VSS  dc 1V
 *Vip  vip   VSS   pwl 0 0.89 1u 0.91 2u 0.89 3u 0.91 4u 0.89
 *Vin  vin   VSS   pwl 0 0.91 1u 0.89 2u 0.91 3u 0.89 4u 0.91
 *VIP VIP VSS SIN(0.9V 0.9V 1MEG 0s 0)
@@ -34,9 +35,7 @@ VIN  VIN  VSS  dc 1V
 VSLEEP SLEEP VSS dc 0V
 VCMP_P1 CMP_P1 VSS dc {AVDD}
 VCMP_P2 CMP_P2 VSS dc 0V
-ROUT VOUT VSS 10MEGOHM
-
-*test
+*ROUT VOUT VSS 100K
 
 *-----------------------------------------------------------------
 * DUT
@@ -56,6 +55,7 @@ ROUT VOUT VSS 10MEGOHM
 .save v(xdut.cmp_p1g)
 .save v(xdut.cmp_p2g)
 .save v(SLEEP)
+.save v(xdut.sleep_n)
 .save v(VIN)
 .save v(VIP)
 .save v(xdut.in)
@@ -82,7 +82,7 @@ unset askquit
 optran 0 0 0 1n 5u 0
 
 
-tran 1ns 10us 1ps
+tran 1ns 5us 1ps
 write
 quit
 

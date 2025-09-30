@@ -27,30 +27,43 @@ VDD     VDD    VSS dc {AVDD}
 IPTAT   VSS    IPTAT dc 750nA
 *VSEL_C1 SEL_C1 VSS pulse(0V {AVDD} 1us 1ns 1ns 430ns 860ns)
 *VSEL_C2 SEL_C2 VSS pulse({AVDD} 0V 1us 1ns 1ns 430ns 860ns)
-VRST    RST    VSS pulse({AVDD} 0V 1us 1ns 1ns 1us 2us)
+*VRST    RST    VSS pwl 0s {AVDD} 0.9us {AVDD} 1us 0V 9us 0V 9.1us {AVDD} 9.2us {VDDA} 9.3us 0V
+VRST    RST    VSS pulse({AVDD} 0V 1us 1ns 1ns 1.9us 2us)
 VREF    REF    VSS dc 1V
 
 *-----------------------------------------------------------------
 * DUT
 *-----------------------------------------------------------------
 .include ../xdut.spi
+.include ../svinst.spi
+
+* Translate names
+VB1 b.1 b<1> dc 0
+VB2 b.2 b<2> dc 0
+VB3 b.3 b<3> dc 0
+VB4 b.4 b<4> dc 0
+VB5 b.5 b<5> dc 0
+VB6 b.6 b<6> dc 0
+VB7 b.7 b<7> dc 0
 
 *----------------------------------------------------------------
 * PROBE
 *----------------------------------------------------------------
-.option savecurrents
-.save all
+*.option savecurrents
+*.save all
 
 * Save the voltages 
-*.save v(VDD)
-*.save v(VSS)
-*.save v(IPTAT)
+.save v(VDD)
+.save v(VSS)
+.save v(IPTAT)
 *.save v(SEL_C1)
 *.save v(SEL_C2)
-*.save v(RST)
-*.save v(REF)
+.save v(RST)
+.save v(REF)
 *.save v(VPTAT)
-*.save v(CMP)
+.save v(CMP)
+
+.save v(b.7) v(b.6) v(b.5) v(b.4) v(b.3) v(b.2) v(b.1) v(b.0)
 
 * Save the currents
 *.save i(VDD)
@@ -73,7 +86,7 @@ unset askquit
 optran 0 0 0 1n 10u 0
 
 
-tran 1n 10u
+tran 10n 10u
 write
 quit
 
