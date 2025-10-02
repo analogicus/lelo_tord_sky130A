@@ -11,12 +11,27 @@ VL_ATTR_COLD void Vlng___024root___eval_static(Vlng___024root* vlSelf) {
     auto& vlSelfRef = std::ref(*vlSelf).get();
 }
 
+VL_ATTR_COLD void Vlng___024root___eval_initial__TOP(Vlng___024root* vlSelf);
+
 VL_ATTR_COLD void Vlng___024root___eval_initial(Vlng___024root* vlSelf) {
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vlng___024root___eval_initial\n"); );
     Vlng__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
+    Vlng___024root___eval_initial__TOP(vlSelf);
     vlSelfRef.__Vtrigprevexpr___TOP__cmp__0 = vlSelfRef.cmp;
+    vlSelfRef.__Vtrigprevexpr___TOP__rst__0 = vlSelfRef.rst;
+}
+
+VL_ATTR_COLD void Vlng___024root___eval_initial__TOP(Vlng___024root* vlSelf) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vlng___024root___eval_initial__TOP\n"); );
+    Vlng__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
+    auto& vlSelfRef = std::ref(*vlSelf).get();
+    // Body
+    vlSelfRef.sel_cap1 = 1U;
+    vlSelfRef.sel_cap2 = 0U;
+    vlSelfRef.b = 0U;
+    vlSelfRef.rst_out = 0U;
 }
 
 VL_ATTR_COLD void Vlng___024root___eval_final(Vlng___024root* vlSelf) {
@@ -43,6 +58,9 @@ VL_ATTR_COLD void Vlng___024root___dump_triggers__act(Vlng___024root* vlSelf) {
     if ((1ULL & vlSelfRef.__VactTriggered.word(0U))) {
         VL_DBG_MSGF("         'act' region trigger index 0 is active: @(posedge cmp)\n");
     }
+    if ((2ULL & vlSelfRef.__VactTriggered.word(0U))) {
+        VL_DBG_MSGF("         'act' region trigger index 1 is active: @(posedge rst)\n");
+    }
 }
 #endif  // VL_DEBUG
 
@@ -58,6 +76,9 @@ VL_ATTR_COLD void Vlng___024root___dump_triggers__nba(Vlng___024root* vlSelf) {
     if ((1ULL & vlSelfRef.__VnbaTriggered.word(0U))) {
         VL_DBG_MSGF("         'nba' region trigger index 0 is active: @(posedge cmp)\n");
     }
+    if ((2ULL & vlSelfRef.__VnbaTriggered.word(0U))) {
+        VL_DBG_MSGF("         'nba' region trigger index 1 is active: @(posedge rst)\n");
+    }
 }
 #endif  // VL_DEBUG
 
@@ -67,6 +88,11 @@ VL_ATTR_COLD void Vlng___024root___ctor_var_reset(Vlng___024root* vlSelf) {
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
     vlSelf->cmp = VL_RAND_RESET_I(1);
+    vlSelf->rst = VL_RAND_RESET_I(1);
+    vlSelf->rst_out = VL_RAND_RESET_I(1);
+    vlSelf->sel_cap1 = VL_RAND_RESET_I(1);
+    vlSelf->sel_cap2 = VL_RAND_RESET_I(1);
     vlSelf->b = VL_RAND_RESET_I(8);
     vlSelf->__Vtrigprevexpr___TOP__cmp__0 = VL_RAND_RESET_I(1);
+    vlSelf->__Vtrigprevexpr___TOP__rst__0 = VL_RAND_RESET_I(1);
 }

@@ -1,0 +1,32 @@
+* Measure tmp_core
+.control
+* control language source: https://ngspice.sourceforge.io/ngspice-control-language-tutorial.html
+
+* Set file ending to .raw format
+set fend = .raw
+
+* Load simulation data from cicsim
+load {cicname}$fend
+
+echo "MEAS_START"
+echo {cicname}
+
+
+* foreach tmp -40 -20 0 27 50 75 100 125
+*     load {cicname}_$tmp$fend
+*     meas tran iptat avg i(vptat) from=1us to=9us
+* end
+
+
+set fend2 = .out
+
+set wr_singlescale
+set wr_vecnames
+option numdgt = 3
+wrdata {cicname}$fend2 v(vptat) v(iptat) v(sel_cap1) v(sel_cap2) v(rst) 
++ v(xdut.vcap1) v(xdut.vcap2) v(xdut.draincap1) v(xdut.draincap2) v(vdd) v(vss)
+
+
+echo "MEAS_END"
+
+.endc

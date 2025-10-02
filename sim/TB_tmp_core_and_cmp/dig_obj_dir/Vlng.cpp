@@ -10,6 +10,10 @@ Vlng::Vlng(VerilatedContext* _vcontextp__, const char* _vcname__)
     : VerilatedModel{*_vcontextp__}
     , vlSymsp{new Vlng__Syms(contextp(), _vcname__, this)}
     , cmp{vlSymsp->TOP.cmp}
+    , rst{vlSymsp->TOP.rst}
+    , rst_out{vlSymsp->TOP.rst_out}
+    , sel_cap1{vlSymsp->TOP.sel_cap1}
+    , sel_cap2{vlSymsp->TOP.sel_cap2}
     , b{vlSymsp->TOP.b}
     , rootp{&(vlSymsp->TOP)}
 {

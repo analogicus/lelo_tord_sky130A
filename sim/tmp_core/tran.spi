@@ -1,0 +1,74 @@
+*TB_SUN_TR_SKY130NM/TB_NCM
+*----------------------------------------------------------------
+* Include
+*----------------------------------------------------------------
+#ifdef Lay
+.include ../../../work/lpe/tmp_core_lpe.spi
+#else
+.include ../../../work/xsch/tmp_core.spice
+#endif
+
+*-----------------------------------------------------------------
+* OPTIONS
+*-----------------------------------------------------------------
+.option TNOM=27 GMIN=1e-15 reltol=1e-3
+
+*-----------------------------------------------------------------
+* PARAMETERS
+*-----------------------------------------------------------------
+.param TRF = 10p
+.param AVDD = {vdda}
+
+*-----------------------------------------------------------------
+* FORCE
+*-----------------------------------------------------------------
+VSS  VSS  0    dc 0
+VDD  VDD  VSS  dc {AVDD}
+IPTAT VSS IPTAT dc 1uA
+VSEL_CAP1 SEL_CAP1 VSS pulse(0 {AVDD} 0.5us 1ns 1ns 1us 2us)
+VSEL_CAP2 SEL_CAP2 VSS pulse({AVDD} 0 0.5us 1ns 1ns 1us 2us)
+VRST RST VSS pulse({AVDD} 0 1.5us 1ns 1ns 3.3us 4us)
+
+*-----------------------------------------------------------------
+* DUT
+*-----------------------------------------------------------------
+.include ../xdut.spi
+
+*----------------------------------------------------------------
+* PROBE
+*----------------------------------------------------------------
+* .save all
+
+.save v(rst)
+.save v(sel_cap1)
+.save v(sel_cap2)
+.save v(vdd)
+.save v(vptat)
+.save v(iptat)
+.save v(vss)
+.save v(xdut.draincap1)
+.save v(xdut.draincap2)
+.save v(xdut.vcap1)
+.save v(xdut.vcap2)
+
+*----------------------------------------------------------------
+* NGSPICE control
+*----------------------------------------------------------------
+.control
+set num_threads=8
+set color0=white
+set color1=black
+unset askquit
+
+optran 0 0 0 1n 1u 0
+
+ic v(vptat)=1V
+
+tran 1ns 10us 1ps UIC
+write
+quit
+
+
+.endc
+
+.end

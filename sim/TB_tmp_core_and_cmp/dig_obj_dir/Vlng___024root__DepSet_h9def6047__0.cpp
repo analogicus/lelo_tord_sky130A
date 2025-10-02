@@ -17,7 +17,10 @@ void Vlng___024root___eval_triggers__act(Vlng___024root* vlSelf) {
     // Body
     vlSelfRef.__VactTriggered.set(0U, ((IData)(vlSelfRef.cmp) 
                                        & (~ (IData)(vlSelfRef.__Vtrigprevexpr___TOP__cmp__0))));
+    vlSelfRef.__VactTriggered.set(1U, ((IData)(vlSelfRef.rst) 
+                                       & (~ (IData)(vlSelfRef.__Vtrigprevexpr___TOP__rst__0))));
     vlSelfRef.__Vtrigprevexpr___TOP__cmp__0 = vlSelfRef.cmp;
+    vlSelfRef.__Vtrigprevexpr___TOP__rst__0 = vlSelfRef.rst;
 #ifdef VL_DEBUG
     if (VL_UNLIKELY(vlSymsp->_vm_contextp__->debug())) {
         Vlng___024root___dump_triggers__act(vlSelf);
