@@ -141,7 +141,7 @@ N 1320 1040 1480 1040 {lab=VSS}
 N 880 290 880 330 {lab=VSS}
 N 880 160 880 200 {lab=VDD}
 N 850 120 850 200 {lab=SWREF}
-N 1480 240 1540 240 {lab=VAVG}
+N 1480 240 1560 240 {lab=VAVG}
 N 550 120 850 120 {lab=SWREF}
 N 700 80 700 120 {lab=SWREF}
 N 550 120 550 200 {lab=SWREF}
@@ -166,9 +166,9 @@ N 1580 880 1620 880 {lab=VSS}
 N 1480 660 1620 660 {lab=VAVG}
 N 1480 1040 1620 1040 {lab=VSS}
 N 1660 830 1700 830 {lab=SWDRAIN5}
-N 1500 210 1540 210 {lab=V2}
-N 1500 180 1540 180 {lab=IPTAT}
-N 1500 270 1540 270 {lab=V1}
+N 1520 210 1560 210 {lab=V2}
+N 1520 180 1560 180 {lab=IPTAT}
+N 1520 270 1560 270 {lab=V1}
 C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} -40 70 0 0 {name=x1 }
 C {sky130_fd_pr/pnp_05v5.sym} -240 970 0 0 {name=Q1
 model=pnp_05v5_W3p40L3p40
@@ -188,7 +188,7 @@ C {JNW_TR_SKY130A/JNWTR_CAPX4.sym} -400 860 0 0 {name=x10[9:0]
 }
 C {JNW_TR_SKY130A/JNWTR_TGX2_CV.sym} 250 660 0 0 {name=x4 }
 C {JNW_TR_SKY130A/JNWTR_TGX2_CV.sym} -250 660 0 1 {name=x5 }
-C {devices/opin.sym} 1540 210 0 0 {name=p6 lab=V2}
+C {devices/opin.sym} 1560 210 0 0 {name=p6 lab=V2}
 C {devices/ipin.sym} -680 1030 0 0 {name=p4 lab=VSS}
 C {JNW_TR_SKY130A/JNWTR_TGX2_CV.sym} -190 660 0 0 {name=x6 }
 C {JNW_TR_SKY130A/JNWTR_TGX2_CV.sym} 190 660 0 1 {name=x7 }
@@ -214,8 +214,8 @@ C {devices/lab_wire.sym} 340 740 0 1 {name=p23 sig_type=std_logic lab=VSS}
 C {devices/lab_wire.sym} 280 480 0 1 {name=p2 sig_type=std_logic lab=VSS}
 C {devices/lab_wire.sym} 170 450 0 0 {name=p24 sig_type=std_logic lab=SWBRANCH2}
 C {devices/lab_wire.sym} 170 480 0 0 {name=p25 sig_type=std_logic lab=VDD}
-C {devices/opin.sym} 1540 270 2 1 {name=p26 lab=V1}
-C {devices/opin.sym} 1540 180 0 0 {name=p5 lab=IPTAT}
+C {devices/opin.sym} 1560 270 2 1 {name=p26 lab=V1}
+C {devices/opin.sym} 1560 180 0 0 {name=p5 lab=IPTAT}
 C {devices/ipin.sym} -680 450 0 0 {name=p27 lab=SWBRANCH1}
 C {devices/ipin.sym} -680 480 0 0 {name=p28 lab=SWBRANCH2}
 C {devices/ipin.sym} -680 630 0 0 {name=p30 lab=SWCAP1}
@@ -267,7 +267,7 @@ C {devices/lab_wire.sym} 880 320 0 1 {name=p59 sig_type=std_logic lab=VSS}
 C {JNW_TR_SKY130A/JNWTR_TGX2_CV.sym} 1270 240 0 0 {name=x21}
 C {devices/lab_wire.sym} 1360 190 0 1 {name=p57 sig_type=std_logic lab=VDD}
 C {devices/lab_wire.sym} 1360 320 0 1 {name=p60 sig_type=std_logic lab=VSS}
-C {devices/opin.sym} 1540 240 0 0 {name=p61 lab=VAVG}
+C {devices/opin.sym} 1560 240 0 0 {name=p61 lab=VAVG}
 C {devices/ipin.sym} -680 860 0 0 {name=p62 lab=SWDRAIN2}
 C {devices/ipin.sym} -680 890 0 0 {name=p63 lab=SWDRAIN3}
 C {devices/ipin.sym} -680 920 0 0 {name=p64 lab=SWDRAIN4}

@@ -8,12 +8,12 @@ module dig(
           output logic [7:0] b
           );
 
-     // initial begin
-     //     sel_cap1 = 1'b1;
-     //     sel_cap2 = 1'b0;
-     //     b = 8'b0;
-     //     rst_out = 1'b0;
-     // end
+     initial begin
+          sel_cap1 = 1'b1;
+          sel_cap2 = 1'b0;
+          b = 8'b0;
+          rst_out = 1'b0;
+     end
 
      always_latch @(posedge cmp or posedge rst) begin
           if (rst) begin
@@ -25,10 +25,10 @@ module dig(
                sel_cap2 <= ~sel_cap2;
           end
 
-          if (b > 6) begin
-               b <= 8'b0;
+          // if (b > 6) begin
+               // b <= 8'b0;
                // rst_out <= 1'b1;
-          end
+          // end
      end
 
 endmodule // 

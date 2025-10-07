@@ -1,0 +1,130 @@
+v {xschem version=3.4.6 file_version=1.2}
+G {}
+K {}
+V {}
+S {}
+E {}
+N -200 -560 -160 -560 {lab=VDD}
+N -200 -100 -160 -100 {lab=VSS}
+N 980 -350 1020 -350 {lab=VOUT}
+N -120 -440 -120 -240 {lab=NBIAS}
+N -160 -480 -140 -480 {lab=VSS}
+N -160 -560 -120 -560 {lab=VDD}
+N -120 -560 -120 -520 {lab=VDD}
+N -160 -170 -120 -170 {lab=VSS}
+N -120 -140 -120 -100 {lab=VSS}
+N -160 -100 -120 -100 {lab=VSS}
+N -80 -170 520 -170 {lab=NBIAS}
+N -120 -100 560 -100 {lab=VSS}
+N 560 -140 560 -100 {lab=VSS}
+N 390 -320 390 -280 {lab=COMMON_SOURCE}
+N 390 -280 730 -280 {lab=COMMON_SOURCE}
+N 730 -320 730 -280 {lab=COMMON_SOURCE}
+N 560 -280 560 -200 {lab=COMMON_SOURCE}
+N 390 -350 430 -350 {lab=COMMON_SOURCE}
+N 430 -350 430 -280 {lab=COMMON_SOURCE}
+N 690 -350 730 -350 {lab=COMMON_SOURCE}
+N 690 -350 690 -280 {lab=COMMON_SOURCE}
+N 560 -170 600 -170 {lab=VSS}
+N 600 -170 600 -100 {lab=VSS}
+N 560 -100 600 -100 {lab=VSS}
+N 480 -460 480 -420 {lab=VIP_DRAIN}
+N 730 -420 730 -380 {lab=VIN_DRAIN}
+N 770 -350 810 -350 {lab=VIN}
+N 310 -350 350 -350 {lab=VIP}
+N 540 -490 580 -420 {lab=VIN_DRAIN}
+N 640 -490 680 -490 {lab=VDD}
+N 680 -560 680 -490 {lab=VDD}
+N 300 -490 340 -490 {lab=VDD}
+N 340 -560 340 -490 {lab=VDD}
+N 480 -560 480 -520 {lab=VDD}
+N 640 -560 640 -520 {lab=VDD}
+N -160 -170 -160 -100 {lab=VSS}
+N -160 -480 -160 -170 {lab=VSS}
+N 320 -420 480 -420 {lab=VIP_DRAIN}
+N 540 -420 580 -490 {lab=VIP_DRAIN}
+N -120 -240 -40 -240 {lab=NBIAS}
+N -40 -240 -40 -170 {lab=NBIAS}
+N -120 -240 -120 -200 {lab=NBIAS}
+N 980 -460 980 -270 {lab=VOUT}
+N 980 -210 980 -100 {lab=VSS}
+N 600 -100 980 -100 {lab=VSS}
+N 980 -560 980 -520 {lab=VDD}
+N 980 -490 1020 -490 {lab=VDD}
+N 1020 -560 1020 -490 {lab=VDD}
+N 980 -560 1020 -560 {lab=VDD}
+N 980 -240 1020 -240 {lab=VSS}
+N 1020 -240 1020 -100 {lab=VSS}
+N 980 -100 1020 -100 {lab=VSS}
+N 520 -490 540 -490 {lab=VIN_DRAIN}
+N 580 -490 600 -490 {lab=VIP_DRAIN}
+N 580 -420 800 -420 {lab=VIN_DRAIN}
+N 180 -240 940 -240 {lab=VOUT_N}
+N 100 -350 140 -350 {lab=VOUT_N}
+N 140 -460 140 -270 {lab=VOUT_N}
+N 140 -210 140 -100 {lab=VSS}
+N 140 -560 140 -520 {lab=VDD}
+N 100 -490 140 -490 {lab=VDD}
+N 100 -560 100 -490 {lab=VDD}
+N 100 -560 140 -560 {lab=VDD}
+N 100 -240 140 -240 {lab=VSS}
+N 100 -240 100 -100 {lab=VSS}
+N 390 -420 390 -380 {lab=VIP_DRAIN}
+N 300 -420 320 -420 {lab=VIP_DRAIN}
+N 800 -420 820 -420 {lab=VIN_DRAIN}
+N 640 -460 640 -420 {lab=VIN_DRAIN}
+N 820 -560 820 -520 {lab=VDD}
+N 820 -460 820 -420 {lab=VIN_DRAIN}
+N 300 -460 300 -420 {lab=VIP_DRAIN}
+N 300 -560 300 -520 {lab=VDD}
+N 220 -420 300 -420 {lab=VIP_DRAIN}
+N 220 -490 220 -420 {lab=VIP_DRAIN}
+N 180 -490 260 -490 {lab=VIP_DRAIN}
+N 820 -420 900 -420 {lab=VIN_DRAIN}
+N 900 -490 900 -420 {lab=VIN_DRAIN}
+N 900 -490 940 -490 {lab=VIN_DRAIN}
+N 860 -490 900 -490 {lab=VIN_DRAIN}
+N 480 -420 540 -420 {lab=VIP_DRAIN}
+N 140 -560 300 -560 {lab=VDD}
+N 300 -560 390 -560 {lab=VDD}
+N 390 -560 480 -560 {lab=VDD}
+N 480 -560 640 -560 {lab=VDD}
+N 640 -560 730 -560 {lab=VDD}
+N 730 -560 820 -560 {lab=VDD}
+N 820 -560 980 -560 {lab=VDD}
+N -120 -560 100 -560 {lab=VDD}
+N 780 -490 820 -490 {lab=VDD}
+N 780 -560 780 -490 {lab=VDD}
+N 440 -490 480 -490 {lab=VDD}
+N 440 -560 440 -490 {lab=VDD}
+N 220 -310 220 -240 {lab=VOUT_N}
+N 140 -310 220 -310 {lab=VOUT_N}
+C {devices/ipin.sym} -200 -560 0 0 {name=p3 lab=VDD}
+C {devices/ipin.sym} -200 -100 0 0 {name=p4 lab=VSS}
+C {devices/opin.sym} 1020 -350 0 0 {name=p5 lab=VOUT
+}
+C {JNW_TR_SKY130A/JNWTR_RPPO16.sym} -120 -520 1 0 {name=x13}
+C {JNW_ATR_SKY130A/JNWATR_NCH_4C5F0.sym} 770 -350 0 1 {name=x2}
+C {JNW_ATR_SKY130A/JNWATR_NCH_4C5F0.sym} 520 -170 0 0 {name=x3[1:0]}
+C {JNW_ATR_SKY130A/JNWATR_NCH_4C5F0.sym} 350 -350 0 0 {name=x1}
+C {JNW_ATR_SKY130A/JNWATR_NCH_4C5F0.sym} -80 -170 0 1 {name=x10[1:0]}
+C {devices/ipin.sym} 810 -350 0 1 {name=p1 lab=VIN}
+C {devices/ipin.sym} 310 -350 0 0 {name=p2 lab=VIP}
+C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} 520 -490 0 1 {name=x5[4:0]
+}
+C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} 600 -490 0 0 {name=x6[4:0]
+}
+C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} 860 -490 0 1 {name=x7[4:0]}
+C {JNW_ATR_SKY130A/JNWATR_NCH_4C5F0.sym} 940 -240 0 0 {name=x8[4:0]}
+C {devices/opin.sym} 100 -350 0 1 {name=p6 lab=VOUT_N
+}
+C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} 180 -490 0 1 {name=x11[4:0]}
+C {JNW_ATR_SKY130A/JNWATR_NCH_4C5F0.sym} 180 -240 0 1 {name=x12[4:0]}
+C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} 260 -490 0 0 {name=x4[4:0]
+}
+C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} 940 -490 0 0 {name=x9[4:0]
+}
+C {devices/lab_wire.sym} -50 -240 0 1 {name=p7 sig_type=std_logic lab=NBIAS}
+C {devices/lab_wire.sym} 490 -280 0 1 {name=p8 sig_type=std_logic lab=COMMON_SOURCE}
+C {devices/lab_wire.sym} 350 -420 0 1 {name=p9 sig_type=std_logic lab=VIP_DRAIN}
+C {devices/lab_wire.sym} 690 -420 0 1 {name=p10 sig_type=std_logic lab=VIN_DRAIN}

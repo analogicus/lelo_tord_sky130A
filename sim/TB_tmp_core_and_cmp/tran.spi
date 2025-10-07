@@ -22,14 +22,14 @@
 *-----------------------------------------------------------------
 * FORCE
 *-----------------------------------------------------------------
-VSS     VSS    0   dc 0V
 VDD     VDD    VSS dc {AVDD}
 IPTAT   VSS    IPTAT dc 750nA
 *VSEL_C1 SEL_C1 VSS pulse(0V {AVDD} 1us 1ns 1ns 430ns 860ns)
 *VSEL_C2 SEL_C2 VSS pulse({AVDD} 0V 1us 1ns 1ns 430ns 860ns)
 *VRST    RST    VSS pwl 0s {AVDD} 0.9us {AVDD} 1us 0V 9us 0V 9.1us {AVDD} 9.2us {VDDA} 9.3us 0V
 *VRST    RST    VSS pulse({AVDD} 0V 1us 10ns 10ns 1.9us 2us)
-VRST RST VSS pwl 0.9us {AVDD} 1us 0V 8.5us 0V 8.6us {AVDD} 9.4us {AVDD} 9.5us 0V
+VRST    RST    VSS pwl 0.9us {AVDD} 1us 0V 8.5us 0V 8.6us {AVDD} 9.4us {AVDD} 9.5us 0V
+VSS     VSS    0   dc 0V
 VREF    REF    VSS dc 1.0V
 
 *-----------------------------------------------------------------

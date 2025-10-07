@@ -1,0 +1,95 @@
+*TB_SUN_TR_SKY130NM/TB_NCM
+*----------------------------------------------------------------
+* Include
+*----------------------------------------------------------------
+#ifdef Lay
+.include ../../../work/lpe/TB_cmps_lpe.spi
+#else
+.include ../../../work/xsch/TB_cmps.spice
+#endif
+
+*-----------------------------------------------------------------
+* OPTIONS
+*-----------------------------------------------------------------
+.option TNOM=27 GMIN=1e-15 reltol=1e-3
+
+*-----------------------------------------------------------------
+* PARAMETERS
+*-----------------------------------------------------------------
+.param TRF = 10p
+
+.param AVDD = {vdda}
+
+*-----------------------------------------------------------------
+* FORCE
+*-----------------------------------------------------------------
+VSS  VSS  0    dc 0
+VDD  VDD  VSS  dc {AVDD}
+
+VIP1 VIP1 VSS  pwl 0s 0V 1us {AVDD} 2us 0V
+VIN1 VIN1 VSS  dc 1V
+
+VIP2 VIP2 VSS  pwl 0s 0V 1us {AVDD} 2us 0V
+VIN2 VIN2 VSS  dc 1V
+
+VIP3 VIP3 VSS  pwl 0s 0V 1us {AVDD} 2us 0V
+VIN3 VIN3 VSS  dc 1V
+
+VIP4 VIP4 VSS  pwl 0s 0V 1us {AVDD} 2us 0V
+VIN4 VIN4 VSS  dc 1V
+
+VIP5 VIP5 VSS  pwl 0s 0V 1us {AVDD} 5us {AVDD} 6us 0V 10us 0V 11us {AVDD} 15us {AVDD} 16us 0V
+VIN5 VIN5 VSS  dc 1V
+
+* For operationg point calculation
+*VIP4 VIP4 VSS  dc 0V
+*VIN4 VIN4 VSS  dc 0V
+*VIP5 VIP5 VSS  dc {AVDD}
+*VIN5 VIN5 VSS  dc {AVDD}
+
+* VSLEEP SLEEP VSS dc 0V
+* VCMP_P1 CMP_P1 VSS dc {AVDD}
+* VCMP_P2 CMP_P2 VSS dc 0V
+
+*-----------------------------------------------------------------
+* DUT
+*-----------------------------------------------------------------
+.include ../xdut.spi
+
+*----------------------------------------------------------------
+* PROBE
+*----------------------------------------------------------------
+* .option savecurrents
+* .save all
+
+.save v(vip1) v(vin1) v(vout1) 
++ v(vip2) v(vin2) v(vout2) 
++ v(vip3) v(vin3) v(vout3) 
++ v(vip4) v(vin4) v(vout4) v(vout4_n)
++ v(xdut.x4.nbias) v(xdut.x4.common_source) v(xdut.x4.vip_drain) v(xdut.x4.vin_drain)
++ v(vip5) v(vin5) v(vout5) v(vout5_n)
++ v(xdut.x5.pbias) v(xdut.x5.insource) v(xdut.x5.vipdrain) v(xdut.x5.vindrain)
+* + v(sleep) v(cmp_p1) v(cmp_p2)
+* Extending a line with + does not work after a line is commented with *
+
+*----------------------------------------------------------------
+* NGSPICE control
+*----------------------------------------------------------------
+.control
+set num_threads=8
+set color0=white
+set color1=black
+unset askquit
+
+optran 0 0 0 1n 20u 0
+
+* op 
+
+tran 1n 20u 1p
+write
+quit
+
+
+.endc
+
+.end

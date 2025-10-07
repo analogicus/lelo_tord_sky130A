@@ -27,23 +27,14 @@ VL_INLINE_OPT void Vlng___024root___nba_sequent__TOP__0(Vlng___024root* vlSelf) 
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vlng___024root___nba_sequent__TOP__0\n"); );
     Vlng__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
-    // Init
-    CData/*7:0*/ __Vdly__b;
-    __Vdly__b = 0;
     // Body
-    __Vdly__b = vlSelfRef.b;
+    vlSelfRef.b = ((IData)(vlSelfRef.rst) ? 0U : (0xffU 
+                                                  & ((IData)(1U) 
+                                                     + (IData)(vlSelfRef.b))));
     if ((1U & (~ (IData)(vlSelfRef.rst)))) {
         vlSelfRef.sel_cap1 = (1U & (~ (IData)(vlSelfRef.sel_cap1)));
         vlSelfRef.sel_cap2 = (1U & (~ (IData)(vlSelfRef.sel_cap2)));
     }
-    __Vdly__b = ((IData)(vlSelfRef.rst) ? 0U : (0xffU 
-                                                & ((IData)(1U) 
-                                                   + (IData)(vlSelfRef.b))));
-    if ((6U < (IData)(vlSelfRef.b))) {
-        __Vdly__b = 0U;
-        vlSelfRef.rst_out = 1U;
-    }
-    vlSelfRef.b = __Vdly__b;
 }
 
 void Vlng___024root___eval_triggers__act(Vlng___024root* vlSelf);
