@@ -17,7 +17,7 @@ This repository contains work related to my specialization project and master th
 
 # How
 
-The circuit was designed and simulated using open source tools such as Xschem, Magic, ngspice and cicsim, as well as the open source 130 nm process technology from Skywater and Google.
+The circuit was designed and simulated using open source tools such as [Xschem](https://xschem.sourceforge.io/stefan/index.html), [Magic](http://opencircuitdesign.com/magic/), [ngspice](https://ngspice.sourceforge.io/index.html) and [cicsim](https://analogicus.com/cicsim/), as well as the open source 130 nm process technology from Skywater and Google.
 
 
 # What
