@@ -4,6 +4,7 @@ K {}
 V {}
 S {}
 E {}
+T {Voltage VSD over MP1 is too low to pass current when input is common mode = 1 Volt (Vref)} 960 -970 0 0 0.4 0.4 {}
 N 1240 -550 1240 -510 {
 lab=VipDrain}
 N 1420 -550 1420 -510 {

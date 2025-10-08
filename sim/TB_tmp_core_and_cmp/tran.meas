@@ -5,7 +5,13 @@ load {cicname}.raw
 
 echo "MEAS_START"
 
-meas tran count FIND v(dec_b) at=9us
+set wr_singlescale
+set wr_vecnames
+option numdgt = 3
+wrdata {cicname}.out 
++ v(dec_b) v(b.7) v(b.6) v(b.5) v(b.4) v(b.3) v(b.2) v(b.1) v(b.0)
++ v(IPTAT) v(xdut.vptat) v(xdut.x1.vcap1) v(xdut.x1.vcap2)
++ v(CMP) v(RST) v(REF) v(VSS) v(VDD)
 
 echo "MEAS_END"
 .endc
