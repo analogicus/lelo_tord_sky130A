@@ -12,7 +12,7 @@ tos4 | Tordnado | Tord Olsen Sætermo
 
 # Why
 
-This repository contains work related to my specialization project and master thesis on duty cycled bandgap reference (BGR) circuits at the Norwegian University of Science and Technology (NTNU) in collaboration with Nordic Semiconductor ASA.
+This repository contains work related to my specialization project and master's thesis on duty cycled bandgap reference (BGR) circuits at the Norwegian University of Science and Technology (NTNU) in collaboration with Nordic Semiconductor ASA.
 
 
 # How
