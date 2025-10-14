@@ -61,5 +61,5 @@ C {JNW_ATR_SKY130A/JNWATR_NCH_4C5F0.sym} 240 -590 0 0 {name=x8}
 C {devices/lab_wire.sym} 280 -500 2 1 {name=p23 sig_type=std_logic lab=VSS}
 C {devices/lab_wire.sym} 280 -660 0 0 {name=p22 sig_type=std_logic lab=VG3}
 C {devices/ipin.sym} 200 -590 0 0 {name=p21 lab=SPARK}
-C {devices/opin.sym} 790 -540 0 0 {name=p14 lab=VG1}
+C {devices/opin.sym} 790 -540 0 0 {name=p14 lab=VBIAS}
 C {devices/lab_wire.sym} 560 -550 2 0 {name=p10 sig_type=std_logic lab=V1}

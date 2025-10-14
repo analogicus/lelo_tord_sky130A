@@ -119,4 +119,3 @@ C {devices/lab_wire.sym} 1360 -570 2 1 {name=p20 sig_type=std_logic lab=VSS}
 C {devices/lab_wire.sym} 1360 -770 0 0 {name=p21 sig_type=std_logic lab=VDD}
 C {devices/ipin.sym} 1380 -520 0 0 {name=p35 lab=CMP_P1}
 C {devices/ipin.sym} 1400 -500 0 0 {name=p47 lab=CMP_P2}
-C {LELO_TORD_SKY130A/LELO_TORD.sch} 1294.698904564514 -521.0378564346382 0 0 {}

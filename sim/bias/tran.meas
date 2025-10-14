@@ -1,0 +1,29 @@
+* Measure bias
+.control
+
+load {cicname}.raw
+
+let v(v1) = v(xdut.v1)
+let v(v2) = v(xdut.v2)
+let v(v3) = v(xdut.v3)
+let vdiff = v(v1) - v(v2)
+let R     = 7535
+let ibias = (vdiff) / (16 * R)
+
+echo MEAS_START
+
+meas tran vnbias find v(nbias) at=49ns
+meas tran vpbias find v(pbias) at=49ns
+meas tran vsleep find v(sleep) at=49ns
+meas tran ibias find ibias at=49ns
+
+set wr_singlescale
+set wr_vecnames
+option numdgt = 3
+wrdata {cicname}.out 
++ v(v1) v(v2) v(v3)
++ v(nbias) v(pbias) v(sleep) 
++ v(vss) v(vdd)
+
+echo "MEAS_END"
+.endc

@@ -1,4 +1,5 @@
 
+
 module dig(
           input wire cmp,
           input wire rst,

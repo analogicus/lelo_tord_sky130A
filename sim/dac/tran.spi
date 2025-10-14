@@ -1,0 +1,84 @@
+*TB_SUN_TR_SKY130NM/TB_NCM
+*----------------------------------------------------------------
+* Include
+*----------------------------------------------------------------
+#ifdef Lay
+.include ../../../work/lpe/dac_lpe.spi
+#else
+.include ../../../work/xsch/dac.spice
+#endif
+
+*-----------------------------------------------------------------
+* OPTIONS
+*-----------------------------------------------------------------
+.option TNOM=27 GMIN=1e-15 reltol=1e-3
+
+*-----------------------------------------------------------------
+* PARAMETERS
+*-----------------------------------------------------------------
+.param TRF = 10p
+.param f_CLK = 1MegHz
+.param T_CLK = {1/f_CLK}
+.param AVDD = {vdda}
+
+*-----------------------------------------------------------------
+* FORCE
+*-----------------------------------------------------------------
+VSS   VSS   0    dc 0V
+VDD   VDD   VSS  dc {AVDD}
+VRST  RST   VSS  pwl 1.3us {AVDD} 1.9us 0V 
+VCLK  CLK   VSS  pulse(0V {AVDD} {T_CLK/10} {T_CLK/100} {T_CLK/100} {T_CLK/2} {T_CLK})
+VSLEEP SLEEP VSS pwl 0.25us {AVDD} 0.3us 0V
+VB4   b4    VSS  dc 0V
+
+*-----------------------------------------------------------------
+* DUT
+*-----------------------------------------------------------------
+.include ../xdut.spi
+.include ../svinst.spi
+
+* Translate names
+VB0 b.0 b0 dc 0
+VB1 b.1 b1 dc 0
+VB2 b.2 b2 dc 0
+VB3 b.3 b3 dc 0
+
+*----------------------------------------------------------------
+* PROBE
+*----------------------------------------------------------------
+* .option savecurrents
+* .save all
+
+.save v(vdd) v(vss)
+.save v(xdut.pbias) v(xdut.nbias) v(sleep)
+.save v(b0) v(b1) v(b2) v(b3) v(b4)
+.save v(xdut.b0_n) v(xdut.b1_n) v(xdut.b2_n) v(xdut.b3_n) v(xdut.b4_n)
+.save v(xdut.vdiode)
+.save v(clk) v(rst)
+
+*----------------------------------------------------------------
+* NGSPICE control
+*----------------------------------------------------------------
+.control
+set num_threads=8
+set color0=white
+set color1=black
+unset 
+
+*- Override the default digital output bridge.
+pre_set auto_bridge_d_out =
+     + ( ".model auto_dac dac_bridge(out_low = 0.0 out_high = 1.8)"
+     +   "auto_bridge%d [ %s ] [ %s ] auto_dac" )
+
+
+optran 0 0 0 1ns 1us 0
+
+
+tran 1ns 20us 1ps
+write
+quit
+
+
+.endc
+
+.end

@@ -1,0 +1,54 @@
+#<name>:
+#  src:
+#    - <paramters>
+#  typ: <typical spec value>
+#  name: <long name>
+#  min: <minimum spec value>
+#  max: <maximum spec value>
+#  scale: <scale, multiply result by scale>
+#  digits: <significant digits>
+#  unit: Unit
+
+ibias:
+  src:
+    - ibias
+  name: Bias Current
+  min: -20%
+  typ: 2.55
+  max: 20%
+  scale: 1e6
+  digits: 3
+  unit: uA
+
+vnbias:
+  src:
+    - vnbias
+  name: NMOS Bias Voltage
+  min: -20%
+  typ: 0.6
+  max: 20%
+  scale: 1
+  digits: 3
+  unit: V
+
+vpbias:
+  src:
+    - vpbias
+  name: PMOS Bias Voltage
+  min: -20%
+  typ: 0.7
+  max: 20%
+  scale: 1
+  digits: 3
+  unit: V
+
+vsleep:
+  src:
+    - vsleep
+  name: Sleep voltage signal
+  min: 0
+  typ: 1
+  max: 1.8
+  scale: 1
+  digits: 3
+  unit: V

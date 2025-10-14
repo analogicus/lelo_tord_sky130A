@@ -1,0 +1,19 @@
+* Measure dig-to-time
+.control
+
+load {cicname}.raw
+
+echo "MEAS_START"
+
+set wr_singlescale
+set wr_vecnames
+option numdgt = 3
+wrdata {cicname}.out 
++ v(dec_b)
++ v(dec_count)
++ v(d0) v(d1) v(d2) v(d3)
++ v(CLK) v(RST) 
++ v(VSS) v(VDD)
+
+echo "MEAS_END"
+.endc
