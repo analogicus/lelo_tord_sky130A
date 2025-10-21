@@ -26,7 +26,7 @@
 *-----------------------------------------------------------------
 VSS  VSS  0    dc 0
 VDD  VDD  VSS  dc {AVDD}
-VRST RST  VSS  pwl 55ns {AVDD} 60ns 0V 
+VRST RST  VSS  pwl 55ns {AVDD} 60ns 0V
 VCLK CLK  VSS  pulse(0V {AVDD} {T_CLK/10} {T_CLK/10000} {T_CLK/10000} {T_CLK/2} {T_CLK})
 
 VD0 d0 vss dc 0V
@@ -56,7 +56,8 @@ VD3 d3 vss pwl 55ns 0V 55.1ns {AVDD} 150ns {AVDD} 150.1ns 0V
 .save v(clk) v(rst)
 .save v(d0) v(d1) v(d2) v(d3)
 .save v(xdut.A) v(xdut.B) v(xdut.C) v(xdut.D)
-.save v(xdut.AorB) v(xdut.CorD) v(xdut.R) v(Q) v(Q_N)
+.save v(xdut.AorB) v(xdut.CorD) v(Q) 
+* .save v(xdut.R) v(xdut.R_n)  v(Q_N)
 
 *----------------------------------------------------------------
 * NGSPICE control

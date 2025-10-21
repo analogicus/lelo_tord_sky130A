@@ -13,7 +13,8 @@ wrdata {cicname}.out
 + v(CLK) v(RST) 
 + v(VSS) v(VDD)
 + v(xdut.A) v(xdut.B) v(xdut.C) v(xdut.D)
-+ v(xdut.AorB) v(xdut.CorD) v(xdut.R) v(Q) v(Q_N)
++ v(xdut.AorB) v(xdut.CorD) ) v(Q) 
+* + v(Q_N) v(xdut.R
 * + v(dec_d)
 * + v(dec_count)
 
