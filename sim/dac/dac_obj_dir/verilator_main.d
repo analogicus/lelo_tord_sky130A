@@ -1,4 +1,5 @@
-verilator_main.o: /opt/eda/share/ngspice/scripts/src/verilator_main.cpp \
- /opt/eda/share/ngspice/scripts/src/ngspice/cmtypes.h \
- /opt/eda/share/ngspice/scripts/src/ngspice/miftypes.h \
- /opt/eda/share/ngspice/scripts/src/ngspice/cosim.h
+verilator_main.o: \
+ /cad/gnu/oseda/ngspice/ngspice-44.2/share/ngspice/scripts/src/verilator_main.cpp \
+ /cad/gnu/oseda/ngspice/ngspice-44.2/share/ngspice/scripts/src/ngspice/cmtypes.h \
+ /cad/gnu/oseda/ngspice/ngspice-44.2/share/ngspice/scripts/src/ngspice/miftypes.h \
+ /cad/gnu/oseda/ngspice/ngspice-44.2/share/ngspice/scripts/src/ngspice/cosim.h
