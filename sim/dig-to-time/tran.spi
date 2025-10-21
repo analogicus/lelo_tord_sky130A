@@ -56,8 +56,11 @@ VD3 d3 vss pwl 55ns 0V 55.1ns {AVDD} 150ns {AVDD} 150.1ns 0V
 .save v(clk) v(rst)
 .save v(d0) v(d1) v(d2) v(d3)
 .save v(xdut.A) v(xdut.B) v(xdut.C) v(xdut.D)
-.save v(xdut.AorB) v(xdut.CorD) v(Q) 
-* .save v(xdut.R) v(xdut.R_n)  v(Q_N)
+.save v(xdut.D0andA) v(xdut.D1andB) v(xdut.D2andC) v(xdut.D3andD)
+.save v(xdut.AorB) v(xdut.CorD)
+.save v(xdut.R) v(xdut.R_n)
+.save v(xdut.D0orD1) v(xdut.D2orD3) v(xdut.EN)
+.save v(xdut.OUT) v(Q)
 
 *----------------------------------------------------------------
 * NGSPICE control
