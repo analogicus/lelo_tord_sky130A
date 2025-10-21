@@ -35,7 +35,7 @@ VL_INLINE_OPT void Vlng___024root___nba_sequent__TOP__0(Vlng___024root* vlSelf) 
     __Vtableidx1 = 0;
     // Body
     __Vtableidx1 = (((IData)(vlSelfRef.count) << 1U) 
-                    | (IData)(vlSelfRef.rst));
+                    | (IData)(vlSelfRef.dac_rst));
     vlSelfRef.count = Vlng__ConstPool__TABLE_h1eb5af75_0
         [__Vtableidx1];
     vlSelfRef.b = Vlng__ConstPool__TABLE_h295ca8b5_0
@@ -99,7 +99,7 @@ void Vlng___024root___eval(Vlng___024root* vlSelf) {
 #ifdef VL_DEBUG
             Vlng___024root___dump_triggers__nba(vlSelf);
 #endif
-            VL_FATAL_MT("../../rtl/dac.v", 1, "", "NBA region did not converge.");
+            VL_FATAL_MT("../../rtl/tbdac.v", 1, "", "NBA region did not converge.");
         }
         __VnbaIterCount = ((IData)(1U) + __VnbaIterCount);
         __VnbaContinue = 0U;
@@ -110,7 +110,7 @@ void Vlng___024root___eval(Vlng___024root* vlSelf) {
 #ifdef VL_DEBUG
                 Vlng___024root___dump_triggers__act(vlSelf);
 #endif
-                VL_FATAL_MT("../../rtl/dac.v", 1, "", "Active region did not converge.");
+                VL_FATAL_MT("../../rtl/tbdac.v", 1, "", "Active region did not converge.");
             }
             vlSelfRef.__VactIterCount = ((IData)(1U) 
                                          + vlSelfRef.__VactIterCount);
@@ -131,9 +131,9 @@ void Vlng___024root___eval_debug_assertions(Vlng___024root* vlSelf) {
     Vlng__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
-    if (VL_UNLIKELY(((vlSelfRef.clk & 0xfeU)))) {
-        Verilated::overWidthError("clk");}
-    if (VL_UNLIKELY(((vlSelfRef.rst & 0xfeU)))) {
-        Verilated::overWidthError("rst");}
+    if (VL_UNLIKELY(((vlSelfRef.dac_clk & 0xfeU)))) {
+        Verilated::overWidthError("dac_clk");}
+    if (VL_UNLIKELY(((vlSelfRef.dac_rst & 0xfeU)))) {
+        Verilated::overWidthError("dac_rst");}
 }
 #endif  // VL_DEBUG

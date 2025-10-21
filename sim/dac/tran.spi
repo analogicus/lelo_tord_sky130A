@@ -53,7 +53,7 @@ VB3 b.3 b3 dc 0
 .save v(xdut.pbias) v(xdut.nbias) v(sleep)
 .save v(b0) v(b1) v(b2) v(b3) v(b4)
 .save v(xdut.b0_n) v(xdut.b1_n) v(xdut.b2_n) v(xdut.b3_n) v(xdut.b4_n)
-.save v(xdut.vdiode)
+.save v(xdut.vdiode) v(xdut.vdummy)
 .save v(clk) v(rst)
 
 *----------------------------------------------------------------
@@ -63,7 +63,7 @@ VB3 b.3 b3 dc 0
 set num_threads=8
 set color0=white
 set color1=black
-unset 
+unset askquit
 
 *- Override the default digital output bridge.
 pre_set auto_bridge_d_out =
@@ -74,7 +74,7 @@ pre_set auto_bridge_d_out =
 optran 0 0 0 1ns 1us 0
 
 
-tran 1ns 20us 1ps
+tran 1ns 125us 1ps
 write
 quit
 

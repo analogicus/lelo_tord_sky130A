@@ -9,11 +9,13 @@ set wr_singlescale
 set wr_vecnames
 option numdgt = 3
 wrdata {cicname}.out 
-+ v(dec_b)
-+ v(dec_count)
 + v(d0) v(d1) v(d2) v(d3)
 + v(CLK) v(RST) 
 + v(VSS) v(VDD)
++ v(xdut.A) v(xdut.B) v(xdut.C) v(xdut.D)
++ v(xdut.AorB) v(xdut.CorD) v(xdut.R) v(Q) v(Q_N)
+* + v(dec_d)
+* + v(dec_count)
 
 echo "MEAS_END"
 .endc

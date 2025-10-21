@@ -1,15 +1,15 @@
-module dac(
-    input wire clk,
-    input wire rst,
+module tbdac(
+    input wire dac_clk,
+    input wire dac_rst,
     output logic [3:0] b,
     output logic [2:0] count
 );
 
     // logic [2:0] count;
 
-    always_ff @ (posedge clk) begin
+    always_ff @ (posedge dac_clk) begin
         
-        if (rst) begin
+        if (dac_rst) begin
         
             count <= 3'b0;
             b <= 4'b0;
