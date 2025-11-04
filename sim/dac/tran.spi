@@ -17,8 +17,10 @@
 * PARAMETERS
 *-----------------------------------------------------------------
 .param TRF = 10p
-.param f_CLK = 1MegHz
-.param T_CLK = {1/f_CLK}
+.param f_CLK1 = 2MegHz
+.param T_CLK1 = {1/f_CLK1}
+.param f_CLK2 = 32MegHz
+.param T_CLK2 = {1/f_CLK2}
 .param AVDD = {vdda}
 
 *-----------------------------------------------------------------
@@ -27,9 +29,9 @@
 VSS   VSS   0    dc 0V
 VDD   VDD   VSS  dc {AVDD}
 VRST  RST   VSS  pwl 1.3us {AVDD} 1.9us 0V 
-VCLK  CLK   VSS  pulse(0V {AVDD} {T_CLK/10} {T_CLK/100} {T_CLK/100} {T_CLK/2} {T_CLK})
+VCLK  CLK   VSS  pulse(0V {AVDD} {T_CLK1/10} {T_CLK1/100} {T_CLK1/100} {T_CLK1/2} {T_CLK1})
 VSLEEP SLEEP VSS pwl 0.25us {AVDD} 0.3us 0V
-VB4   b4    VSS  dc 0V
+VB4   b4    VSS  pulse(0V {AVDD} {T_CLK1/10} {T_CLK2/100} {T_CLK2/100} {T_CLK2/2} {T_CLK1/4})
 
 *-----------------------------------------------------------------
 * DUT
@@ -55,6 +57,8 @@ VB3 b.3 b3 dc 0
 .save v(xdut.b0_n) v(xdut.b1_n) v(xdut.b2_n) v(xdut.b3_n) v(xdut.b4_n)
 .save v(xdut.vdiode) v(xdut.vdummy)
 .save v(clk) v(rst)
+.save v(xdut.v0) v(xdut.v1) v(xdut.v2) v(xdut.v3) v(xdut.v4)
+.save v(xdut.vctrl) v(xdut.vctrl2)
 
 *----------------------------------------------------------------
 * NGSPICE control
@@ -74,7 +78,7 @@ pre_set auto_bridge_d_out =
 optran 0 0 0 1ns 1us 0
 
 
-tran 1ns 125us 1ps
+tran 1ns 15us 1ps
 write
 quit
 

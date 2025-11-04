@@ -11,6 +11,7 @@ let v(b4_n) = v(xdut.b4_n)
 let v(pbias) = v(xdut.pbias)
 let v(nbias) = v(xdut.nbias)
 let v(vdiode) = v(xdut.vdiode)
+let v(vctrl) = v(xdut.vctrl)
 
 echo "MEAS_START"
 
@@ -18,10 +19,11 @@ set wr_singlescale
 set wr_vecnames
 option numdgt = 3
 wrdata {cicname}.out 
-+ v(dec_b)
++ v(dec_b) v(dec_count)
 + v(b0) v(b1) v(b2) v(b3) v(b4)
 + v(b0_n) v(b1_n) v(b2_n) v(b3_n) v(b4_n)
 + v(vdiode)
++ v(vctrl)
 + v(CLK) v(RST) 
 + v(PBIAS) v(NBIAS) v(SLEEP)
 + v(VSS) v(VDD)
