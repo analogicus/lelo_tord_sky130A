@@ -31,7 +31,7 @@ VDD   VDD   VSS  dc {AVDD}
 VRST  RST   VSS  pwl 1.3us {AVDD} 1.9us 0V 
 VCLK  CLK   VSS  pulse(0V {AVDD} {T_CLK1/10} {T_CLK1/100} {T_CLK1/100} {T_CLK1/2} {T_CLK1})
 VSLEEP SLEEP VSS pwl 0.25us {AVDD} 0.3us 0V
-VB4   b4    VSS  pulse(0V {AVDD} {T_CLK1/10} {T_CLK2/100} {T_CLK2/100} {T_CLK2/2} {T_CLK1/4})
+VB4   b4    VSS  pulse(0V {AVDD} {T_CLK1/10} {T_CLK2/100} {T_CLK2/100} {T_CLK2} {T_CLK1/4})
 
 *-----------------------------------------------------------------
 * DUT

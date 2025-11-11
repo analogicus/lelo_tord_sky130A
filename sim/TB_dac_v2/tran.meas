@@ -1,0 +1,35 @@
+* Measure TB_dac_v2
+.control
+
+load {cicname}.raw
+
+let v(vctrl) = v(xdut.x1.vctrl)
+let v(ctrl2) = v(xdut.x1.vctrl2)
+let v(b0_n) = v(xdut.x1.b0_n) 
+let v(b1_n) = v(xdut.x1.b1_n) 
+let v(b2_n) = v(xdut.x1.b2_n) 
+let v(b3_n) = v(xdut.x1.b3_n)
+let v(b4_n) = v(xdut.x1.b4_n)
+let v(pbias) = v(xdut.x1.pbias)
+let v(nbias) = v(xdut.x1.nbias)
+let v(v1) = v(xdut.x1.v1) 
+let v(v2) = v(xdut.x1.v2) 
+let v(v3) = v(xdut.x1.v3)
+let v(v4) = v(xdut.x1.v4)
+
+echo "MEAS_START"
+
+set wr_singlescale
+set wr_vecnames
+option numdgt = 3
+wrdata {cicname}.out 
++ v(vdiode)
++ v(vctrl) v(ctrl2)
++ v(b0) v(b1) v(b2) v(b3) v(b4)
++ v(b0_n) v(b1_n) v(b2_n) v(b3_n) v(b4_n)
++ v(v1) v(v2) v(v3) v(v4)
++ v(PBIAS) v(NBIAS) v(SLEEP)
++ v(VSS) v(VDD)
+
+echo "MEAS_END"
+.endc

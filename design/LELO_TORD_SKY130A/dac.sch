@@ -201,9 +201,9 @@ C {devices/lab_wire.sym} 750 550 0 0 {name=p12 sig_type=std_logic lab=pbias
 }
 C {LELO_TORD_SKY130A/bias.sym} 500 680 0 0 {name=x14}
 C {devices/ipin.sym} 400 680 0 0 {name=p33 lab=sleep}
-C {devices/lab_wire.sym} 590 550 0 0 {name=p13 sig_type=std_logic lab=pbias
+C {devices/lab_wire.sym} 580 670 0 1 {name=p13 sig_type=std_logic lab=pbias
 }
-C {devices/lab_wire.sym} 590 790 2 1 {name=p21 sig_type=std_logic lab=nbias
+C {devices/lab_wire.sym} 580 690 2 0 {name=p21 sig_type=std_logic lab=nbias
 }
 C {devices/lab_wire.sym} 1060 740 0 0 {name=p22 sig_type=std_logic lab=vdiode
 }
@@ -212,7 +212,7 @@ C {JNW_ATR_SKY130A/JNWATR_PCH_4C1F2.sym} 760 670 0 0 {name=x3 }
 C {JNW_ATR_SKY130A/JNWATR_PCH_4C1F2.sym} 920 670 0 0 {name=x5 }
 C {JNW_ATR_SKY130A/JNWATR_PCH_4C1F2.sym} 1080 670 0 0 {name=x7 }
 C {JNW_ATR_SKY130A/JNWATR_PCH_4C1F2.sym} 1240 670 0 0 {name=x9 }
-C {JNW_TR_SKY130A/JNWTR_CAPX4.sym} 1600 580 0 0 {name=x12[7:0]}
+C {JNW_TR_SKY130A/JNWTR_CAPX4.sym} 1600 580 0 0 {name=x12[19:0]}
 C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} 1680 610 0 0 {name=x13 }
 C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} 1940 610 0 1 {name=x20 }
 C {JNW_ATR_SKY130A/JNWATR_NCH_4C1F2.sym} 1680 710 0 0 {name=x21 }
