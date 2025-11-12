@@ -19,43 +19,50 @@ def main(name):
   #   yaml.dump(obj,fo)
 
   # Read result .out file
-  fname = name + ".out"
+  fend = ".out" # bias file extension, could be .out, .yaml or .csv
+  fname = name + fend
   df = pd.read_csv(fname, sep='\s+')
+
+  R16 = 7535*16
+  R8 = 7535*8
+  R4 = 7535*4
+  R2 = 7535*2
+  Rtot = 3*R16 + R8 + R4 + R2
+  vdiff = df['v(v1)'] - df['v(nbias)']
 
   if name == "output_tran/tran_SchGtKttTtVt":
 
-    R = 7535*16
-
-    df['ib'] = ((df['v(v1)'] - df['v(v2)']) / R) * 1e6 # in uA
+    df['ib'] = (vdiff / Rtot) * 1e6 # in uA
     df['time'] = df['time'] * 1e9 # in ns
 
     print(df.columns)
     print(df.head())
 
     fig,(ax0, ax1, ax2, ax3) = plt.subplots(4, 1)
-    fig.suptitle('Bias currents and voltages')
+    fig.suptitle('Bias currents and voltages', fontsize=16)
+    fig.set_size_inches(8, 8)
 
     ax0.plot(df['time'], df['ib'], label='ib')
     ax0.set_title("Bias current")
-    ax0.set_yticks([-5, -2.5, 0, 2.5, 5, 7.5])
+    # ax0.set_yticks([-5, -2.5, 0, 2.5, 5, 7.5])
     ax0.legend(loc='upper right')
     ax0.grid()
   
     ax1.plot(df['time'], df['v(nbias)'], label='nbias')
     ax1.set_title("NMOS bias voltage")
-    ax1.set_yticks([-0.6, 0, 0.6, 1.2])
+    # ax1.set_yticks([-0.6, 0, 0.6, 1.2])
     ax1.legend(loc='upper right')
     ax1.grid()
 
     ax2.plot(df['time'], df['v(pbias)'], label='pbias')
     ax2.set_title("PMOS bias voltage")
-    ax2.set_yticks([0, 0.7, 1.4, 2.1])
+    # ax2.set_yticks([0, 0.7, 1.4, 2.1])
     ax2.legend(loc='upper right')
     ax2.grid()
 
     ax3.plot(df['time'], df['v(sleep)'], label='sleep')
     ax3.set_title("Sleep voltage")
-    ax3.set_yticks([0, 0.9, 1.8])
+    # ax3.set_yticks([0, 0.9, 1.8])
     ax3.legend(loc='upper right')
     ax3.grid()
 

@@ -28,45 +28,37 @@ def main(name):
     print(df.columns)
     print(df.head())
 
-    fig,(ax0, ax4, ax1, ax2, ax3) = plt.subplots(5, 1)
+    fig,axs = plt.subplots(8, 1)
     fig.suptitle('DAC currents and voltages')
-    fig.set_size_inches(8, 8)
+    fig.set_size_inches(8, 12)
 
-    ax0.plot(df['time'], df['v(vdiode)'], label='diode voltage')
-    # ax0.set_title("Diode voltage")
-    # ax0.set_yticks([0, 0.25, 0.5, 0.75, 1.0])
-    ax0.legend(loc='upper right')
-    ax0.grid()
+    axs[0].plot(df['time'], df['v(vdiode)'], label='diode voltage')
+    # axs[0].set_title("Diode voltage")
+    # axs[0].set_yticks([0, 0.25, 0.5, 0.75, 1.0])
 
-    ax1.plot(df['time'], df['v(b0)'], label='bit 0')
-    ax1.plot(df['time'], df['v(b1)'], label='bit 1')
-    ax1.plot(df['time'], df['v(b2)'], label='bit 2')
-    ax1.plot(df['time'], df['v(b3)'], label='bit 3')
-    # ax1.set_title("Select lines")
-    # ax1.set_yticks([0, 0.9, 1.8])
-    ax1.legend(loc='upper right')
-    ax1.grid()
+    axs[1].plot(df['time'], df['v(vctrl)'], label='control')
 
-    ax2.plot(df['time'], df['v(b4)'], label='bit 4')
-    # ax2.set_title("Counter")
-    # ax2.set_yticks([])
-    ax2.legend(loc='upper right')
-    ax2.grid()
+    axs[2].plot(df['time'], df['v(b0)'], label='bit 0')
+    axs[3].plot(df['time'], df['v(b1)'], label='bit 1')
+    axs[4].plot(df['time'], df['v(b2)'], label='bit 2')
+    axs[5].plot(df['time'], df['v(b3)'], label='bit 3')
+    # axs[1].set_title("Select lines")
+    # axs[1].set_yticks([0, 0.9, 1.8])
 
-    ax3.plot(df['time'], df['v(sleep)'], label='sleep')
-    # ax3.set_title("Sleep voltage")
-    # ax3.set_yticks([0, 0.9, 1.8])
-    ax3.legend(loc='upper right')
-    ax3.grid()
+    axs[6].plot(df['time'], df['v(b4)'], label='bit 4')
+    # axs[2].set_title("Counter")
+    # axs[2].set_yticks([])
 
-    ax4.plot(df['time'], df['v(vctrl)'], label='control')
-    ax4.legend(loc='upper right')
-    ax4.grid()
+    axs[7].plot(df['time'], df['v(sleep)'], label='sleep')
+    # axs[3].set_title("Sleep voltage")
+    # axs[3].set_yticks([0, 0.9, 1.8])
 
-    for ax in (ax0, ax1, ax2, ax3, ax4):
+    for ax in axs:
       ax.set(xlabel='Time (ns)', ylabel='Voltage (V)')
+      ax.legend()
+      ax.grid()
 
-    # fig.tight_layout()
+    fig.tight_layout()
 
     image_path = "./figures/" + name.split('/')[-1] + ".png"
     plt.savefig(image_path)

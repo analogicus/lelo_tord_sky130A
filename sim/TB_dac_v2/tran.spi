@@ -19,7 +19,7 @@
 .param TRF = 10p
 .param AVDD = {vdda}
 
-.param f_CLK1 = 250kHz
+.param f_CLK1 = 125kHz
 .param T_CLK1 = {1/f_CLK1}
  
 .param f_CLK2 = 4MegHz
@@ -31,18 +31,25 @@
 
 .param delay = 1us
 
+.param numberofcurrentsources = 8
+
 *-----------------------------------------------------------------
 * FORCE
 *-----------------------------------------------------------------
 VSS   VSS   0    dc 0V
 VDD   VDD   VSS  dc {AVDD}
 VSLEEP SLEEP VSS pwl 0.25us {AVDD} 0.3us 0V
-VB0   b0    VSS  pulse({AVDD} 0V {delay} {T_CLK1/100} {T_CLK1/100} {T_CLK1*4/8} {T_CLK1})
-VB1   b1    VSS  pulse({AVDD} 0V {delay} {T_CLK1/100} {T_CLK1/100} {T_CLK1*5/8} {T_CLK1})
-VB2   b2    VSS  pulse({AVDD} 0V {delay} {T_CLK1/100} {T_CLK1/100} {T_CLK1*6/8} {T_CLK1})
-VB3   b3    VSS  pulse({AVDD} 0V {delay} {T_CLK1/100} {T_CLK1/100} {T_CLK1*7/8} {T_CLK1})
-VB4   b4    VSS  pulse(0V {AVDD} {4*delay} {T_CLK2/100} {T_CLK2/100} {T_CLK2*ratio} {T_CLK2})
-* VB4   b4    VSS  dc 0V
+VB0   b0    VSS  pulse({AVDD} 0V {delay} {T_CLK1/100} {T_CLK1/100} {T_CLK1*8/16} {T_CLK1})
+VB1   b1    VSS  pulse({AVDD} 0V {delay} {T_CLK1/100} {T_CLK1/100} {T_CLK1*9/16} {T_CLK1})
+VB2   b2    VSS  pulse({AVDD} 0V {delay} {T_CLK1/100} {T_CLK1/100} {T_CLK1*10/16} {T_CLK1})
+VB3   b3    VSS  pulse({AVDD} 0V {delay} {T_CLK1/100} {T_CLK1/100} {T_CLK1*11/16} {T_CLK1})
+VB4   b4    VSS  pulse({AVDD} 0V {delay} {T_CLK1/100} {T_CLK1/100} {T_CLK1*12/16} {T_CLK1})
+VB5   b5    VSS  pulse({AVDD} 0V {delay} {T_CLK1/100} {T_CLK1/100} {T_CLK1*13/16} {T_CLK1})
+VB6   b6    VSS  pulse({AVDD} 0V {delay} {T_CLK1/100} {T_CLK1/100} {T_CLK1*14/16} {T_CLK1})
+VB7   b7    VSS  pulse({AVDD} 0V {delay} {T_CLK1/100} {T_CLK1/100} {T_CLK1*15/16} {T_CLK1})
+
+VBT   bt    VSS  pulse(0V {AVDD} {6*delay} {T_CLK2/100} {T_CLK2/100} {T_CLK2*ratio} {T_CLK2})
+* VBT   bt    VSS  dc 0V
 
 *-----------------------------------------------------------------
 * DUT
@@ -53,15 +60,15 @@ VB4   b4    VSS  pulse(0V {AVDD} {4*delay} {T_CLK2/100} {T_CLK2/100} {T_CLK2*rat
 * PROBE
 *----------------------------------------------------------------
 * .option savecurrents
-* .save all
+.save all
 
-.save v(vdiode)
-.save v(xdut.x1.pbias) v(xdut.x1.nbias)
-.save v(b0) v(b1) v(b2) v(b3) v(b4)
-.save v(xdut.x1.b0_n) v(xdut.x1.b1_n) v(xdut.x1.b2_n) v(xdut.x1.b3_n) v(xdut.x1.b4_n)
-.save v(xdut.x1.v0) v(xdut.x1.v1) v(xdut.x1.v2) v(xdut.x1.v3) v(xdut.x1.v4)
-.save v(xdut.x1.vctrl) v(xdut.x1.vctrl2)¨
-.save v(vdd) v(vss) v(sleep)
+* .save v(vdiode)
+* .save v(xdut.x1.pbias) v(xdut.x1.nbias)
+* .save v(b0) v(b1) v(b2) v(b3) v(b4)
+* .save v(xdut.x1.b0_n) v(xdut.x1.b1_n) v(xdut.x1.b2_n) v(xdut.x1.b3_n) v(xdut.x1.b4_n)
+* .save v(xdut.x1.v0) v(xdut.x1.v1) v(xdut.x1.v2) v(xdut.x1.v3) v(xdut.x1.v4)
+* .save v(xdut.x1.vctrl) v(xdut.x1.vctrl2)¨
+* .save v(vdd) v(vss) v(sleep)
 
 *----------------------------------------------------------------
 * NGSPICE control

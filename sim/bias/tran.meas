@@ -6,24 +6,38 @@ load {cicname}.raw
 let v(v1) = v(xdut.v1)
 let v(v2) = v(xdut.v2)
 let v(v3) = v(xdut.v3)
-let vdiff = v(v1) - v(v2)
+let v(v4) = v(xdut.v4)
+let v(v5) = v(xdut.v5)
+let v(v6) = v(xdut.v6)
+
+let vdiff = v(v1) - v(nbias)
 let R     = 7535
-let ibias = (vdiff) / (16 * R)
+let ibias1 = (vdiff) / (3*16*R + 2*R + 4*R + 8*R)
+
+let ibias3 = (v(xdut.x2.xxa1.int_0) - v(xdut.x2.xxa1.int_1)) / R
+
+* let ibias5 = @m.xdut.x8.xm1.msky130_fd_pr__pfet_01v8[id]
 
 echo MEAS_START
 
-meas tran vnbias find v(nbias) at=49ns
-meas tran vpbias find v(pbias) at=49ns
-meas tran vsleep find v(sleep) at=49ns
-meas tran ibias find ibias at=49ns
+meas tran vnbias find v(nbias) at=199ns
+meas tran vpbias find v(pbias) at=199ns
+meas tran vsleep find v(sleep) at=199ns
+meas tran ibias2 find ibias1 at=199ns
+meas tran ibias4 find ibias3 at=199ns
+* meas tran ibias6 find ibias5 at=199ns
 
 set wr_singlescale
 set wr_vecnames
 option numdgt = 3
 wrdata {cicname}.out 
-+ v(v1) v(v2) v(v3)
++ v(v1) v(v2) v(v3) v(v4) v(v5) v(v6)
 + v(nbias) v(pbias) v(sleep) 
 + v(vss) v(vdd)
++ i(vss) i(vdd)
++ ibias1
++ ibias3
+* + ibias5
 
 echo "MEAS_END"
 .endc

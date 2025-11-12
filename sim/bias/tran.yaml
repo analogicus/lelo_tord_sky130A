@@ -11,7 +11,7 @@
 
 ibias:
   src:
-    - ibias
+    - ibias2
   name: Bias Current
   min: -20%
   typ: 2.55

@@ -5,5 +5,25 @@ load {cicname}.raw
 
 echo "MEAS_START"
 
+meas tran vin1 find v(in1) at=19ns
+meas tran vin2 find v(in2) at=19ns
+meas tran vin3 find v(in3) at=19ns
+meas tran vin4 find v(in4) at=19ns
+
+meas tran vout1 find v(out1) at=19ns
+meas tran vout2 find v(out2) at=19ns
+meas tran vout3 find v(out3) at=19ns
+meas tran vout4 find v(out4) at=19ns
+
+set wr_singlescale
+set wr_vecnames
+option numdgt = 3
+wrdata {cicname}.out 
++ v(in1) v(in2) v(in3) v(in4)
++ v(out1) v(out2) v(out3) v(out4)
++ v(vss) v(vdd)
++ i(v1) i(v2) i(v3) i(v4)
++ i(vdd) i(vss)
+
 echo "MEAS_END"
 .endc

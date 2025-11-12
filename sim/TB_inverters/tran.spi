@@ -25,10 +25,10 @@
 *-----------------------------------------------------------------
 VSS VSS 0   dc  0
 VDD VDD VSS dc  {AVDD}
-V1  in1 vss pwl 10ns 0V 20ns {AVDD}
-V2  in2 vss pwl 10ns 0V 20ns {AVDD}
-V3  in3 vss pwl 10ns 0V 20ns {AVDD}
-V4  in4 vss pwl 10ns 0V 20ns {AVDD}
+V1  in1 vss pwl 0ns 0V 20ns {AVDD}
+V2  in2 vss pwl 0ns 0V 20ns {AVDD}
+V3  in3 vss pwl 0ns 0V 20ns {AVDD}
+V4  in4 vss pwl 0ns 0V 20ns {AVDD}
 
 *-----------------------------------------------------------------
 * DUT
@@ -38,7 +38,7 @@ V4  in4 vss pwl 10ns 0V 20ns {AVDD}
 *----------------------------------------------------------------
 * PROBE
 *----------------------------------------------------------------
-*.option savecurrents
+* .option savecurrents
 .save all
 
 *----------------------------------------------------------------
@@ -50,10 +50,10 @@ set color0=white
 set color1=black
 unset askquit
 
-optran 0 0 0 1n 1u 0
+optran 0 0 0 1ns 1us 0
 
 
-tran 1n 30n 1p
+tran 1ns 20ns 1ps
 write
 quit
 

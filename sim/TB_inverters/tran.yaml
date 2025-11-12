@@ -8,3 +8,14 @@
 #  scale: <scale, multiply result by scale>
 #  digits: <significant digits>
 #  unit: Unit
+
+vout1:
+ src:
+   - vout1
+ typ: 0.9
+ name: Inverter 1 output voltage
+ min: 0.0
+ max: 1.8
+ scale: 1e0
+ digits: 3
+ unit: V

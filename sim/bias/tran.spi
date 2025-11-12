@@ -17,15 +17,18 @@
 * PARAMETERS
 *-----------------------------------------------------------------
 .param TRF = 10p
-
 .param AVDD = {vdda}
+.param delay = 10ns
+.param rise = 1ns
+.param width = 100ns
+.param fall = 1ns
 
 *-----------------------------------------------------------------
 * FORCE
 *-----------------------------------------------------------------
-VSS  VSS  0     dc 0
-VDD  VDD  VSS   dc {AVDD}
-VSLEEP SLEEP VSS pwl 10ns 0V 10.1ns {AVDD} 19.9ns {AVDD} 20ns 0V
+VSS VSS 0   dc 0
+VDD VDD VSS dc {AVDD}
+VSLEEP SLEEP VSS pwl {delay} 0V {delay+rise} {AVDD} {delay+rise+width} {AVDD} {delay+rise+width+fall} 0V
 
 *-----------------------------------------------------------------
 * DUT
@@ -35,13 +38,14 @@ VSLEEP SLEEP VSS pwl 10ns 0V 10.1ns {AVDD} 19.9ns {AVDD} 20ns 0V
 *----------------------------------------------------------------
 * PROBE
 *----------------------------------------------------------------
-* .save all
-* .option savecurrents
-.save v(xdut.v1) v(xdut.v2) v(xdut.v3)
-.save v(pbias)
-.save v(nbias)
-.save v(sleep)
-.save v(vdd) v(vss)
+.save all
+.option savecurrents
+
+*.save v(xdut.v1) v(xdut.v2) v(xdut.v3) v(xdut.v4) v(xdut.v5) v(xdut.v6)
+*.save v(pbias)
+*.save v(nbias)
+*.save v(sleep)
+*.save v(vdd) v(vss)
 
 *----------------------------------------------------------------
 * NGSPICE control
@@ -52,10 +56,10 @@ set color0=white
 set color1=black
 unset askquit
 
-optran 0 0 0 1n 1u 0
+optran 0 0 0 1ns 1us 0
 
 
-tran 1n 50n 1p
+tran 1ns 200ns 1ps
 write
 quit
 
