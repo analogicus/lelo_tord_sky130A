@@ -3,7 +3,41 @@
 
 load {cicname}.raw
 
+let v(ctrl) = v(xdut.ctrl)
+let v(ctrl_b) = v(xdut.ctrl_b)
+let v(b0_n) = v(xdut.b0_n) 
+let v(b1_n) = v(xdut.b1_n) 
+let v(b2_n) = v(xdut.b2_n) 
+let v(b3_n) = v(xdut.b3_n)
+let v(b4_n) = v(xdut.b4_n)
+let v(b5_n) = v(xdut.b5_n)
+let v(b6_n) = v(xdut.b6_n)
+let v(b7_n) = v(xdut.b7_n)
+let v(bt_n) = v(xdut.bt_n)
+let v(v0) = v(xdut.v0)
+let v(v1) = v(xdut.v1) 
+let v(v2) = v(xdut.v2) 
+let v(v3) = v(xdut.v3)
+let v(v4) = v(xdut.v4)
+let v(v5) = v(xdut.v5) 
+let v(v6) = v(xdut.v6)
+let v(v7) = v(xdut.v7)
+let v(pbias) = v(xdut.pbias)
+let v(nbias) = v(xdut.nbias)
+
 echo "MEAS_START"
+
+set wr_singlescale
+set wr_vecnames
+option numdgt = 3
+wrdata {cicname}.out 
++ v(iout)
++ v(ctrl) v(ctrl_b)
++ v(b0) v(b1) v(b2) v(b3) v(b4) v(b5) v(b6) v(b7) v(bt)
++ v(b0_n) v(b1_n) v(b2_n) v(b3_n) v(b4_n) v(b5_n) v(b6_n) v(b7_n) v(bt_n)
++ v(v0) v(v1) v(v2) v(v3) v(v4) v(v5) v(v6) v(v7)
++ v(pbias) v(nbias) 
++ v(vss) v(vdd) v(sleep)
 
 echo "MEAS_END"
 .endc

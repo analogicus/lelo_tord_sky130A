@@ -28,33 +28,39 @@ def main(name):
     print(df.columns)
     print(df.head())
 
-    fig,axs = plt.subplots(8, 1)
+    idx_dict = {'diff': 0, 'diode': 1, 'control': 2, 'bits': 3, 'sleep': 4}  # Adjust this index if the position of 'sleep' plot changes
+
+    fig,axs = plt.subplots(len(idx_dict), 1, sharex=True)
     fig.suptitle('DAC currents and voltages')
     fig.set_size_inches(8, 12)
 
-    axs[0].plot(df['time'], df['v(vdiode)'], label='diode voltage')
-    # axs[0].set_title("Diode voltage")
-    # axs[0].set_yticks([0, 0.25, 0.5, 0.75, 1.0])
+    axs[idx_dict['diff']].plot(df['time'], df['v(v1)']-df['v(v2)'], label='v(v1) - v(v2)')
+    axs[idx_dict['diff']].plot(df['time'], df['v(v1a)']-df['v(v2a)'], label='v(v1a) - v(v2a)')
+    axs[idx_dict['diff']].plot(df['time'], df['v(v1b)']-df['v(v2b)'], label='v(v1b) - v(v2b)')
 
-    axs[1].plot(df['time'], df['v(vctrl)'], label='control')
+    axs[idx_dict['diode']].plot(df['time'], df['v(v1)'], label='v1')
+    axs[idx_dict['diode']].plot(df['time'], df['v(v1a)'], label='v1a')
+    axs[idx_dict['diode']].plot(df['time'], df['v(v1b)'], label='v1b')
+    axs[idx_dict['diode']].plot(df['time'], df['v(v2)'], label='v2')
+    axs[idx_dict['diode']].plot(df['time'], df['v(v2a)'], label='v2a')
+    axs[idx_dict['diode']].plot(df['time'], df['v(v2b)'], label='v2b')
+    axs[idx_dict['diode']].plot(df['time'], df['v(v2c)'], label='v2c')
 
-    axs[2].plot(df['time'], df['v(b0)'], label='bit 0')
-    axs[3].plot(df['time'], df['v(b1)'], label='bit 1')
-    axs[4].plot(df['time'], df['v(b2)'], label='bit 2')
-    axs[5].plot(df['time'], df['v(b3)'], label='bit 3')
-    # axs[1].set_title("Select lines")
-    # axs[1].set_yticks([0, 0.9, 1.8])
+    axs[idx_dict['control']].plot(df['time'], df['v(x1.ctl)'], label='x1.ctl')
+    axs[idx_dict['control']].plot(df['time'], df['v(x2.ctl)'], label='x2.ctl')
+    axs[idx_dict['bits']].plot(df['time'], df['v(b0)'], label='bit 0')
+    axs[idx_dict['bits']].plot(df['time'], df['v(b1)'], label='bit 1')
+    axs[idx_dict['bits']].plot(df['time'], df['v(b2)'], label='bit 2')
+    axs[idx_dict['bits']].plot(df['time'], df['v(b3)'], label='bit 3')
+    axs[idx_dict['bits']].plot(df['time'], df['v(b4)'], label='bit 4')
+    axs[idx_dict['bits']].plot(df['time'], df['v(b5)'], label='bit 5')
+    axs[idx_dict['bits']].plot(df['time'], df['v(b6)'], label='bit 6')
+    axs[idx_dict['bits']].plot(df['time'], df['v(b7)'], label='bit 7')
 
-    axs[6].plot(df['time'], df['v(b4)'], label='bit 4')
-    # axs[2].set_title("Counter")
-    # axs[2].set_yticks([])
-
-    axs[7].plot(df['time'], df['v(sleep)'], label='sleep')
-    # axs[3].set_title("Sleep voltage")
-    # axs[3].set_yticks([0, 0.9, 1.8])
+    axs[idx_dict['sleep']].plot(df['time'], df['v(slp)'], label='sleep')
+    axs[list(idx_dict.values())[-1]].set(xlabel='Time (ns)', ylabel='Voltage (V)')
 
     for ax in axs:
-      ax.set(xlabel='Time (ns)', ylabel='Voltage (V)')
       ax.legend()
       ax.grid()
 

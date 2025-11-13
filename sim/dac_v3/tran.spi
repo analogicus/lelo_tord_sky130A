@@ -18,16 +18,37 @@
 *-----------------------------------------------------------------
 .param TRF = 10p
 .param AVDD = {vdda}
-.param f_CLK1 = 2MegHz
-.param T_CLK2 = {1/f_CLK1}
-.param f_CLK2 = 32MegHz
+
+.param delay = 1us
+
+.param f_CLK1 = 250kHz
+.param T_CLK1 = {1/f_CLK1}
+
+.param f_CLK2 = 8MegHz
 .param T_CLK2 = {1/f_CLK2}
+
+* Duty cycle is given in percent (%)
+.param dutycycle = 50
+.param ratio = {dutycycle/100}
 
 *-----------------------------------------------------------------
 * FORCE
 *-----------------------------------------------------------------
-VSS  VSS  0     dc 0
-VDD  VDD_1V8  VSS  pwl 0 0 10n {AVDD}
+VSS VSS 0   dc  0V
+VDD VDD VSS dc  {AVDD}
+VSLEEP SLEEP VSS pwl 0.25us {AVDD} 0.3us 0V
+
+VB0 b0  VSS pulse({AVDD} 0V {delay} {T_CLK1/100} {T_CLK1/100} {T_CLK1*(8/16)} {T_CLK1})
+VB1 b1  VSS pulse({AVDD} 0V {delay} {T_CLK1/100} {T_CLK1/100} {T_CLK1*(9/16)} {T_CLK1})
+VB2 b2  VSS pulse({AVDD} 0V {delay} {T_CLK1/100} {T_CLK1/100} {T_CLK1*(10/16)} {T_CLK1})
+VB3 b3  VSS pulse({AVDD} 0V {delay} {T_CLK1/100} {T_CLK1/100} {T_CLK1*(11/16)} {T_CLK1})
+VB4 b4  VSS pulse({AVDD} 0V {delay} {T_CLK1/100} {T_CLK1/100} {T_CLK1*(12/16)} {T_CLK1})
+VB5 b5  VSS pulse({AVDD} 0V {delay} {T_CLK1/100} {T_CLK1/100} {T_CLK1*(13/16)} {T_CLK1})
+VB6 b6  VSS pulse({AVDD} 0V {delay} {T_CLK1/100} {T_CLK1/100} {T_CLK1*(14/16)} {T_CLK1})
+VB7 b7  VSS pulse({AVDD} 0V {delay} {T_CLK1/100} {T_CLK1/100} {T_CLK1*(15/16)} {T_CLK1})
+
+VBT bt  VSS pulse(0V {AVDD} {6*delay} {T_CLK2/100} {T_CLK2/100} {T_CLK2*ratio} {T_CLK2})
+* VBT   bt    VSS  dc 0V
 
 *-----------------------------------------------------------------
 * DUT
@@ -37,8 +58,17 @@ VDD  VDD_1V8  VSS  pwl 0 0 10n {AVDD}
 *----------------------------------------------------------------
 * PROBE
 *----------------------------------------------------------------
+* .option savecurrents
 .save all
 
+* .save v(iout)
+* .save v(xdut.pbias) v(xdut.nbias)
+* .save v(b0) v(b1) v(b2) v(b3) v(b4) v(b5) v(b6) v(b7) 
+* .save v(bt) v(bt_n)
+* .save v(xdut.b0_n) v(xdut.b1_n) v(xdut.b2_n) v(xdut.b3_n) v(xdut.b4_n) v(xdut.b5_n) v(xdut.b6_n) v(xdut.b7_n)
+* .save v(xdut.v0) v(xdut.v1) v(xdut.v2) v(xdut.v3) v(xdut.v4) v(xdut.v5) v(xdut.v6) v(xdut.v7)
+* .save v(xdut.vctrl) v(xdut.vctrl_b)
+* .save v(vdd) v(vss) v(sleep)
 
 *----------------------------------------------------------------
 * NGSPICE control
@@ -52,7 +82,7 @@ unset askquit
 optran 0 0 0 1n 1u 0
 
 
-tran 1n 10n 1p
+tran 1ns 15us 1ps
 write
 quit
 

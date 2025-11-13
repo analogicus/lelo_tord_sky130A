@@ -17,14 +17,16 @@
 * PARAMETERS
 *-----------------------------------------------------------------
 .param TRF = 10p
+.param AVDD = {vdda}
+
 .param f_CLK = 2MegHz
 .param T_CLK = {1/f_CLK}
 .param f_CLK2 = 32MegHz
 .param T_CLK2 = {1/f_CLK2}
-.param dutycycle = 50
+
 * Duty cycle is given in percent (%)
+.param dutycycle = 50
 .param ratio = {dutycycle/100}
-.param AVDD = {vdda}
 
 *-----------------------------------------------------------------
 * FORCE
