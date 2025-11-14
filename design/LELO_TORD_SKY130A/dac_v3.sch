@@ -73,11 +73,6 @@ N 760 180 800 180 {lab=vdd}
 N 760 260 800 260 {lab=vss}
 N 840 220 880 220 {lab=b4_n}
 N 180 690 220 690 {lab=b0}
-N 280 620 300 620 {lab=sleep}
-N 420 630 440 630 {lab=nbias}
-N 420 610 440 610 {lab=pbias}
-N 280 640 300 640 {lab=vss}
-N 280 600 300 600 {lab=vdd}
 N 1300 410 1460 410 {lab=ctl}
 N 1260 300 1260 380 {lab=vdd}
 N 1080 540 1260 540 {lab=iout}
@@ -190,6 +185,11 @@ N 1560 180 1600 180 {lab=vdd}
 N 1560 260 1600 260 {lab=vss}
 N 1640 220 1680 220 {lab=bt_n}
 N 180 670 220 670 {lab=bt}
+N 320 630 340 630 {lab=sleep}
+N 640 630 660 630 {lab=nbias}
+N 640 610 660 610 {lab=pbias}
+N 320 650 340 650 {lab=vss}
+N 320 610 340 610 {lab=vdd}
 C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} 560 350 0 0 {name=x4 }
 C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} 720 350 0 0 {name=x6 }
 C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} 880 350 0 0 {name=x8 }
@@ -242,12 +242,7 @@ C {devices/lab_wire.sym} 1030 350 0 0 {name=p10 sig_type=std_logic lab=pbias
 }
 C {devices/lab_wire.sym} 550 350 0 0 {name=p12 sig_type=std_logic lab=pbias
 }
-C {LELO_TORD_SKY130A/bias.sym} 360 620 0 0 {name=x14}
 C {devices/ipin.sym} 180 620 0 0 {name=p33 lab=sleep}
-C {devices/lab_wire.sym} 440 610 0 1 {name=p13 sig_type=std_logic lab=pbias
-}
-C {devices/lab_wire.sym} 440 630 0 1 {name=p21 sig_type=std_logic lab=nbias
-}
 C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} 1300 410 0 1 {name=x11 }
 C {JNW_ATR_SKY130A/JNWATR_PCH_4C1F2.sym} 560 470 0 0 {name=x3 }
 C {JNW_ATR_SKY130A/JNWATR_PCH_4C1F2.sym} 720 470 0 0 {name=x5 }
@@ -273,14 +268,8 @@ C {devices/lab_wire.sym} 920 400 2 1 {name=p47 sig_type=std_logic lab=v6}
 C {devices/lab_wire.sym} 760 400 2 1 {name=p48 sig_type=std_logic lab=v5}
 C {devices/lab_wire.sym} 600 400 2 1 {name=p49 sig_type=std_logic lab=v4
 }
-C {devices/lab_wire.sym} 280 640 0 0 {name=p50 sig_type=std_logic lab=vss
-}
-C {devices/lab_wire.sym} 280 600 0 0 {name=p51 sig_type=std_logic lab=vdd
-}
 C {devices/opin.sym} 1310 540 0 0 {name=p54 lab=iout}
 C {devices/lab_wire.sym} 1630 660 0 0 {name=p52 sig_type=std_logic lab=vss
-}
-C {devices/lab_wire.sym} 280 620 0 0 {name=p53 sig_type=std_logic lab=sleep
 }
 C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} -100 350 0 0 {name=x1 }
 C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} 60 350 0 0 {name=x2 }
@@ -337,3 +326,14 @@ C {devices/lab_wire.sym} 1590 180 0 0 {name=p83 sig_type=std_logic lab=vdd}
 C {devices/lab_wire.sym} 1550 220 0 0 {name=p84 sig_type=std_logic lab=bt}
 C {devices/lab_wire.sym} 1650 220 0 1 {name=p85 sig_type=std_logic lab=bt_n}
 C {devices/ipin.sym} 180 670 0 0 {name=p86 lab=bt}
+C {devices/lab_wire.sym} 660 610 0 1 {name=p87 sig_type=std_logic lab=pbias
+}
+C {devices/lab_wire.sym} 660 630 0 1 {name=p88 sig_type=std_logic lab=nbias
+}
+C {devices/lab_wire.sym} 320 650 0 0 {name=p89 sig_type=std_logic lab=vss
+}
+C {devices/lab_wire.sym} 320 610 0 0 {name=p90 sig_type=std_logic lab=vdd
+}
+C {devices/lab_wire.sym} 320 630 0 0 {name=p91 sig_type=std_logic lab=sleep
+}
+C {LELO_TORD_SKY130A/bias_2p4u.sym} 490 630 0 0 {name=x33}

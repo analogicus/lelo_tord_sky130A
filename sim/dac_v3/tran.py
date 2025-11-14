@@ -37,7 +37,7 @@ def main(name):
     # axs[0].set_title("DAC output voltage")
     # ax[0].set_yticks([-5, -2.5, 0, 2.5, 5, 7.5])
   
-    axs[1].plot(df['time'], df['v(ctrl)'], label='ctrl')
+    axs[1].plot(df['time'], df['v(ctl)'], label='ctl')
     # axs[1].set_title("Time averaging control voltage")
     # axs[1].set_yticks([-0.6, 0, 0.6, 1.2])
 

@@ -3,9 +3,9 @@
 * Include
 *----------------------------------------------------------------
 #ifdef Lay
-.include ../../../work/lpe/bias_lpe.spi
+.include ../../../work/lpe/bias_2p4u_lpe.spi
 #else
-.include ../../../work/xsch/bias.spice
+.include ../../../work/xsch/bias_2p4u.spice
 #endif
 
 *-----------------------------------------------------------------
@@ -53,7 +53,7 @@ unset askquit
 optran 0 0 0 1ns 1us 0
 
 
-tran 1ns 200ns 1ps
+tran 0.1ns 200ns 1ps
 write
 quit
 

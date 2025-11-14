@@ -3,8 +3,8 @@
 
 load {cicname}.raw
 
-let v(ctrl) = v(xdut.ctrl)
-let v(ctrl_b) = v(xdut.ctrl_b)
+let v(ctl) = v(xdut.ctl)
+let v(ctlb) = v(xdut.ctlb)
 let v(b0_n) = v(xdut.b0_n) 
 let v(b1_n) = v(xdut.b1_n) 
 let v(b2_n) = v(xdut.b2_n) 
@@ -32,7 +32,7 @@ set wr_vecnames
 option numdgt = 3
 wrdata {cicname}.out 
 + v(iout)
-+ v(ctrl) v(ctrl_b)
++ v(ctl) v(ctlb)
 + v(b0) v(b1) v(b2) v(b3) v(b4) v(b5) v(b6) v(b7) v(bt)
 + v(b0_n) v(b1_n) v(b2_n) v(b3_n) v(b4_n) v(b5_n) v(b6_n) v(b7_n) v(bt_n)
 + v(v0) v(v1) v(v2) v(v3) v(v4) v(v5) v(v6) v(v7)

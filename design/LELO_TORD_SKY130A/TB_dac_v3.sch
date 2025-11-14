@@ -5,6 +5,7 @@ V {}
 S {}
 E {}
 N 1220 600 1260 600 {lab=VSS}
+N 1220 720 1260 720 {lab=B4}
 N 1220 700 1260 700 {lab=B3}
 N 1220 680 1260 680 {lab=B2}
 N 1220 660 1260 660 {lab=B1}
@@ -12,14 +13,21 @@ N 1220 640 1260 640 {lab=B0}
 N 1220 560 1260 560 {lab=VDD}
 N 1220 580 1260 580 {lab=SLP}
 N 1220 620 1260 620 {lab=BT}
+N 1220 780 1260 780 {lab=B7}
+N 1220 760 1260 760 {lab=B6}
+N 1220 740 1260 740 {lab=B5}
 N 2620 600 2660 600 {lab=VSS}
+N 2620 720 2660 720 {lab=B4}
 N 2620 700 2660 700 {lab=B3}
 N 2620 680 2660 680 {lab=B2}
 N 2620 660 2660 660 {lab=B1}
 N 2620 640 2660 640 {lab=B0}
 N 2620 560 2660 560 {lab=VDD}
-N 2620 580 2660 580 {lab=SLP}
+N 2620 580 2660 580 {lab=SLEEP}
 N 2620 620 2660 620 {lab=BT}
+N 2620 780 2660 780 {lab=B7}
+N 2620 760 2660 760 {lab=B6}
+N 2620 740 2660 740 {lab=B5}
 N 1720 560 1720 640 {lab=SRC1}
 N 2160 1120 2160 1180 {lab=V2C}
 N 2120 1080 2140 1080 {lab=VSS}
@@ -111,14 +119,20 @@ N 1220 920 1260 920 {lab=SWBGR1}
 N 1220 940 1260 940 {lab=SWBGR2}
 N 1220 970 1260 970 {lab=SWDRN1}
 N 1220 990 1260 990 {lab=SWDRN2}
+C {LELO_TORD_SKY130A/dac_v3.sym} 1410 670 0 0 {name=x1}
 C {devices/ipin.sym} 1220 660 0 0 {name=p17 lab=B1}
 C {devices/ipin.sym} 1220 680 0 0 {name=p18 lab=B2}
 C {devices/ipin.sym} 1220 700 0 0 {name=p19 lab=B3}
+C {devices/ipin.sym} 1220 720 0 0 {name=p20 lab=B4}
 C {devices/ipin.sym} 1220 640 0 0 {name=p7 lab=B0}
 C {devices/ipin.sym} 1220 600 0 0 {name=p1 lab=VSS}
 C {devices/ipin.sym} 1220 560 0 0 {name=p2 lab=VDD}
 C {devices/ipin.sym} 1220 580 0 0 {name=p3 lab=SLP}
 C {devices/ipin.sym} 1220 620 0 0 {name=p4 lab=BT}
+C {devices/ipin.sym} 1220 740 0 0 {name=p5 lab=B5}
+C {devices/ipin.sym} 1220 760 0 0 {name=p6 lab=B6}
+C {devices/ipin.sym} 1220 780 0 0 {name=p8 lab=B7}
+C {LELO_TORD_SKY130A/dac_v3.sym} 2470 670 0 1 {name=x2}
 C {devices/lab_wire.sym} 2160 560 0 1 {name=p41 sig_type=std_logic lab=SRC2}
 C {devices/lab_wire.sym} 1720 560 0 0 {name=p43 sig_type=std_logic lab=SRC1}
 C {sky130_fd_pr/pnp_05v5.sym} 1700 1210 0 0 {name=Q1
@@ -186,6 +200,10 @@ C {devices/lab_wire.sym} 2630 660 0 1 {name=p13 sig_type=std_logic lab=B1}
 C {devices/lab_wire.sym} 2630 640 0 1 {name=p14 sig_type=std_logic lab=B0}
 C {devices/lab_wire.sym} 2630 680 0 1 {name=p15 sig_type=std_logic lab=B2}
 C {devices/lab_wire.sym} 2630 700 0 1 {name=p16 sig_type=std_logic lab=B3}
+C {devices/lab_wire.sym} 2630 720 0 1 {name=p22 sig_type=std_logic lab=B4}
+C {devices/lab_wire.sym} 2630 740 0 1 {name=p23 sig_type=std_logic lab=B5}
+C {devices/lab_wire.sym} 2630 760 0 1 {name=p24 sig_type=std_logic lab=B6}
+C {devices/lab_wire.sym} 2630 780 0 1 {name=p25 sig_type=std_logic lab=B7}
 C {devices/ipin.sym} 1220 970 0 0 {name=p27 lab=SWDRN1}
 C {devices/ipin.sym} 1220 820 0 0 {name=p28 lab=SWBRN1}
 C {devices/ipin.sym} 1220 840 0 0 {name=p29 lab=SWBRN2}
@@ -195,5 +213,3 @@ C {devices/ipin.sym} 1220 920 0 0 {name=p32 lab=SWBGR1}
 C {devices/ipin.sym} 1220 940 0 0 {name=p33 lab=SWBGR2}
 C {devices/ipin.sym} 1220 990 0 0 {name=p34 lab=SWDRN2}
 C {devices/lab_wire.sym} 1410 1280 0 0 {name=p35 sig_type=std_logic lab=VSS}
-C {LELO_TORD_SKY130A/dac_v2.sym} 1410 630 0 0 {name=x1}
-C {LELO_TORD_SKY130A/dac_v2.sym} 2470 630 0 1 {name=x2}

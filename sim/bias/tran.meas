@@ -10,12 +10,12 @@ let v(v4) = v(xdut.v4)
 let v(v5) = v(xdut.v5)
 let v(v6) = v(xdut.v6)
 
+
 let vdiff = v(v1) - v(nbias)
 let R     = 7535
 let ibias1 = (vdiff) / (3*16*R + 2*R + 4*R + 8*R)
 
 let ibias3 = (v(xdut.x2.xxa1.int_0) - v(xdut.x2.xxa1.int_1)) / R
-
 * let ibias5 = @m.xdut.x8.xm1.msky130_fd_pr__pfet_01v8[id]
 
 echo MEAS_START
