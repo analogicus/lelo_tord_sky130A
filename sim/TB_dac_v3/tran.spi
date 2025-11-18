@@ -17,14 +17,59 @@
 * PARAMETERS
 *-----------------------------------------------------------------
 .param TRF = 10p
-
 .param AVDD = {vdda}
+
+.param delay = 6us
+
+.param f_CLK1 = 250kHz
+.param T_CLK1 = {1/f_CLK1}
+ 
+.param f_CLK2 = 8MegHz
+.param T_CLK2 = {1/f_CLK2}
+
+* Time averaging duty cycle is given in percent (%)
+.param dutycycle = 50
+.param ratio = {dutycycle/100}
 
 *-----------------------------------------------------------------
 * FORCE
 *-----------------------------------------------------------------
-VSS  VSS  0     dc 0
-VDD  VDD_1V8  VSS  pwl 0 0 10n {AVDD}
+VSS   VSS   0    dc 0V
+VDD   VDD   VSS  dc {AVDD}
+VSLP  SLP VSS pwl 0.25us {AVDD} 0.3us 0V
+
+VB0   B0    VSS  pulse({AVDD} 0V {delay} {T_CLK1/100} {T_CLK1/100} {T_CLK1*8/16} {T_CLK1})
+VB1   B1    VSS  pulse({AVDD} 0V {delay} {T_CLK1/100} {T_CLK1/100} {T_CLK1*9/16} {T_CLK1})
+VB2   B2    VSS  pulse({AVDD} 0V {delay} {T_CLK1/100} {T_CLK1/100} {T_CLK1*10/16} {T_CLK1})
+VB3   B3    VSS  pulse({AVDD} 0V {delay} {T_CLK1/100} {T_CLK1/100} {T_CLK1*11/16} {T_CLK1})
+VB4   B4    VSS  pulse({AVDD} 0V {delay} {T_CLK1/100} {T_CLK1/100} {T_CLK1*12/16} {T_CLK1})
+VB5   B5    VSS  pulse({AVDD} 0V {delay} {T_CLK1/100} {T_CLK1/100} {T_CLK1*13/16} {T_CLK1})
+VB6   B6    VSS  pulse({AVDD} 0V {delay} {T_CLK1/100} {T_CLK1/100} {T_CLK1*14/16} {T_CLK1})
+VB7   B7    VSS  pulse({AVDD} 0V {delay} {T_CLK1/100} {T_CLK1/100} {T_CLK1*15/16} {T_CLK1})
+
+* VBT   BT    VSS  pulse(0V {AVDD} {2*delay} {T_CLK2/100} {T_CLK2/100} {T_CLK2*ratio} {T_CLK2})
+* VBT   BT    VSS  dc 0V
+VBT   BT    VSS  pulse(0V {AVDD} 11000ns {T_CLK2/100} {T_CLK2/100} {T_CLK2*ratio} {T_CLK2})
+
+VSWBRANCH1 SWBRN1 VSS dc {AVDD}
+VSWBRANCH2 SWBRN2 VSS dc {AVDD}
+* VSWBRANCH1 SWBRN1 VSS dc 0
+* VSWBRANCH2 SWBRN2 VSS dc 0
+
+* VSWCAP1 SWCAP1 VSS dc {AVDD}
+* VSWCAP2 SWCAP2 VSS dc {AVDD}
+VSWCAP1 SWCAP1 VSS dc 0
+VSWCAP2 SWCAP2 VSS dc 0
+
+VSWBGR1 SWBGR1 VSS dc {AVDD}
+VSWBGR2 SWBGR2 VSS dc {AVDD}
+* VSWBGR1 SWBGR1 VSS dc 0
+* VSWBGR2 SWBGR2 VSS dc 0
+
+* VSWDRAIN1 SWDRAIN1 VSS dc {AVDD}
+* VSWDRAIN2 SWDRAIN2 VSS dc {AVDD}
+VSWDRAIN1 SWDRN1 VSS dc 0
+VSWDRAIN2 SWDRN2 VSS dc 0
 
 *-----------------------------------------------------------------
 * DUT
@@ -34,8 +79,17 @@ VDD  VDD_1V8  VSS  pwl 0 0 10n {AVDD}
 *----------------------------------------------------------------
 * PROBE
 *----------------------------------------------------------------
+* .option savecurrents
 .save all
 
+* .save v(iout)
+* .save v(xdut.x1.pbias) v(xdut.x1.nbias)
+* .save v(b0) v(b1) v(b2) v(b3) v(b4) v(b5) v(b6) v(b7) 
+* .save v(bt)
+* .save v(xdut.x1.b0_n) v(xdut.x1.b1_n) v(xdut.x1.b2_n) v(xdut.x1.b3_n) v(xdut.x1.b4_n)
+* .save v(xdut.x1.v0) v(xdut.x1.v1) v(xdut.x1.v2) v(xdut.x1.v3) v(xdut.x1.v4)
+* .save v(xdut.x1.vctrl) v(xdut.x1.vctrl_b)
+* .save v(vdd) v(vss) v(sleep)
 
 *----------------------------------------------------------------
 * NGSPICE control
@@ -46,10 +100,11 @@ set color0=white
 set color1=black
 unset askquit
 
-optran 0 0 0 1n 1u 0
+
+optran 0 0 0 1ns 1us 0
 
 
-tran 1n 10n 1p
+tran 1ns 20us 1ps
 write
 quit
 

@@ -46,16 +46,12 @@ def main(name):
     axs[idx_dict['diode']].plot(df['time'], df['v(v2b)'], label='v2b')
     axs[idx_dict['diode']].plot(df['time'], df['v(v2c)'], label='v2c')
 
-    axs[idx_dict['control']].plot(df['time'], df['v(x1.ctl)'], label='x1.ctl')
-    axs[idx_dict['control']].plot(df['time'], df['v(x2.ctl)'], label='x2.ctl', linestyle='--')
+    axs[idx_dict['control']].plot(df['time'], df['v(x1.vt)'], label='x1.vt')
+    axs[idx_dict['control']].plot(df['time'], df['v(x2.vt)'], label='x2.vt', linestyle='--')
     axs[idx_dict['bits']].plot(df['time'], df['v(b0)'], label='bit 0')
     axs[idx_dict['bits']].plot(df['time'], df['v(b1)'], label='bit 1')
     axs[idx_dict['bits']].plot(df['time'], df['v(b2)'], label='bit 2')
     axs[idx_dict['bits']].plot(df['time'], df['v(b3)'], label='bit 3')
-    axs[idx_dict['bits']].plot(df['time'], df['v(b4)'], label='bit 4')
-    axs[idx_dict['bits']].plot(df['time'], df['v(b5)'], label='bit 5')
-    axs[idx_dict['bits']].plot(df['time'], df['v(b6)'], label='bit 6')
-    axs[idx_dict['bits']].plot(df['time'], df['v(b7)'], label='bit 7')
 
     axs[idx_dict['sleep']].plot(df['time'], df['v(slp)'], label='sleep')
     axs[list(idx_dict.values())[-1]].set(xlabel='Time (ns)')
