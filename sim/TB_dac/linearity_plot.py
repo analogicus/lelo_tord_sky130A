@@ -148,8 +148,8 @@ image_path = f"./figures/linearity_plot_{view}_{'_'.join(args)}_tb_dac"
 fig.savefig(image_path + ".png")
 print("Figure saved to " + image_path + ".png")
 
-# with open(f"{image_path}.fig.pickle", 'wb') as file:
-#     pickle.dump(fig, file)
-# print("Figure pickled to " + image_path + ".fig.pickle")
+with open(f"{image_path}.fig.pickle", 'wb') as file:
+    pickle.dump(fig, file)
+print("Figure pickled to " + image_path + ".fig.pickle")
 
 plt.show()
