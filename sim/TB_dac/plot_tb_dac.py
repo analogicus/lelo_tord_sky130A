@@ -2,6 +2,7 @@ import pandas as pd
 import yaml
 import matplotlib.pyplot as plt
 import sys
+import pickle
 
 fend = ".out" # File extension for output files, can be changed to ".yaml", ".csv" or others if needed
 view = "Sch" # Sets schematic is default view if none is specified
@@ -21,7 +22,7 @@ for arg in args:
         view = "Lay"
         print(f"View set to: {view}")
 
-if len(args) == 0 or all(arg not in ["typical", "etc", "mc", "sch", "lay", "Sch", "Lay"] for arg in args):
+if len(args) == 0 or all(arg not in ["typical", "etc", "mc"] for arg in args):
     print("Wrong/No arguments provided. Please specify a combination of 'typical', 'etc', and 'mc' to be plotted.")
     sys.exit(1)
 
@@ -37,10 +38,11 @@ if "mc" in args:
     for n in range(1, 30):
         files.append(f"output_tran/tran_{view}GtKttmmTtVt_{n}")
 
-fig, axs = plt.subplot_mosaic([['top_left', 'right'],
-                                ['bottom_left', 'right']], 
+fig, axs = plt.subplot_mosaic([['top_left', 'top_right'],
+                               ['bottom_left', 'bottom_right']],
+                                sharex=True,
                                 figsize=(12, 12))
-fig.suptitle('Bias Currents Comparison  (target 2.4 uA)', fontsize=16)
+fig.suptitle('DAC Currents Comparison')
 
 for file in files:
     fname = file + fend
@@ -51,33 +53,41 @@ for file in files:
 
     # print(df.columns)
     # print(df.head())
+    # print(df.tail())
 
     labelname = fname.split('/')[-1].replace(fend, '')
 
-    axs['top_left'].plot(df['time'], df['ibias']*1e6, label=f'{labelname}, ibias') # in uA
-
+    axs['top_left'].plot(df['time'], df['v(vout1)'], label=f'{labelname}', linestyle='solid')
     line_color = axs['top_left'].lines[-1].get_color()
-
-    axs['bottom_left'].plot(df['time'], -df['i(vdd)']/2*1e6, color=line_color, linestyle='--', label=f'{labelname}, i(vdd)/2') # in uA
-    
-    axs['right'].plot(df['time'], df['ibias']*1e6, color=line_color, label=f'{labelname}, ibias') # in uA
-    axs['right'].plot(df['time'], -df['i(vdd)']/2*1e6, color=line_color, linestyle='--', label=f'{labelname}, i(vdd)/2') # in uA
+    axs['bottom_left'].plot(df['time'], df['v(vout1)'], color=line_color, linestyle='solid')
+    axs['top_left'].plot(df['time'], df['v(vout2)'], color=line_color, linestyle='dashed')
+    axs['top_right'].plot(df['time'], df['v(vout2)'], color=line_color, linestyle='dashed')
+    axs['top_left'].plot(df['time'], df['v(vout3)'], color=line_color, linestyle='dotted')
+    axs['bottom_right'].plot(df['time'], df['v(vout3)'], color=line_color, linestyle='dotted')
 
 for ax in axs.values():
-    ax.set(xlabel='Time (ns)', ylabel='Current (uA)')
+    ax.set_ylabel('Voltage (V)')
     ax.grid()
 
-axs['top_left'].set_title("Bias Current Comparison (calculated)")
-axs['bottom_left'].set_title("Bias Current Comparison (half of measured VDD current)")
-axs['right'].set_title("Bias Current Comparison (Both methods)")
+axs['bottom_left'].set_xlabel('Time (ns)')
+axs['bottom_right'].set_xlabel('Time (ns)')
 
-axs['right'].legend(fontsize='small')
+axs['top_left'].set_title("DAC Output Voltages Comparison")
+axs['bottom_left'].set_title("DAC1 Output Voltage over transistor")
+axs['top_right'].set_title("DAC2 Output Voltage over small resistor")
+axs['bottom_right'].set_title("DAC3 Output Voltage over large resistor")
 
+axs['top_left'].legend(fontsize='small')
 
-fig.tight_layout()
+# fig.tight_layout()
 
-image_path = "./figures/plot_bias.png"
-plt.savefig(image_path)
-print("Figure saved to " + image_path)
+image_path = f"./figures/plot_{view}_{'_'.join(args)}_tb_dac"
+fig.savefig(image_path + ".png")
+print("Figure saved to " + image_path + ".png")
+
+with open(f"{image_path}.fig.pickle", 'wb') as file:
+    pickle.dump(fig, file)
+print("Figure pickled to " + image_path + ".fig.pickle")
 
 plt.show()
+

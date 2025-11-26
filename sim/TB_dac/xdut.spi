@@ -1,2 +1,2 @@
 *Automatic generated instance fron ../../tech/scripts/genxdut TB_dac
-XDUT b0 b1 b2 b3 sleep vss vdd d3 d2 d1 d0 clk Q_not  TB_dac
+XDUT B0 B1 B2 B3 SLP B4 B5 B6 B7 BT VSS VDD VOUT2 VOUT1 VOUT3  TB_dac

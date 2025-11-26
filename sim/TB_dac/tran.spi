@@ -17,50 +17,47 @@
 * PARAMETERS
 *-----------------------------------------------------------------
 .param TRF = 10p
-
-.param f_CLK = 32MegHz
-.param T_CLK = {1/f_CLK}
-
 .param AVDD = {vdda}
 
-.param f_CLK2 = 200kHz
-.param T_CLK2 = {1/f_CLK2}
+.param f_CLK = 1MegHz
+.param T_CLK = {1/f_CLK}
+
+.param TD = {T_CLK*3}
+.param TR = {T_CLK/100}
+.param TF = {TR}
+.param PW = {T_CLK}
+.param PER = {T_CLK}
 
 *-----------------------------------------------------------------
 * FORCE
 *-----------------------------------------------------------------
-VSS VSS 0 dc 0
-VDD VDD VSS dc {AVDD}
+VSS  VSS  0    DC 0
+VDD  VDD  VSS  DC {AVDD}
+VSLP SLP  VSS  PWL 0.25us {AVDD} 0.3us 0V
 
-VD0 d0 vss dc 0V
-VD1 d1 vss dc 0V
-VD2 d2 vss dc 0V
-VD3 d3 vss pwl 100ns 0V 100.1ns {AVDD}
-VCLK CLK VSS pulse(0V {AVDD} {T_CLK/10} {T_CLK/10000} {T_CLK/10000} {T_CLK/2} {T_CLK})
+VB0  B0   VSS  PULSE({AVDD} 0V {TD} {TR} {TF} {PW*8/16} {PER})
+VB1  B1   VSS  PULSE({AVDD} 0V {TD} {TR} {TF} {PW*9/16} {PER})
+VB2  B2   VSS  PULSE({AVDD} 0V {TD} {TR} {TF} {PW*10/16} {PER})
+VB3  B3   VSS  PULSE({AVDD} 0V {TD} {TR} {TF} {PW*11/16} {PER})
+VB4  B4   VSS  PULSE({AVDD} 0V {TD} {TR} {TF} {PW*12/16} {PER})
+VB5  B5   VSS  PULSE({AVDD} 0V {TD} {TR} {TF} {PW*13/16} {PER})
+VB6  B6   VSS  PULSE({AVDD} 0V {TD} {TR} {TF} {PW*14/16} {PER})
+VB7  B7   VSS  PULSE({AVDD} 0V {TD} {TR} {TF} {PW*15/16} {PER})
 
-VDACCLK dac_CLK VSS pulse(0V {AVDD} {T_CLK2/10} {T_CLK2/100} {T_CLK2/100} {T_CLK2/2} {T_CLK2})
-VRST dac_RST VSS pwl 1.3us {AVDD} 1.9us 0V 
-VSLEEP SLEEP VSS pwl 0.25us {AVDD} 0.3us 0V
-
+* VBT  BT   VSS  PULSE({AVDD} 0V {TD} {TR} {TF} {PW*8/16} {PER})
+VBT  BT   VSS  DC 0V
 
 *-----------------------------------------------------------------
 * DUT
 *-----------------------------------------------------------------
 .include ../xdut.spi
-.include ../svinst.spi
-
-* Translate names
-
-VB0 b.0 b0 dc 0
-VB1 b.1 b1 dc 0
-VB2 b.2 b2 dc 0
-VB3 b.3 b3 dc 0
+* .include ../svinst.spi
 
 *----------------------------------------------------------------
 * PROBE
 *----------------------------------------------------------------
 .save all
-*.option savecurrents
+.option savecurrents
 
 *----------------------------------------------------------------
 * NGSPICE control
@@ -71,15 +68,13 @@ set color0=white
 set color1=black
 unset askquit
 
-* Override the default digital output bridge.
-pre_set auto_bridge_d_out =
-     + ( ".model auto_dac dac_bridge(out_low = 0.0 out_high = 1.8)"
-     +   "auto_bridge%d [ %s ] [ %s ] auto_dac" )
+echo "T_CLK = " {T_CLK}
+
 
 optran 0 0 0 1n 1u 0
 
 
-tran 1n 75us 1p
+tran 1n 15us 1p
 write
 quit
 
