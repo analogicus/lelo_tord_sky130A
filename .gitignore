@@ -16,5 +16,5 @@ work/lvs
 work/gds
 work/drc
 work/xsch
-sim/*figures*.pickle
-sim/*figures*.fig.pickle
+*.pickle
+*.fig.pickle
