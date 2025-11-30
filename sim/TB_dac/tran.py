@@ -57,13 +57,13 @@ def main(name):
     print(f'target_times_idx = {target_times_idx}')
 
     axs[idx_dict['v(vout1)']].plot(df['time'], df['v(vout1)'], label='vout1', color=line_color1)
-    axs[idx_dict['v(vout1)']].plot(target_times, df.loc[target_times_idx]['v(vout1)'], marker='o', linestyle='dashed', color='red', label='vout1 levels')
+    axs[idx_dict['v(vout1)']].plot(target_times, df.loc[target_times_idx]['v(vout1)'], marker='o', linestyle='dashed', color='gray', label='vout1 levels')
 
     axs[idx_dict['v(vout2)']].plot(df['time'], df['v(vout2)'], label='vout2', color=line_color2)
-    axs[idx_dict['v(vout2)']].plot(target_times, df.loc[target_times_idx]['v(vout2)'], marker='o', linestyle='dashed', color='red', label='vout2 levels')
+    axs[idx_dict['v(vout2)']].plot(target_times, df.loc[target_times_idx]['v(vout2)'], marker='o', linestyle='dashed', color='gray', label='vout2 levels')
 
     axs[idx_dict['v(vout3)']].plot(df['time'], df['v(vout3)'], label='vout3', color=line_color3)
-    axs[idx_dict['v(vout3)']].plot(target_times, df.loc[target_times_idx]['v(vout3)'], marker='o', linestyle='dashed', color='red', label='vout3 levels')
+    axs[idx_dict['v(vout3)']].plot(target_times, df.loc[target_times_idx]['v(vout3)'], marker='o', linestyle='dashed', color='gray', label='vout3 levels')
 
     axs[idx_dict['bx']].plot(df['time'], df['v(b0)'], label='b0', color='brown')
     axs[idx_dict['bx']].plot(df['time'], df['v(b1)'], label='b1', color='pink')

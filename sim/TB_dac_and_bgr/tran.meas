@@ -1,0 +1,149 @@
+* Measure TB_dac_and_bgr
+.control
+
+echo loading {cicname}.raw
+load {cicname}.raw
+
+let v(x1.vt) = v(xdut.x1.vt)
+let v(x1.ctl) = v(xdut.x1.ctl)
+let v(x1.ctlb) = v(xdut.x1.ctlb)
+let v(x1.b0_n) = v(xdut.x1.b0_n) 
+let v(x1.b1_n) = v(xdut.x1.b1_n) 
+let v(x1.b2_n) = v(xdut.x1.b2_n) 
+let v(x1.b3_n) = v(xdut.x1.b3_n)
+let v(x1.b4_n) = v(xdut.x1.b4_n)
+let v(x1.b5_n) = v(xdut.x1.b5_n)
+let v(x1.b6_n) = v(xdut.x1.b6_n)
+let v(x1.b7_n) = v(xdut.x1.b7_n)
+let v(x1.bt_n) = v(xdut.x1.bt_n)
+let v(x1.v0) = v(xdut.x1.v0)
+let v(x1.v1) = v(xdut.x1.v1) 
+let v(x1.v2) = v(xdut.x1.v2) 
+let v(x1.v3) = v(xdut.x1.v3)
+let v(x1.v4) = v(xdut.x1.v4)
+let v(x1.v5) = v(xdut.x1.v5) 
+let v(x1.v6) = v(xdut.x1.v6)
+let v(x1.v7) = v(xdut.x1.v7)
+let v(pbias) = v(xdut.x1.pbias)
+let v(nbias) = v(xdut.x1.nbias)
+
+let v(iout) = v(xdut.iout)
+
+let v(src1) = v(xdut.src1) 
+let v(src2) = v(xdut.src2)
+let v(src3) = v(xdut.src3)
+let v(v1a) = v(xdut.v1a)
+let v(v1b) = v(xdut.v1b)
+let v(v2a) = v(xdut.v2a)
+let v(v2b) = v(xdut.v2b)
+let v(v2c) = v(xdut.v2c)
+let v(r1) = v(xdut.r1)
+let v(r2) = v(xdut.r2)
+let v(vref) = v(xdut.vref)
+
+
+echo "MEAS_START"
+
+meas tran v1a_ find v(v1a) at=6.us
+meas tran v2a_ find v(v2a) at=6.4us
+meas tran v1b_ find v(xdut.v1b) at=6.4us
+meas tran v2b_ find v(xdut.v2b) at=6.4us
+meas tran vout_ find v(vout) at=6.4us
+meas tran vref_ find v(vref) at=6.4us
+meas tran v1_ find v(v1) at=6.4us
+meas tran v2_ find v(v2) at=6.4us
+
+set wr_singlescale
+set wr_vecnames
+option numdgt = 5
+echo writing to {cicname}.out
+wrdata {cicname}.out 
++ v(b0) v(b1) v(b2) v(b3) v(b4) v(b5) v(b6) v(b7) v(bt)
++ v(SWBRN1) v(SWBRN2) v(SWBRN3) v(SWBGR1) v(SWBGR2) v(SWCAP1) v(SWCAP2) v(SWCAP3) v(SWDRN1) v(SWDRN2) v(SWDRN3)
++ v(iout)
++ v(src1) v(src2) v(src3)
++ v(vref) v(vout)
++ v(v1) 
++ v(v1a) v(v1b) 
++ v(v2) 
++ v(v2a) v(v2b) v(v2c)
++ v(r1) v(r2)
++ v(x1.ctl) v(x1.ctlb) v(x1.vt)
++ v(x1.b0_n) v(x1.b1_n) v(x1.b2_n) v(x1.b3_n) v(x1.b4_n) v(x1.b5_n) v(x1.b6_n) v(x1.b7_n) v(x1.bt_n)
++ v(x1.v0) v(x1.v1) v(x1.v2) v(x1.v3) v(x1.v4) v(x1.v5) v(x1.v6) v(x1.v7)
++ v(pbias) v(nbias) 
++ v(vss) v(vdd) v(slp)
++ i(v.xdut.v1)
+
+set fend = .raw
+foreach vtemp -50 -25 0 25 50 75 100 125
+	echo loading {cicname}_$vtemp$fend
+    load {cicname}_$vtemp$fend
+    echo vtemp is $vtemp
+
+    * Echos needed to give script time to make measurments or something ¯\_(ツ)_/¯
+    echo
+    echo
+    echo
+	* meas tran i_r1_$vtemp find i(@r.xdut.r1[i]) at=4u
+
+	meas tran v1a_$vtemp find v(xdut.v1a) at=6.4us
+    meas tran v2a_$vtemp find v(xdut.v2a) at=6.4us
+    meas tran v1b_$vtemp find v(xdut.v1b) at=6.4us
+    meas tran v2b_$vtemp find v(xdut.v2b) at=6.4us
+    meas tran vout_$vtemp find v(vout) at=6.4us
+    meas tran vref_$vtemp find v(xdut.vref) at=6.4us
+    meas tran v1_$vtemp find v(v1) at=6.4us
+    meas tran v2_$vtemp find v(v2) at=6.4us
+
+    * Echos needed to give script time to make measurments or something ¯\_(ツ)_/¯
+    echo
+    echo
+    echo
+
+    let index = 1
+    foreach bx b0 b1 b2 b3 b4 b5 b6 b7
+        echo bx is {$bx}
+
+        if index = 1
+            set meas_start = 1.4us
+            * echo meas_start is {$meas_start}
+        end
+        if index = 2
+            set meas_start = 2.4us
+            * echo meas_start is {$meas_start}
+        end
+        if index = 3
+            set meas_start = 3.4us
+            * echo meas_start is {$meas_start}
+        end
+        if index = 4
+            set meas_start = 4.4us
+            * echo meas_start is {$meas_start}
+        end
+        if index = 5
+            set meas_start = 5.4us
+            * echo meas_start is {$meas_start}
+        end
+        if index = 6
+            set meas_start = 6.4us
+            * echo meas_start is {$meas_start}
+        end
+        if index = 7
+            set meas_start = 7.4us
+            * echo meas_start is {$meas_start}
+        end
+        if index = 8
+            set meas_start = 8.4us
+            * echo meas_start is {$meas_start}
+        end
+
+        meas tran vout_{$vtemp}_{$bx} find v(vout) at={$meas_start}
+        meas tran vref_{$vtemp}_{$bx} find v(xdut.vref) at={$meas_start}
+
+        let index = index + 1
+    end
+end
+
+echo "MEAS_END"
+.endc

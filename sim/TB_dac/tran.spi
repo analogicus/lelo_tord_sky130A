@@ -44,8 +44,8 @@ VB5  B5   VSS  PULSE({AVDD} 0V {TD} {TR} {TF} {PW*13/16} {PER})
 VB6  B6   VSS  PULSE({AVDD} 0V {TD} {TR} {TF} {PW*14/16} {PER})
 VB7  B7   VSS  PULSE({AVDD} 0V {TD} {TR} {TF} {PW*15/16} {PER})
 
-* VBT  BT   VSS  PULSE({AVDD} 0V {TD} {TR} {TF} {PW*8/16} {PER})
-VBT  BT   VSS  DC 0V
+VBT  BT   VSS  PULSE({AVDD} 0V {TD} {TR} {TF} {PW*8/16} {PER})
+* VBT  BT   VSS  DC 0V
 
 *-----------------------------------------------------------------
 * DUT

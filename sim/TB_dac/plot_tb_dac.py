@@ -10,21 +10,21 @@ view = "Sch" # Sets schematic is default view if none is specified
 
 args = sys.argv[1:]
 
+if len(args) == 0 or all(arg not in ["typical", "etc", "mc"] for arg in args):
+    print("Wrong/No arguments provided. Please specify a combination of 'typical', 'etc', and 'mc' to plot. View may be specified with 'Sch' or 'Lay' as arguments.")
+    sys.exit(1)
+
 for arg in args:
     print(f"Argument {arg} of type: {type(arg)} recieved.")
     if arg in ["Sch", "Lay"]:
         view = arg
         print(f"View set to: {view}")
-    elif arg in ["sch"]:
+    elif arg =="sch":
         view = "Sch"
         print(f"View set to: {view}")
-    elif arg in ["lay"]:
+    elif arg =="lay":
         view = "Lay"
         print(f"View set to: {view}")
-
-if len(args) == 0 or all(arg not in ["typical", "etc", "mc"] for arg in args):
-    print("Wrong/No arguments provided. Please specify a combination of 'typical', 'etc', and 'mc' to be plotted.")
-    sys.exit(1)
 
 files = []
 if "typical" in args:
