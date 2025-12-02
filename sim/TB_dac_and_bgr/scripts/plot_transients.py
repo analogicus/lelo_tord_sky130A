@@ -73,6 +73,14 @@ def plot_tran(name):
     axs[idx_dict['switches']].plot(df['time'], df['v(swdrn3)'], label='SWDRN3')
 
     axs[idx_dict['sources']].plot(df['time'], df['i(v.xdut.v1)']*1e6, label='iout', color='tab:blue') # in uA
+    
+    for tstart in [2400, 4400, 6400, 8400, 10400, 12400, 14400, 16400]: # times given in nano seconds (ns)
+        axs[idx_dict['sources']].axvline(x=tstart, color='gray', linestyle='--')
+                
+    handle = axs[idx_dict['sources']].lines[-1]
+    handle.set_label(f'Measurement times')
+  
+
     ax2 = axs[idx_dict['sources']].twinx()
     ax2.plot(df['time'], df['v(vref)'], label='vref', linestyle='solid', color='tab:orange')
     ax2.plot(df['time'], df['v(vout)'], label='vout', linestyle='dashed', color='tab:green')
@@ -106,7 +114,7 @@ def plot_tran(name):
     fig2.suptitle('DAC and BGR Testbench - Temperature Variation', fontsize=16)
 
     yamlfile = name + '.yaml'
-    print(f"Processing file: {yamlfile}")
+    # print(f"Processing file: {yamlfile}")
 
     labelname = yamlfile.split('/')[-1].replace('.yaml', '')
     # print(f"Label name: {labelname}")
@@ -131,7 +139,8 @@ def plot_tran(name):
                     temps_out.append(temp_out)
                     v_out.append(value)
             else:
-                print(f"Skipping key: {key} as it does not end with a digit of ''.\n key: {key}, value: {value}")
+                continue
+                # print(f"Skipping key: {key} as it does not end with a digit of ''.\n key: {key}, value: {value}")
 
         # print("Temps ref:", temps_ref)
         # print("V ref:", v_ref)

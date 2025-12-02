@@ -21,7 +21,7 @@ def main(name):
   # with open(yamlfile,"w") as fo:
   #   yaml.dump(obj,fo)
 
-  number_of_linearity_points = 9
+  number_of_linearity_points = 8
 
   fname = name + ".out"
   df = pd.read_csv(fname, sep='\s+')
@@ -51,7 +51,7 @@ def main(name):
     axs[idx_dict['combined']].plot(df['time'], df['v(vout3)'], label='vout3 over large resistor (16*7525 Ohm = 120400 Ohm)')
     line_color3 = axs[idx_dict['combined']].lines[-1].get_color()
 
-    target_times = [8500 + i*62 for i in range(number_of_linearity_points)] # 62 ns is Tclk and should have been 62.5 ns, but with rise and fall times it might be better to add a bit more
+    target_times = [2400 + i*2000 for i in range(number_of_linearity_points)] # 62 ns is Tclk and should have been 62.5 ns, but with rise and fall times it might be better to add a bit more
     print(f'x = {target_times}')
     target_times_idx = [df.index[df['time'] == xi][0] for xi in target_times]
     print(f'target_times_idx = {target_times_idx}')
@@ -94,8 +94,8 @@ def main(name):
     fig.savefig(image_path + ".png")
     print("Figure saved to " + image_path + ".png")  
 
-    with open(f"{image_path}.fig.pickle", 'wb') as file:
-        pickle.dump(fig, file)
-    print("Figure pickled to " + image_path + ".fig.pickle")
+    # with open(f"{image_path}.fig.pickle", 'wb') as file:
+    #     pickle.dump(fig, file)
+    # print("Figure pickled to " + image_path + ".fig.pickle")
 
     plt.show()

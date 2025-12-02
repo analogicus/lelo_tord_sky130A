@@ -85,6 +85,7 @@ foreach vtemp -50 -25 0 25 50 75 100 125
     echo
     echo
     echo
+    
 	* meas tran i_r1_$vtemp find i(@r.xdut.r1[i]) at=4u
 
 	meas tran v1a_$vtemp find v(xdut.v1a) at=6.4us
@@ -106,38 +107,31 @@ foreach vtemp -50 -25 0 25 50 75 100 125
         echo bx is {$bx}
 
         if index = 1
-            set meas_start = 1.4us
-            * echo meas_start is {$meas_start}
+            set meas_start = 2.4us
         end
         if index = 2
-            set meas_start = 2.4us
-            * echo meas_start is {$meas_start}
+            set meas_start = 4.4us
         end
         if index = 3
-            set meas_start = 3.4us
-            * echo meas_start is {$meas_start}
+            set meas_start = 6.4us
         end
         if index = 4
-            set meas_start = 4.4us
-            * echo meas_start is {$meas_start}
+            set meas_start = 8.4us
         end
         if index = 5
-            set meas_start = 5.4us
-            * echo meas_start is {$meas_start}
+            set meas_start = 10.4us
         end
         if index = 6
-            set meas_start = 6.4us
-            * echo meas_start is {$meas_start}
+            set meas_start = 12.4us
         end
         if index = 7
-            set meas_start = 7.4us
-            * echo meas_start is {$meas_start}
+            set meas_start = 14.4us
         end
         if index = 8
-            set meas_start = 8.4us
-            * echo meas_start is {$meas_start}
+            set meas_start = 16.4us
         end
 
+        echo meas_start is {$meas_start}
         meas tran vout_{$vtemp}_{$bx} find v(vout) at={$meas_start}
         meas tran vref_{$vtemp}_{$bx} find v(xdut.vref) at={$meas_start}
 

@@ -66,7 +66,7 @@ fig, axs = plt.subplot_mosaic([['top_left', 'top_middle', 'top_right'],
 fig.suptitle('DAC Linearity', fontsize=16)
 
 target_times = [2400 + i*2000 for i in range(number_of_linearity_points)] # 62 ns is Tclk and should have been 62.5 ns, but with rise and fall times it might be better to add a bit more
-# print(f'x = {target_times}')
+print(f'x = {target_times}')
 
 axs_list1 = [axs['top_left'], axs['top_middle'], axs['top_right']]
 axs_list2 = [axs['bottom_left'], axs['bottom_middle'], axs['bottom_right']]
@@ -83,11 +83,24 @@ for file in files:
     df['time'] = df['time'] * 1e9 # in ns
 
     # print(df.columns)
-    # print(df.head())
-    # print(df.tail())
+    print(df.head())
+    print(df.tail())
 
-    target_times_idx = [df.index[df['time'] == xi][0] for xi in target_times]
-    # print(f'target_times_idx = {target_times_idx}')
+    # target_times_idx = [df.index[df['time'] == xi][0] for xi in target_times]
+
+    # determine target times indices with tolerance
+    target_times_idx = []
+    tolerance = 50e-6*1e9  # small tolerance to account for floating point precision
+    print(tolerance)
+    for xi in target_times:
+        idx = df.index[(df['time'] >= xi - tolerance) & (df['time'] <= xi + tolerance)]
+        if not idx.empty:
+            target_times_idx.append(idx[0])
+        else:
+            raise ValueError(f"Time value {xi} ns not found in the data.")
+        
+    print(f'target_times_idx = {target_times_idx}')
+
 
     labelname = fname.split('_')[-1].replace(fend, '')
 

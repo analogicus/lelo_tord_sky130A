@@ -43,6 +43,12 @@ temp: netlist
 tord: netlist
 	cicsim run --name ${VIEW}_tord ${TB} ${OPT} ${VIEW} Gt "Kss,Kff,Ktt,Ksf,Kfs" Tt "Vl,Vt,Vh"
 
+everything: netlist
+	cicsim run --name ${VIEW}_everything ${TB} ${OPT} ${VIEW} Gt "Ktt,Kss,Kff,Ksf,Kfs" "Tt,Th,Tl" "Vl,Vt,Vh"
+
+emc: netlist
+	cicsim run --name ${VIEW}_emc --count 10 ${TB} ${OPT} ${VIEW} Gt "Ktt,Kss,Kff,Ksf,Kfs,Kttmm" "Tt,Th,Tl" "Vl,Vt,Vh"
+
 summary:
 	cicsim summary --output "README.md"
 

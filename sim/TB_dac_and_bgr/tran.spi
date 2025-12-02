@@ -34,7 +34,7 @@
 
 * Stepping Current out of DAC
 .param step_start = 0.5us
-.param step_length = 1.0us
+.param step_length = 2.0us
 
 *-----------------------------------------------------------------
 * FORCE
@@ -62,8 +62,8 @@ VB6  B6   VSS  dc pwl {step_start + 6*step_length} 0V {step_start + 6*step_lengt
 VB7  B7   VSS  dc pwl {step_start + 7*step_length} 0V {step_start + 7*step_length + 0.01us} {AVDD}
 
 * VBT  BT   VSS  PULSE({AVDD} 0V {2*TD} {TR} {TF} {PW*ratio} {PER})
-* VBT  BT   VSS  PULSE(0V {AVDD} {2*TD} {TR} {TF} {PW*ratio} {PER})
-VBT  BT   VSS  DC 0V
+VBT  BT   VSS  PULSE(0V {AVDD} {2*TD} {TR} {TF} {PW*ratio} {PER})
+* VBT  BT   VSS  DC 0V
 
 VSWBRANCH1 SWBRN1 VSS dc {AVDD}
 VSWBRANCH2 SWBRN2 VSS dc {AVDD}
@@ -143,20 +143,19 @@ set color0=white
 set color1=black
 unset askquit
 
-
 optran 0 0 0 1ns 1us 0
 
 
-tran 1ns 9.9us 1ps
-write
+set simulation_length = 16.5us
 
+tran 1ns $simulation_length 1ps
+write
 
 set fend = .raw
 foreach vtemp -50 -25 0 25 50 75 100 125
 	option temp=$vtemp
-	tran 1ns 10us 1ps
+	tran 1ns $simulation_length 1ps
 	write {cicname}_$vtemp$fend
-    
 end
 
 quit

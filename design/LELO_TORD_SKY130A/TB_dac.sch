@@ -20,14 +20,14 @@ N 820 870 860 870 {lab=VSS}
 N 720 640 900 640 {lab=VOUT2}
 N 380 360 420 360 {lab=VSS}
 N 380 380 420 380 {lab=BT}
-N 380 400 420 400 {lab=#net1}
-N 380 420 420 420 {lab=#net2}
-N 380 440 420 440 {lab=#net3}
-N 380 460 420 460 {lab=#net4}
-N 380 480 420 480 {lab=#net5}
-N 380 500 420 500 {lab=#net6}
-N 380 520 420 520 {lab=#net7}
-N 380 540 420 540 {lab=#net8}
+N 380 400 420 400 {lab=B0}
+N 380 420 420 420 {lab=B1}
+N 380 440 420 440 {lab=B2}
+N 380 460 420 460 {lab=B3}
+N 380 480 420 480 {lab=B4}
+N 380 500 420 500 {lab=B5}
+N 380 520 420 520 {lab=B6}
+N 380 540 420 540 {lab=B7}
 N 380 660 420 660 {lab=SLP}
 N 380 640 420 640 {lab=VDD}
 N 380 680 420 680 {lab=VSS}
@@ -59,6 +59,23 @@ N 820 960 900 960 {lab=VOUT3}
 N 720 960 820 960 {lab=VOUT3}
 N 820 1130 820 1190 {lab=VSS}
 N 820 1130 840 1130 {lab=VSS}
+N 380 1280 420 1280 {lab=SLP}
+N 380 1260 420 1260 {lab=VDD}
+N 380 1300 420 1300 {lab=VSS}
+N 380 1320 420 1320 {lab=BT}
+N 380 1340 420 1340 {lab=B0}
+N 380 1360 420 1360 {lab=B1}
+N 380 1380 420 1380 {lab=B2}
+N 380 1400 420 1400 {lab=B3}
+N 380 1420 420 1420 {lab=B4}
+N 380 1440 420 1440 {lab=B5}
+N 380 1460 420 1460 {lab=B6}
+N 380 1480 420 1480 {lab=B7}
+N 860 1260 860 1390 {lab=VOUT3}
+N 860 1450 860 1490 {lab=VSS}
+N 820 1490 860 1490 {lab=VSS}
+N 820 1260 900 1260 {lab=VOUT3}
+N 720 1260 820 1260 {lab=VOUT3}
 C {devices/ipin.sym} 380 400 0 0 {name=p1 lab=B0
 }
 C {devices/ipin.sym} 380 420 0 0 {name=p2 lab=B1}
@@ -114,3 +131,19 @@ C {devices/lab_pin.sym} 380 1140 0 0 {name=p40 sig_type=std_logic lab=B5}
 C {devices/lab_pin.sym} 380 1160 0 0 {name=p41 sig_type=std_logic lab=B6}
 C {devices/lab_pin.sym} 380 1180 0 0 {name=p42 sig_type=std_logic lab=B7}
 C {JNW_TR_SKY130A/JNWTR_RPPO16.sym} 860 1090 1 0 {name=x5 }
+C {LELO_TORD_SKY130A/dac_v3.sym} 570 1370 0 0 {name=x6}
+C {devices/opin.sym} 900 1260 0 0 {name=p43 lab=VOUT4}
+C {devices/lab_wire.sym} 820 1490 0 0 {name=p44 sig_type=std_logic lab=VSS}
+C {devices/lab_pin.sym} 380 1260 0 0 {name=p45 sig_type=std_logic lab=VDD}
+C {devices/lab_pin.sym} 380 1280 0 0 {name=p46 sig_type=std_logic lab=SLP}
+C {devices/lab_pin.sym} 380 1300 0 0 {name=p47 sig_type=std_logic lab=VSS}
+C {devices/lab_pin.sym} 380 1320 0 0 {name=p48 sig_type=std_logic lab=BT}
+C {devices/lab_pin.sym} 380 1340 0 0 {name=p49 sig_type=std_logic lab=B0}
+C {devices/lab_pin.sym} 380 1360 0 0 {name=p50 sig_type=std_logic lab=B1}
+C {devices/lab_pin.sym} 380 1380 0 0 {name=p51 sig_type=std_logic lab=B2}
+C {devices/lab_pin.sym} 380 1400 0 0 {name=p52 sig_type=std_logic lab=B3}
+C {devices/lab_pin.sym} 380 1420 0 0 {name=p53 sig_type=std_logic lab=B4}
+C {devices/lab_pin.sym} 380 1440 0 0 {name=p54 sig_type=std_logic lab=B5}
+C {devices/lab_pin.sym} 380 1460 0 0 {name=p55 sig_type=std_logic lab=B6}
+C {devices/lab_pin.sym} 380 1480 0 0 {name=p56 sig_type=std_logic lab=B7}
+C {devices/vsource.sym} 860 1420 0 0 {name=V1 value=0 savecurrent=true}
