@@ -116,9 +116,9 @@ for file in files:
 
     x = np.array(range(number_of_linearity_points))
 
-    y1 = df.loc[target_times_idx]['v(vout1)']/VDD
-    y2 = df.loc[target_times_idx]['v(vout2)']/VDD
-    y3 = df.loc[target_times_idx]['v(vout3)']/VDD
+    y1 = df.loc[target_times_idx]['v(vout)']/VDD
+    y2 = df.loc[target_times_idx]['v(vout)']/VDD
+    y3 = df.loc[target_times_idx]['v(vout)']/VDD
 
     line_color = colors[i]
     i += 1

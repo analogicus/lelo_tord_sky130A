@@ -41,3 +41,14 @@ vout3:
   scale: 1e0
   digits: 3
   unit: V
+
+iout4:
+  src:
+    - iout4_1us
+  name: Output current of DAC x4 over large resistor (16*7525 Ohm = 120400 Ohm)
+  min: 0
+  typ: 2.4
+  max: 15
+  scale: 1e6
+  digits: 3
+  unit: uA

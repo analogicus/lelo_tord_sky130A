@@ -49,6 +49,10 @@ everything: netlist
 emc: netlist
 	cicsim run --name ${VIEW}_emc --count 10 ${TB} ${OPT} ${VIEW} Gt "Ktt,Kss,Kff,Ksf,Kfs,Kttmm" "Tt,Th,Tl" "Vl,Vt,Vh"
 
+# Custom corners can be defined here according to changing needs, such as a missing raw file for a specific corner
+custom: netlist
+	cicsim run --name ${VIEW}_custom ${TB} ${OPT} ${VIEW} Gt "Kss" "Th" "Vl"
+
 summary:
 	cicsim summary --output "README.md"
 

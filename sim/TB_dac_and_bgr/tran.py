@@ -25,3 +25,7 @@ def main(name):
   if name == "output_tran/tran_SchGtKttTtVt":
     pt.plot_tran(name)
     # print("Skipping tran_SchGtKttTtVt")
+
+if __name__ == "__main__":
+  default_name = "output_tran/tran_SchGtKttTtVt"
+  main(default_name)

@@ -14,7 +14,8 @@ def plot_tran(name):
     print(df.columns)
     print(df.head())
 
-    idx_dict = {'diff': 0, 'diode': 1, 'control': 2, 'bits': 3, 'sleep': 4, 'switches': 5, 'sources': 6}  # Adjust this index if the position of 'sleep' plot changes
+    # idx_dict = {'diff': 0, 'diode': 1, 'control': 2, 'bits': 3, 'sleep': 4, 'switches': 5, 'sources': 6}  # Adjust this index if the position of 'sleep' plot changes
+    idx_dict = {'diff': 0, 'diode': 1, 'control': 2, 'bits': 3, 'sleep': 4, 'sources': 5}  # Adjusted index dictionary without 'switches'
 
     fig,axs = plt.subplots(len(idx_dict), 1, sharex=True)
     fig.suptitle('DAC currents and voltages')
@@ -60,17 +61,17 @@ def plot_tran(name):
     axs[idx_dict['sleep']].plot(df['time'], df['v(slp)'], label='slp')
     axs[idx_dict['sleep']].plot(df['time'], df['v(bt)'], label='v(bt)', linestyle='solid')
 
-    axs[idx_dict['switches']].plot(df['time'], df['v(swbrn1)'], label='SWBRN1')
-    axs[idx_dict['switches']].plot(df['time'], df['v(swbrn2)'], label='SWBRN2')
-    axs[idx_dict['switches']].plot(df['time'], df['v(swbrn3)'], label='SWBRN3')
-    axs[idx_dict['switches']].plot(df['time'], df['v(swbgr1)'], label='SWBGR1')
-    axs[idx_dict['switches']].plot(df['time'], df['v(swbgr2)'], label='SWBGR2')
-    axs[idx_dict['switches']].plot(df['time'], df['v(swcap1)'], label='SWCAP1')
-    axs[idx_dict['switches']].plot(df['time'], df['v(swcap2)'], label='SWCAP2')
-    axs[idx_dict['switches']].plot(df['time'], df['v(swcap3)'], label='SWCAP3')
-    axs[idx_dict['switches']].plot(df['time'], df['v(swdrn1)'], label='SWDRN1')
-    axs[idx_dict['switches']].plot(df['time'], df['v(swdrn2)'], label='SWDRN2')
-    axs[idx_dict['switches']].plot(df['time'], df['v(swdrn3)'], label='SWDRN3')
+    # axs[idx_dict['switches']].plot(df['time'], df['v(swbrn1)'], label='SWBRN1')
+    # axs[idx_dict['switches']].plot(df['time'], df['v(swbrn2)'], label='SWBRN2')
+    # axs[idx_dict['switches']].plot(df['time'], df['v(swbrn3)'], label='SWBRN3')
+    # axs[idx_dict['switches']].plot(df['time'], df['v(swbgr1)'], label='SWBGR1')
+    # axs[idx_dict['switches']].plot(df['time'], df['v(swbgr2)'], label='SWBGR2')
+    # axs[idx_dict['switches']].plot(df['time'], df['v(swcap1)'], label='SWCAP1')
+    # axs[idx_dict['switches']].plot(df['time'], df['v(swcap2)'], label='SWCAP2')
+    # axs[idx_dict['switches']].plot(df['time'], df['v(swcap3)'], label='SWCAP3')
+    # axs[idx_dict['switches']].plot(df['time'], df['v(swdrn1)'], label='SWDRN1')
+    # axs[idx_dict['switches']].plot(df['time'], df['v(swdrn2)'], label='SWDRN2')
+    # axs[idx_dict['switches']].plot(df['time'], df['v(swdrn3)'], label='SWDRN3')
 
     axs[idx_dict['sources']].plot(df['time'], df['i(v.xdut.v1)']*1e6, label='iout', color='tab:blue') # in uA
     
@@ -102,7 +103,7 @@ def plot_tran(name):
             ax.legend()
         ax.grid()
 
-    # fig.tight_layout()
+    fig.tight_layout()
 
     image_path = "./figures/" + name.split('/')[-1] + ".png"
     plt.savefig(image_path)

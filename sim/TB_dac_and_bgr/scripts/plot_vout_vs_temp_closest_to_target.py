@@ -160,7 +160,7 @@ if __name__ == "__main__":
 
     fig.tight_layout()
 
-    image_path2 = f"./figures/plot_vout_closest_to_{target}_volt_args_{'_'.join(args)}_{view}_tb_dac_and_bgr"
+    image_path2 = f"./figures/plot_vout_closest_to_{target}_volt_{'_'.join(args)}_{view}_tb_dac_and_bgr"
     fig.savefig(image_path2 + ".png")
     print("Figure saved to " + image_path2 + ".png")
 
@@ -178,6 +178,7 @@ if __name__ == "__main__":
                 title=f'Average TC of plots: {Vl_avg_TC:.0f} ppm/°C')
     axVl.grid()
     figVl.tight_layout()
+    figVl.savefig(f"./figures/plot_vout_closest_to_{target}_volt_Vl_{'_'.join(args)}_{view}_tb_dac_and_bgr.png")
 
     axVt.set_title(f'Output voltage across temperatures (VDD: 1.8 V)')
     axVt.set_xlabel('Temperature (°C)')
@@ -186,6 +187,7 @@ if __name__ == "__main__":
                 title=f'Average TC of plots: {Vt_avg_TC:.0f} ppm/°C')
     axVt.grid()
     figVt.tight_layout()
+    figVt.savefig(f"./figures/plot_vout_closest_to_{target}_volt_Vt_{'_'.join(args)}_{view}_tb_dac_and_bgr.png")
 
     axVh.set_title(f'Output voltage across temperatures (VDD: 1.9 V)')
     axVh.set_xlabel('Temperature (°C)')
@@ -194,5 +196,6 @@ if __name__ == "__main__":
                 title=f'Average TC of plots: {Vh_avg_TC:.0f} ppm/°C')
     axVh.grid()
     figVh.tight_layout()
+    figVh.savefig(f"./figures/plot_vout_closest_to_{target}_volt_Vh_{'_'.join(args)}_{view}_tb_dac_and_bgr.png")
 
     plt.show()

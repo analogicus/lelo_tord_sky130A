@@ -146,7 +146,7 @@ if __name__ == "__main__":
 
     fig.tight_layout()
 
-    image_path = f"./figures/plot_temps_for_selected_bit_{args[0]}_{view}_tb_dac_and_bgr"
+    image_path = f"./figures/plot_vout_for_selected_bit_{args[0]}_{view}_tb_dac_and_bgr"
     fig.savefig(image_path + ".png")
     print("Figure saved to " + image_path + ".png")
 

@@ -13,8 +13,8 @@ if __name__ == "__main__":
 
     args = sys.argv[1:]
 
-    if len(args) == 0 or all(arg not in ["typical", "etc", "mc", "tord"] for arg in args):
-        print("Wrong/No arguments provided. Please specify a combination of 'typical', 'etc', 'mc', and 'tord' to plot. View may be specified with 'Sch' or 'Lay' as arguments.")
+    if len(args) == 0 or all(arg not in ["typical", "etc", "mc", "tord", "custom"] for arg in args):
+        print("Wrong/No arguments provided. Please specify a combination of 'typical', 'etc', 'mc', 'tord', and 'custom' to plot. View may be specified with 'Sch' or 'Lay' as arguments.")
         sys.exit(1)
 
     for arg in args:
@@ -51,7 +51,14 @@ if __name__ == "__main__":
         for corner in ["ff", "ss", "tt", "sf", "fs"]:
             for voltage in ["Vl", "Vt", "Vh"]:
                 files_tord.append(f"output_tran/tran_{view}GtK{corner}Tt{voltage}")
-                files.append(f"output_tran/tran_{view}GtK{corner}Tt{voltage}")
+                for temperature in ["Tl", "Tt", "Th"]:
+                    files.append(f"output_tran/tran_{view}GtK{corner}{temperature}{voltage}")
+
+    if "custom" in args:
+        for corner in ["ss", "ff", "sf", "fs"]:
+            for temperature in ["Th", "Tl"]:
+                for voltage in ["Vl","Vh", "Vt"]:
+                    files.append(f"output_tran/tran_{view}GtK{corner}{temperature}{voltage}")
 
     fig, axs = plt.subplot_mosaic([['Vl_error', 'Vt_error', 'Vh_error']], sharex=True, sharey=True, figsize=(20, 6))
     fig.suptitle('DAC and BGR Testbench Transient Errors')

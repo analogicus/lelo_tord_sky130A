@@ -14,8 +14,8 @@ N 1070 220 1070 270 {lab=VDD}
 N 1030 220 1070 220 {lab=VDD}
 N 1030 180 1030 240 {lab=VDD}
 N 1030 270 1070 270 {lab=VDD}
-N 1030 300 1030 440 {lab=PMOS_DRAIN}
-N 810 440 810 600 {lab=PMOS_DRAIN}
+N 1030 300 1030 440 {lab=VSRC}
+N 810 440 810 600 {lab=VSRC}
 N 1250 1080 1250 1140 {lab=V2C}
 N 1210 1040 1230 1040 {lab=VSS}
 N 1210 1040 1210 1240 {lab=VSS}
@@ -35,7 +35,7 @@ N 1170 680 1210 680 {lab=VDD}
 N 1170 650 1210 650 {lab=SWBRANCH2}
 N 1430 1070 1430 1240 {lab=VSS}
 N 1430 860 1430 1000 {lab=V2}
-N 1250 440 1250 600 {lab=PMOS_DRAIN}
+N 1250 440 1250 600 {lab=VSRC}
 N 810 700 810 850 {lab=V1A}
 N 630 1070 630 1240 {lab=VSS}
 N 810 870 810 1140 {lab=V1A}
@@ -93,8 +93,8 @@ N 510 440 550 440 {lab=IPTAT}
 N 570 490 570 530 {lab=VSS}
 N 570 360 570 400 {lab=VDD}
 N 600 360 600 400 {lab=SWPTAT}
-N 650 440 810 440 {lab=PMOS_DRAIN}
-N 1030 440 1250 440 {lab=PMOS_DRAIN}
+N 650 440 810 440 {lab=VSRC}
+N 1030 440 1250 440 {lab=VSRC}
 N 1690 1040 1710 1040 {lab=VSS}
 N 1690 1040 1690 1240 {lab=VSS}
 N 1730 1080 1730 1240 {lab=VSS}
@@ -135,13 +135,13 @@ N 1250 240 1270 240 {lab=VSS}
 N 1610 490 1610 530 {lab=VSS}
 N 1610 360 1610 400 {lab=VDD}
 N 1630 440 1830 440 {lab=VREF}
-N 2510 440 2510 1000 {lab=VAVG}
+N 2510 440 2510 1000 {lab=VOUT}
 N 2510 1070 2510 1240 {lab=VSS}
 N 2350 1240 2510 1240 {lab=VSS}
 N 1910 490 1910 530 {lab=VSS}
 N 1910 360 1910 400 {lab=VDD}
 N 1880 320 1880 400 {lab=SWREF}
-N 2510 440 2590 440 {lab=VAVG}
+N 2510 440 2590 440 {lab=VOUT}
 N 1580 320 1880 320 {lab=SWREF}
 N 1730 280 1730 320 {lab=SWREF}
 N 1580 320 1580 400 {lab=SWREF}
@@ -150,20 +150,20 @@ N 770 860 800 860 {lab=V1A}
 N 820 860 850 860 {lab=V1A}
 N 1210 860 1240 860 {lab=V2A}
 N 1260 860 1290 860 {lab=V2A}
-N 810 440 1030 440 {lab=PMOS_DRAIN}
+N 810 440 1030 440 {lab=VSRC}
 N 1630 1240 1950 1240 {lab=VSS}
-N 1250 440 1530 440 {lab=PMOS_DRAIN}
+N 1250 440 1530 440 {lab=VSRC}
 N 2390 490 2390 530 {lab=VSS}
 N 2390 360 2390 400 {lab=VDD}
 N 2210 440 2310 440 {lab=#net1}
-N 2410 440 2510 440 {lab=VAVG}
+N 2410 440 2510 440 {lab=VOUT}
 N 2360 360 2360 400 {lab=SWAVG}
 N 2650 1060 2650 1240 {lab=VSS}
-N 2650 860 2650 1000 {lab=VAVG}
+N 2650 860 2650 1000 {lab=VOUT}
 N 2610 1030 2650 1030 {lab=VSS}
 N 2610 1030 2610 1080 {lab=VSS}
 N 2610 1080 2650 1080 {lab=VSS}
-N 2510 860 2650 860 {lab=VAVG}
+N 2510 860 2650 860 {lab=VOUT}
 N 2510 1240 2650 1240 {lab=VSS}
 N 2690 1030 2730 1030 {lab=SWDRAIN5}
 N 2550 410 2590 410 {lab=V2}
@@ -267,7 +267,7 @@ C {devices/lab_wire.sym} 1910 520 0 1 {name=p59 sig_type=std_logic lab=VSS}
 C {JNW_TR_SKY130A/JNWTR_TGX2_CV.sym} 2300 440 0 0 {name=x21}
 C {devices/lab_wire.sym} 2390 390 0 1 {name=p57 sig_type=std_logic lab=VDD}
 C {devices/lab_wire.sym} 2390 520 0 1 {name=p60 sig_type=std_logic lab=VSS}
-C {devices/opin.sym} 2590 440 0 0 {name=p61 lab=VAVG}
+C {devices/opin.sym} 2590 440 0 0 {name=p61 lab=VOUT}
 C {devices/ipin.sym} 350 1060 0 0 {name=p62 lab=SWDRAIN2}
 C {devices/ipin.sym} 350 1090 0 0 {name=p63 lab=SWDRAIN3}
 C {devices/ipin.sym} 350 1120 0 0 {name=p64 lab=SWDRAIN4}
@@ -288,6 +288,6 @@ C {devices/lab_wire.sym} 1720 440 0 1 {name=p74 sig_type=std_logic lab=VREF}
 C {devices/lab_pin.sym} 470 860 0 0 {name=p75 sig_type=std_logic lab=V1}
 C {devices/lab_pin.sym} 510 440 0 0 {name=p76 sig_type=std_logic lab=IPTAT}
 C {devices/lab_pin.sym} 1590 860 0 1 {name=p77 sig_type=std_logic lab=V2}
-C {devices/lab_wire.sym} 1040 440 0 1 {name=p78 sig_type=std_logic lab=PMOS_DRAIN}
+C {devices/lab_wire.sym} 1040 440 0 1 {name=p78 sig_type=std_logic lab=VSRC}
 C {devices/lab_wire.sym} 990 1110 0 0 {name=p79 sig_type=std_logic lab=MIDLERES1}
 C {devices/lab_wire.sym} 1070 1110 0 1 {name=p80 sig_type=std_logic lab=MIDLERES2}

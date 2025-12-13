@@ -33,7 +33,7 @@
 .param ratio = {dutycycle/100}
 
 * Stepping Current out of DAC
-.param step_start = 0.5us
+.param step_start = 8us
 .param step_length = 2.0us
 
 *-----------------------------------------------------------------
@@ -92,17 +92,17 @@ echo "T_CLK = " {T_CLK}
 optran 0 0 0 1ns 1us 0
 
 
-set simulation_length = 16.5us
+set simulation_length = 25us
 
 tran 1ns $simulation_length 1ps
 write
 
-set fend = .raw
-foreach vtemp -50 -25 0 25 50 75 100 125
-	option temp=$vtemp
-	tran 1ns $simulation_length 1ps
-	write {cicname}_$vtemp$fend
-end
+* set fend = .raw
+* foreach vtemp -45 -25 0 25 50 75 100 125
+* 	option temp=$vtemp
+* 	tran 1ns $simulation_length 1ps
+* 	write {cicname}_$vtemp$fend
+* end
 
 quit
 

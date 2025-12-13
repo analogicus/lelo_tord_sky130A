@@ -152,7 +152,7 @@ tran 1ns $simulation_length 1ps
 write
 
 set fend = .raw
-foreach vtemp -50 -25 0 25 50 75 100 125
+foreach vtemp -45 -25 0 25 50 75 100 125
 	option temp=$vtemp
 	tran 1ns $simulation_length 1ps
 	write {cicname}_$vtemp$fend

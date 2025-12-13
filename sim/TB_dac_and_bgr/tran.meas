@@ -76,7 +76,7 @@ wrdata {cicname}.out
 + i(v.xdut.v1)
 
 set fend = .raw
-foreach vtemp -50 -25 0 25 50 75 100 125
+foreach vtemp -45 -25 0 25 50 75 100 125
 	echo loading {cicname}_$vtemp$fend
     load {cicname}_$vtemp$fend
     echo vtemp is $vtemp

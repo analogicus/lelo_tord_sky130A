@@ -20,8 +20,10 @@
 .param AVDD = {vdda}
 .param delay = 10ns
 .param rise = 1ns
-.param width = 100ns
+.param width = 250ns
 .param fall = 1ns
+
+* ny kommentar
 
 *-----------------------------------------------------------------
 * FORCE
@@ -53,7 +55,7 @@ unset askquit
 optran 0 0 0 1ns 1us 0
 
 
-tran 0.1ns 200ns 1ps
+tran 0.1ns 400ns 1ps
 write
 quit
 

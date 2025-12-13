@@ -7,7 +7,7 @@ print(args)
 
 if len(args) != 1:
     print("No path provided as argument. Assumes default path to pickled figure.")
-    image_path = './figures/plot_Sch_typical_tb_dac.fig.pickle'
+    image_path = './figures/tb_dac_plot_tran_Sch_typical.fig.pickle'
 else:
     image_path = args[0]
 

@@ -72,6 +72,29 @@ let v(x3.v7) = v(xdut.x3.v7)
 let v(x3.pbias) = v(xdut.x3.pbias)
 let v(x3.nbias) = v(xdut.x3.nbias)
 
+let v(x4.vt) = v(xdut.x4.vt)
+let v(x4.ctl) = v(xdut.x4.ctl)
+let v(x4.ctlb) = v(xdut.x4.ctlb)
+let v(x4.b0_n) = v(xdut.x4.b0_n) 
+let v(x4.b1_n) = v(xdut.x4.b1_n) 
+let v(x4.b2_n) = v(xdut.x4.b2_n) 
+let v(x4.b3_n) = v(xdut.x4.b3_n)
+let v(x4.b4_n) = v(xdut.x4.b4_n)
+let v(x4.b5_n) = v(xdut.x4.b5_n)
+let v(x4.b6_n) = v(xdut.x4.b6_n)
+let v(x4.b7_n) = v(xdut.x4.b7_n)
+let v(x4.bt_n) = v(xdut.x4.bt_n)
+let v(x4.v0) = c(xdut.x4.v0)
+let v(x4.v1) = v(xdut.x4.v1) 
+let v(x4.v2) = v(xdut.x4.v2) 
+let v(x4.v3) = v(xdut.x4.v3)
+let v(x4.v4) = v(xdut.x4.v4)
+let v(x4.v5) = v(xdut.x4.v5) 
+let v(x4.v6) = v(xdut.x4.v6)
+let v(x4.v7) = v(xdut.x4.v7)
+let v(x4.pbias) = v(xdut.x4.pbias)
+let v(x4.nbias) = v(xdut.x4.nbias)
+
 
 let tclk = 62.5ns
 let startpoint = 8500ns
@@ -82,14 +105,15 @@ echo "MEAS_START"
 meas tran vout1_1us find v(vout1) at=1us
 meas tran vout2_1us find v(vout2) at=1us
 meas tran vout3_1us find v(vout3) at=1us
+meas tran iout4_1us find i(v.xdut.v1) at=1us
 
 set wr_singlescale
 set wr_vecnames
-option numdgt = 3
+option numdgt = 5
 wrdata {cicname}.out 
 + v(b0) v(b1) v(b2) v(b3) v(b4) v(b5) v(b6) v(b7) v(bt)
 + v(vss) v(vdd) v(slp)
-+ v(vout1) v(vout2) v(vout3)
++ v(vout1) v(vout2) v(vout3) v(vout4)
 + v(x1.ctl) v(x1.ctlb) v(x1.vt)
 + v(x1.b0_n) v(x1.b1_n) v(x1.b2_n) v(x1.b3_n) v(x1.b4_n) v(x1.b5_n) v(x1.b6_n) v(x1.b7_n) v(x1.bt_n)
 + v(x1.v0) v(x1.v1) v(x1.v2) v(x1.v3) v(x1.v4) v(x1.v5) v(x1.v6) v(x1.v7)
@@ -102,7 +126,11 @@ wrdata {cicname}.out
 + v(x3.b0_n) v(x3.b1_n) v(x3.b2_n) v(x3.b3_n) v(x3.b4_n) v(x3.b5_n) v(x3.b6_n) v(x3.b7_n) v(x3.bt_n)
 + v(x3.v0) v(x3.v1) v(x3.v2) v(x3.v3) v(x3.v4) v(x3.v5) v(x3.v6) v(x3.v7)
 + v(x3.nbias) v(x3.pbias)
-* + i(v.xdut.v1)
++ v(x4.ctl) v(x4.ctlb) v(x4.vt)
++ v(x4.b0_n) v(x4.b1_n) v(x4.b2_n) v(x4.b3_n) v(x4.b4_n) v(x4.b5_n) v(x4.b6_n) v(x4.b7_n) v(x4.bt_n)
++ v(x4.v0) v(x4.v1) v(x4.v2) v(x4.v3) v(x4.v4) v(x4.v5) v(x4.v6) v(x4.v7)
++ v(x4.nbias) v(x4.pbias)
++ i(v.xdut.v1)
 
 echo "MEAS_END"
 .endc
