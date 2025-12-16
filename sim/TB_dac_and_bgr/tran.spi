@@ -132,7 +132,6 @@ VSWDRAIN3 SWDRN3 VSS dc 0
 + v(vss) v(vdd) v(slp)
 + i(v.xdut.v1)
 
-*test
 
 *----------------------------------------------------------------
 * NGSPICE control

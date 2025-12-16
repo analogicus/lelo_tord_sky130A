@@ -40,6 +40,18 @@ ntc: netlist
 temp: netlist
 	cicsim run --name ${VIEW}_temp ${TB} ${OPT} ${VIEW} Gt "Ktt" "Tt,Th,Tl" Vt
 
+tlvt: netlist
+	cicsim run --name ${VIEW}_tlvt ${TB} ${OPT} ${VIEW} Gt "Ktt" "Tl" Vt
+
+ttvt: netlist
+	cicsim run --name ${VIEW}_thvt ${TB} ${OPT} ${VIEW} Gt "Ktt" "Tt" Vt
+
+thvt: netlist
+	cicsim run --name ${VIEW}_thvt ${TB} ${OPT} ${VIEW} Gt "Ktt" "Th" Vt
+
+corners: netlist
+	cicsim run --name ${VIEW}_corners ${TB} ${OPT} ${VIEW} Gt "Ktt" "Tt" "Vt"
+
 summary:
 	cicsim summary --output "README.md"
 

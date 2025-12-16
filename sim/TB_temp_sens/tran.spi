@@ -127,7 +127,6 @@ VSWDRAIN3 SWDRN3 VSS dc 0
 
 .save 
 + v(b0) v(b1) v(b2) v(b3) v(b4) v(b5) v(b6) v(b7) v(bt)
-+ v(SWBRN1) v(SWBRN2) v(SWBRN3) v(SWBGR1) v(SWBGR2) v(SWCAP1) v(SWCAP2) v(SWCAP3) v(SWDRN1) v(SWDRN2) v(SWDRN3)
 + v(xdut.iout)
 + v(xdut.src1) v(xdut.src2) v(xdut.src3)
 + v(xdut.vref) v(vout)
@@ -135,13 +134,14 @@ VSWDRAIN3 SWDRN3 VSS dc 0
 + v(xdut.v1a) v(xdut.v1b) 
 + v(v2) 
 + v(xdut.v2a) v(xdut.v2b) v(xdut.v2c)
-+ v(xdut.r1) v(xdut.r2)
 + v(xdut.x1.ctl) v(xdut.x1.ctlb) v(xdut.x1.vt)
-+ v(xdut.x1.b0_n) v(xdut.x1.b1_n) v(xdut.x1.b2_n) v(xdut.x1.b3_n) v(xdut.x1.b4_n) v(xdut.x1.b5_n) v(xdut.x1.b6_n) v(xdut.x1.b7_n) v(xdut.x1.bt_n)
-+ v(xdut.x1.v0) v(xdut.x1.v1) v(xdut.x1.v2) v(xdut.x1.v3) v(xdut.x1.v4) v(xdut.x1.v5) v(xdut.x1.v6) v(xdut.x1.v7)
-+ v(xdut.x1.pbias) v(xdut.x1.nbias) 
 + v(vss) v(vdd) v(slp)
 + i(v.xdut.v1)
+* + v(xdut.r1) v(xdut.r2)
+* + v(xdut.x1.b0_n) v(xdut.x1.b1_n) v(xdut.x1.b2_n) v(xdut.x1.b3_n) v(xdut.x1.b4_n) v(xdut.x1.b5_n) v(xdut.x1.b6_n) v(xdut.x1.b7_n) v(xdut.x1.bt_n)
+* + v(xdut.x1.pbias) v(xdut.x1.nbias) 
+* + v(xdut.x1.v0) v(xdut.x1.v1) v(xdut.x1.v2) v(xdut.x1.v3) v(xdut.x1.v4) v(xdut.x1.v5) v(xdut.x1.v6) v(xdut.x1.v7)
+* + v(SWBRN1) v(SWBRN2) v(SWBRN3) v(SWBGR1) v(SWBGR2) v(SWCAP1) v(SWCAP2) v(SWCAP3) v(SWDRN1) v(SWDRN2) v(SWDRN3)
 
 *----------------------------------------------------------------
 * NGSPICE control
@@ -160,15 +160,16 @@ set simulation_length = 16us
 tran 1ns $simulation_length 1ps
 write
 
-* set fend = .raw
-* foreach vtemp -40 0 27 125
-* 	option temp=$vtemp
-* 	tran 1ns $simulation_length 1ps
-* 	write {cicname}_$vtemp$fend
-* end
+set fend = .raw
+foreach vtemp -40 0 27 125
+    reset
+	option temp=$vtemp
+    op
+	tran 1ns $simulation_length 1ps
+	write {cicname}_$vtemp$fend
+end
 
 quit
-
 
 .endc
 
