@@ -3,9 +3,9 @@
 * Include
 *----------------------------------------------------------------
 #ifdef Lay
-.include ../../../work/lpe/TB_dac_and_bgr_lpe.spi
+.include ../../../work/lpe/TB_temp_sens_lpe.spi
 #else
-.include ../../../work/xsch/TB_dac_and_bgr.spice
+.include ../../../work/xsch/TB_temp_sens.spice
 #endif
 
 *-----------------------------------------------------------------
@@ -19,6 +19,8 @@
 .param TRF = 10ps
 .param AVDD = {vdda}
 
+* f_CLK = 2 MHz => T_CLK = 0.5 us
+* f_CLK = 1 MHz => T_CLK = 1.0 us
 .param f_CLK = 2MegHz
 .param T_CLK = {1/f_CLK}
 
@@ -33,7 +35,7 @@
 .param ratio = {dutycycle/100}
 
 * Stepping Current out of DAC
-.param step_start = 0.5us
+.param step_start = 6.0us
 .param step_length = 2.0us
 
 *-----------------------------------------------------------------
@@ -56,10 +58,19 @@ VB0  B0   VSS  dc pwl {step_start + 0*step_length} 0V {step_start + 0*step_lengt
 VB1  B1   VSS  dc pwl {step_start + 1*step_length} 0V {step_start + 1*step_length + 0.01us} {AVDD}
 VB2  B2   VSS  dc pwl {step_start + 2*step_length} 0V {step_start + 2*step_length + 0.01us} {AVDD}
 VB3  B3   VSS  dc pwl {step_start + 3*step_length} 0V {step_start + 3*step_length + 0.01us} {AVDD}
-VB4  B4   VSS  dc pwl {step_start + 4*step_length} 0V {step_start + 4*step_length + 0.01us} {AVDD}
-VB5  B5   VSS  dc pwl {step_start + 5*step_length} 0V {step_start + 5*step_length + 0.01us} {AVDD}
-VB6  B6   VSS  dc pwl {step_start + 6*step_length} 0V {step_start + 6*step_length + 0.01us} {AVDD}
-VB7  B7   VSS  dc pwl {step_start + 7*step_length} 0V {step_start + 7*step_length + 0.01us} {AVDD}
+* VB4  B4   VSS  dc pwl {step_start + 4*step_length} 0V {step_start + 4*step_length + 0.01us} {AVDD}
+* VB5  B5   VSS  dc pwl {step_start + 5*step_length} 0V {step_start + 5*step_length + 0.01us} {AVDD}
+* VB6  B6   VSS  dc pwl {step_start + 6*step_length} 0V {step_start + 6*step_length + 0.01us} {AVDD}
+* VB7  B7   VSS  dc pwl {step_start + 7*step_length} 0V {step_start + 7*step_length + 0.01us} {AVDD}
+
+* VB0  B0   VSS  dc 0V
+* VB1  B1   VSS  dc 0V
+* VB2  B2   VSS  dc 0V
+* VB3  B3   VSS  dc 0V
+VB4  B4   VSS  dc 0V
+VB5  B5   VSS  dc 0V
+VB6  B6   VSS  dc 0V
+VB7  B7   VSS  dc 0V
 
 * VBT  BT   VSS  PULSE({AVDD} 0V {2*TD} {TR} {TF} {PW*ratio} {PER})
 VBT  BT   VSS  PULSE(0V {AVDD} {2*TD} {TR} {TF} {PW*ratio} {PER})
@@ -72,10 +83,10 @@ VSWBRANCH3 SWBRN3 VSS dc {AVDD}
 * VSWBRANCH2 SWBRN2 VSS dc 0
 * VSWBRANCH3 SWBRN3 VSS dc 0
 
-VSWBGR1 SWBGR1 VSS dc {AVDD}
-VSWBGR2 SWBGR2 VSS dc {AVDD}
-* VSWBGR1 SWBGR1 VSS dc 0
-* VSWBGR2 SWBGR2 VSS dc 0
+* VSWBGR1 SWBGR1 VSS dc {AVDD}
+* VSWBGR2 SWBGR2 VSS dc {AVDD}
+VSWBGR1 SWBGR1 VSS dc 0
+VSWBGR2 SWBGR2 VSS dc 0
 
 * VSWCAP1 SWCAP1 VSS dc {AVDD}
 * VSWCAP2 SWCAP2 VSS dc {AVDD}
@@ -132,8 +143,6 @@ VSWDRAIN3 SWDRN3 VSS dc 0
 + v(vss) v(vdd) v(slp)
 + i(v.xdut.v1)
 
-*test
-
 *----------------------------------------------------------------
 * NGSPICE control
 *----------------------------------------------------------------
@@ -146,17 +155,17 @@ unset askquit
 optran 0 0 0 1ns 1us 0
 
 
-set simulation_length = 16.5us
+set simulation_length = 14us
 
 tran 1ns $simulation_length 1ps
 write
 
-set fend = .raw
-foreach vtemp -45 -25 0 25 50 75 100 125
-	option temp=$vtemp
-	tran 1ns $simulation_length 1ps
-	write {cicname}_$vtemp$fend
-end
+* set fend = .raw
+* foreach vtemp -40 0 27 125
+* 	option temp=$vtemp
+* 	tran 1ns $simulation_length 1ps
+* 	write {cicname}_$vtemp$fend
+* end
 
 quit
 
