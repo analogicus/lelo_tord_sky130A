@@ -42,7 +42,7 @@ let v(vref) = v(xdut.vref)
 
 echo "MEAS_START"
 
-meas tran v1a_ find v(v1a) at=6.us
+meas tran v1a_ find v(v1a) at=6.4us
 meas tran v2a_ find v(v2a) at=6.4us
 meas tran v1b_ find v(xdut.v1b) at=6.4us
 meas tran v2b_ find v(xdut.v2b) at=6.4us
