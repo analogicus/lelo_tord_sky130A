@@ -26,7 +26,7 @@ def plot_transient(name):
     ticks_fontsize = font_size
 
     fig, axs = plt.subplots(4, 1, figsize=(fig_width, fig_height), sharex=True)
-    axs[0].set_title(name.split("/")[-1])
+    axs[0].set_title(name.split("/")[-1], fontweight='bold', fontsize=title_fontsize)
     
     ax_iout = axs[0].twinx()
     ax_iout.plot(df['time'], df['i(v.xdut.v1)']*1e6, label='iout', color='tab:orange') # in uA
@@ -43,7 +43,6 @@ def plot_transient(name):
     axs[2].plot(df['time'], df['v(v2)'], label='v2')
     axs[2].plot(df['time'], df['v(v2a)'], label='v2a')
     # axs[2].plot(df['time'], df['v(v2b)'], label='v2b')
-
     axs[2].plot(df['time'], df['v(v2c)'], label='v2c')
 
     axs[3].plot(df['time'], df['v(bt)'], label='v(bt)', linestyle='solid')
@@ -75,13 +74,8 @@ def plot_transient(name):
 # Parsing Arguments
 #
 
-def main():
+def main(args, view):
     names = []
-
-    args = sys.argv[1:]
-
-    view = "Sch"
-    # view = "Lay"
 
     if len(args) == 0:
         names.append("output_tran/tran_SchGtKttTtVt")
@@ -119,5 +113,11 @@ def main():
 #
                 
 if __name__ == "__main__":
-    main()
+
+    args = sys.argv[1:]
+
+    view = "Sch"
+    # view = "Lay"
+
+    main(args, view)
 

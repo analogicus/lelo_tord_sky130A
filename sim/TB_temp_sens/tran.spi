@@ -19,24 +19,35 @@
 .param TRF = 10ps
 .param AVDD = {vdda}
 
-* f_CLK = 2 MHz => T_CLK = 0.5 us
-* f_CLK = 1 MHz => T_CLK = 1.0 us
-.param f_CLK = 2MegHz
-.param T_CLK = {1/f_CLK}
+.csparam voltage_supply = {vdda}
 
-.param TD = {T_CLK}
-.param TR = {T_CLK/100}
+* Circuit temperature given in degrees Celsius
+.csparam circuit_temperature = -40
+.param finetuning_frequency = 2
+.param dutycycle = 55
+
+* Finetuning frequency given in Mega Hertz and periode given in micro seconds
+.csparam clock_frequency = {finetuning_frequency}
+.csparam clock_periode = {1/finetuning_frequency}
+
+* clock_frequency = 2 MHz => clock_periode = 0.5 us
+* clock_frequency = 1 MHz => clock_periode = 1.0 us
+.param f_clk = {finetuning_frequency * 1MegHz}
+.param T_clk = {1/f_clk}
+.param TD = {T_clk}
+.param TR = {T_clk/100}
 .param TF = {TR}
-.param PW = {T_CLK}
-.param PER = {T_CLK}
+.param PW = {T_clk}
+.param PER = {T_clk}
 
-* Time averaging duty cycle is given in percent (%)
-.param dutycycle = 35
+* Time averaging duty cycle is given in percent
 .param ratio = {dutycycle/100}
+.csparam duty_cycle = {dutycycle}
 
 * Stepping Current out of DAC
 .param step_start = 6.0us
-.param step_length = 2.0us
+.param step_length = {4*T_clk}
+.csparam simulation_length = {step_start + 5*step_length}
 
 *-----------------------------------------------------------------
 * FORCE
@@ -137,6 +148,8 @@ VSWDRAIN3 SWDRN3 VSS dc 0
 + v(xdut.x1.ctl) v(xdut.x1.ctlb) v(xdut.x1.vt)
 + v(vss) v(vdd) v(slp)
 + i(v.xdut.v1)
++ clock_frequency
++ duty_cycle
 * + v(xdut.r1) v(xdut.r2)
 * + v(xdut.x1.b0_n) v(xdut.x1.b1_n) v(xdut.x1.b2_n) v(xdut.x1.b3_n) v(xdut.x1.b4_n) v(xdut.x1.b5_n) v(xdut.x1.b6_n) v(xdut.x1.b7_n) v(xdut.x1.bt_n)
 * + v(xdut.x1.pbias) v(xdut.x1.nbias) 
@@ -152,22 +165,35 @@ set color0=white
 set color1=black
 unset askquit
 
+option temp = $&circuit_temperature
+
 optran 0 0 0 1ns 1us 0
 
-
-set simulation_length = 16us
-
-tran 1ns $simulation_length 1ps
-write
-
 set fend = .raw
-foreach vtemp -40 0 27 125
-    reset
-	option temp=$vtemp
-    op
-	tran 1ns $simulation_length 1ps
-	write {cicname}_$vtemp$fend
-end
+set clk_freq = {$&clock_frequency}
+set clk_per = {1/clk_freq}
+set cir_temp = {$&circuit_temperature}
+set dcycle = {$&duty_cycle}
+set vsup = {$&voltage_supply}
+
+tran 1ns $&simulation_length 1ps
+write {cicname}_temperature{$cir_temp}celsius_frequency{$clk_freq}mhz_dutycycle{$dcycle}percent_vdd{$vsup}volt{$fend}
+* write
+
+echo Circuit temperature: $cir_temp Celsius.
+echo Simulation lenght: $&simulation_length seconds.
+echo Clock frequency of finetuning signal: {$clk_freq} Mega Hertz, and clock periode is: {$clk_per} micro seconds.
+echo Duty cycle of fine tuning signal: {$dcycle} %.
+echo Supply voltage (VDD): {$vsup} Volt.
+echo Circuit process corners: {cicname}.
+
+* foreach vtemp -40 0 27 125
+* 	reset
+* 	option temp=$vtemp
+* 	op
+* 	tran 1ns $simulation_length 1ps
+* 	write {cicname}_$vtemp$fend
+* end
 
 quit
 

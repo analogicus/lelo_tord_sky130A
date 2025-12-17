@@ -19,6 +19,24 @@ test:
 typical: netlist
 	cicsim run --name ${VIEW}_typical ${TB} ${OPT} ${VIEW} Gt Ktt Tt Vt
 
+ttvl: netlist
+	cicsim run --name ${VIEW}_ttvl ${TB} ${OPT} ${VIEW} Gt "Ktt" Tt Vl
+
+ttvh: netlist
+	cicsim run --name ${VIEW}_ttvh ${TB} ${OPT} ${VIEW} Gt "Ktt" Tt Vh
+
+ssvl: netlist
+	cicsim run --name ${VIEW}_ssvl ${TB} ${OPT} ${VIEW} Gt Kss Tt Vl
+
+ssvh: netlist
+	cicsim run --name ${VIEW}_ssvh ${TB} ${OPT} ${VIEW} Gt Kss Tt Vh
+
+ffvl: netlist
+	cicsim run --name ${VIEW}_ffvl ${TB} ${OPT} ${VIEW} Gt Kff Tt Vl
+
+ffvh: netlist
+	cicsim run --name ${VIEW}_ffvh ${TB} ${OPT} ${VIEW} Gt Kff Tt Vh
+
 slow: netlist
 	cicsim run --name ${VIEW}_slow ${TB} ${OPT} ${VIEW} Gt Kss "Th,Tl" Vl
 
@@ -40,17 +58,14 @@ ntc: netlist
 temp: netlist
 	cicsim run --name ${VIEW}_temp ${TB} ${OPT} ${VIEW} Gt "Ktt" "Tt,Th,Tl" Vt
 
-tlvt: netlist
-	cicsim run --name ${VIEW}_tlvt ${TB} ${OPT} ${VIEW} Gt "Ktt" "Tl" Vt
+vtcorners: netlist
+	cicsim run --name ${VIEW}_vtcorners ${TB} ${OPT} ${VIEW} Gt "Ktt,Kss,Kff,Ksf,Kfs" "Tt" "Vt"
 
-ttvt: netlist
-	cicsim run --name ${VIEW}_thvt ${TB} ${OPT} ${VIEW} Gt "Ktt" "Tt" Vt
+vlcorners: netlist
+	cicsim run --name ${VIEW}_vlcorners ${TB} ${OPT} ${VIEW} Gt "Ktt,Kss,Kff,Ksf,Kfs" "Tt" "Vl"
 
-thvt: netlist
-	cicsim run --name ${VIEW}_thvt ${TB} ${OPT} ${VIEW} Gt "Ktt" "Th" Vt
-
-corners: netlist
-	cicsim run --name ${VIEW}_corners ${TB} ${OPT} ${VIEW} Gt "Ktt" "Tt" "Vt"
+vhcorners: netlist
+	cicsim run --name ${VIEW}_vhcorners ${TB} ${OPT} ${VIEW} Gt "Ktt,Kss,Kff,Ksf,Kfs" "Tt" "Vh"
 
 summary:
 	cicsim summary --output "README.md"
