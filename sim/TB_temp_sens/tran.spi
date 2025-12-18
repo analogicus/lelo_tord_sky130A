@@ -18,20 +18,19 @@
 *-----------------------------------------------------------------
 .param TRF = 10ps
 .param AVDD = {vdda}
-
 .csparam voltage_supply = {vdda}
 
 * Circuit temperature given in degrees Celsius
-.csparam circuit_temperature = -40
+.param circuit_temperature = 27
 .param finetuning_frequency = 2
-.param dutycycle = 55
+.param finetuning_dutycycle = 40
 
-* Finetuning frequency given in Mega Hertz and periode given in micro seconds
-.csparam clock_frequency = {finetuning_frequency}
-.csparam clock_periode = {1/finetuning_frequency}
+.csparam cs_circuit_temperature = {circuit_temperature}
+.csparam cs_finetuning_frequency = {finetuning_frequency}
+.csparam cs_finetuning_dutycycle = {finetuning_dutycycle}
 
-* clock_frequency = 2 MHz => clock_periode = 0.5 us
-* clock_frequency = 1 MHz => clock_periode = 1.0 us
+* finetuning_frequency = 2 MHz => finetuning_periode = 0.5 us
+* finetuning_frequency = 1 MHz => finetuning_periode = 1.0 us
 .param f_clk = {finetuning_frequency * 1MegHz}
 .param T_clk = {1/f_clk}
 .param TD = {T_clk}
@@ -41,8 +40,7 @@
 .param PER = {T_clk}
 
 * Time averaging duty cycle is given in percent
-.param ratio = {dutycycle/100}
-.csparam duty_cycle = {dutycycle}
+.param ratio = {finetuning_dutycycle/100}
 
 * Stepping Current out of DAC
 .param step_start = 6.0us
@@ -148,6 +146,7 @@ VSWDRAIN3 SWDRN3 VSS dc 0
 + v(xdut.x1.ctl) v(xdut.x1.ctlb) v(xdut.x1.vt)
 + v(vss) v(vdd) v(slp)
 + i(v.xdut.v1)
++ i(vss) i(vdd)
 + clock_frequency
 + duty_cycle
 * + v(xdut.r1) v(xdut.r2)
@@ -165,35 +164,93 @@ set color0=white
 set color1=black
 unset askquit
 
-option temp = $&circuit_temperature
+set cir_temp = {$&cs_circuit_temperature}
+set clk_freq = {$&cs_finetuning_frequency}
+set clk_per = {1/$clk_freq}
+set dcycle = {$&cs_finetuning_dutycycle}
+set vsup = {$&voltage_supply}
+set sim_len = {$&simulation_length}
 
-optran 0 0 0 1ns 1us 0
+echo $cir_temp
+echo $clk_freq
+echo $clk_per
+echo $dcycle
+echo $vsup
+echo $sim_len
 
 set fend = .raw
-set clk_freq = {$&clock_frequency}
-set clk_per = {1/clk_freq}
-set cir_temp = {$&circuit_temperature}
-set dcycle = {$&duty_cycle}
-set vsup = {$&voltage_supply}
+foreach cir_temp -40 -20 0 27 60 90 125
+	foreach clk_freq 2
+		foreach dcycle 10 20 30 40 50 60 70 80 90
+    		reset
+			option temp = $cir_temp
+			alterparam finetuning_frequency = {$clk_freq}
+			alterparam finetuning_dutycycle = {$dcycle}
 
-tran 1ns $&simulation_length 1ps
-write {cicname}_temperature{$cir_temp}celsius_frequency{$clk_freq}mhz_dutycycle{$dcycle}percent_vdd{$vsup}volt{$fend}
-* write
+			* if your netlist uses derived params like T_CLK/ratio from f_CLK/dutycycle,
+			* they will re-evaluate automatically as long as they are expressions:
+			*   .param T_CLK = {1/f_CLK}
+			*   .param ratio = {dutycycle/100}
 
-echo Circuit temperature: $cir_temp Celsius.
-echo Simulation lenght: $&simulation_length seconds.
-echo Clock frequency of finetuning signal: {$clk_freq} Mega Hertz, and clock periode is: {$clk_per} micro seconds.
-echo Duty cycle of fine tuning signal: {$dcycle} %.
-echo Supply voltage (VDD): {$vsup} Volt.
-echo Circuit process corners: {cicname}.
+			let clk_per = {1/$clk_freq}
 
-* foreach vtemp -40 0 27 125
-* 	reset
-* 	option temp=$vtemp
-* 	op
-* 	tran 1ns $simulation_length 1ps
-* 	write {cicname}_$vtemp$fend
-* end
+			echo ------------------------------------------------------------
+			echo Temperature: $cir_temp C
+			echo Finetuning frequency: $clk_freq MHz, Period: $clk_per us
+			echo Duty cycle: $dcycle %
+			echo VDD: $vsup V
+			echo Corner: {cicname}
+			echo Simulation lenght: $sim_len seconds.
+			echo ------------------------------------------------------------
+
+			optran 0 0 0 1ns 1us 0
+			tran 1ns $sim_len 1ps
+
+			write {cicname}_temperature{$cir_temp}celsius_frequency{$clk_freq}mhz_dutycycle{$dcycle}percent_vdd{$vsup}volt{$fend}
+
+			*
+			* This last part used to be in tran.meas, but was moved to ensure all simulations are written to .out-files
+			*
+
+			load {cicname}_temperature{$cir_temp}celsius_frequency{$clk_freq}mhz_dutycycle{$dcycle}percent_vdd{$vsup}volt{$fend}
+
+			let v(x1.vt) = v(xdut.x1.vt)
+			let v(x1.ctl) = v(xdut.x1.ctl)
+			let v(x1.ctlb) = v(xdut.x1.ctlb)
+
+			let v(iout) = v(xdut.iout)
+
+			let v(src1) = v(xdut.src1) 
+			let v(src2) = v(xdut.src2)
+			let v(src3) = v(xdut.src3)
+			let v(v1a) = v(xdut.v1a)
+			let v(v1b) = v(xdut.v1b)
+			let v(v2a) = v(xdut.v2a)
+			let v(v2b) = v(xdut.v2b)
+			let v(v2c) = v(xdut.v2c)
+			let v(vref) = v(xdut.vref)
+
+			set fend = .out
+			set wr_singlescale
+			set wr_vecnames
+			option numdgt = 5
+			echo writing to {cicname}_temperature{$cir_temp}celsius_frequency{$clk_freq}mhz_dutycycle{$dcycle}percent_vdd{$vsup}volt{$fend}
+			wrdata {cicname}_temperature{$cir_temp}celsius_frequency{$clk_freq}mhz_dutycycle{$dcycle}percent_vdd{$vsup}volt{$fend}
+			+ v(b0) v(b1) v(b2) v(b3) v(b4) v(b5) v(b6) v(b7) v(bt)
+			+ v(iout)
+			+ v(src1) v(src2) v(src3)
+			+ v(vref) v(vout)
+			+ v(v1) 
+			+ v(v1a) v(v1b) 
+			+ v(v2) 
+			+ v(v2a) v(v2b) v(v2c)
+			+ v(x1.ctl) v(x1.ctlb) v(x1.vt)
+			+ v(vss) v(vdd) v(slp)
+			+ i(v.xdut.v1)
+			+ i(vdd) i(vss)
+		end
+	end
+end
 
 quit
 

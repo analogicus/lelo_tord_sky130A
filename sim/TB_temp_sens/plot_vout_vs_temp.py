@@ -60,11 +60,16 @@ if __name__ == "__main__":
             times = []
             duty_cycles = []
             frequencies = []
+            avg_diffs = []
 
             for temp in temperatures:
+                print()
                 out_files = glob.glob(f"output_tran/tran_SchGtK{corner}Tt{Vx}_temperature{temp}celsius_frequency*mhz_dutycycle*percent_vdd{voltage}volt.out")
-                print(f'Found file(s): {out_files}')
+                print(f'Found files: {out_files}')
 
+                prev_smallest_avg_diff = np.inf
+                final_zero_crossings = pd.Series([0])
+                final_zero_crossings_vout_values = pd.Series([1])
                 for file in out_files:
                     print(f'Plotting transient results from file: {file}')
 
@@ -77,26 +82,56 @@ if __name__ == "__main__":
 
                     df = pd.read_csv(file, sep="\s+")
                     
-                    print(df.columns)
-                    print(df.head())
-                    print(df.tail())
+                    # print(df.columns)
+                    # print(df.head())
+                    # print(df.tail())
 
                     df['time'] = df['time'] * 1e9 # in ns
                     df['diff'] = df['v(v1)']-df['v(v2)']
 
                     zero_crossings = df.index[(df['diff'].shift(1) * df['diff']) < 0]
+                    zero_crossings_time_values = df.loc[zero_crossings, 'time'].values
+                    zero_crossings_vout_values = df.loc[zero_crossings, 'v(vout)'].values
+                    
+                    if len(zero_crossings) > 8:
+                        print(f'Zero crossings found at indices: {zero_crossings.tolist()}')
+                        print(f'Zero crossings found at time values (ns): {zero_crossings_time_values.tolist()}')
+                        print(f'Zero crossings found at vout values (V): {zero_crossings_vout_values.tolist()}')
 
-                    times.append(df.loc[zero_crossings[-2], 'time']) # second last (-2) instead of last (-1) value because that is when we shift DAC
-                    vouts.append(df.loc[zero_crossings[-2], 'v(vout)']) # second last (-2) instead of last (-1) value because that is when we shift DAC
-                    temps.append(int(temp))
-                    duty_cycles.append(duty_cycle)
-                    frequencies.append(clock_frequency)
-        
+                        # average diff from first to last zero crossing
+                        avg_diff = df.loc[zero_crossings[-8]:zero_crossings[-2], 'diff'].mean()
+                        print(f'Average diff between first ({zero_crossings[-8]}) and last ({zero_crossings[-2]}) zero crossing (V): {avg_diff}')
+
+                        if (np.abs(avg_diff) < prev_smallest_avg_diff): # threshold to consider stable operation
+                            print(f'Updating from previous avg diff: {prev_smallest_avg_diff}, to new smallest avg diff: {np.abs(avg_diff)}')
+                            prev_smallest_avg_diff = np.abs(avg_diff)
+                            final_temp = circuit_temperature
+                            final_clock_frequency = clock_frequency
+                            final_duty_cycle = duty_cycle
+                            final_process_corner = process_corner
+                            final_voltage_supply = voltage_supply
+                            final_zero_crossings = zero_crossings
+                            final_zero_crossings_vout_values = df.loc[final_zero_crossings, 'v(vout)'].values
+                            final_zero_crossings_time_values = df.loc[final_zero_crossings, 'time'].values
+                
+
+                if len(final_zero_crossings_vout_values.tolist()) > 8:
+                    times.append(final_zero_crossings_time_values.tolist()[-2]) # second last (-2) instead of last (-1) value because that is when we shift DAC
+                    vouts.append(final_zero_crossings_vout_values.tolist()[-2]) # second last (-2) instead of last (-1) value because that is when we shift DAC
+                    temps.append(int(final_temp))
+                    duty_cycles.append(final_duty_cycle)
+                    frequencies.append(final_clock_frequency)
+                    avg_diffs.append(prev_smallest_avg_diff)
+                else:
+                    print(f'No stable zero crossings found for temp {temp} C, corner {corner}, voltage {voltage} V')
+
+
             print(f'temps: {temps}')
             print(f'vouts: {vouts}')
             print(f'times: {times}')
             print(f'duty_cycles: {duty_cycles}')
             print(f'frequencies: {frequencies}')
+            print(f'avg_diffs: {avg_diffs}')
 
             # data[f"{corner}_{voltage}"] = {[temps, vouts, times]}
 
@@ -104,18 +139,18 @@ if __name__ == "__main__":
             last_color = axs.lines[-1].get_color()
             
             # find linear fit coefficients
-            fit_coeffs = np.polyfit(temps, vouts, 1)
-            fit_line = np.poly1d(fit_coeffs)
-            axs.plot(temps, fit_line(temps), color=last_color, linestyle='dotted')
+            # fit_coeffs = np.polyfit(temps, vouts, 1)
+            # fit_line = np.poly1d(fit_coeffs)
+            # axs.plot(temps, fit_line(temps), color=last_color, linestyle='dotted')
 
-    axs.plot([], [], label=f"best fits", color="black", linestyle='dotted')
+    # axs.plot([], [], label=f"best fits", color="black", linestyle='dotted')
 
     axs.tick_params(axis='both', labelsize=ticks_fontsize)
     axs.grid()
     axs.set_ylabel('Voltage (V)', fontsize=label_fontsize)
-    axs.set_xlabel('Temperature [$^\\circ$C]', fontsize=label_fontsize)
+    axs.set_xlabel('Temperature [°C]', fontsize=label_fontsize)
     # axs.set_title('Vout vs Temperature', fontsize=title_fontsize)
-    axs.legend(fontsize=legend_fontsize)
+    axs.legend(loc="upper left", fontsize=legend_fontsize)
 
     fig.tight_layout()
     fig.savefig(f'figures/vout_vs_temp_{corners}_{voltages}.png', dpi=300, bbox_inches="tight")
