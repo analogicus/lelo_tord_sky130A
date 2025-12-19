@@ -6,7 +6,7 @@ args = sys.argv[1:]
 
 files = list()
 
-# example input arguments: python plot_temperature_transients.py ss 125 2 30 1.7
+# example input arguments: python plot_temperature_transients.py ss Tl 125 2 30 1.7 0
 
 if len(args) == 0:
     print("No arguments provided. Plotting for typical corner, voltage (1.8 Volt) and temperature (27 Celsius).")
@@ -14,31 +14,51 @@ if len(args) == 0:
 elif "typical" in args:
     files.append("output_tran/tran_SchGtKttTtVt_temperature27celsius_frequency2mhz_dutycycle35percent_vdd1.8volt.out")
 elif "all" in args:
-    for temperature in [-40, 0, 27, 125]: # Celsius (degree C)
-        for frequency in [1, 2, 5, 10]: # Mega Hertz (MHz)
-            for dutycycle in [5, 35, 65, 95]: # Percent (%)
-                for voltage in [1.7, 1.8, 1.9]: # Volt (V)
-                    Vx = "Vl" if voltage == 1.7 else "Vt" if voltage == 1.8 else "Vh" if voltage == 1.9 else "Oops"
-                    files.append(f"output_tran/tran_SchGtKttTt{Vx}_temperature{temperature}celsius_frequency{frequency}mhz_dutycycle{dutycycle}percent_vdd{voltage}volt.out")
+    for corner in ["tt", "ss", "ff", "sf", "fs"]:
+        for temperature in [-40, 0, 27, 125]: # Celsius (degree C)
+            for frequency in [1, 2, 5, 10]: # Mega Hertz (MHz)
+                for dutycycle in [5, 35, 65, 95]: # Percent (%)
+                    for voltage in [1.7, 1.8, 1.9]: # Volt (V)
+                        Vx = "Vl" if voltage == 1.7 else "Vt" if voltage == 1.8 else "Vh" if voltage == 1.9 else "Oops"
+                        files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_temperature{temperature}celsius_frequency{frequency}mhz_dutycycle{dutycycle}percent_vdd{voltage}volt.out")
 elif "report" in args:
-    for temperature in [-40, 27, 125]: # Celsius (degree C)
-        for frequency in [2]: # Mega Hertz (MHz)
-            for dutycycle in [35]: # Percent (%)
-                for voltage in [1.7, 1.9]: # Volt (V)
-                    Vx = "Vl" if voltage == 1.7 else "Vt" if voltage == 1.8 else "Vh" if voltage == 1.9 else "Oops"
-                    files.append(f"output_tran/tran_SchGtKttTt{Vx}_temperature{temperature}celsius_frequency{frequency}mhz_dutycycle{dutycycle}percent_vdd{voltage}volt.out")
+    for corner in ["ff", "ss"]:
+        for temperature in [-40, 27, 125]: # Celsius (degree C)
+            for frequency in [2]: # Mega Hertz (MHz)
+                for dutycycle in [35]: # Percent (%)
+                    for voltage in [1.7, 1.9]: # Volt (V)
+                        Vx = "Vl" if voltage == 1.7 else "Vt" if voltage == 1.8 else "Vh" if voltage == 1.9 else "Oops"
+                        files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_temperature{temperature}celsius_frequency{frequency}mhz_dutycycle{dutycycle}percent_vdd{voltage}volt.out")
 elif "test" in args:
-    for temperature in [0]: # Celsius (degree C)
-        for frequency in [2]: # Mega Hertz (MHz)
-            for dutycycle in [35]: # Percent (%)
-                for voltage in [1.8]: # Volt (V)
-                    Vx = "Vl" if voltage == 1.7 else "Vt" if voltage == 1.8 else "Vh" if voltage == 1.9 else "Oops"
-                    files.append(f"output_tran/tran_SchGtKttTt{Vx}_temperature{temperature}celsius_frequency{frequency}mhz_dutycycle{dutycycle}percent_vdd{voltage}volt.out")
+    for corner in ["ss"]:
+        for temperature in [0]: # Celsius (degree C)
+            for frequency in [2]: # Mega Hertz (MHz)
+                for dutycycle in [35]: # Percent (%)
+                    for voltage in [1.8]: # Volt (V)
+                        Vx = "Vl" if voltage == 1.7 else "Vt" if voltage == 1.8 else "Vh" if voltage == 1.9 else "Oops"
+                        files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_temperature{temperature}celsius_frequency{frequency}mhz_dutycycle{dutycycle}percent_vdd{voltage}volt.out")
+elif "etc" in args:
+    for corner in ["ss", "ff", "sf", "fs"]:
+        for temperature in [-40, -20, 0, 27, 60, 90, 125]: # Celsius (degree C)
+            for frequency in [2]: # Mega Hertz (MHz)
+                for dutycycle in [10, 20, 30, 40, 50, 60, 70, 80, 90]: # Percent (%)
+                    for voltage in [1.7, 1.9]: # Volt (V)
+                        Vx = "Vl" if voltage == 1.7 else "Vt" if voltage == 1.8 else "Vh" if voltage == 1.9 else "Oops"
+                        files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_temperature{temperature}celsius_frequency{frequency}mhz_dutycycle{dutycycle}percent_vdd{voltage}volt.out")
 else:
     print("Plotting with file data passed as argument.")
-    xx = "tt" if args[0] == "tt" else "ff" if args[0] == "ff" else "ss" if args[0] == "ss" else "sf" if args[0] == "sf" else "fs" if args[0] == "fs" else "Oops, Somethings wrong!"
-    Vx = "Vl" if float(args[4]) == 1.7 else "Vt" if float(args[4]) == 1.8 else "Vh" if float(args[4]) == 1.9 else "Oops"
-    files.append(f"output_tran/tran_SchGtK{xx}Tt{Vx}_temperature{args[1]}celsius_frequency{args[2]}mhz_dutycycle{args[3]}percent_vdd{args[4]}volt.out") # plots file name passed as argument
+    xx = "tt" if args[0] == "tt" else "ff" if args[0] == "ff" else "ss" if args[0] == "ss" else "sf" if args[0] == "sf" else "fs" if args[0] == "fs" else "ttmm" if args[0] == "ttmm" else "Oops, Somethings wrong!"
+    print(f'Process corner: {xx}')
+    Tx = args[1]
+    print(f'Temperature corner: {Tx}')
+    Vx = "Vl" if float(args[5]) == 1.7 else "Vt" if float(args[5]) == 1.8 else "Vh" if float(args[5]) == 1.9 else "Oops"
+    print(f'Voltage corner: {Vx}')
+    files.append(f"output_tran/tran_SchGtK{xx}{Tx}{Vx}_temperature{args[2]}celsius_frequency{args[3]}mhz_dutycycle{args[4]}percent_vdd{args[5]}volt.out") # plots file name passed as argument
+
+if xx == "ttmm" and len(args) > 6:   
+    c = args[6]
+    # insert c in the file names
+    files = [f.replace("SchGtKttmmTtVt_", f"SchGtKttmmTtVt_{c}_") for f in files]
 
 fig_width = 3
 fig_height = 5
@@ -66,15 +86,15 @@ for file in files:
 
     df = pd.read_csv(file, sep="\s+")
 
-    print(f"Data columns: {df.columns.tolist()}")
-    print(f"Dataframe shape: {df.shape}")
+    # print(f"Data columns: {df.columns.tolist()}")
+    # print(f"Dataframe shape: {df.shape}")
     print(f"Dataframe head:\n{df.head()}")
-    print(f"Dataframe tail:\n{df.tail()}")
+    # print(f"Dataframe tail:\n{df.tail()}")
 
     df['time'] = df['time'] * 1e9 # in ns
     df['diff'] = df['v(v1)']-df['v(v2)']
 
-    fig, axs = plt.subplots(4, 1, figsize=(fig_width, fig_height), sharex=True)
+    fig, axs = plt.subplots(4, 1, figsize=(fig_width, fig_height), sharex=True, dpi=300)
     ax_iout = axs[0].twinx()
 
     ax_iout.plot(df["time"], df["i(v.xdut.v1)"]*1e6, label="iout", color="tab:orange") # in uA
@@ -115,6 +135,6 @@ for file in files:
     axs[0].set_title(f"{process_corner} corner, {voltage_supply} V, {circuit_temperature} °C, {clock_frequency} MHz, {duty_cycle} %", fontsize=title_fontsize, fontweight='bold')
 
     fig.tight_layout()
-    fig.savefig(f"figures/{file.split('/')[-1].split('.out')[0]}.png", dpi=300, bbox_inches="tight")
+    fig.savefig(f"figures/{file.split('/')[-1].split('.out')[0]}_tempsense.png", dpi=300, bbox_inches="tight")
 
 plt.show()

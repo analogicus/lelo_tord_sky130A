@@ -1,0 +1,263 @@
+*TB_SUN_TR_SKY130NM/TB_NCM
+*----------------------------------------------------------------
+* Include
+*----------------------------------------------------------------
+#ifdef Lay
+.include ../../../work/lpe/TB_bgr_lpe.spi
+#else
+.include ../../../work/xsch/TB_bgr.spice
+#endif
+
+*-----------------------------------------------------------------
+* OPTIONS
+*-----------------------------------------------------------------
+.option TNOM=27 GMIN=1e-15 reltol=1e-3
+
+*-----------------------------------------------------------------
+* PARAMETERS
+*-----------------------------------------------------------------
+.param TRF = 10ps
+.param AVDD = {vdda}
+.csparam voltage_supply = {vdda}
+
+* Circuit temperature given in degrees Celsius
+.param circuit_temperature = 27
+.param finetuning_frequency = 2
+.param finetuning_dutycycle = 40
+
+.csparam cs_circuit_temperature = {circuit_temperature}
+.csparam cs_finetuning_frequency = {finetuning_frequency}
+.csparam cs_finetuning_dutycycle = {finetuning_dutycycle}
+
+* finetuning_frequency = 2 MHz => finetuning_periode = 0.5 us
+* finetuning_frequency = 1 MHz => finetuning_periode = 1.0 us
+.param f_clk = {finetuning_frequency * 1MegHz}
+.param T_clk = {1/f_clk}
+.param TD = {T_clk}
+.param TR = {T_clk/100}
+.param TF = {TR}
+.param PW = {T_clk}
+.param PER = {T_clk}
+
+* Time averaging duty cycle is given in percent
+.param ratio = {finetuning_dutycycle/100}
+
+* Stepping Current out of DAC
+.param step_start = 6.0us
+.param step_length = {10*T_clk}
+.csparam simulation_length = {step_start + 8*step_length}
+
+*-----------------------------------------------------------------
+* FORCE
+*-----------------------------------------------------------------
+VSS   VSS   0    dc 0V
+VDD   VDD   VSS  dc {AVDD}
+VSLP  SLP VSS pwl 0.02us {AVDD} 0.03us 0V
+
+* VB0  B0   VSS  PULSE({AVDD} 0V {TD} {TR} {TF} {PW*8/16} {PER})
+* VB1  B1   VSS  PULSE({AVDD} 0V {TD} {TR} {TF} {PW*9/16} {PER})
+* VB2  B2   VSS  PULSE({AVDD} 0V {TD} {TR} {TF} {PW*10/16} {PER})
+* VB3  B3   VSS  PULSE({AVDD} 0V {TD} {TR} {TF} {PW*11/16} {PER})
+* VB4  B4   VSS  PULSE({AVDD} 0V {TD} {TR} {TF} {PW*12/16} {PER})
+* VB5  B5   VSS  PULSE({AVDD} 0V {TD} {TR} {TF} {PW*13/16} {PER})
+* VB6  B6   VSS  PULSE({AVDD} 0V {TD} {TR} {TF} {PW*14/16} {PER})
+* VB7  B7   VSS  PULSE({AVDD} 0V {TD} {TR} {TF} {PW*15/16} {PER})
+
+VB0  B0   VSS  dc pwl {step_start + 0*step_length} 0V {step_start + 0*step_length + 0.01us} {AVDD}
+VB1  B1   VSS  dc pwl {step_start + 1*step_length} 0V {step_start + 1*step_length + 0.01us} {AVDD}
+VB2  B2   VSS  dc pwl {step_start + 2*step_length} 0V {step_start + 2*step_length + 0.01us} {AVDD}
+VB3  B3   VSS  dc pwl {step_start + 3*step_length} 0V {step_start + 3*step_length + 0.01us} {AVDD}
+VB4  B4   VSS  dc pwl {step_start + 4*step_length} 0V {step_start + 4*step_length + 0.01us} {AVDD}
+VB5  B5   VSS  dc pwl {step_start + 5*step_length} 0V {step_start + 5*step_length + 0.01us} {AVDD}
+VB6  B6   VSS  dc pwl {step_start + 6*step_length} 0V {step_start + 6*step_length + 0.01us} {AVDD}
+VB7  B7   VSS  dc pwl {step_start + 7*step_length} 0V {step_start + 7*step_length + 0.01us} {AVDD}
+
+* VB0  B0   VSS  dc 0V
+* VB1  B1   VSS  dc 0V
+* VB2  B2   VSS  dc 0V
+* VB3  B3   VSS  dc 0V
+* VB4  B4   VSS  dc 0V
+* VB5  B5   VSS  dc 0V
+* VB6  B6   VSS  dc 0V
+* VB7  B7   VSS  dc 0V
+
+* VBT  BT   VSS  PULSE({AVDD} 0V {2*TD} {TR} {TF} {PW*ratio} {PER})
+VBT  BT   VSS  PULSE(0V {AVDD} {2*TD} {TR} {TF} {PW*ratio} {PER})
+* VBT  BT   VSS  DC 0V
+
+VSWBRANCH1 SWBRN1 VSS dc {AVDD}
+VSWBRANCH2 SWBRN2 VSS dc {AVDD}
+VSWBRANCH3 SWBRN3 VSS dc {AVDD}
+* VSWBRANCH1 SWBRN1 VSS dc 0
+* VSWBRANCH2 SWBRN2 VSS dc 0
+* VSWBRANCH3 SWBRN3 VSS dc 0
+
+VSWBGR1 SWBGR1 VSS dc {AVDD}
+VSWBGR2 SWBGR2 VSS dc {AVDD}
+* VSWBGR1 SWBGR1 VSS dc 0
+* VSWBGR2 SWBGR2 VSS dc 0
+
+* VSWCAP1 SWCAP1 VSS dc {AVDD}
+* VSWCAP2 SWCAP2 VSS dc {AVDD}
+* VSWCAP3 SWCAP3 VSS dc {AVDD}
+* VSWCAP1 SWCAP1 VSS dc 0
+* VSWCAP2 SWCAP2 VSS dc 0
+* VSWCAP3 SWCAP3 VSS dc 0
+VSWCAP1 SWCAP1 VSS pwl 0.09us 0V 0.1us {AVDD} 
+VSWCAP2 SWCAP2 VSS pwl 0.09us 0V 0.1us {AVDD} 
+VSWCAP3 SWCAP3 VSS pwl 0.09us 0V 0.1us {AVDD} 
+
+* VSWDRAIN1 SWDRAIN1 VSS dc {AVDD}
+* VSWDRAIN2 SWDRAIN2 VSS dc {AVDD}
+* VSWDRAIN2 SWDRAIN3 VSS dc {AVDD}
+VSWDRAIN1 SWDRN1 VSS dc 0
+VSWDRAIN2 SWDRN2 VSS dc 0
+VSWDRAIN3 SWDRN3 VSS dc 0
+
+*-----------------------------------------------------------------
+* DUT
+*-----------------------------------------------------------------
+.include ../xdut.spi
+
+*----------------------------------------------------------------
+* PROBE
+*----------------------------------------------------------------
+* .option savecurrents
+* .save all
+
+* .save v(iout)
+* .save v(xdut.x1.pbias) v(xdut.x1.nbias)
+* .save v(b0) v(b1) v(b2) v(b3) v(b4) v(b5) v(b6) v(b7) 
+* .save v(bt)
+* .save v(xdut.x1.b0_n) v(xdut.x1.b1_n) v(xdut.x1.b2_n) v(xdut.x1.b3_n) v(xdut.x1.b4_n)
+* .save v(xdut.x1.v0) v(xdut.x1.v1) v(xdut.x1.v2) v(xdut.x1.v3) v(xdut.x1.v4)
+* .save v(xdut.x1.vctrl) v(xdut.x1.vctrl_b)
+* .save v(vdd) v(vss) v(sleep)
+
+.save 
++ v(b0) v(b1) v(b2) v(b3) v(b4) v(b5) v(b6) v(b7) v(bt)
++ v(xdut.iout)
++ v(xdut.src1) v(xdut.src2) v(xdut.src3)
++ v(xdut.vref) v(vout)
++ v(v1) 
++ v(xdut.v1a) v(xdut.v1b) 
++ v(v2) 
++ v(xdut.v2a) v(xdut.v2b) v(xdut.v2c)
++ v(xdut.x1.ctl) v(xdut.x1.ctlb) v(xdut.x1.vt)
++ v(vss) v(vdd) v(slp)
++ i(v.xdut.v1)
++ i(vss) i(vdd)
++ clock_frequency
++ duty_cycle
+* + v(xdut.r1) v(xdut.r2)
+* + v(xdut.x1.b0_n) v(xdut.x1.b1_n) v(xdut.x1.b2_n) v(xdut.x1.b3_n) v(xdut.x1.b4_n) v(xdut.x1.b5_n) v(xdut.x1.b6_n) v(xdut.x1.b7_n) v(xdut.x1.bt_n)
+* + v(xdut.x1.pbias) v(xdut.x1.nbias) 
+* + v(xdut.x1.v0) v(xdut.x1.v1) v(xdut.x1.v2) v(xdut.x1.v3) v(xdut.x1.v4) v(xdut.x1.v5) v(xdut.x1.v6) v(xdut.x1.v7)
+* + v(SWBRN1) v(SWBRN2) v(SWBRN3) v(SWBGR1) v(SWBGR2) v(SWCAP1) v(SWCAP2) v(SWCAP3) v(SWDRN1) v(SWDRN2) v(SWDRN3)
+
+*----------------------------------------------------------------
+* NGSPICE control
+*----------------------------------------------------------------
+.control
+set num_threads=8
+set color0=white
+set color1=black
+unset askquit
+
+set cir_temp = {$&cs_circuit_temperature}
+set clk_freq = {$&cs_finetuning_frequency}
+set clk_per = {1/$clk_freq}
+set dcycle = {$&cs_finetuning_dutycycle}
+set vsup = {$&voltage_supply}
+set sim_len = {$&simulation_length}
+
+echo $cir_temp
+echo $clk_freq
+echo $clk_per
+echo $dcycle
+echo $vsup
+echo $sim_len
+
+* -40 -20 0 27 60 90 125
+* 10 20 30 40 50 60 70 80 90
+
+set fend = .raw
+foreach cir_temp -40
+	foreach clk_freq 2
+		foreach dcycle 35 45 
+    		reset
+			option temp = $cir_temp
+			alterparam finetuning_frequency = {$clk_freq}
+			alterparam finetuning_dutycycle = {$dcycle}
+
+			* if your netlist uses derived params like T_CLK/ratio from f_CLK/dutycycle,
+			* they will re-evaluate automatically as long as they are expressions:
+			*   .param T_CLK = {1/f_CLK}
+			*   .param ratio = {dutycycle/100}
+
+			let clk_per = {1/$clk_freq}
+
+			echo ------------------------------------------------------------
+			echo testbench: TB_bgr
+			echo Temperature: $cir_temp C
+			echo Finetuning frequency: $clk_freq MHz, Period: $clk_per us
+			echo Duty cycle: $dcycle %
+			echo VDD: $vsup V
+			echo Corner: {cicname}
+			echo Simulation lenght: $sim_len seconds.
+			echo ------------------------------------------------------------
+
+			optran 0 0 0 1ns 1us 0
+			tran 1ns $sim_len 1ps
+
+			write {cicname}_temperature{$cir_temp}celsius_frequency{$clk_freq}mhz_dutycycle{$dcycle}percent_vdd{$vsup}volt{$fend}
+
+			*
+			* This last part used to be in tran.meas, but was moved to ensure all simulations are written to .out-files
+			*
+
+			load {cicname}_temperature{$cir_temp}celsius_frequency{$clk_freq}mhz_dutycycle{$dcycle}percent_vdd{$vsup}volt{$fend}
+
+			let v(x1.vt) = v(xdut.x1.vt)
+			let v(x1.ctl) = v(xdut.x1.ctl)
+			let v(x1.ctlb) = v(xdut.x1.ctlb)
+
+			let v(iout) = v(xdut.iout)
+
+			let v(src1) = v(xdut.src1) 
+			let v(src2) = v(xdut.src2)
+			let v(src3) = v(xdut.src3)
+			let v(v1a) = v(xdut.v1a)
+			let v(v1b) = v(xdut.v1b)
+			let v(v2a) = v(xdut.v2a)
+			let v(v2b) = v(xdut.v2b)
+			let v(v2c) = v(xdut.v2c)
+			let v(vref) = v(xdut.vref)
+
+			set fend = .out
+			set wr_singlescale
+			set wr_vecnames
+			option numdgt = 5
+			echo writing to {cicname}_temperature{$cir_temp}celsius_frequency{$clk_freq}mhz_dutycycle{$dcycle}percent_vdd{$vsup}volt{$fend}
+			wrdata {cicname}_temperature{$cir_temp}celsius_frequency{$clk_freq}mhz_dutycycle{$dcycle}percent_vdd{$vsup}volt{$fend}
+			+ v(b0) v(b1) v(b2) v(b3) v(b4) v(b5) v(b6) v(b7) v(bt)
+			+ v(iout)
+			+ v(src1) v(src2) v(src3)
+			+ v(vref) v(vout)
+			+ v(v1) 
+			+ v(v1a) v(v1b) 
+			+ v(v2) 
+			+ v(v2a) v(v2b) v(v2c)
+			+ v(x1.ctl) v(x1.ctlb) v(x1.vt)
+			+ v(vss) v(vdd) v(slp)
+			+ i(v.xdut.v1)
+			+ i(vdd) i(vss)
+		end
+	end
+end
+
+quit
+
+.endc
+
+.end
