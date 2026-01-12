@@ -3,21 +3,35 @@ import yaml
 import matplotlib.pyplot as plt
 import sys
 
+fig_width = 3
+fig_height = 3
+font_size = 10
+title_fontsize = font_size + 2
+label_fontsize = font_size
+legend_fontsize = font_size
+ticks_fontsize = font_size
+
 fend = ".out" # File extension for output files, can be changed to ".yaml", ".csv" or others if needed
-view = "Sch" # Sets schematic is default view if noen is specified
-# view = "Lay" # Sets schematic is default view if noen is specified
+view = "Sch" # Sets schematic as default view if noen is specified
+# view = "Lay" # Sets layout as default view if noen is specified
 
 args = sys.argv[1:]
+
+if len(args) == 0 or all(arg not in ["typical", "etc", "mc"] for arg in args):
+    print("Wrong/No arguments provided. Please specify a combination of 'typical', 'etc', and 'mc' to be plotted.")
+    sys.exit(1)
 
 for arg in args:
     print(f"Argument {arg} of type: {type(arg)} recieved.")
     if arg in ["Sch", "Lay"]:
         view = arg
         print(f"View set to: {view}")
-
-if len(args) == 0 or all(arg not in ["typical", "etc", "mc"] for arg in args):
-    print("Wrong/No arguments provided. Please specify a combination of 'typical', 'etc', and 'mc' to be plotted.")
-    sys.exit(1)
+    elif arg in ["sch"]:
+        view = "Sch"
+        print(f"View set to: {view}")
+    elif arg in ["lay"]:
+        view = "Lay"
+        print(f"View set to: {view}")
 
 files = []
 if "typical" in args:
@@ -31,46 +45,83 @@ if "mc" in args:
     for n in range(1, 30):
         files.append(f"output_tran/tran_{view}GtKttmmTtVt_{n}")
 
-fig, axs = plt.subplot_mosaic([['top_left', 'right'],
-                                ['bottom_left', 'right']], 
-                                figsize=(12, 12))
-fig.suptitle('Bias Currents Comparison (target 1.2 uA)', fontsize=16)
+fig, axs = plt.subplot_mosaic([['idd', 'ref', 'bias', 'comb']], 
+                                figsize=(16, 8))
+fig.suptitle('Bias Currents Comparison (target 1.2 uA)', fontsize=title_fontsize)
+axs['idd'].set_title('half of supply current')
+axs['ref'].set_title('calculated over unit resistor')
+axs['bias'].set_title('calculated over total resistance')
+axs['comb'].set_title('combined plots')
+
+fig_idd, ax_idd = plt.subplots(1, 1, figsize=(fig_width, fig_height), dpi=300)  
+ax_idd.set_title('supply current halfed')
+fig_ref, ax_ref = plt.subplots(1, 1, figsize=(fig_width, fig_height), dpi=300)
+ax_ref.set_title('calculated over unit resistor')
+fig_bias, ax_bias = plt.subplots(1, 1, figsize=(fig_width, fig_height), dpi=300)
+ax_bias.set_title('calculated over total resistance')
+fig_comb, ax_comb = plt.subplots(1, 1, figsize=(fig_width, fig_height), dpi=300)
+ax_comb.set_title('combined plots')
 
 for file in files:
     fname = file + fend
     print(f"Processing file: {fname}")
     df = pd.read_csv(fname, sep='\s+')
 
+    df['i(vss)'] = -df['i(vss)'] * 1e6 # in uA
+    df['i(vdd)'] = -df['i(vdd)'] * 1e6 # in uA
+    df['iref'] = df['iref'] * 1e6 # in uA
+    df['ibias'] = df['ibias'] * 1e6 # in uA
+
     df['time'] = df['time'] * 1e9 # in ns
 
     # print(df.columns)
     # print(df.head())
 
-    labelname = fname.split('/')[-1].replace(fend, '')
+    labelname = file.split('/')[-1]
 
-    axs['top_left'].plot(df['time'], df['ibias']*1e6, label=f'{labelname}, ibias') # in uA
-
-    line_color = axs['top_left'].lines[-1].get_color()
-
-    axs['bottom_left'].plot(df['time'], -df['i(vdd)']/2*1e6, color=line_color, linestyle='--', label=f'{labelname}, i(vdd)/2') # in uA
+    axs['idd'].plot(df['time'], (df['i(vdd)']/2), label=f'{labelname}', linestyle='solid')
+    axs['ref'].plot(df['time'], df['iref'], label=f'{labelname}', linestyle='dashed')
+    axs['bias'].plot(df['time'], df['ibias'], label=f'{labelname}', linestyle='dotted')
     
-    axs['right'].plot(df['time'], df['ibias']*1e6, color=line_color, label=f'{labelname}, ibias') # in uA
-    axs['right'].plot(df['time'], -df['i(vdd)']/2*1e6, color=line_color, linestyle='--', label=f'{labelname}, i(vdd)/2') # in uA
+    line_color = axs['ref'].lines[-1].get_color()
+
+    axs['comb'].plot(df['time'], (df['i(vdd)']/2), color=line_color, linestyle='solid', label=f'{labelname}')
+    axs['comb'].plot(df['time'], df['iref'], color=line_color, linestyle='dashed')
+    axs['comb'].plot(df['time'], df['ibias'], color=line_color, linestyle='dotted')
+
+    ax_idd.plot(df['time'], (df['i(vdd)']/2), label=f'{labelname}', linestyle='solid')
+    ax_ref.plot(df['time'], df['iref'], label=f'{labelname}', linestyle='dashed')
+    ax_bias.plot(df['time'], df['ibias'], label=f'{labelname}', linestyle='dotted')
+    
+    line_color = axs['ref'].lines[-1].get_color()
+
+    ax_comb.plot(df['time'], (df['i(vdd)']/2), color=line_color, linestyle='solid', label=f'{labelname}')
+    ax_comb.plot(df['time'], df['iref'], color=line_color, linestyle='dashed')
+    ax_comb.plot(df['time'], df['ibias'], color=line_color, linestyle='dotted')
 
 for ax in axs.values():
-    ax.set(xlabel='Time (ns)', ylabel='Current (uA)')
+    ax.set_xlabel("Time (ns)", fontsize=10)
+    ax.set_ylabel("Current (uA)", fontsize=10)
+    ax.tick_params(axis='both', which='major', labelsize=10)
+    ax.legend(fontsize=10)
     ax.grid()
+    ax.set_ylim(-0.1, 2.6)
 
-axs['top_left'].set_title("Bias Current Comparison (calculated)")
-axs['bottom_left'].set_title("Bias Current Comparison (half of measured VDD current)")
-axs['right'].set_title("Bias Current Comparison (Both methods)")
-
-axs['right'].legend(fontsize='small')
-
+for ax in [ax_idd, ax_ref, ax_bias, ax_comb]:
+    ax.set_xlabel("Time (ns)", fontsize=label_fontsize)
+    ax.set_ylabel("Current (uA)", fontsize=label_fontsize)
+    ax.tick_params(axis='both', which='major', labelsize=ticks_fontsize)
+    # ax.legend(fontsize=legend_fontsize)
+    ax.grid()
+    ax.set_ylim(-0.1, 2.6)
 
 fig.tight_layout()
+fig_idd.tight_layout()
+fig_ref.tight_layout()
+fig_bias.tight_layout()
+fig_comb.tight_layout()
 
-image_path = "./figures/plot_bias.png"
+image_path = f"./figures/plot_bias_{'_'.join(args)}.png"
 plt.savefig(image_path)
 print("Figure saved to " + image_path)
 

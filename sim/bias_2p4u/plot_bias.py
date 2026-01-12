@@ -3,11 +3,23 @@ import yaml
 import matplotlib.pyplot as plt
 import sys
 
+fig_width = 3
+fig_height = 3
+font_size = 12
+title_fontsize = font_size
+label_fontsize = font_size
+legend_fontsize = font_size
+ticks_fontsize = font_size
+
 fend = ".out" # File extension for output files, can be changed to ".yaml", ".csv" or others if needed
-view = "Sch" # Sets schematic is default view if none is specified
-# view = "Lay" # Sets schematic is default view if none is specified
+view = "Sch" # Sets schematic as default view if noen is specified
+# view = "Lay" # Sets layout as default view if noen is specified
 
 args = sys.argv[1:]
+
+if len(args) == 0 or all(arg not in ["typical", "etc", "mc", "sch", "lay", "Sch", "Lay"] for arg in args):
+    print("Wrong/No arguments provided. Please specify a combination of 'typical', 'etc', and 'mc' to be plotted.")
+    sys.exit(1)
 
 for arg in args:
     print(f"Argument {arg} of type: {type(arg)} recieved.")
@@ -20,10 +32,6 @@ for arg in args:
     elif arg in ["lay"]:
         view = "Lay"
         print(f"View set to: {view}")
-
-if len(args) == 0 or all(arg not in ["typical", "etc", "mc", "sch", "lay", "Sch", "Lay"] for arg in args):
-    print("Wrong/No arguments provided. Please specify a combination of 'typical', 'etc', and 'mc' to be plotted.")
-    sys.exit(1)
 
 files = []
 if "typical" in args:
@@ -42,9 +50,9 @@ fig, axs = plt.subplot_mosaic([['top_left', 'right'],
                                 figsize=(12, 12))
 fig.suptitle('Bias Currents Comparison  (target 2.4 uA)', fontsize=16)
 
-fig_bias, ax_bias = plt.subplots(1,1, figsize=(5, 4))
-fig_idd, ax_idd = plt.subplots(1,1)
-fig_comb, ax_comb = plt.subplots(1,1)
+fig_meas, ax_meas = plt.subplots(1, 1, figsize=(fig_width, fig_height), dpi=300)  
+fig_calc, ax_calc = plt.subplots(1, 1, figsize=(fig_width, fig_height), dpi=300)
+fig_comb, ax_comb = plt.subplots(1, 1, figsize=(fig_width, fig_height), dpi=300)
 
 for file in files:
     fname = file + fend

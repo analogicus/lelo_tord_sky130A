@@ -9,10 +9,21 @@
 #  digits: <significant digits>
 #  unit: Unit
 
+iref:
+  src:
+    - iref_199ns
+  name: Calculated Reference Current Over Unit Resistor
+  min: -20%
+  typ: 1.2
+  max: 20%
+  scale: 1e6
+  digits: 3
+  unit: uA
+
 ibias:
   src:
     - ibias_199ns
-  name: Bias Current
+  name: Calculated Bias Current Over Total Resistance
   min: -20%
   typ: 1.2
   max: 20%

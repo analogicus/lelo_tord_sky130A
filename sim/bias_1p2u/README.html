@@ -14,6 +14,7 @@
     div.column{display: inline-block; vertical-align: top; width: 50%;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" type="text/css" media="screen, projection, print"
     href="https://www.w3.org/Talks/Tools/Slidy2/styles/slidy.css" />
@@ -29,6 +30,16 @@
 <h1>Transient analysis (tran)</h1>
 <p>Check transient operation</p>
 <table>
+<colgroup>
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+<col width="14%" />
+<col width="14%" />
+<col width="14%" />
+<col width="11%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th align="left"><strong>Name</strong></th>
@@ -43,7 +54,51 @@
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left"><strong>Bias Current</strong></td>
+<td align="left"><strong>Calculated Reference Current Over Unit
+Resistor</strong></td>
+<td align="left"><strong>iref_199ns</strong></td>
+<td align="left"></td>
+<td align="right"><strong>Spec</strong></td>
+<td align="center"><strong>0.960</strong></td>
+<td align="center"><strong>1.200</strong></td>
+<td align="center"><strong>1.440</strong></td>
+<td align="right"><strong>uA</strong></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td
+align="right"><a href='results/tran_Sch_typical.html'>Sch_typ</a></td>
+<td align="center"></td>
+<td align="center">1.362</td>
+<td align="center"></td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="right"><a href='results/tran_Sch_etc.html'>Sch_etc</a></td>
+<td align="center">1.146</td>
+<td align="center">1.370</td>
+<td align="center"><span
+style="color:red"><strong>1.593</strong></span></td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="right"><a href='results/tran_Sch_mc.html'>Sch_3std</a></td>
+<td align="center">1.287</td>
+<td align="center">1.361</td>
+<td align="center">1.435</td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Calculated Bias Current Over Total
+Resistance</strong></td>
 <td align="left"><strong>ibias_199ns</strong></td>
 <td align="left"></td>
 <td align="right"><strong>Spec</strong></td>
@@ -56,9 +111,10 @@
 <td align="left"></td>
 <td align="left"></td>
 <td align="left"></td>
-<td align="right"><a href='results/tran_Sch_typical.html'>Sch_typ</a></td>
+<td
+align="right"><a href='results/tran_Sch_typical.html'>Sch_typ</a></td>
 <td align="center"></td>
-<td align="center">1.365</td>
+<td align="center">1.362</td>
 <td align="center"></td>
 <td align="right"></td>
 </tr>
@@ -67,9 +123,10 @@
 <td align="left"></td>
 <td align="left"></td>
 <td align="right"><a href='results/tran_Sch_etc.html'>Sch_etc</a></td>
-<td align="center">1.151</td>
-<td align="center">1.374</td>
-<td align="center"><span style="color:red"><strong>1.596</strong></span></td>
+<td align="center">1.146</td>
+<td align="center">1.370</td>
+<td align="center"><span
+style="color:red"><strong>1.593</strong></span></td>
 <td align="right"></td>
 </tr>
 <tr class="even">
@@ -77,9 +134,9 @@
 <td align="left"></td>
 <td align="left"></td>
 <td align="right"><a href='results/tran_Sch_mc.html'>Sch_3std</a></td>
-<td align="center">1.352</td>
-<td align="center">1.365</td>
-<td align="center">1.378</td>
+<td align="center">1.351</td>
+<td align="center">1.362</td>
+<td align="center">1.373</td>
 <td align="right"></td>
 </tr>
 </tbody>
