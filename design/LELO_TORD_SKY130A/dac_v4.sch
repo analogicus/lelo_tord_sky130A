@@ -346,7 +346,7 @@ C {devices/lab_wire.sym} 2180 710 0 1 {name=p13 sig_type=std_logic lab=pbias
 }
 C {devices/lab_wire.sym} 2180 730 0 1 {name=p21 sig_type=std_logic lab=nbias
 }
-C {JNW_TR_SKY130A/JNWTR_CAPX4.sym} 1800 360 0 0 {name=x12[23:0]}
+C {JNW_TR_SKY130A/JNWTR_CAPX4.sym} 1800 360 0 0 {name=x12[99:0]}
 C {devices/lab_wire.sym} 2150 490 0 1 {name=p1 sig_type=std_logic lab=bt_n}
 C {devices/lab_wire.sym} 1860 490 0 0 {name=p2 sig_type=std_logic lab=bt}
 C {devices/lab_wire.sym} 1950 590 0 0 {name=p11 sig_type=std_logic lab=nbias
