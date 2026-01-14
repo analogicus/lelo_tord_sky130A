@@ -50,8 +50,8 @@ fig, axs = plt.subplot_mosaic([['top_left', 'right'],
                                 figsize=(12, 12))
 fig.suptitle('Bias Currents Comparison  (target 2.4 uA)', fontsize=16)
 
-fig_meas, ax_meas = plt.subplots(1, 1, figsize=(fig_width, fig_height), dpi=300)  
-fig_calc, ax_calc = plt.subplots(1, 1, figsize=(fig_width, fig_height), dpi=300)
+fig_bias, ax_bias = plt.subplots(1, 1, figsize=(fig_width, fig_height), dpi=300)  
+fig_idd, ax_idd = plt.subplots(1, 1, figsize=(fig_width, fig_height), dpi=300)
 fig_comb, ax_comb = plt.subplots(1, 1, figsize=(fig_width, fig_height), dpi=300)
 
 for file in files:

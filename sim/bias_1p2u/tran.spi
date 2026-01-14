@@ -18,24 +18,25 @@
 *-----------------------------------------------------------------
 .param TRF = 10p
 .param AVDD = {vdda}
+.csparam voltage_supply_csparam = {vdda}
 
 .param delay = 10ns
 .param rise = 1ns
 .param width = 100ns
 .param fall = 1ns
 
-.param simulation_length = 400ns
-* .param simulation_length = {delay + rise + width + fall + 200ns}
+.param sleep_signal = 0V
+.csparam sleep_signal_csparam = {sleep_signal}
 
-.csparam sim_len_csparam = {simulation_length}
+.param simulation_length = 50ns
+.csparam simulation_length_csparam = {simulation_length}
 
 *-----------------------------------------------------------------
 * FORCE
 *-----------------------------------------------------------------
-VSS VSS 0   dc 0V
+VSS VSS 0 dc 0V
 VDD VDD VSS dc {AVDD}
-* VSLEEP SLEEP VSS pwl {delay} 0V {delay+rise} {AVDD} {delay+rise+width} {AVDD} {delay+rise+width+fall} 0V
-VSLEEP SLEEP VSS dc 0V
+VSLEEP SLEEP VSS dc {sleep_signal}
 
 *-----------------------------------------------------------------
 * DUT
@@ -57,16 +58,22 @@ set color0=white
 set color1=black
 unset askquit
 
-set sim_length = {$&sim_len_csparam}
-echo $sim_length
+set sim_len = {$&simulation_length_csparam}
+set slp_sig = {$&sleep_signal_csparam}
+set vsup = {$&voltage_supply_csparam}
 
 optran 0 0 0 1ns 1us 0
+tran 1ns $sim_len 10ps
+write 
 
+alterparam sleep_signal = {$vsup}
+reset
 
-tran 1ns $sim_length 1ps
-write
+optran 0 0 0 1ns 1us 0
+tran 1ns $sim_len 10ps
+write {cicname}_sleep_high.raw
+
 quit
-
 
 .endc
 
