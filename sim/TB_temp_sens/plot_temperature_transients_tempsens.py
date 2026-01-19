@@ -6,13 +6,15 @@ args = sys.argv[1:]
 
 files = list()
 
+xx = "xx"
+
 # example input arguments: python plot_temperature_transients.py ss Tl 125 2 30 1.7 0
 
 if len(args) == 0:
     print("No arguments provided. Plotting for typical corner, voltage (1.8 Volt) and temperature (27 Celsius).")
-    files.append("output_tran/tran_SchGtKttTtVt_temperature27celsius_frequency2mhz_dutycycle35percent_vdd1.8volt.out")
+    files.append("output_tran/tran_SchGtKttTtVt_temperature27celsius_frequency2mhz_dutycycle40percent_vdd1.8volt.out")
 elif "typical" in args:
-    files.append("output_tran/tran_SchGtKttTtVt_temperature27celsius_frequency2mhz_dutycycle35percent_vdd1.8volt.out")
+    files.append("output_tran/tran_SchGtKttTtVt_temperature27celsius_frequency2mhz_dutycycle40percent_vdd1.8volt.out")
 elif "all" in args:
     for corner in ["tt", "ss", "ff", "sf", "fs"]:
         for temperature in [-40, 0, 27, 125]: # Celsius (degree C)

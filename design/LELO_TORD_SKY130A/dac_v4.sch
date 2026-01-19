@@ -49,9 +49,8 @@ N 1520 400 1520 450 {lab=#net4}
 N 1480 400 1520 400 {lab=#net4}
 N 1000 280 1680 280 {lab=vdd}
 N 200 340 240 340 {lab=b2}
-N 200 360 240 360 {lab=b2}
-N 200 380 240 380 {lab=b3}
-N 200 400 240 400 {lab=b4}
+N 200 360 240 360 {lab=b3}
+N 200 380 240 380 {lab=b4}
 N 460 200 480 200 {lab=b1}
 N 480 160 520 160 {lab=vdd}
 N 480 240 520 240 {lab=vss}
@@ -150,9 +149,9 @@ N 880 400 880 450 {lab=#net7}
 N 840 400 880 400 {lab=#net7}
 N 360 280 1000 280 {lab=vdd}
 N 840 520 1020 520 {lab=iout}
-N 200 420 240 420 {lab=b5}
-N 200 440 240 440 {lab=b6}
-N 200 460 240 460 {lab=b7}
+N 200 400 240 400 {lab=b5}
+N 200 420 240 420 {lab=b6}
+N 200 440 240 440 {lab=b7}
 N 1100 200 1120 200 {lab=b5}
 N 1120 160 1160 160 {lab=vdd}
 N 1120 240 1160 240 {lab=vss}
@@ -314,9 +313,8 @@ C {devices/lab_wire.sym} 950 450 0 0 {name=p6 sig_type=std_logic lab=b4_n
 C {devices/ipin.sym} 200 180 0 0 {name=p14 lab=vdd}
 C {devices/ipin.sym} 200 220 0 0 {name=p15 lab=vss}
 C {devices/ipin.sym} 200 340 0 0 {name=p17 lab=b2}
-C {devices/ipin.sym} 200 360 0 0 {name=p18 lab=b2}
-C {devices/ipin.sym} 200 380 0 0 {name=p19 lab=b3}
-C {devices/ipin.sym} 200 400 0 0 {name=p20 lab=b4}
+C {devices/ipin.sym} 200 360 0 0 {name=p19 lab=b3}
+C {devices/ipin.sym} 200 380 0 0 {name=p20 lab=b4}
 C {devices/lab_wire.sym} 510 240 2 1 {name=p26 sig_type=std_logic lab=vss}
 C {devices/lab_wire.sym} 510 160 0 0 {name=p27 sig_type=std_logic lab=vdd}
 C {devices/lab_wire.sym} 670 240 2 1 {name=p30 sig_type=std_logic lab=vss}
@@ -379,9 +377,9 @@ C {devices/lab_wire.sym} 790 330 0 0 {name=p61 sig_type=std_logic lab=pbias
 }
 C {devices/lab_wire.sym} 1650 280 0 1 {name=p67 sig_type=std_logic lab=vdd
 }
-C {devices/ipin.sym} 200 420 0 0 {name=p22 lab=b5}
-C {devices/ipin.sym} 200 440 0 0 {name=p68 lab=b6}
-C {devices/ipin.sym} 200 460 0 0 {name=p69 lab=b7}
+C {devices/ipin.sym} 200 400 0 0 {name=p22 lab=b5}
+C {devices/ipin.sym} 200 420 0 0 {name=p68 lab=b6}
+C {devices/ipin.sym} 200 440 0 0 {name=p69 lab=b7}
 C {devices/lab_wire.sym} 1150 240 2 1 {name=p70 sig_type=std_logic lab=vss}
 C {devices/lab_wire.sym} 1150 160 0 0 {name=p71 sig_type=std_logic lab=vdd}
 C {devices/lab_wire.sym} 1120 200 0 0 {name=p72 sig_type=std_logic lab=b5}

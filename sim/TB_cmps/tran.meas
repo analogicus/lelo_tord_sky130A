@@ -9,13 +9,13 @@ set wr_singlescale
 set wr_vecnames
 option numdgt = 3
 wrdata {cicname}.out 
++ v(vip1) v(vin1) v(vout1) 
++ v(vip2) v(vin2) v(vout2) 
++ v(vip3) v(vin3) v(vout3) 
 + v(vip4) v(vin4) v(vout4) v(vout4_n)
-+ v(xdut.x4.common_source) v(xdut.x4.nbias) v(xdut.x4.vin_drain) v(xdut.x4.vip_drain)
 + v(vip5) v(vin5) v(vout5) v(vout5_n)
++ v(xdut.x4.common_source) v(xdut.x4.nbias) v(xdut.x4.vin_drain) v(xdut.x4.vip_drain)
 + v(xdut.x5.insource) v(xdut.x5.pbias) v(xdut.x5.vindrain) v(xdut.x5.vipdrain)
-* + v(vip1) v(vin1) v(vout1) 
-* + v(vip2) v(vin2) v(vout2) 
-* + v(vip3) v(vin3) v(vout3) 
 
 echo "MEAS_END"
 .endc

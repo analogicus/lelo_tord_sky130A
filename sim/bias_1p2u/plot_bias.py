@@ -16,6 +16,9 @@ fend = ".out" # File extension for output files, can be changed to ".yaml", ".cs
 view = "Sch" # Sets schematic as default view if noen is specified
 # view = "Lay" # Sets layout as default view if noen is specified
 
+mc_runs = 30
+num_of_bins = 5
+
 args = sys.argv[1:]
 
 if len(args) == 0 or all(arg not in ["typical", "etc", "mc"] for arg in args):
@@ -43,12 +46,12 @@ if "etc" in args:
             for voltage in ["Vl", "Vh"]:
                 files.append(f"output_tran/tran_{view}GtK{corner}{temperature}{voltage}")
 if "mc" in args:
-    for n in range(1, 30):
+    for n in range(1, mc_runs):
         files.append(f"output_tran/tran_{view}GtKttmmTtVt_{n}")
 
-fig, axs = plt.subplot_mosaic([['idd', 'ref', 'bias', 'comb']], 
+fig_all, axs = plt.subplot_mosaic([['idd', 'ref', 'bias', 'comb']], 
                                 figsize=(fig_width*3.5, fig_height), dpi=300)
-# fig.suptitle('Bias Currents Comparison (target 1.2 uA)', fontsize=title_fontsize)
+# fig_all.suptitle('Bias Currents Comparison (target 1.2 uA)', fontsize=title_fontsize)
 axs['idd'].set_title('half of supply current', fontsize = title_fontsize)
 axs['ref'].set_title('calculated over unit resistor', fontsize = title_fontsize)
 axs['bias'].set_title('calculated over total resistance', fontsize = title_fontsize)
@@ -127,13 +130,53 @@ print(f"minimum mean bias current: {np.min(mean_bias)}")
 print(f"mean of the mean bias currents: {np.mean(mean_bias)}")  
 print(f"------------------------------------------------")
 
-fig_hist, ax_hist = plt.subplots(1, 1, figsize=(fig_width, fig_height), dpi=300)  
-# ax_hist.hist(mean_bias, bins=5, density=True, edgecolor='black')
-# ax_hist.hist(mean_ref,  bins=5, alpha=0.5)
+if 'mm' in fname:
+    label_add_on =  f', n={mc_runs}, m={num_of_bins}'
+else: 
+    label_add_on = ''
 
-sns.histplot(mean_bias, bins=5, kde=True, edgecolor='black')
-sns.histplot(mean_ref, bins=5, kde=True, edgecolor='black')
-ax_hist.tick_params(axis='both', which='major', labelsize=ticks_fontsize)
+fig_hist_idd, ax_hist_idd = plt.subplots(1, 1, figsize=(fig_width, fig_height), dpi=300)
+ax_hist_idd.set_title('idd histplot')
+sns.histplot(mean_idd, bins=5, kde=True, color='red', edgecolor='black', label=f'idd{label_add_on}')
+sns.rugplot(mean_idd, height=0.1, color='red')
+plt.grid(True)
+plt.gca().set_axisbelow(True)
+ax_hist_idd.tick_params(axis='both', which='major', labelsize=ticks_fontsize)
+fig_hist_idd.tight_layout()
+
+fig_hist_ref, ax_hist_ref = plt.subplots(1, 1, figsize=(fig_width, fig_height), dpi=300)
+ax_hist_ref.set_title('ref histplot')
+sns.histplot(mean_ref, bins=5, kde=True, color='green', edgecolor='black', label=f'idd{label_add_on}')
+sns.rugplot(mean_ref, height=0.1, color='green')
+plt.grid(True)
+plt.gca().set_axisbelow(True)
+ax_hist_ref.tick_params(axis='both', which='major', labelsize=ticks_fontsize)
+fig_hist_ref.tight_layout()
+
+fig_hist_bias, ax_hist_bias = plt.subplots(1, 1, figsize=(fig_width, fig_height), dpi=300)
+ax_hist_bias.set_title('bias histplot')
+sns.histplot(mean_bias, bins=5, kde=True, color='blue', edgecolor='black', label=f'idd{label_add_on}')
+sns.rugplot(mean_bias, height=0.1, color='blue')
+plt.grid(True)
+plt.gca().set_axisbelow(True)
+ax_hist_bias.tick_params(axis='both', which='major', labelsize=ticks_fontsize)
+fig_hist_bias.tight_layout()
+
+fig_hist_comb, ax_hist_comb = plt.subplots(1, 1, figsize=(fig_width, fig_height), dpi=300)
+ax_hist_comb.set_title('combined histplot')
+sns.histplot(mean_idd, bins=5, kde=True, color='red', edgecolor='black', label=f'idd{label_add_on}')
+sns.rugplot(mean_idd, height=0.1, color='red')
+sns.histplot(mean_ref, bins=5, kde=True, color='green', edgecolor='black', label=f'ref{label_add_on}')
+sns.rugplot(mean_ref, height=0.1, color='green')
+sns.histplot(mean_bias, bins=5, kde=True, color='blue', edgecolor='black', label=f'bias{label_add_on}', linewidth=1)
+sns.rugplot(mean_bias, height=0.1, color='blue')
+plt.grid(True)
+plt.gca().set_axisbelow(True)
+ax_hist_comb.legend()
+ax_hist_comb.tick_params(axis='both', which='major', labelsize=ticks_fontsize)
+fig_hist_comb.tight_layout()
+
+# fig_test, ax_test = plt.subplots(1, 1, figsize=(fig_width, fig_height), dpi=300)  
 
 for ax in axs.values():
     ax.set_xlabel("Time (ns)", fontsize=label_fontsize)
@@ -152,14 +195,22 @@ for ax in [ax_idd, ax_ref, ax_bias, ax_comb]:
     ax.grid()
     ax.set_ylim(-0.1, 2.6)
 
-fig.tight_layout()
+fig_all.tight_layout()
 fig_idd.tight_layout()
 fig_ref.tight_layout()
 fig_bias.tight_layout()
 fig_comb.tight_layout()
 
-image_path = f"./figures/plot_bias_{'_'.join(args)}.png"
-fig.savefig(image_path)
-print("Figure saved to " + image_path)
+image_path = f"./figures/plot_bias_{'_'.join(args)}_"
+fig_all.savefig(image_path + "tran_all.png")
+fig_idd.savefig(image_path + "tran_idd.png")
+fig_ref.savefig(image_path + "tran_ref.png")
+fig_bias.savefig(image_path + "tran_bias.png")
+fig_comb.savefig(image_path + "tran_comb.png")
+fig_hist_idd.savefig(image_path + "hist_idd.png")
+fig_hist_ref.savefig(image_path + "hist_ref.png")
+fig_hist_bias.savefig(image_path + "hist_bias.png")
+fig_hist_comb.savefig(image_path + "hist_comb.png")
+print("Figures saved to " + image_path + "...")
 
 plt.show()

@@ -26,19 +26,20 @@
 VSS  VSS  0    dc 0
 VDD  VDD  VSS  dc {AVDD}
 
-VIP1 VIP1 VSS  pwl 0s 0V 1us {AVDD} 2us 0V
+VIP1 VIP1 VSS  pwl 0s 0V 1us {AVDD} 2us 0V 5us 0V 10us {AVDD} 15us 0V
 VIN1 VIN1 VSS  dc 1V
 
-VIP2 VIP2 VSS  pwl 0s 0V 1us {AVDD} 2us 0V
+VIP2 VIP2 VSS  pwl 0s 0V 1us {AVDD} 2us 0V 5us 0V 10us {AVDD} 15us 0V
 VIN2 VIN2 VSS  dc 1V
 
-VIP3 VIP3 VSS  pwl 0s 0V 1us {AVDD} 2us 0V
+VIP3 VIP3 VSS  pwl 0s 0V 1us {AVDD} 2us 0V 5us 0V 10us {AVDD} 15us 0V
 VIN3 VIN3 VSS  dc 1V
 
-VIP4 VIP4 VSS  pwl 0s 0V 1us {AVDD} 2us 0V
+VIP4 VIP4 VSS  pwl 0s 0V 1us {AVDD} 2us 0V 5us 0V 10us {AVDD} 15us 0V
 VIN4 VIN4 VSS  dc 1V
 
-VIP5 VIP5 VSS  pwl 0s 0V 1us {AVDD} 5us {AVDD} 6us 0V 10us 0V 11us {AVDD} 15us {AVDD} 16us 0V
+VIP5 VIP5 VSS  pwl 0s 0V 1us {AVDD} 2us 0V 5us 0V 10us {AVDD} 15us 0V
+* VIP5 VIP5 VSS  pwl 0s 0V 1us {AVDD} 5us {AVDD} 6us 0V 10us 0V 11us {AVDD} 15us {AVDD} 16us 0V
 VIN5 VIN5 VSS  dc 1V
 
 * For operationg point calculation
@@ -62,9 +63,11 @@ VIN5 VIN5 VSS  dc 1V
 * .option savecurrents
 * .save all
 
-.save v(vip1) v(vin1) v(vout1) 
+.save 
++ v(vip1) v(vin1) v(vout1) 
 + v(vip2) v(vin2) v(vout2) 
 + v(vip3) v(vin3) v(vout3) 
++ v(xdut.x3.i_bias) v(xdut.x3.ota_cm_gate) v(xdut.x3.ota_vdd)
 + v(vip4) v(vin4) v(vout4) v(vout4_n)
 + v(xdut.x4.nbias) v(xdut.x4.common_source) v(xdut.x4.vip_drain) v(xdut.x4.vin_drain)
 + v(vip5) v(vin5) v(vout5) v(vout5_n)
@@ -81,7 +84,7 @@ set color0=white
 set color1=black
 unset askquit
 
-optran 0 0 0 1n 20u 0
+optran 0 0 0 1n 1u 0
 
 * op 
 

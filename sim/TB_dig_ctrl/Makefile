@@ -7,7 +7,7 @@ all: typical etc mc summary
 TB=tran
 VIEW=Sch
 #VIEW=Lay
-CELL=bias_1p2u
+CELL=TB_dig_ctrl
 LIB =LELO_TORD_SKY130A
 OPT=
 

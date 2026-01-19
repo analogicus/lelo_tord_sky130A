@@ -182,9 +182,9 @@ echo $sim_len
 * 10 20 30 40 50 60 70 80 90
 
 set fend = .raw
-foreach cir_temp -40 -20 0 27 60 90 125
+foreach cir_temp 27
 	foreach clk_freq 2
-		foreach dcycle 10 20 30 40 50 60 70 80 90
+		foreach dcycle 40
     		reset
 			option temp = $cir_temp
 			alterparam finetuning_frequency = {$clk_freq}

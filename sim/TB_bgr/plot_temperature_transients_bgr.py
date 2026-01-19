@@ -6,6 +6,10 @@ args = sys.argv[1:]
 
 files = list()
 
+xx = "xx"
+Tx = "Tx"
+Vx = "Vx"
+
 # example input arguments: python plot_temperature_transients.py ttmm Tt 125 2 30 1.7 0
 
 if len(args) == 0:
@@ -28,9 +32,9 @@ elif "report" in args:
                     Vx = "Vl" if voltage == 1.7 else "Vt" if voltage == 1.8 else "Vh" if voltage == 1.9 else "Oops"
                     files.append(f"output_tran/tran_SchGtKttTt{Vx}_temperature{temperature}celsius_frequency{frequency}mhz_dutycycle{dutycycle}percent_vdd{voltage}volt.out")
 elif "test" in args:
-    for temperature in [0]: # Celsius (degree C)
+    for temperature in [-40]: # Celsius (degree C)
         for frequency in [2]: # Mega Hertz (MHz)
-            for dutycycle in [35]: # Percent (%)
+            for dutycycle in [35, 45]: # Percent (%)
                 for voltage in [1.8]: # Volt (V)
                     Vx = "Vl" if voltage == 1.7 else "Vt" if voltage == 1.8 else "Vh" if voltage == 1.9 else "Oops"
                     files.append(f"output_tran/tran_SchGtKttTt{Vx}_temperature{temperature}celsius_frequency{frequency}mhz_dutycycle{dutycycle}percent_vdd{voltage}volt.out")
