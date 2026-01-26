@@ -49,9 +49,10 @@ def main(name):
   axs[idxs['2']].plot(df['time'], df['v(vin2)'], label='vin2')
   axs[idxs['2']].plot(df['time'], df['v(vout2)'], label='vin2')
 
-  axs[idxs['3']].plot(df['time'], df['v(vip3)'], label='vin3')
+  axs[idxs['3']].plot(df['time'], df['v(vip3)'], label='vip3')
   axs[idxs['3']].plot(df['time'], df['v(vin3)'], label='vin3')
-  axs[idxs['3']].plot(df['time'], df['v(vout3)'], label='vin3')
+  axs[idxs['3']].plot(df['time'], df['v(vout3)'], label='vout3')
+  axs[idxs['3']].plot(df['time'], df['v(vout3_pmos)'], label='vout3_pmos')
 
   axs[idxs['4']].plot(df['time'], df['v(vip4)'], label='vin4')
   axs[idxs['4']].plot(df['time'], df['v(vin4)'], label='vin4')

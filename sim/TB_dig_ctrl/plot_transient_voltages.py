@@ -21,35 +21,27 @@ elif "typical" in args:
                     for voltage in [1.8]: # Volt (V)
                         Vx = "Vl" if voltage == 1.7 else "Vt" if voltage == 1.8 else "Vh" if voltage == 1.9 else "Oops"
                         files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_temperature{temperature}celsius_frequency{frequency}mhz_dutycycle{dutycycle}percent_vdd{voltage}volt.out")
-elif "all" in args:
-    for corner in ["tt", "ss", "ff", "sf", "fs"]:
-        for temperature in [-40, 0, 27, 125]: # Celsius (degree C)
-            for frequency in [1, 2, 5, 10]: # Mega Hertz (MHz)
-                for dutycycle in [5, 35, 65, 95]: # Percent (%)
-                    for voltage in [1.7, 1.8, 1.9]: # Volt (V)
-                        Vx = "Vl" if voltage == 1.7 else "Vt" if voltage == 1.8 else "Vh" if voltage == 1.9 else "Oops"
-                        files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_temperature{temperature}celsius_frequency{frequency}mhz_dutycycle{dutycycle}percent_vdd{voltage}volt.out")
-elif "report" in args:
-    for corner in ["ff", "ss"]:
-        for temperature in [-40, 27, 125]: # Celsius (degree C)
-            for frequency in [2]: # Mega Hertz (MHz)
-                for dutycycle in [35]: # Percent (%)
-                    for voltage in [1.7, 1.9]: # Volt (V)
-                        Vx = "Vl" if voltage == 1.7 else "Vt" if voltage == 1.8 else "Vh" if voltage == 1.9 else "Oops"
-                        files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_temperature{temperature}celsius_frequency{frequency}mhz_dutycycle{dutycycle}percent_vdd{voltage}volt.out")
 elif "test" in args:
     for corner in ["ss"]:
-        for temperature in [0]: # Celsius (degree C)
+        for temperature in [27]: # Celsius (degree C)
             for frequency in [2]: # Mega Hertz (MHz)
-                for dutycycle in [35]: # Percent (%)
+                for dutycycle in [40]: # Percent (%)
                     for voltage in [1.8]: # Volt (V)
+                        Vx = "Vl" if voltage == 1.7 else "Vt" if voltage == 1.8 else "Vh" if voltage == 1.9 else "Oops"
+                        files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_temperature{temperature}celsius_frequency{frequency}mhz_dutycycle{dutycycle}percent_vdd{voltage}volt.out")
+elif "all" in args:
+    for corner in ["tt", "ss", "ff", "sf", "fs"]:
+        for temperature in [-40, -20, 0, 27, 60, 90, 125]: # Celsius (degree C)
+            for frequency in [0.5, 1, 2]: # Mega Hertz (MHz)
+                for dutycycle in [30, 40, 50, 60, 70]: # Percent (%)
+                    for voltage in [1.7, 1.8, 1.9]: # Volt (V)
                         Vx = "Vl" if voltage == 1.7 else "Vt" if voltage == 1.8 else "Vh" if voltage == 1.9 else "Oops"
                         files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_temperature{temperature}celsius_frequency{frequency}mhz_dutycycle{dutycycle}percent_vdd{voltage}volt.out")
 elif "etc" in args:
     for corner in ["ss", "ff", "sf", "fs"]:
         for temperature in [-40, -20, 0, 27, 60, 90, 125]: # Celsius (degree C)
-            for frequency in [2]: # Mega Hertz (MHz)
-                for dutycycle in [10, 20, 30, 40, 50, 60, 70, 80, 90]: # Percent (%)
+            for frequency in [0.5, 1, 2]: # Mega Hertz (MHz)
+                for dutycycle in [30, 40, 50, 60, 70]: # Percent (%)
                     for voltage in [1.7, 1.9]: # Volt (V)
                         Vx = "Vl" if voltage == 1.7 else "Vt" if voltage == 1.8 else "Vh" if voltage == 1.9 else "Oops"
                         files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_temperature{temperature}celsius_frequency{frequency}mhz_dutycycle{dutycycle}percent_vdd{voltage}volt.out")
@@ -133,7 +125,7 @@ for file in files:
     axs[0].legend(loc="upper left", fontsize=legend_fontsize)
     axs[1].legend(loc="upper left", fontsize=legend_fontsize)
     axs[2].legend(loc="upper left", fontsize=legend_fontsize)
-    axs[3].legend(loc="upper right", fontsize=legend_fontsize)
+    axs[3].legend(loc="upper left", fontsize=legend_fontsize)
 
     ax_iout.set_ylabel("Current (uA)", fontsize=label_fontsize)
     ax_iout.legend(loc="lower right", fontsize=legend_fontsize)

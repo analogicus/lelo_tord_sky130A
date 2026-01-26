@@ -38,7 +38,7 @@ N 520 -1040 560 -1040 {lab=VIP5}
 N 520 -1020 560 -1020 {lab=VIN5}
 N 520 -1000 560 -1000 {lab=VSS}
 N 860 -1060 900 -1060 {lab=VOUT5}
-N 860 -1040 900 -1040 {lab=VOUT5_NOT}
+N 860 -1040 900 -1040 {lab=VOUT5_N}
 C {LELO_TORD_SKY130A/cmp.sym} 660 -370 0 0 {name=x1}
 C {LELO_TORD_SKY130A/cmp_v2.sym} 640 -630 0 0 {name=x2}
 C {LELO_TORD_SKY130A/cmp_v3.sym} 710 -790 0 0 {name=x3}
@@ -81,3 +81,10 @@ C {devices/opin.sym} 900 -1060 0 0 {name=p32 lab=VOUT5
 }
 C {devices/opin.sym} 900 -1040 0 0 {name=p29 lab=VOUT5_N
 }
+C {LELO_TORD_SKY130A/cmp_v3_pmos.sym} 1060 -730 0 0 {name=x6}
+C {devices/opin.sym} 1210 -760 0 0 {name=p30 lab=VOUT3_PMOS
+}
+C {devices/lab_wire.sym} 910 -700 2 1 {name=p34 sig_type=std_logic lab=VSS}
+C {devices/lab_wire.sym} 910 -760 0 0 {name=p35 sig_type=std_logic lab=VDD}
+C {devices/lab_wire.sym} 910 -740 0 0 {name=p31 sig_type=std_logic lab=VIP3}
+C {devices/lab_wire.sym} 910 -720 0 0 {name=p33 sig_type=std_logic lab=VIN3}

@@ -11,7 +11,7 @@ option numdgt = 3
 wrdata {cicname}.out 
 + v(vip1) v(vin1) v(vout1) 
 + v(vip2) v(vin2) v(vout2) 
-+ v(vip3) v(vin3) v(vout3) 
++ v(vip3) v(vin3) v(vout3) v(vout3_pmos)
 + v(vip4) v(vin4) v(vout4) v(vout4_n)
 + v(vip5) v(vin5) v(vout5) v(vout5_n)
 + v(xdut.x4.common_source) v(xdut.x4.nbias) v(xdut.x4.vin_drain) v(xdut.x4.vip_drain)

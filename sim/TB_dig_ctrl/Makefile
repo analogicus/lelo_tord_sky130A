@@ -1,6 +1,6 @@
 
 
-all: typical etc mc summary
+# all: typical etc mc summary
 
 
 
@@ -39,6 +39,9 @@ ntc: netlist
 
 temp: netlist
 	cicsim run --name ${VIEW}_temp ${TB} ${OPT} ${VIEW} Gt "Ktt" "Tt,Th,Tl" Vt
+
+all: netlist
+	cicsim run --name ${VIEW}_all ${TB} ${OPT} ${VIEW} Gt "Ktt,Kss,Ksf,Kfs,Kff" "Tt" "Vt,Vl,Vh"
 
 summary:
 	cicsim summary --output "README.md"

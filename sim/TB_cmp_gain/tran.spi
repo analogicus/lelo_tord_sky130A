@@ -1,0 +1,74 @@
+*TB_SUN_TR_SKY130NM/TB_NCM
+*----------------------------------------------------------------
+* Include
+*----------------------------------------------------------------
+#ifdef Lay
+.include ../../../work/lpe/TB_cmp_gain_lpe.spi
+#else
+.include ../../../work/xsch/TB_cmp_gain.spice
+#endif
+
+*-----------------------------------------------------------------
+* OPTIONS
+*-----------------------------------------------------------------
+.option TNOM=27 GMIN=1e-15 reltol=1e-3
+
+*-----------------------------------------------------------------
+* PARAMETERS
+*-----------------------------------------------------------------
+.param TRF = 10p
+.param AVDD = {vdda}
+
+*-----------------------------------------------------------------
+* FORCE
+*-----------------------------------------------------------------
+VSS VSS 0   DC 0V
+VDD VDD VSS DC {AVDD}
+
+VIP VIP VSS DC 1V AC 1mV SIN(1V 1mV 500kHz)
+VIN VIN VSS DC 1V
+
+* VAC VIP VIN AC 1mV
+RL VOUT VSS 10kOhm
+
+*-----------------------------------------------------------------
+* DUT
+*-----------------------------------------------------------------
+.include ../xdut.spi
+
+*----------------------------------------------------------------
+* PROBE
+*----------------------------------------------------------------
+.save all
+
+*----------------------------------------------------------------
+* NGSPICE control
+*----------------------------------------------------------------
+.control
+set num_threads=8
+set color0=white
+set color1=black
+unset askquit
+
+optran 0 0 0 1n 1u 0
+
+echo beginning tranisent analysis simulation
+
+tran 1n 5u 1p
+write {cicname}.raw
+
+echo beginning ac analysis simulation
+
+ac dec 100 10kHz 2MegHz
+write {cicname}_ac.raw
+
+echo beginning dc analysis simulation
+
+* dc vip 0.9V 1.1V 1mV
+* write {cicname}_dc.raw
+
+quit
+
+.endc
+
+.end
