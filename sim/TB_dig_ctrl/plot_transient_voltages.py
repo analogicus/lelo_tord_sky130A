@@ -22,10 +22,10 @@ elif "typical" in args:
                         Vx = "Vl" if voltage == 1.7 else "Vt" if voltage == 1.8 else "Vh" if voltage == 1.9 else "Oops"
                         files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_temperature{temperature}celsius_frequency{frequency}mhz_dutycycle{dutycycle}percent_vdd{voltage}volt.out")
 elif "test" in args:
-    for corner in ["ss"]:
+    for corner in ["tt"]:
         for temperature in [27]: # Celsius (degree C)
-            for frequency in [2]: # Mega Hertz (MHz)
-                for dutycycle in [40]: # Percent (%)
+            for frequency in [1]: # Mega Hertz (MHz)
+                for dutycycle in [50]: # Percent (%)
                     for voltage in [1.8]: # Volt (V)
                         Vx = "Vl" if voltage == 1.7 else "Vt" if voltage == 1.8 else "Vh" if voltage == 1.9 else "Oops"
                         files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_temperature{temperature}celsius_frequency{frequency}mhz_dutycycle{dutycycle}percent_vdd{voltage}volt.out")

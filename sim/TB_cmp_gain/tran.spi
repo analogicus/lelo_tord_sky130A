@@ -18,6 +18,7 @@
 *-----------------------------------------------------------------
 .param TRF = 10p
 .param AVDD = {vdda}
+.param CM = {AVDD/2} 
 
 *-----------------------------------------------------------------
 * FORCE
@@ -25,11 +26,15 @@
 VSS VSS 0   DC 0V
 VDD VDD VSS DC {AVDD}
 
-VIP VIP VSS DC 1V AC 1mV SIN(1V 1mV 500kHz)
-VIN VIN VSS DC 1V
+VIP VIP VSS DC 0.9V AC 100uV SIN(0.9V 100uV 100kHz)
+VIN VIN VSS DC 0.9V
 
+RL1 VOUT VSS 1G
+RL2 VOUT_PMOS VSS 1G
+
+* Should frequency rather be 500 kHz to mimic operation in final circuit?
+* VAC VIP VIN SIN(0V 1mV 1000kHz)
 * VAC VIP VIN AC 1mV
-RL VOUT VSS 10kOhm
 
 *-----------------------------------------------------------------
 * DUT
@@ -50,19 +55,19 @@ set color0=white
 set color1=black
 unset askquit
 
-optran 0 0 0 1n 1u 0
+optran 0 0 0 1ns 10us 0
 
 echo beginning tranisent analysis simulation
 
-tran 1n 5u 1p
+tran 1ns 11us 1ps
 write {cicname}.raw
 
 echo beginning ac analysis simulation
 
-ac dec 100 10kHz 2MegHz
+ac dec 100 1Hz 1GHz
 write {cicname}_ac.raw
 
-echo beginning dc analysis simulation
+* echo beginning dc analysis simulation
 
 * dc vip 0.9V 1.1V 1mV
 * write {cicname}_dc.raw
