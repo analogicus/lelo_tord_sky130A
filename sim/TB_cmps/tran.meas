@@ -1,21 +1,76 @@
 * Measure TB_cmps
 .control
 
-load {cicname}.raw
-
 echo "MEAS_START"
+
+echo "MEAS_END"
+
+
+*
+* Transient analysis simulated data parsing
+*
+
+load {cicname}.raw
 
 set wr_singlescale
 set wr_vecnames
-option numdgt = 3
-wrdata {cicname}.out 
-+ v(vip1) v(vin1) v(vout1) 
-+ v(vip2) v(vin2) v(vout2) 
-+ v(vip3) v(vin3) v(vout3) v(vout3_pmos)
-+ v(vip4) v(vin4) v(vout4) v(vout4_n)
-+ v(vip5) v(vin5) v(vout5) v(vout5_n)
-+ v(xdut.x4.common_source) v(xdut.x4.nbias) v(xdut.x4.vin_drain) v(xdut.x4.vip_drain)
-+ v(xdut.x5.insource) v(xdut.x5.pbias) v(xdut.x5.vindrain) v(xdut.x5.vipdrain)
+option numdgt = 5
 
-echo "MEAS_END"
+echo writing transient analysis simulation results to file named {cicname}.out
+
+wrdata {cicname}.out
++ v(vout)
++ v(vin) v(vip)
++ v(vss) v(vdd)
+
+
+*
+* AC analysis simulated data parsing
+*
+
+load {cicname}_ac.raw
+
+set wr_singlescale
+set wr_vecnames
+option numdgt = 5
+
+echo writing ac analysis simulation results to file named {cicname}_ac.out
+
+wrdata {cicname}_ac.out
++ vm(vout) vr(vout) vi(vout) vp(vout) vdb(vout)
++ vm(vin) vp(vin) vr(vin) vi(vin)
++ vm(vip) vp(vip) vr(vip) vi(vip) vdb(vip)
++ v(vss) v(vdd)
+
+
+*
+* DC analysis simulated data parsing
+*
+
+* load {cicname}_dc.raw
+
+* let v(vindrn) = v(xdut.x1.vindrn)
+* let v(vipdrn) = v(xdut.x1.vipdrn)
+* let v(vsrc) = v(xdut.x1.vsrc)
+* let v(vnbias) = v(xdut.x1.vnbias)
+
+* set wr_singlescale
+* set wr_vecnames
+* option numdgt = 5
+
+* echo writing transient analysis simulation results to file named {cicname}.out
+
+* wrdata {cicname}_dc.out
+* + v(vout)
+* + v(vin) v(vip)
+* + v(vss) v(vdd)
+* + v(vindrn) v(vipdrn) v(vsrc) v(vnbias)
+
+
+*
+* Print system data usage
+*
+
+rusage
+
 .endc

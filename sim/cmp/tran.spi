@@ -17,25 +17,17 @@
 * PARAMETERS
 *-----------------------------------------------------------------
 .param TRF = 10p
-
 .param AVDD = {vdda}
+.param CM = {AVDD/2} 
 
 *-----------------------------------------------------------------
 * FORCE
 *-----------------------------------------------------------------
-VSS  VSS  0    dc 0
-VDD  VDD  VSS  dc {AVDD}
-VIP  VIP  VSS  pwl 0s 0V 1us {AVDD} 2us 0V 3us {AVDD} 4us 0V 4.5us {AVDD}
-VIN  VIN  VSS  pwl 0s {AVDD} 1us 0V 2us {AVDD} 3us 0V 4us {AVDD} 4.5us 0V
-*VIN  VIN  VSS  dc 1V
-*Vip  vip   VSS   pwl 0 0.89 1u 0.91 2u 0.89 3u 0.91 4u 0.89
-*Vin  vin   VSS   pwl 0 0.91 1u 0.89 2u 0.91 3u 0.89 4u 0.91
-*VIP VIP VSS SIN(0.9V 0.9V 1MEG 0s 0)
-*VIN VIN VSS SIN(0.9V 0.9V 1MEG 0.5us 0)
-VSLEEP SLEEP VSS dc 0V
-VCMP_P1 CMP_P1 VSS dc {AVDD}
-VCMP_P2 CMP_P2 VSS dc 0V
-*ROUT VOUT VSS 100K
+VSS VSS 0   DC 0V
+VDD VDD VSS DC {AVDD}
+
+VIP VIP VSS DC 0.9V AC 1V SIN(0.9V 100uV 100kHz)
+VIN VIN VSS DC 0.9V
 
 *-----------------------------------------------------------------
 * DUT
@@ -45,30 +37,7 @@ VCMP_P2 CMP_P2 VSS dc 0V
 *----------------------------------------------------------------
 * PROBE
 *----------------------------------------------------------------
-* .save all
-* .option savecurrents
-
-.save v(VDD)
-.save v(VSS)
-.save v(CMP_P1)
-.save v(CMP_P2)
-.save v(xdut.cmp_p1g)
-.save v(xdut.cmp_p2g)
-.save v(SLEEP)
-.save v(xdut.sleep_n)
-.save v(VIN)
-.save v(VIP)
-.save v(xdut.in)
-.save v(xdut.ip)
-.save v(xdut.vinshifted)
-.save v(xdut.vipshifted)
-.save v(xdut.nbias)
-.save v(xdut.pbias)
-.save v(VOUT)
-.save v(xdut.pre_vout)
-.save v(xdut.pre_voutn)
-.save v(xdut.vindrain)
-.save v(xdut.vipdrain)
+.save all
 
 *----------------------------------------------------------------
 * NGSPICE control
@@ -79,14 +48,26 @@ set color0=white
 set color1=black
 unset askquit
 
-optran 0 0 0 1n 5u 0
+optran 0 0 0 1ns 10us 0
 
+echo beginning tranisent analysis simulation
 
-tran 1ns 5us 1ps
-write
+tran 1ns 11us 1ps
+write {cicname}.raw
+
+echo beginning ac analysis simulation
+
+ac dec 100 1Hz 1GHz
+write {cicname}_ac.raw
+
+* echo beginning dc analysis simulation
+
+* dc vip 0.9V 1.1V 1mV
+* write {cicname}_dc.raw
+
 quit
-
 
 .endc
 
 .end
+

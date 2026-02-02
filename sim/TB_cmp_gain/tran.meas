@@ -6,17 +6,11 @@ echo "MEAS_START"
 echo "MEAS_END"
 
 
-
 *
 * Transient analysis simulated data parsing
 *
 
 load {cicname}.raw
-
-let v(vindrn) = v(xdut.x1.vindrn)
-let v(vipdrn) = v(xdut.x1.vipdrn)
-let v(vsrc) = v(xdut.x1.vsrc)
-let v(vnbias) = v(xdut.x1.vnbias)
 
 set wr_singlescale
 set wr_vecnames
@@ -25,10 +19,14 @@ option numdgt = 5
 echo writing transient analysis simulation results to file named {cicname}.out
 
 wrdata {cicname}.out
-+ v(vin) v(vip) v(vout) v(vout_pmos)
++ v(vo_nmos)
++ v(vo_pmos)
++ v(vo_nch_lvt)
++ v(vo_pch_lvt)
++ v(vo_nch_crs) v(vo_nch_crs_n)
++ v(vo_pch_crs) v(vo_pch_crs_n)
++ v(vin) v(vip)
 + v(vss) v(vdd)
-+ v(vindrn) v(vipdrn) v(vsrc) v(vnbias)
-
 
 
 *
@@ -37,11 +35,6 @@ wrdata {cicname}.out
 
 load {cicname}_ac.raw
 
-let v(vindrn) = v(xdut.x1.vindrn)
-let v(vipdrn) = v(xdut.x1.vipdrn)
-let v(vsrc) = v(xdut.x1.vsrc)
-let v(vnbias) = v(xdut.x1.vnbias)
-
 set wr_singlescale
 set wr_vecnames
 option numdgt = 5
@@ -49,13 +42,15 @@ option numdgt = 5
 echo writing ac analysis simulation results to file named {cicname}_ac.out
 
 wrdata {cicname}_ac.out
++ vm(vo_nmos) vr(vo_nmos) vi(vo_nmos) vp(vo_nmos) vdb(vo_nmos)
++ vm(vo_pmos) vr(vo_pmos) vi(vo_pmos) vp(vo_pmos) vdb(vo_pmos)
++ vm(vo_nch_lvt) vr(vo_nch_lvt) vi(vo_nch_lvt) vp(vo_nch_lvt) vdb(vo_nch_lvt)
++ vm(vo_pch_lvt) vr(vo_pch_lvt) vi(vo_pch_lvt) vp(vo_pch_lvt) vdb(vo_pch_lvt)
++ vm(vo_nch_crs) vr(vo_nch_crs) vi(vo_nch_crs) vp(vo_nch_crs) vdb(vo_nch_crs)
++ vm(vo_pch_crs) vr(vo_pch_crs) vi(vo_pch_crs) vp(vo_pch_crs) vdb(vo_pch_crs)
 + vm(vin) vr(vin) vi(vin) vp(vin)
 + vm(vip) vr(vip) vi(vip) vp(vip) vdb(vip)
-+ vm(vout) vr(vout) vi(vout) vp(vout) vdb(vout)
-+ vm(vout_pmos) vr(vout_pmos) vi(vout_pmos) vp(vout_pmos) vdb(vout_pmos)
 + v(vss) v(vdd)
-+ v(vindrn) v(vipdrn) v(vsrc) v(vnbias)
-
 
 
 *
@@ -79,7 +74,6 @@ wrdata {cicname}_ac.out
 * + v(vin) v(vip) v(vout) v(vout_pmos)
 * + v(vss) v(vdd)
 * + v(vindrn) v(vipdrn) v(vsrc) v(vnbias)
-
 
 
 *

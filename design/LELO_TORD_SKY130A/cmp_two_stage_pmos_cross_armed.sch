@@ -1,0 +1,158 @@
+v {xschem version=3.4.6 file_version=1.2}
+G {}
+K {}
+V {}
+S {}
+E {}
+N 1340 800 1340 820 {
+lab=VINDRN}
+N 1520 800 1520 820 {
+lab=VINDRN}
+N 1680 800 1680 820 {
+lab=VIPDRN}
+N 1780 800 1860 800 {
+lab=VIPDRN}
+N 1560 850 1580 850 {
+lab=VIPDRN}
+N 1580 850 1620 800 {
+lab=VIPDRN}
+N 1620 850 1640 850 {
+lab=VINDRN}
+N 1580 800 1620 850 {
+lab=VINDRN}
+N 1520 800 1580 800 {
+lab=VINDRN}
+N 1620 800 1680 800 {
+lab=VIPDRN}
+N 1260 800 1340 800 {
+lab=VINDRN}
+N 1260 800 1260 850 {
+lab=VINDRN}
+N 1430 700 1430 720 {
+lab=VSRC}
+N 1770 700 1770 720 {
+lab=VSRC}
+N 1350 750 1390 750 {lab=VIN}
+N 1680 800 1780 800 {
+lab=VIPDRN}
+N 1340 800 1520 800 {
+lab=VINDRN}
+N 1640 650 1680 650 {lab=PBIAS}
+N 1600 680 1600 700 {lab=VSRC}
+N 1600 600 1600 620 {lab=VDD}
+N 1180 530 1180 550 {lab=VDD}
+N 2020 710 2060 710 {lab=VOUT}
+N 1140 850 1140 900 {lab=VSS}
+N 1100 900 1140 900 {
+lab=VSS}
+N 1520 900 1680 900 {
+lab=VSS}
+N 1860 900 2020 900 {
+lab=VSS}
+N 2020 580 2060 580 {lab=VDD}
+N 2020 530 2060 530 {lab=VDD}
+N 1100 530 1140 530 {lab=VDD}
+N 1140 530 1140 580 {lab=VDD}
+N 1140 580 1180 580 {lab=VDD}
+N 2060 530 2060 580 {lab=VDD}
+N 1560 650 1600 650 {lab=VDD}
+N 1560 600 1560 650 {lab=VDD}
+N 1340 850 1380 850 {lab=VSS}
+N 1380 850 1380 900 {lab=VSS}
+N 1480 900 1520 900 {lab=VSS}
+N 1480 850 1480 900 {lab=VSS}
+N 1480 850 1520 850 {lab=VSS}
+N 1680 900 1720 900 {lab=VSS}
+N 1720 850 1720 900 {lab=VSS}
+N 1680 850 1720 850 {lab=VSS}
+N 1860 800 1860 820 {lab=VIPDRN}
+N 1820 850 1860 850 {lab=VSS}
+N 1820 850 1820 900 {lab=VSS}
+N 1820 900 1860 900 {lab=VSS}
+N 1860 800 1940 800 {lab=VIPDRN}
+N 1940 800 1940 850 {lab=VIPDRN}
+N 1430 780 1430 800 {lab=VINDRN}
+N 1770 780 1770 800 {lab=VIPDRN}
+N 1140 850 1180 850 {lab=VSS}
+N 1430 750 1470 750 {lab=VDD}
+N 1730 750 1770 750 {lab=VDD}
+N 2020 850 2060 850 {lab=VSS}
+N 2060 850 2060 900 {lab=VSS}
+N 1140 900 1180 900 {lab=VSS}
+N 1810 750 1850 750 {lab=VIP}
+N 2020 530 2020 550 {lab=VDD}
+N 1140 710 1180 710 {lab=VOUT_N}
+N 1220 850 1260 850 {lab=VINDRN}
+N 1260 850 1300 850 {lab=VINDRN}
+N 1900 850 1940 850 {lab=VIPDRN}
+N 1940 850 1980 850 {lab=VIPDRN}
+N 1180 880 1180 900 {lab=VSS}
+N 1860 880 1860 900 {lab=VSS}
+N 2020 900 2060 900 {lab=VSS}
+N 2020 880 2020 900 {lab=VSS}
+N 1720 900 1820 900 {lab=VSS}
+N 1680 880 1680 900 {lab=VSS}
+N 1520 880 1520 900 {lab=VSS}
+N 1380 900 1480 900 {lab=VSS}
+N 1340 900 1380 900 {lab=VSS}
+N 1340 880 1340 900 {lab=VSS}
+N 1180 900 1340 900 {lab=VSS}
+N 1140 530 1180 530 {lab=VDD}
+N 1180 530 1600 530 {lab=VDD}
+N 1180 710 1180 820 {lab=VOUT_N}
+N 2020 610 2020 710 {lab=VOUT}
+N 1600 530 2020 530 {lab=VDD}
+N 1430 700 1600 700 {lab=VSRC}
+N 1600 700 1770 700 {lab=VSRC}
+N 2020 710 2020 820 {lab=VOUT}
+N 1220 580 1980 580 {lab=VOUT_N}
+N 1180 610 1180 710 {lab=VOUT_N}
+N 1180 630 1240 630 {lab=VOUT_N}
+N 1240 580 1240 630 {lab=VOUT_N}
+N 1560 600 1600 600 {lab=VDD}
+N 1600 530 1600 600 {lab=VDD}
+N 880 730 900 730 {lab=#net1}
+N 880 730 880 790 {lab=#net1}
+N 920 770 920 790 {lab=#net1}
+N 920 570 920 590 {lab=#net2}
+N 920 650 920 690 {lab=PBIAS}
+N 960 620 980 620 {lab=PBIAS}
+N 920 670 980 670 {lab=PBIAS}
+N 880 620 920 620 {lab=#net2}
+N 880 570 880 620 {lab=#net2}
+N 980 620 980 670 {lab=PBIAS}
+N 880 570 920 570 {lab=#net2}
+N 880 790 920 790 {lab=#net1}
+C {devices/ipin.sym} 1100 900 0 0 {name=p2 lab=VSS
+}
+C {devices/ipin.sym} 1100 530 2 1 {name=p3 lab=VDD
+}
+C {devices/ipin.sym} 1350 750 0 0 {name=p5 lab=VIN
+}
+C {devices/ipin.sym} 1850 750 0 1 {name=p6 lab=VIP
+}
+C {JNW_ATR_SKY130A/JNWATR_NCH_2C5F0.sym} 1300 850 0 0 {name=x2 }
+C {JNW_ATR_SKY130A/JNWATR_NCH_2C5F0.sym} 1560 850 0 1 {name=x3 }
+C {JNW_ATR_SKY130A/JNWATR_NCH_2C5F0.sym} 1640 850 0 0 {name=x4 }
+C {JNW_ATR_SKY130A/JNWATR_NCH_2C5F0.sym} 1900 850 0 1 {name=x5 }
+C {JNW_ATR_SKY130A/JNWATR_NCH_2C5F0.sym} 1220 850 0 1 {name=x6 }
+C {JNW_ATR_SKY130A/JNWATR_NCH_2C5F0.sym} 1980 850 0 0 {name=x7 }
+C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} 1980 580 0 0 {name=x8 }
+C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} 1220 580 0 1 {name=x9 }
+C {devices/opin.sym} 2060 710 2 1 {name=p7 lab=VOUT}
+C {devices/lab_wire.sym} 1550 800 0 0 {name=p12 sig_type=std_logic lab=VINDRN}
+C {devices/lab_wire.sym} 1650 800 0 1 {name=p13 sig_type=std_logic lab=VIPDRN}
+C {JNW_ATR_SKY130A/JNWATR_PCH_2C5F0.sym} 1640 650 0 1 {name=x15[7:0]}
+C {devices/lab_wire.sym} 1580 700 2 0 {name=p47 sig_type=std_logic lab=VSRC}
+C {devices/lab_wire.sym} 1650 650 0 1 {name=p23 sig_type=std_logic lab=PBIAS}
+C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} 1390 750 0 0 {name=x3[3:0]}
+C {devices/lab_wire.sym} 1450 750 0 1 {name=p4 sig_type=std_logic lab=VDD}
+C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} 1810 750 0 1 {name=x1[3:0]}
+C {devices/lab_wire.sym} 1750 750 0 0 {name=p8 sig_type=std_logic lab=VDD}
+C {devices/opin.sym} 1140 710 2 0 {name=p1 lab=VOUT_N}
+C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} 960 620 0 1 {name=x2[1:0]
+}
+C {JNW_TR_SKY130A/JNWTR_RPPO16.sym} 920 690 1 0 {name=x1}
+C {devices/lab_wire.sym} 980 670 0 0 {name=p9 sig_type=std_logic lab=PBIAS}
+C {devices/lab_wire.sym} 880 570 2 1 {name=p10 sig_type=std_logic lab=VDD}
+C {devices/lab_wire.sym} 880 790 0 0 {name=p11 sig_type=std_logic lab=VSS}

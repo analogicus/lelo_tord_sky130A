@@ -17,40 +17,17 @@
 * PARAMETERS
 *-----------------------------------------------------------------
 .param TRF = 10p
-
 .param AVDD = {vdda}
+.param CM = {AVDD/2} 
 
 *-----------------------------------------------------------------
 * FORCE
 *-----------------------------------------------------------------
-VSS  VSS  0    dc 0
-VDD  VDD  VSS  dc {AVDD}
+VSS VSS 0   DC 0V
+VDD VDD VSS DC {AVDD}
 
-VIP1 VIP1 VSS  pwl 0s 0V 1us {AVDD} 2us 0V 5us 0V 10us {AVDD} 15us 0V
-VIN1 VIN1 VSS  dc 1V
-
-VIP2 VIP2 VSS  pwl 0s 0V 1us {AVDD} 2us 0V 5us 0V 10us {AVDD} 15us 0V
-VIN2 VIN2 VSS  dc 1V
-
-VIP3 VIP3 VSS  pwl 0s 0V 1us {AVDD} 2us 0V 5us 0V 10us {AVDD} 15us 0V
-VIN3 VIN3 VSS  dc 1V
-
-VIP4 VIP4 VSS  pwl 0s 0V 1us {AVDD} 2us 0V 5us 0V 10us {AVDD} 15us 0V
-VIN4 VIN4 VSS  dc 1V
-
-VIP5 VIP5 VSS  pwl 0s 0V 1us {AVDD} 2us 0V 5us 0V 10us {AVDD} 15us 0V
-* VIP5 VIP5 VSS  pwl 0s 0V 1us {AVDD} 5us {AVDD} 6us 0V 10us 0V 11us {AVDD} 15us {AVDD} 16us 0V
-VIN5 VIN5 VSS  dc 1V
-
-* For operationg point calculation
-*VIP4 VIP4 VSS  dc 0V
-*VIN4 VIN4 VSS  dc 0V
-*VIP5 VIP5 VSS  dc {AVDD}
-*VIN5 VIN5 VSS  dc {AVDD}
-
-* VSLEEP SLEEP VSS dc 0V
-* VCMP_P1 CMP_P1 VSS dc {AVDD}
-* VCMP_P2 CMP_P2 VSS dc 0V
+VIP VIP VSS DC 0.9V AC 1V SIN(0.9V 100uV 100kHz)
+VIN VIN VSS DC 0.9V
 
 *-----------------------------------------------------------------
 * DUT
@@ -60,20 +37,7 @@ VIN5 VIN5 VSS  dc 1V
 *----------------------------------------------------------------
 * PROBE
 *----------------------------------------------------------------
-* .option savecurrents
-* .save all
-
-.save 
-+ v(vip1) v(vin1) v(vout1) 
-+ v(vip2) v(vin2) v(vout2) 
-+ v(vip3) v(vin3) v(vout3) v(vout3_pmos)
-+ v(xdut.x3.i_bias) v(xdut.x3.ota_cm_gate) v(xdut.x3.ota_vdd)
-+ v(vip4) v(vin4) v(vout4) v(vout4_n)
-+ v(xdut.x4.nbias) v(xdut.x4.common_source) v(xdut.x4.vip_drain) v(xdut.x4.vin_drain)
-+ v(vip5) v(vin5) v(vout5) v(vout5_n)
-+ v(xdut.x5.pbias) v(xdut.x5.insource) v(xdut.x5.vipdrain) v(xdut.x5.vindrain)
-* + v(sleep) v(cmp_p1) v(cmp_p2)
-* Extending a line with + does not work after a line is commented with *
+.save all
 
 *----------------------------------------------------------------
 * NGSPICE control
@@ -84,14 +48,24 @@ set color0=white
 set color1=black
 unset askquit
 
-optran 0 0 0 1n 1u 0
+optran 0 0 0 1ns 10us 0
 
-* op 
+echo beginning tranisent analysis simulation
 
-tran 1n 20u 1p
-write
+tran 1ns 11us 1ps
+write {cicname}.raw
+
+echo beginning ac analysis simulation
+
+ac dec 100 1Hz 1GHz
+write {cicname}_ac.raw
+
+* echo beginning dc analysis simulation
+
+* dc vip 0.9V 1.1V 1mV
+* write {cicname}_dc.raw
+
 quit
-
 
 .endc
 
