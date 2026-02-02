@@ -17,22 +17,22 @@ N -160 -100 -120 -100 {lab=VSS}
 N -80 -170 520 -170 {lab=NBIAS}
 N -120 -100 560 -100 {lab=VSS}
 N 560 -140 560 -100 {lab=VSS}
-N 390 -320 390 -280 {lab=COMMON_SOURCE}
-N 390 -280 730 -280 {lab=COMMON_SOURCE}
-N 730 -320 730 -280 {lab=COMMON_SOURCE}
-N 560 -280 560 -200 {lab=COMMON_SOURCE}
-N 390 -350 430 -350 {lab=COMMON_SOURCE}
-N 430 -350 430 -280 {lab=COMMON_SOURCE}
-N 690 -350 730 -350 {lab=COMMON_SOURCE}
-N 690 -350 690 -280 {lab=COMMON_SOURCE}
+N 390 -320 390 -280 {lab=VSRC}
+N 390 -280 730 -280 {lab=VSRC}
+N 730 -320 730 -280 {lab=VSRC}
+N 560 -280 560 -200 {lab=VSRC}
+N 390 -350 430 -350 {lab=VSRC}
+N 430 -350 430 -280 {lab=VSRC}
+N 690 -350 730 -350 {lab=VSRC}
+N 690 -350 690 -280 {lab=VSRC}
 N 560 -170 600 -170 {lab=VSS}
 N 600 -170 600 -100 {lab=VSS}
 N 560 -100 600 -100 {lab=VSS}
 N 480 -460 480 -420 {lab=VIP_DRAIN}
-N 730 -420 730 -380 {lab=VIN_DRAIN}
+N 730 -420 730 -380 {lab=VINDRN}
 N 770 -350 810 -350 {lab=VIN}
 N 310 -350 350 -350 {lab=VIP}
-N 540 -490 580 -420 {lab=VIN_DRAIN}
+N 540 -490 580 -420 {lab=VINDRN}
 N 640 -490 680 -490 {lab=VDD}
 N 680 -560 680 -490 {lab=VDD}
 N 300 -490 340 -490 {lab=VDD}
@@ -56,9 +56,9 @@ N 980 -560 1020 -560 {lab=VDD}
 N 980 -240 1020 -240 {lab=VSS}
 N 1020 -240 1020 -100 {lab=VSS}
 N 980 -100 1020 -100 {lab=VSS}
-N 520 -490 540 -490 {lab=VIN_DRAIN}
+N 520 -490 540 -490 {lab=VINDRN}
 N 580 -490 600 -490 {lab=VIP_DRAIN}
-N 580 -420 800 -420 {lab=VIN_DRAIN}
+N 580 -420 800 -420 {lab=VINDRN}
 N 180 -240 940 -240 {lab=VOUT_N}
 N 100 -350 140 -350 {lab=VOUT_N}
 N 140 -460 140 -270 {lab=VOUT_N}
@@ -71,19 +71,19 @@ N 100 -240 140 -240 {lab=VSS}
 N 100 -240 100 -100 {lab=VSS}
 N 390 -420 390 -380 {lab=VIP_DRAIN}
 N 300 -420 320 -420 {lab=VIP_DRAIN}
-N 800 -420 820 -420 {lab=VIN_DRAIN}
-N 640 -460 640 -420 {lab=VIN_DRAIN}
+N 800 -420 820 -420 {lab=VINDRN}
+N 640 -460 640 -420 {lab=VINDRN}
 N 820 -560 820 -520 {lab=VDD}
-N 820 -460 820 -420 {lab=VIN_DRAIN}
+N 820 -460 820 -420 {lab=VINDRN}
 N 300 -460 300 -420 {lab=VIP_DRAIN}
 N 300 -560 300 -520 {lab=VDD}
 N 220 -420 300 -420 {lab=VIP_DRAIN}
 N 220 -490 220 -420 {lab=VIP_DRAIN}
 N 180 -490 260 -490 {lab=VIP_DRAIN}
-N 820 -420 900 -420 {lab=VIN_DRAIN}
-N 900 -490 900 -420 {lab=VIN_DRAIN}
-N 900 -490 940 -490 {lab=VIN_DRAIN}
-N 860 -490 900 -490 {lab=VIN_DRAIN}
+N 820 -420 900 -420 {lab=VINDRN}
+N 900 -490 900 -420 {lab=VINDRN}
+N 900 -490 940 -490 {lab=VINDRN}
+N 860 -490 900 -490 {lab=VINDRN}
 N 480 -420 540 -420 {lab=VIP_DRAIN}
 N 140 -560 300 -560 {lab=VDD}
 N 300 -560 390 -560 {lab=VDD}
@@ -125,6 +125,7 @@ C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} 260 -490 0 0 {name=x4[4:0]
 C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} 940 -490 0 0 {name=x9[4:0]
 }
 C {devices/lab_wire.sym} -50 -240 0 1 {name=p7 sig_type=std_logic lab=NBIAS}
-C {devices/lab_wire.sym} 490 -280 0 1 {name=p8 sig_type=std_logic lab=COMMON_SOURCE}
-C {devices/lab_wire.sym} 350 -420 0 1 {name=p9 sig_type=std_logic lab=VIP_DRAIN}
-C {devices/lab_wire.sym} 690 -420 0 1 {name=p10 sig_type=std_logic lab=VIN_DRAIN}
+C {devices/lab_wire.sym} 540 -280 0 1 {name=p8 sig_type=std_logic lab=VSRC}
+C {devices/lab_wire.sym} 360 -420 0 1 {name=p9 sig_type=std_logic lab=VIPDRN}
+C {devices/lab_wire.sym} 700 -420 0 1 {name=p10 sig_type=std_logic lab=VINDRN}
+C {devices/lab_wire.sym} 230 -240 0 1 {name=p11 sig_type=std_logic lab=VNBIAS}
