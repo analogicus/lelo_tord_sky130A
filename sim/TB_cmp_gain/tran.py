@@ -6,7 +6,7 @@ import numpy as np
 
 fig_width = 6
 fig_height = 5
-font_size = 8
+font_size = 4
 title_fontsize = font_size
 label_fontsize = font_size
 legend_fontsize = font_size
@@ -49,6 +49,8 @@ def main(name):
   AVout_pch_lvt = max(df["v(vo_pch_lvt)"]) - min(df["v(vo_pch_lvt)"])
   AVout_nch_crs = max(df["v(vo_nch_crs)"]) - min(df["v(vo_nch_crs)"])
   AVout_pch_crs = max(df["v(vo_pch_crs)"]) - min(df["v(vo_pch_crs)"])
+  AVout_nch_lvt_crs = max(df["v(vo_nch_lvt_crs)"]) - min(df["v(vo_nch_lvt_crs)"])
+  AVout_pch_lvt_crs = max(df["v(vo_pch_lvt_crs)"]) - min(df["v(vo_pch_lvt_crs)"])
 
   Vout_nmos_gain = AVout_nmos / AVip
   Vout_pmos_gain = AVout_pmos / AVip
@@ -56,6 +58,8 @@ def main(name):
   Vout_pch_lvt_gain = AVout_pch_lvt / AVip
   Vout_nch_crs_gain = AVout_nch_crs / AVip
   Vout_pch_crs_gain = AVout_pch_crs / AVip
+  Vout_nch_lvt_crs_gain = AVout_nch_lvt_crs / AVip
+  Vout_pch_lvt_crs_gain = AVout_pch_lvt_crs / AVip
 
   Vout_nmos_gain_db = 20 * np.log10(Vout_nmos_gain)
   Vout_pmos_gain_db = 20 * np.log10(Vout_pmos_gain)
@@ -63,6 +67,8 @@ def main(name):
   Vout_pch_lvt_gain_db = 20 * np.log10(Vout_pch_lvt_gain)
   Vout_nch_crs_gain_db = 20 * np.log10(Vout_nch_crs_gain)
   Vout_pch_crs_gain_db = 20 * np.log10(Vout_pch_crs_gain)
+  Vout_nch_lvt_crs_gain_db = 20 * np.log10(Vout_nch_lvt_crs_gain)
+  Vout_pch_lvt_crs_gain_db = 20 * np.log10(Vout_pch_lvt_crs_gain)
 
   print(f"AVip: {AVip*1e3:.2f} mV, AVout_nmos: {AVout_nmos*1e3:.2f} mV, Vout_nmos_gain: {Vout_nmos_gain:.2f} V/V, Vout_nmos_gain_db: {Vout_nmos_gain_db:.2f} dB")
   print(f"AVip: {AVip*1e3:.2f} mV, AVout_pmos: {AVout_pmos*1e3:.2f} mV, Vout_pmos_gain: {Vout_pmos_gain:.2f} V/V, Vout_pmos_gain_db: {Vout_pmos_gain_db:.2f} dB")
@@ -70,12 +76,14 @@ def main(name):
   print(f"AVip: {AVip*1e3:.2f} mV, AVout_pch_lvt: {AVout_pch_lvt*1e3:.2f} mV, Vout_pch_lvt_gain: {Vout_pch_lvt_gain:.2f} V/V, Vout_pch_lvt_gain_db: {Vout_pch_lvt_gain_db:.2f} dB")
   print(f"AVip: {AVip*1e3:.2f} mV, AVout_nch_crs: {AVout_nch_crs*1e3:.2f} mV, Vout_nch_crs_gain: {Vout_nch_crs_gain:.2f} V/V, Vout_nch_crs_gain_db: {Vout_nch_crs_gain_db:.2f} dB")
   print(f"AVip: {AVip*1e3:.2f} mV, AVout_pch_crs: {AVout_pch_crs*1e3:.2f} mV, Vout_pch_crs_gain: {Vout_pch_crs_gain:.2f} V/V, Vout_pch_crs_gain_db: {Vout_pch_crs_gain_db:.2f} dB")
+  print(f"AVip: {AVip*1e3:.2f} mV, AVout_nch_lvt_crs: {AVout_nch_lvt_crs*1e3:.2f} mV, Vout_nch_lvt_crs_gain: {Vout_nch_lvt_crs_gain:.2f} V/V, Vout_nch_lvt_crs_gain_db: {Vout_nch_lvt_crs_gain_db:.2f} dB")
+  print(f"AVip: {AVip*1e3:.2f} mV, AVout_pch_lvt_crs: {AVout_pch_lvt_crs*1e3:.2f} mV, Vout_pch_lvt_crs_gain: {Vout_pch_lvt_crs_gain:.2f} V/V, Vout_pch_lvt_crs_gain_db: {Vout_pch_lvt_crs_gain_db:.2f} dB")
 
   #
   # Plot transient simulation data saved in .out file
   #
 
-  fig, axs = plt.subplot_mosaic([["vin_vip", "vin_vip"], ["nmos", "pmos"], ["nch_lvt", "pch_lvt"], ["nch_crs", "pch_crs"]], figsize=(fig_width, fig_height), sharex=True, dpi=300)
+  fig, axs = plt.subplot_mosaic([["vin_vip", "nch_lvt_crs"], ["nmos", "pmos"], ["nch_lvt", "pch_lvt"], ["nch_crs", "pch_crs"]], figsize=(fig_width, fig_height), dpi=300) # , sharex=True)
 
   axs["vin_vip"].plot(df["time"], df["v(vin)"], label=f"vin")
   axs["vin_vip"].plot(df["time"], df["v(vip)"], label=f"vip")
@@ -86,6 +94,8 @@ def main(name):
   axs["pch_lvt"].plot(df["time"], df["v(vo_pch_lvt)"], label=f"vout, pch_lvt input\ngain: {Vout_pch_lvt_gain:.2f} V/V ({Vout_pch_lvt_gain_db:.2f} dB)")
   axs["nch_crs"].plot(df["time"], df["v(vo_nch_crs)"], label=f"vout, nch_crs input\ngain: {Vout_nch_crs_gain:.2f} V/V ({Vout_nch_crs_gain_db:.2f} dB)")
   axs["pch_crs"].plot(df["time"], df["v(vo_pch_crs)"], label=f"vout, pch_crs input\ngain: {Vout_pch_crs_gain:.2f} V/V ({Vout_pch_crs_gain_db:.2f} dB)")
+  axs["nch_lvt_crs"].plot(df["time"], df["v(vo_nch_lvt_crs)"], label=f"vout, nch_lvt_crs input\ngain: {Vout_nch_lvt_crs_gain:.2f} V/V ({Vout_nch_lvt_crs_gain_db:.2f} dB)")
+  axs["nch_lvt_crs"].plot(df["time"], df["v(vo_pch_lvt_crs)"], label=f"vout, pch_lvt_crs input\ngain: {Vout_pch_lvt_crs_gain:.2f} V/V ({Vout_pch_lvt_crs_gain_db:.2f} dB)")
 
   for ax in axs.values():
     ax.tick_params(axis="both", labelsize=ticks_fontsize)
@@ -102,6 +112,7 @@ def main(name):
   axs["pch_lvt"].set_ylabel("Voltage (V)", fontsize=label_fontsize)
   axs["nch_crs"].set_ylabel("Voltage (V)", fontsize=label_fontsize)
   axs["pch_crs"].set_ylabel("Voltage (V)", fontsize=label_fontsize)
+  axs["nch_lvt_crs"].set_ylabel("Voltage (V)", fontsize=label_fontsize)
 
   # axs[1].set_ylim(bottom=0 - (max(df["v(vout)"]) * 0.05))
 
@@ -119,7 +130,7 @@ def main(name):
 
   ac_df["gain_nmos_vv"] = ac_df["vm(vo_nmos)"] / ac_df["vm(vip)"] # AC Gain ≈ V(out) / V(in)
   ac_df["gain_nmos_db"] = 20 * np.log10(ac_df["gain_nmos_vv"])
-  ac_df["gain_nmos_db_alt"] = ac_df["vdb(vo_nmos)"] - ac_df["vdb(vip)"] # Alternative way to calculate gain in dB
+  # ac_df["gain_nmos_db_alt"] = ac_df["vdb(vo_nmos)"] - ac_df["vdb(vip)"] # Alternative way to calculate gain in dB
 
   ac_df["gain_pmos_vv"] = ac_df["vm(vo_pmos)"] / ac_df["vm(vip)"]
   ac_df["gain_pmos_db"] = 20 * np.log10(ac_df["gain_pmos_vv"])
@@ -136,26 +147,36 @@ def main(name):
   ac_df["gain_pch_crs_vv"] = ac_df["vm(vo_pch_crs)"] / ac_df["vm(vip)"]
   ac_df["gain_pch_crs_db"] = 20 * np.log10(ac_df["gain_pch_crs_vv"])
 
+  ac_df["gain_nch_lvt_crs_vv"] = ac_df["vm(vo_nch_lvt_crs)"] / ac_df["vm(vip)"]
+  ac_df["gain_nch_lvt_crs_db"] = 20 * np.log10(ac_df["gain_nch_lvt_crs_vv"])
+
+  ac_df["gain_pch_lvt_crs_vv"] = ac_df["vm(vo_pch_lvt_crs)"] / ac_df["vm(vip)"]
+  ac_df["gain_pch_lvt_crs_db"] = 20 * np.log10(ac_df["gain_pch_lvt_crs_vv"])
+
   #
   # Plot AC simulation data saved in .out file
   #
 
   # ac_fig, ac_axs = plt.subplots(2, 1, figsize=(fig_width, fig_height), sharex=True, dpi=300)
-  ac_fig, ac_axs = plt.subplot_mosaic([['gain_vv'], ['gain_db']], figsize=(fig_width, fig_height), sharex=True, dpi=300)
+  ac_fig, ac_axs = plt.subplot_mosaic([['gain_vv'], ['gain_db']], figsize=(fig_width, fig_height), dpi=300) # , sharex=True)
   
-  ac_axs['gain_vv'].plot(ac_df["frequency"], ac_df["gain_nmos_vv"], label=f"gain at 1Hz: {ac_df['gain_nmos_vv'].iloc[0]:.2f} V/V")
-  ac_axs['gain_vv'].plot(ac_df["frequency"], ac_df["gain_pmos_vv"], label=f"gain at 1Hz: {ac_df['gain_pmos_vv'].iloc[0]:.2f} V/V")
-  ac_axs['gain_vv'].plot(ac_df["frequency"], ac_df["gain_nch_lvt_vv"], label=f"gain at 1Hz: {ac_df['gain_nch_lvt_vv'].iloc[0]:.2f} V/V")
-  ac_axs['gain_vv'].plot(ac_df["frequency"], ac_df["gain_pch_lvt_vv"], label=f"gain at 1Hz: {ac_df['gain_pch_lvt_vv'].iloc[0]:.2f} V/V")
-  ac_axs['gain_vv'].plot(ac_df["frequency"], ac_df["gain_nch_crs_vv"], label=f"gain at 1Hz: {ac_df['gain_nch_crs_vv'].iloc[0]:.2f} V/V")
-  ac_axs['gain_vv'].plot(ac_df["frequency"], ac_df["gain_pch_crs_vv"], label=f"gain at 1Hz: {ac_df['gain_pch_crs_vv'].iloc[0]:.2f} V/V")
+  ac_axs['gain_vv'].plot(ac_df["frequency"], ac_df["gain_nmos_vv"], label=f"gain at 1Hz (two staged NMOS input pair): {ac_df['gain_nmos_vv'].iloc[0]:.2f} V/V")
+  ac_axs['gain_vv'].plot(ac_df["frequency"], ac_df["gain_pmos_vv"], label=f"gain at 1Hz (two staged PMOS input pair): {ac_df['gain_pmos_vv'].iloc[0]:.2f} V/V")
+  ac_axs['gain_vv'].plot(ac_df["frequency"], ac_df["gain_nch_lvt_vv"], label=f"gain at 1Hz (two staged NMOS LVT input pair): {ac_df['gain_nch_lvt_vv'].iloc[0]:.2f} V/V")
+  ac_axs['gain_vv'].plot(ac_df["frequency"], ac_df["gain_pch_lvt_vv"], label=f"gain at 1Hz (two staged PMOS LVT input pair): {ac_df['gain_pch_lvt_vv'].iloc[0]:.2f} V/V")
+  ac_axs['gain_vv'].plot(ac_df["frequency"], ac_df["gain_nch_crs_vv"], label=f"gain at 1Hz (cross armed and two staged NMOS input pair): {ac_df['gain_nch_crs_vv'].iloc[0]:.2f} V/V")
+  ac_axs['gain_vv'].plot(ac_df["frequency"], ac_df["gain_pch_crs_vv"], label=f"gain at 1Hz (cross armed and two staged PMOS input pair): {ac_df['gain_pch_crs_vv'].iloc[0]:.2f} V/V")
+  ac_axs['gain_vv'].plot(ac_df["frequency"], ac_df["gain_nch_lvt_crs_vv"], label=f"gain at 1Hz (cross armed and two staged NMOS LVT input pair): {ac_df['gain_nch_lvt_crs_vv'].iloc[0]:.2f} V/V")
+  ac_axs['gain_vv'].plot(ac_df["frequency"], ac_df["gain_pch_lvt_crs_vv"], label=f"gain at 1Hz (cross armed and two staged PMOS LVT input pair): {ac_df['gain_pch_lvt_crs_vv'].iloc[0]:.2f} V/V")
 
-  ac_axs['gain_db'].plot(ac_df["frequency"], ac_df["gain_nmos_db"], label=f"gain at 1Hz: {ac_df['gain_nmos_db'].iloc[0]:.2f} dB")
-  ac_axs['gain_db'].plot(ac_df["frequency"], ac_df["gain_pmos_db"], label=f"gain at 1Hz: {ac_df['gain_pmos_db'].iloc[0]:.2f} dB")
-  ac_axs['gain_db'].plot(ac_df["frequency"], ac_df["gain_nch_lvt_db"], label=f"gain at 1Hz: {ac_df['gain_nch_lvt_db'].iloc[0]:.2f} dB")
-  ac_axs['gain_db'].plot(ac_df["frequency"], ac_df["gain_pch_lvt_db"], label=f"gain at 1Hz: {ac_df['gain_pch_lvt_db'].iloc[0]:.2f} dB")
-  ac_axs['gain_db'].plot(ac_df["frequency"], ac_df["gain_nch_crs_db"], label=f"gain at 1Hz: {ac_df['gain_nch_crs_db'].iloc[0]:.2f} dB")
-  ac_axs['gain_db'].plot(ac_df["frequency"], ac_df["gain_pch_crs_db"], label=f"gain at 1Hz: {ac_df['gain_pch_crs_db'].iloc[0]:.2f} dB")
+  ac_axs['gain_db'].plot(ac_df["frequency"], ac_df["gain_nmos_db"], label=f"gain at 1Hz (two staged NMOS input pair): {ac_df['gain_nmos_db'].iloc[0]:.2f} dB")
+  ac_axs['gain_db'].plot(ac_df["frequency"], ac_df["gain_pmos_db"], label=f"gain at 1Hz (two staged PMOS input pair): {ac_df['gain_pmos_db'].iloc[0]:.2f} dB")
+  ac_axs['gain_db'].plot(ac_df["frequency"], ac_df["gain_nch_lvt_db"], label=f"gain at 1Hz (two staged NMOS LVT input pair): {ac_df['gain_nch_lvt_db'].iloc[0]:.2f} dB")
+  ac_axs['gain_db'].plot(ac_df["frequency"], ac_df["gain_pch_lvt_db"], label=f"gain at 1Hz (two staged PMOS LVT input pair): {ac_df['gain_pch_lvt_db'].iloc[0]:.2f} dB")
+  ac_axs['gain_db'].plot(ac_df["frequency"], ac_df["gain_nch_crs_db"], label=f"gain at 1Hz (cross armed and two staged NMOS input pair): {ac_df['gain_nch_crs_db'].iloc[0]:.2f} dB")
+  ac_axs['gain_db'].plot(ac_df["frequency"], ac_df["gain_pch_crs_db"], label=f"gain at 1Hz (cross armed and two staged PMOS input pair): {ac_df['gain_pch_crs_db'].iloc[0]:.2f} dB")
+  ac_axs['gain_db'].plot(ac_df["frequency"], ac_df["gain_nch_lvt_crs_db"], label=f"gain at 1Hz (cross armed and two staged NMOS LVT input pair): {ac_df['gain_nch_lvt_crs_db'].iloc[0]:.2f} dB")
+  ac_axs['gain_db'].plot(ac_df["frequency"], ac_df["gain_pch_lvt_crs_db"], label=f"gain at 1Hz (cross armed and two staged PMOS LVT input pair): {ac_df['gain_pch_lvt_crs_db'].iloc[0]:.2f} dB")
 
   for ax in ac_axs.values():
     ax.tick_params(axis="both", labelsize=ticks_fontsize)

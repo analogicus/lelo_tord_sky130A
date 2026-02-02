@@ -80,7 +80,7 @@ C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} 520 130 0 0 {name=x6[4:0]
 }
 C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} 680 130 0 0 {name=x7[4:0]}
 C {JNW_ATR_SKY130A/JNWATR_NCH_4C5F0.sym} 680 450 0 0 {name=x8[4:0]}
-C {devices/lab_wire.sym} 260 380 0 0 {name=p6 sig_type=std_logic lab=VNBIAS}
+C {devices/lab_wire.sym} 260 380 0 0 {name=p6 sig_type=std_logic lab=VBIAS}
 C {devices/lab_wire.sym} 420 200 0 0 {name=p7 sig_type=std_logic lab=VINDRN}
 C {devices/lab_wire.sym} 480 340 0 0 {name=p8 sig_type=std_logic lab=VSRC}
 C {devices/lab_wire.sym} 580 200 0 1 {name=p9 sig_type=std_logic lab=VIPDRN}

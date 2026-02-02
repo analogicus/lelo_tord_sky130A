@@ -39,6 +39,18 @@ VIN VIN VSS DC 0.9V
 *----------------------------------------------------------------
 .save all
 
+.save 
++ v(vip) v(vin) 
++ v(vo_nmos) 
++ v(vo_pmos)
++ v(vo_nch_lvt) 
++ v(vo_pch_lvt)
++ v(vo_nch_crs) v(vo_nch_crs_n) 
++ v(vo_pch_crs) v(vo_pch_crs_n)
++ v(vo_nch_lvt_crs) v(vo_nch_lvt_crs_n)
++ v(vo_pch_lvt_crs) v(vo_pch_lvt_crs_n)
++ v(vdd) v(vss)
+
 *----------------------------------------------------------------
 * NGSPICE control
 *----------------------------------------------------------------
@@ -57,12 +69,12 @@ write {cicname}.raw
 
 echo beginning ac analysis simulation
 
-ac dec 100 1Hz 1GHz
+ac dec 100 1Hz 10MegHz
 write {cicname}_ac.raw
 
 * echo beginning dc analysis simulation
 
-* dc vip 0.9V 1.1V 1mV
+* dc vip 0V 1.8V 150mV
 * write {cicname}_dc.raw
 
 quit

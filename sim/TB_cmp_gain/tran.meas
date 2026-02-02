@@ -6,6 +6,46 @@ echo "MEAS_START"
 echo "MEAS_END"
 
 
+let v(vindrn1) = v(xdut.x1.vindrn)
+let v(vipdrn1) = v(xdut.x1.vipdrn)
+let v(vsrc1) = v(xdut.x1.vsrc)
+let v(vbias1) = v(xdut.x1.vbias)
+
+let v(vindrn2) = v(xdut.x2.vindrn)
+let v(vipdrn2) = v(xdut.x2.vipdrn)
+let v(vsrc2) = v(xdut.x2.vsrc)
+let v(vbias2) = v(xdut.x2.vbias)
+
+let v(vindrn3) = v(xdut.x3.vindrn)
+let v(vipdrn3) = v(xdut.x3.vipdrn)
+let v(vsrc3) = v(xdut.x3.vsrc)
+let v(vbias3) = v(xdut.x3.vbias)
+
+let v(vindrn4) = v(xdut.x4.vindrn)
+let v(vipdrn4) = v(xdut.x4.vipdrn)
+let v(vsrc4) = v(xdut.x4.vsrc)
+let v(vbias4) = v(xdut.x4.vbias)
+
+let v(vindrn5) = v(xdut.x5.vindrn)
+let v(vipdrn5) = v(xdut.x5.vipdrn)
+let v(vsrc5) = v(xdut.x5.vsrc)
+let v(vbias5) = v(xdut.x5.vbias)
+
+let v(vindrn6) = v(xdut.x6.vindrn)
+let v(vipdrn6) = v(xdut.x6.vipdrn)
+let v(vsrc6) = v(xdut.x6.vsrc)
+let v(vbias6) = v(xdut.x6.vbias)
+
+let v(vindrn7) = v(xdut.x7.vindrn)
+let v(vipdrn7) = v(xdut.x7.vipdrn)
+let v(vsrc7) = v(xdut.x7.vsrc)
+let v(vbias7) = v(xdut.x7.vbias)
+
+let v(vindrn8) = v(xdut.x8.vindrn)
+let v(vipdrn8) = v(xdut.x8.vipdrn)
+let v(vsrc8) = v(xdut.x8.vsrc)
+let v(vbias8) = v(xdut.x8.vbias)
+
 *
 * Transient analysis simulated data parsing
 *
@@ -25,6 +65,8 @@ wrdata {cicname}.out
 + v(vo_pch_lvt)
 + v(vo_nch_crs) v(vo_nch_crs_n)
 + v(vo_pch_crs) v(vo_pch_crs_n)
++ v(vo_nch_lvt_crs) v(vo_nch_lvt_crs_n)
++ v(vo_pch_lvt_crs) v(vo_pch_lvt_crs_n)
 + v(vin) v(vip)
 + v(vss) v(vdd)
 
@@ -42,15 +84,21 @@ option numdgt = 5
 echo writing ac analysis simulation results to file named {cicname}_ac.out
 
 wrdata {cicname}_ac.out
-+ vm(vo_nmos) vr(vo_nmos) vi(vo_nmos) vp(vo_nmos) vdb(vo_nmos)
-+ vm(vo_pmos) vr(vo_pmos) vi(vo_pmos) vp(vo_pmos) vdb(vo_pmos)
-+ vm(vo_nch_lvt) vr(vo_nch_lvt) vi(vo_nch_lvt) vp(vo_nch_lvt) vdb(vo_nch_lvt)
-+ vm(vo_pch_lvt) vr(vo_pch_lvt) vi(vo_pch_lvt) vp(vo_pch_lvt) vdb(vo_pch_lvt)
-+ vm(vo_nch_crs) vr(vo_nch_crs) vi(vo_nch_crs) vp(vo_nch_crs) vdb(vo_nch_crs)
-+ vm(vo_pch_crs) vr(vo_pch_crs) vi(vo_pch_crs) vp(vo_pch_crs) vdb(vo_pch_crs)
++ vm(vo_nmos) vr(vo_nmos) vi(vo_nmos) vp(vo_nmos) 
++ vm(vo_pmos) vr(vo_pmos) vi(vo_pmos) vp(vo_pmos)
++ vm(vo_nch_lvt) vr(vo_nch_lvt) vi(vo_nch_lvt) vp(vo_nch_lvt) 
++ vm(vo_pch_lvt) vr(vo_pch_lvt) vi(vo_pch_lvt) vp(vo_pch_lvt) 
++ vm(vo_nch_crs) vr(vo_nch_crs) vi(vo_nch_crs) vp(vo_nch_crs) 
++ vm(vo_pch_crs) vr(vo_pch_crs) vi(vo_pch_crs) vp(vo_pch_crs) 
++ vm(vo_nch_lvt_crs) vr(vo_nch_lvt_crs) vi(vo_nch_lvt_crs) vp(vo_nch_lvt_crs) 
++ vm(vo_pch_lvt_crs) vr(vo_pch_lvt_crs) vi(vo_pch_lvt_crs) vp(vo_pch_lvt_crs) 
 + vm(vin) vr(vin) vi(vin) vp(vin)
-+ vm(vip) vr(vip) vi(vip) vp(vip) vdb(vip)
-+ v(vss) v(vdd)
++ vm(vip) vr(vip) vi(vip) vp(vip)
+
+*
+* There exists the possibility of extracting dB data sraight from the complex data in raw format, but it did not work on nordic comuter, only my personal laptop
+* + vdb(vip)
+*
 
 
 *
@@ -59,11 +107,6 @@ wrdata {cicname}_ac.out
 
 * load {cicname}_dc.raw
 
-* let v(vindrn) = v(xdut.x1.vindrn)
-* let v(vipdrn) = v(xdut.x1.vipdrn)
-* let v(vsrc) = v(xdut.x1.vsrc)
-* let v(vnbias) = v(xdut.x1.vnbias)
-
 * set wr_singlescale
 * set wr_vecnames
 * option numdgt = 5
@@ -71,10 +114,24 @@ wrdata {cicname}_ac.out
 * echo writing transient analysis simulation results to file named {cicname}.out
 
 * wrdata {cicname}_dc.out
-* + v(vin) v(vip) v(vout) v(vout_pmos)
+* + v(vo_nmos)
+* + v(vo_pmos)
+* + v(vo_nch_lvt)
+* + v(vo_pch_lvt)
+* + v(vo_nch_crs) v(vo_nch_crs_n)
+* + v(vo_pch_crs) v(vo_pch_crs_n)
+* + v(vo_nch_lvt_crs) v(vo_nch_lvt_crs_n)
+* + v(vo_pch_lvt_crs) v(vo_pch_lvt_crs_n)
+* + v(vin) v(vip) 
 * + v(vss) v(vdd)
-* + v(vindrn) v(vipdrn) v(vsrc) v(vnbias)
-
+* + v(vindrn1) v(vipdrn1) v(vsrc1) v(vbias1)
+* + v(vindrn2) v(vipdrn2) v(vsrc2) v(vbias2)
+* + v(vindrn3) v(vipdrn3) v(vsrc3) v(vbias3)
+* + v(vindrn4) v(vipdrn4) v(vsrc4) v(vbias4)
+* + v(vindrn5) v(vipdrn5) v(vsrc5) v(vbias5)
+* + v(vindrn6) v(vipdrn6) v(vsrc6) v(vbias6)
+* + v(vindrn7) v(vipdrn7) v(vsrc7) v(vbias7)
+* + v(vindrn8) v(vipdrn8) v(vsrc8) v(vbias8)
 
 *
 * Print system data usage

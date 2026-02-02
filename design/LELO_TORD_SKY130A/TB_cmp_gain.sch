@@ -34,8 +34,20 @@ N 360 770 400 770 {lab=VDD}
 N 360 790 400 790 {lab=VIP}
 N 360 810 400 810 {lab=VIN}
 N 360 830 400 830 {lab=VSS}
-N 700 790 740 790 {lab=VO_PCH_CRS}
+N 700 790 740 790 {lab=VO_PCH_CRS_N}
 N 700 680 740 680 {lab=VO_NCH_CRS_N}
+N 360 880 400 880 {lab=VDD}
+N 360 900 400 900 {lab=VIP}
+N 360 920 400 920 {lab=VIN}
+N 360 940 400 940 {lab=VSS}
+N 700 880 740 880 {lab=VO_NCH_LVT_CRS}
+N 700 900 740 900 {lab=VO_NCH_LVT_CRS_N}
+N 360 990 400 990 {lab=VDD}
+N 360 1010 400 1010 {lab=VIP}
+N 360 1030 400 1030 {lab=VIN}
+N 360 1050 400 1050 {lab=VSS}
+N 700 990 740 990 {lab=VO_PCH_LVT_CRS}
+N 700 1010 740 1010 {lab=VO_PCH_LVT_CRS_N}
 C {devices/opin.sym} 740 220 2 1 {name=p5 lab=VO_NMOS}
 C {devices/ipin.sym} 360 220 0 0 {name=p1 lab=VDD}
 C {devices/ipin.sym} 360 240 0 0 {name=p2 lab=VIP}
@@ -74,3 +86,17 @@ C {LELO_TORD_SKY130A/cmp_two_stage_nmos_cross_armed.sym} 550 690 0 0 {name=x5}
 C {LELO_TORD_SKY130A/cmp_two_stage_pmos_cross_armed.sym} 550 800 0 0 {name=x6}
 C {devices/opin.sym} 740 680 2 1 {name=p31 lab=VO_NCH_CRS_N}
 C {devices/opin.sym} 740 790 2 1 {name=p32 lab=VO_PCH_CRS_N}
+C {devices/lab_wire.sym} 380 880 0 0 {name=p33 sig_type=std_logic lab=VDD}
+C {devices/lab_wire.sym} 380 900 0 0 {name=p34 sig_type=std_logic lab=VIP}
+C {devices/lab_wire.sym} 380 920 0 0 {name=p35 sig_type=std_logic lab=VIN}
+C {devices/lab_wire.sym} 380 940 0 0 {name=p36 sig_type=std_logic lab=VSS}
+C {LELO_TORD_SKY130A/cmp_two_stage_nmos_lvt_cross_armed.sym} 550 910 0 0 {name=x7}
+C {devices/opin.sym} 740 880 2 1 {name=p37 lab=VO_NCH_LVT_CRS}
+C {devices/opin.sym} 740 900 2 1 {name=p38 lab=VO_NCH_LVT_CRS_N}
+C {devices/lab_wire.sym} 380 990 0 0 {name=p39 sig_type=std_logic lab=VDD}
+C {devices/lab_wire.sym} 380 1010 0 0 {name=p40 sig_type=std_logic lab=VIP}
+C {devices/lab_wire.sym} 380 1030 0 0 {name=p41 sig_type=std_logic lab=VIN}
+C {devices/lab_wire.sym} 380 1050 0 0 {name=p42 sig_type=std_logic lab=VSS}
+C {devices/opin.sym} 740 990 2 1 {name=p43 lab=VO_PCH_LVT_CRS}
+C {devices/opin.sym} 740 1010 2 1 {name=p44 lab=VO_PCH_LVT_CRS_N}
+C {LELO_TORD_SKY130A/cmp_two_stage_pmos_lvt_cross_armed.sym} 550 1020 0 0 {name=x8}
