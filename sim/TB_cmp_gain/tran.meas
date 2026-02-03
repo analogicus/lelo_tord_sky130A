@@ -3,8 +3,24 @@
 
 echo "MEAS_START"
 
+* .meas tran t_start WHEN V(clk)=VDD/2 RISE=1
+* .meas tran t_stop WHEN V(vcmp)=VDD/2 RISE=1 (or FALL=1 depending polarity)
+* .meas tran t_res PARAM='t_stop - t_start'
+
 echo "MEAS_END"
 
+
+*
+* Transient analysis simulated data parsing
+*
+
+load {cicname}.raw
+
+set wr_singlescale
+set wr_vecnames
+option numdgt = 5
+
+echo writing transient analysis simulation results to file named {cicname}.out
 
 let v(vindrn1) = v(xdut.x1.vindrn)
 let v(vipdrn1) = v(xdut.x1.vipdrn)
@@ -46,18 +62,6 @@ let v(vipdrn8) = v(xdut.x8.vipdrn)
 let v(vsrc8) = v(xdut.x8.vsrc)
 let v(vbias8) = v(xdut.x8.vbias)
 
-*
-* Transient analysis simulated data parsing
-*
-
-load {cicname}.raw
-
-set wr_singlescale
-set wr_vecnames
-option numdgt = 5
-
-echo writing transient analysis simulation results to file named {cicname}.out
-
 wrdata {cicname}.out
 + v(vo_nmos)
 + v(vo_pmos)
@@ -69,6 +73,14 @@ wrdata {cicname}.out
 + v(vo_pch_lvt_crs) v(vo_pch_lvt_crs_n)
 + v(vin) v(vip)
 + v(vss) v(vdd)
++ v(vindrn1) v(vipdrn1) v(vsrc1) v(vbias1)
++ v(vindrn2) v(vipdrn2) v(vsrc2) v(vbias2)
++ v(vindrn3) v(vipdrn3) v(vsrc3) v(vbias3)
++ v(vindrn4) v(vipdrn4) v(vsrc4) v(vbias4)
++ v(vindrn5) v(vipdrn5) v(vsrc5) v(vbias5)
++ v(vindrn6) v(vipdrn6) v(vsrc6) v(vbias6)
++ v(vindrn7) v(vipdrn7) v(vsrc7) v(vbias7)
++ v(vindrn8) v(vipdrn8) v(vsrc8) v(vbias8)
 
 
 *
@@ -94,6 +106,7 @@ wrdata {cicname}_ac.out
 + vm(vo_pch_lvt_crs) vr(vo_pch_lvt_crs) vi(vo_pch_lvt_crs) vp(vo_pch_lvt_crs) 
 + vm(vin) vr(vin) vi(vin) vp(vin)
 + vm(vip) vr(vip) vi(vip) vp(vip)
+
 
 *
 * There exists the possibility of extracting dB data sraight from the complex data in raw format, but it did not work on nordic comuter, only my personal laptop

@@ -82,15 +82,12 @@ C {devices/lab_wire.sym} 380 790 0 0 {name=p27 sig_type=std_logic lab=VIP}
 C {devices/lab_wire.sym} 380 810 0 0 {name=p28 sig_type=std_logic lab=VIN}
 C {devices/lab_wire.sym} 380 830 0 0 {name=p29 sig_type=std_logic lab=VSS}
 C {devices/opin.sym} 740 770 2 1 {name=p30 lab=VO_PCH_CRS}
-C {LELO_TORD_SKY130A/cmp_two_stage_nmos_cross_armed.sym} 550 690 0 0 {name=x5}
-C {LELO_TORD_SKY130A/cmp_two_stage_pmos_cross_armed.sym} 550 800 0 0 {name=x6}
 C {devices/opin.sym} 740 680 2 1 {name=p31 lab=VO_NCH_CRS_N}
 C {devices/opin.sym} 740 790 2 1 {name=p32 lab=VO_PCH_CRS_N}
 C {devices/lab_wire.sym} 380 880 0 0 {name=p33 sig_type=std_logic lab=VDD}
 C {devices/lab_wire.sym} 380 900 0 0 {name=p34 sig_type=std_logic lab=VIP}
 C {devices/lab_wire.sym} 380 920 0 0 {name=p35 sig_type=std_logic lab=VIN}
 C {devices/lab_wire.sym} 380 940 0 0 {name=p36 sig_type=std_logic lab=VSS}
-C {LELO_TORD_SKY130A/cmp_two_stage_nmos_lvt_cross_armed.sym} 550 910 0 0 {name=x7}
 C {devices/opin.sym} 740 880 2 1 {name=p37 lab=VO_NCH_LVT_CRS}
 C {devices/opin.sym} 740 900 2 1 {name=p38 lab=VO_NCH_LVT_CRS_N}
 C {devices/lab_wire.sym} 380 990 0 0 {name=p39 sig_type=std_logic lab=VDD}
@@ -99,4 +96,7 @@ C {devices/lab_wire.sym} 380 1030 0 0 {name=p41 sig_type=std_logic lab=VIN}
 C {devices/lab_wire.sym} 380 1050 0 0 {name=p42 sig_type=std_logic lab=VSS}
 C {devices/opin.sym} 740 990 2 1 {name=p43 lab=VO_PCH_LVT_CRS}
 C {devices/opin.sym} 740 1010 2 1 {name=p44 lab=VO_PCH_LVT_CRS_N}
-C {LELO_TORD_SKY130A/cmp_two_stage_pmos_lvt_cross_armed.sym} 550 1020 0 0 {name=x8}
+C {LELO_TORD_SKY130A/cmp_two_stage_nmos_cross_coupled.sym} 550 690 0 0 {name=x5}
+C {LELO_TORD_SKY130A/cmp_two_stage_pmos_lvt_cross_coupled.sym} 550 1020 0 0 {name=x8}
+C {LELO_TORD_SKY130A/cmp_two_stage_pmos_cross_coupled.sym} 550 800 0 0 {name=x6}
+C {LELO_TORD_SKY130A/cmp_two_stage_nmos_lvt_cross_coupled.sym} 550 910 0 0 {name=x7}

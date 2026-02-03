@@ -18,9 +18,15 @@ option numdgt = 5
 
 echo writing transient analysis simulation results to file named {cicname}.out
 
+let v(vindrn) = v(xdut.x1.vindrn)
+let v(vipdrn) = v(xdut.x1.vipdrn)
+let v(vsrc) = v(xdut.x1.vsrc)
+let v(vbias) = v(xdut.x1.vbias)
+
 wrdata {cicname}.out
 + v(vin) v(vip) v(vout)
 + v(vss) v(vdd)
++ v(vindrn) v(vipdrn) v(vsrc) v(vbias)
 
 
 *

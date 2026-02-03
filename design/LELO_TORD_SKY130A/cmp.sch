@@ -18,4 +18,4 @@ C {devices/ipin.sym} 200 160 0 0 {name=p3 lab=VIN
 C {devices/ipin.sym} 200 140 0 0 {name=p2 lab=VIP
 }
 C {devices/opin.sym} 580 120 2 1 {name=p5 lab=VOUT}
-C {LELO_TORD_SKY130A/cmp_two_stage_nmos_lvt.sym} 390 150 0 0 {name=x1}
+C {LELO_TORD_SKY130A/cmp_two_stage_nmos_cross_coupled.sym} 390 150 0 0 {name=x1}

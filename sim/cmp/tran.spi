@@ -26,7 +26,7 @@
 VSS VSS 0   DC 0V
 VDD VDD VSS DC {AVDD}
 
-VIP VIP VSS DC 0.9V AC 1V SIN(0.9V 100uV 100kHz)
+VIP VIP VSS DC 0.9V AC 1V SIN(0.9V 10uV 100kHz)
 VIN VIN VSS DC 0.9V
 
 *-----------------------------------------------------------------
@@ -50,14 +50,18 @@ unset askquit
 
 optran 0 0 0 1ns 10us 0
 
-echo beginning tranisent analysis simulation
+echo begining transient analysis simulation
 
-tran 1ns 11us 1ps
+tran 1ns 10us 1ps
 write {cicname}.raw
+
+reset
+
+op
 
 echo beginning ac analysis simulation
 
-ac dec 100 1Hz 1GHz
+ac dec 100 1Hz 100MegHz
 write {cicname}_ac.raw
 
 * echo beginning dc analysis simulation

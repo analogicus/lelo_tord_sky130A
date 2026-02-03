@@ -104,26 +104,22 @@ C {devices/ipin.sym} 480 760 0 0 {name=p4 lab=VSS}
 C {devices/opin.sym} 1700 510 0 0 {name=p5 lab=VOUT
 }
 C {JNW_TR_SKY130A/JNWTR_RPPO16.sym} 560 340 1 0 {name=x13}
-C {JNW_ATR_SKY130A/JNWATR_NCH_4C5F0.sym} 1450 510 0 1 {name=x2}
-C {JNW_ATR_SKY130A/JNWATR_NCH_4C5F0.sym} 1200 690 0 0 {name=x3[1:0]}
-C {JNW_ATR_SKY130A/JNWATR_NCH_4C5F0.sym} 1030 510 0 0 {name=x1}
-C {JNW_ATR_SKY130A/JNWATR_NCH_4C5F0.sym} 600 690 0 1 {name=x10[1:0]}
+C {JNW_ATR_SKY130A/JNWATR_NCH_4C5F0.sym} 1450 510 0 1 {name=x2[3:0]}
+C {JNW_ATR_SKY130A/JNWATR_NCH_4C5F0.sym} 1200 690 0 0 {name=x3[3:0]}
+C {JNW_ATR_SKY130A/JNWATR_NCH_4C5F0.sym} 1030 510 0 0 {name=x1[3:0]}
+C {JNW_ATR_SKY130A/JNWATR_NCH_4C5F0.sym} 600 690 0 1 {name=x10}
 C {devices/ipin.sym} 1490 510 0 1 {name=p1 lab=VIN}
 C {devices/ipin.sym} 990 510 0 0 {name=p2 lab=VIP}
-C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} 1200 370 0 1 {name=x5[4:0]
-}
-C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} 1280 370 0 0 {name=x6[4:0]
-}
-C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} 1540 370 0 1 {name=x7[4:0]}
-C {JNW_ATR_SKY130A/JNWATR_NCH_4C5F0.sym} 1620 620 0 0 {name=x8[4:0]}
+C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} 1200 370 0 1 {name=x5[3:0]}
+C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} 1280 370 0 0 {name=x6[3:0]}
+C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} 1540 370 0 1 {name=x7[3:0]}
+C {JNW_ATR_SKY130A/JNWATR_NCH_4C5F0.sym} 1620 620 0 0 {name=x8}
 C {devices/opin.sym} 780 510 0 1 {name=p6 lab=VOUT_N
 }
-C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} 860 370 0 1 {name=x11[4:0]}
-C {JNW_ATR_SKY130A/JNWATR_NCH_4C5F0.sym} 860 620 0 1 {name=x12[4:0]}
-C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} 940 370 0 0 {name=x4[4:0]
-}
-C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} 1620 370 0 0 {name=x9[4:0]
-}
+C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} 860 370 0 1 {name=x11[1:0]}
+C {JNW_ATR_SKY130A/JNWATR_NCH_4C5F0.sym} 860 620 0 1 {name=x12}
+C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} 940 370 0 0 {name=x4[3:0]}
+C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} 1620 370 0 0 {name=x9[1:0]}
 C {devices/lab_wire.sym} 630 620 0 1 {name=p7 sig_type=std_logic lab=VBIAS}
 C {devices/lab_wire.sym} 1220 580 0 1 {name=p8 sig_type=std_logic lab=VSRC}
 C {devices/lab_wire.sym} 1040 440 0 1 {name=p9 sig_type=std_logic lab=VIPDRN}

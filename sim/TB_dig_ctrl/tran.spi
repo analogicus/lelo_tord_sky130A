@@ -46,11 +46,11 @@
 .param PER = finetuning_periode
 
 * Stepping Current out of DAC
-.param step_start = 25us
+.param step_start = 20us
 .param step_length = 5.0us
 
-* .csparam simulation_length_csparam = {step_start + 16*step_length}
-.csparam simulation_length_csparam = {step_start + 7*step_length}
+.csparam simulation_length_csparam = 70us
+* .csparam simulation_length_csparam = {step_start + 7*step_length}
 
 *-----------------------------------------------------------------
 * FORCE
@@ -94,7 +94,7 @@ VB13  B13   VSS  dc 0V
 VB14  B14   VSS  dc 0V
 VB15  B15   VSS  dc 0V
 
-VBT  BT   VSS  PULSE(0V {AVDD} {2*TD} {TR} {TF} {PW*ratio} {PER})
+VBT  BT   VSS  PULSE(0V {AVDD} {TD} {TR} {TF} {PW*ratio} {PER})
 
 VSWBRANCH1 SWBRN1 VSS dc {AVDD}
 VSWBRANCH2 SWBRN2 VSS dc {AVDD}
@@ -115,14 +115,14 @@ VSWDRAIN3 SWDRN3 VSS dc 0V
 * DUT
 *-----------------------------------------------------------------
 .include ../xdut.spi
-.include ../svinst.spi
+* .include ../svinst.spi
 
 * Translate names (Do not use the letter t or any number to replace x in VBx, as they have already most likely been used)
-VBa b.0 b<0> dc 0
-VBb b.1 b<1> dc 0
-VBc b.2 b<2> dc 0
-VBd b.3 b<3> dc 0
-VBe b.4 b<4> dc 0
+* VBa b.0 b<0> dc 0
+* VBb b.1 b<1> dc 0
+* VBc b.2 b<2> dc 0
+* VBd b.3 b<3> dc 0
+* VBe b.4 b<4> dc 0
 
 *----------------------------------------------------------------
 * PROBE
@@ -161,11 +161,6 @@ set num_threads=8
 set color0=white
 set color1=black
 unset askquit
-
-*- Override the default digital output bridge.
-pre_set auto_bridge_d_out =
-     + ( ".model auto_dac dac_bridge(out_low = 0.0 out_high = 1.8)"
-     +   "auto_bridge%d [ %s ] [ %s ] auto_dac" )
 
 set vsupply = {$&voltage_supply_csparam}
 set cirtemp = {$&circuit_temperature_csparam}
@@ -210,7 +205,8 @@ foreach cirtemp 27
 			echo ------------------------------------------------------------
 
 			optran 0 0 0 1ns 1us 0
-			tran 1ns $simlen 1ps
+			tran 1ns {$simlen} 1ps
+			* tran 1ns 100us 1ps
 
 			write {cicname}_temperature{$cirtemp}celsius_frequency{$clkfreq}mhz_dutycycle{$dcycle}percent_vdd{$vsupply}volt{$fend}
 
@@ -257,7 +253,7 @@ foreach cirtemp 27
 			+ v(vss) v(vdd) v(slp)
 			+ i(v.xdut.v1)
 			+ i(vdd) i(vss)
-			+ v(dec_b)
+			* + v(dec_b)
 		end
 	end
 end

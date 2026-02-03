@@ -7,14 +7,14 @@ E {}
 N 120 60 160 60 {lab=VDD}
 N 120 520 160 520 {lab=VSS}
 N 720 270 760 270 {lab=VOUT}
-N 200 180 200 380 {lab=VNBIAS}
+N 200 180 200 380 {lab=VBIAS}
 N 160 140 180 140 {lab=VSS}
 N 160 60 200 60 {lab=VDD}
 N 200 60 200 100 {lab=VDD}
 N 160 450 200 450 {lab=VSS}
 N 200 480 200 520 {lab=VSS}
 N 160 520 200 520 {lab=VSS}
-N 240 450 420 450 {lab=VNBIAS}
+N 240 450 420 450 {lab=VBIAS}
 N 200 520 460 520 {lab=VSS}
 N 460 480 460 520 {lab=VSS}
 N 360 300 360 340 {lab=VSRC}
@@ -48,12 +48,12 @@ N 440 130 440 200 {lab=VINDRN}
 N 560 200 640 200 {lab=VIPDRN}
 N 640 130 680 130 {lab=VIPDRN}
 N 640 130 640 200 {lab=VIPDRN}
-N 200 380 280 380 {lab=VNBIAS}
-N 280 380 280 450 {lab=VNBIAS}
-N 200 380 200 420 {lab=VNBIAS}
-N 280 380 640 380 {lab=VNBIAS}
-N 640 380 640 450 {lab=VNBIAS}
-N 640 450 680 450 {lab=VNBIAS}
+N 200 380 280 380 {lab=VBIAS}
+N 280 380 280 450 {lab=VBIAS}
+N 200 380 200 420 {lab=VBIAS}
+N 280 380 640 380 {lab=VBIAS}
+N 640 380 640 450 {lab=VBIAS}
+N 640 450 680 450 {lab=VBIAS}
 N 720 160 720 420 {lab=VOUT}
 N 720 480 720 520 {lab=VSS}
 N 500 520 720 520 {lab=VSS}
@@ -70,21 +70,19 @@ C {devices/ipin.sym} 120 520 0 0 {name=p4 lab=VSS}
 C {devices/opin.sym} 760 270 0 0 {name=p5 lab=VOUT
 }
 C {JNW_TR_SKY130A/JNWTR_RPPO16.sym} 200 100 1 0 {name=x9}
-C {JNW_ATR_SKY130A/JNWATR_NCH_4C5F0.sym} 420 450 0 0 {name=x3[1:0]}
-C {JNW_ATR_SKY130A/JNWATR_NCH_4C5F0.sym} 240 450 0 1 {name=x4[1:0]}
+C {JNW_ATR_SKY130A/JNWATR_NCH_4C5F0.sym} 420 450 0 0 {name=x3[4:0]}
+C {JNW_ATR_SKY130A/JNWATR_NCH_4C5F0.sym} 240 450 0 1 {name=x4}
 C {devices/ipin.sym} 280 270 0 0 {name=p1 lab=VIN}
 C {devices/ipin.sym} 640 270 0 1 {name=p2 lab=VIP}
-C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} 400 130 0 1 {name=x5[4:0]
-}
-C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} 520 130 0 0 {name=x6[4:0]
-}
-C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} 680 130 0 0 {name=x7[4:0]}
-C {JNW_ATR_SKY130A/JNWATR_NCH_4C5F0.sym} 680 450 0 0 {name=x8[4:0]}
+C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} 400 130 0 1 {name=x5[7:0]}
+C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} 520 130 0 0 {name=x6[7:0]}
+C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} 680 130 0 0 {name=x7[2:0]}
+C {JNW_ATR_SKY130A/JNWATR_NCH_4C5F0.sym} 680 450 0 0 {name=x8}
 C {devices/lab_wire.sym} 260 380 0 0 {name=p6 sig_type=std_logic lab=VBIAS}
 C {devices/lab_wire.sym} 420 200 0 0 {name=p7 sig_type=std_logic lab=VINDRN}
 C {devices/lab_wire.sym} 480 340 0 0 {name=p8 sig_type=std_logic lab=VSRC}
 C {devices/lab_wire.sym} 580 200 0 1 {name=p9 sig_type=std_logic lab=VIPDRN}
 C {devices/lab_wire.sym} 380 270 2 0 {name=p10 sig_type=std_logic lab=VSS}
 C {devices/lab_wire.sym} 540 270 2 1 {name=p11 sig_type=std_logic lab=VSS}
-C {LELO_ATR_SKY130A/LELOATR_LVT_NCH_4C5F0.sym} 320 270 0 0 {name=x1}
-C {LELO_ATR_SKY130A/LELOATR_LVT_NCH_4C5F0.sym} 600 270 0 1 {name=x2}
+C {LELO_ATR_SKY130A/LELOATR_LVT_NCH_4C5F0.sym} 320 270 0 0 {name=x1[4:0]}
+C {LELO_ATR_SKY130A/LELOATR_LVT_NCH_4C5F0.sym} 600 270 0 1 {name=x2[4:0]}

@@ -3,7 +3,7 @@ K {type=subcircuit
 format="@name @pinlist @symname"
 template="name=x1"
 }
-T {@symname} -153 -6 0 0 0.3 0.3 {}
+T {@symname} -162 -6 0 0 0.3 0.3 {}
 T {@name} 135 -52 0 0 0.2 0.2 {}
 L 4 -130 -40 130 -40 {}
 L 4 -130 40 130 40 {}
