@@ -5,9 +5,9 @@ all: typical etc mc summary
 
 
 TB=tran
-# VIEW=Sch
-VIEW=Lay
-CELL=LELO_TORD
+VIEW=Sch
+#VIEW=Lay
+CELL=cmp_two_stage_nmos_cross_coupled
 LIB =LELO_TORD_SKY130A
 OPT=
 

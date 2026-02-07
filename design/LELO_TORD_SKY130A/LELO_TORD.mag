@@ -1,68 +1,38 @@
 magic
 tech sky130A
-magscale 1 2
-timestamp 1756731965
+timestamp 1770504968
 << locali >>
-rect 104 198 296 624
-rect 1250 198 1442 628
-rect 104 166 1442 198
-rect 104 6 488 166
-rect 668 6 1442 166
-<< viali >>
-rect 488 -14 668 166
+rect 2744 2544 2840 2584
 << metal1 >>
-rect 354 2773 418 4420
-rect 347 2707 353 2773
-rect 419 2707 425 2773
-rect 354 506 418 2707
-rect 482 438 674 4332
-rect 866 4142 1414 4334
-rect 1222 3538 1414 4142
-rect 866 3346 1414 3538
-rect 977 2773 1043 2779
-rect 977 2701 1043 2707
-rect 1222 1936 1414 3346
-rect 866 1744 1414 1936
-rect 1222 1158 1414 1744
-rect 874 966 1414 1158
-rect 384 436 674 438
-rect 384 166 736 436
-rect 384 -14 488 166
-rect 668 -14 736 166
-rect 384 -114 736 -14
-<< via1 >>
-rect 353 2707 419 2773
-rect 977 2707 1043 2773
-<< metal2 >>
-rect 353 2773 419 2779
-rect 419 2707 977 2773
-rect 1043 2707 1049 2773
-rect 353 2701 419 2707
-use JNWATR_NCH_4C5F0  JNWATR_NCH_4C5F0_0 ../JNW_ATR_SKY130A
-timestamp 1756731965
-transform 1 0 194 0 1 3674
-box -184 -128 1336 928
-use JNWATR_NCH_4C5F0  JNWATR_NCH_4C5F0_1 ../JNW_ATR_SKY130A
-timestamp 1756731965
-transform 1 0 194 0 1 466
-box -184 -128 1336 928
-use JNWATR_NCH_4C5F0  JNWATR_NCH_4C5F0_2 ../JNW_ATR_SKY130A
-timestamp 1756731965
-transform 1 0 194 0 1 1264
-box -184 -128 1336 928
-use JNWATR_NCH_4C5F0  JNWATR_NCH_4C5F0_3 ../JNW_ATR_SKY130A
-timestamp 1756731965
-transform 1 0 194 0 1 2068
-box -184 -128 1336 928
-use JNWATR_NCH_4C5F0  JNWATR_NCH_4C5F0_4 ../JNW_ATR_SKY130A
-timestamp 1756731965
-transform 1 0 194 0 1 2870
-box -184 -128 1336 928
+rect 2036 5164 2132 5204
+rect 2228 4084 2324 4124
+rect 6728 4084 6824 4124
+rect 2872 2544 2904 2584
+rect 5572 2544 5604 2584
+use cmp_two_stage_nmos_cross_coupled  x1 ../LELO_TORD_SKY130A
+timestamp 1770504890
+transform 1 0 0 0 1 0
+box -200 -13 7060 5800
 << labels >>
-flabel metal1 1222 3346 1414 3538 0 FreeSans 1600 0 0 0 IBNS_20U
-port 0 nsew
-flabel metal1 354 2600 418 2664 0 FreeSans 1600 0 0 0 IBPS_5U
-port 3 nsew
-flabel metal1 482 12 674 204 0 FreeSans 1600 0 0 0 VSS
-port 1 nsew
+flabel locali s 2744 2544 2840 2584 0 FreeSans 200 0 0 0 VSS
+port 1 nsew ground bidirectional
+flabel metal1 s 2036 5164 2132 5204 0 FreeSans 200 0 0 0 VDD
+port 2 nsew power bidirectional
+flabel metal1 s 2872 2544 2904 2584 0 FreeSans 200 0 0 0 VIN
+port 3 nsew signal bidirectional
+flabel metal1 s 5572 2544 5604 2584 0 FreeSans 200 0 0 0 VIP
+port 4 nsew signal bidirectional
+flabel metal1 s 6728 4084 6824 4124 0 FreeSans 200 0 0 0 VOUT
+port 5 nsew signal bidirectional
+flabel metal1 s 2228 4084 2324 4124 0 FreeSans 200 0 0 0 VOUT_N
+port 6 nsew signal bidirectional
+flabel space 3584 3638 3612 3671 0 FreeSans 800 0 0 0 VIPDRN
+port 7 nsew
+flabel space 5324 3642 5352 3675 0 FreeSans 800 0 0 0 VINDRN
+port 8 nsew
+flabel space 4395 2116 4423 2149 0 FreeSans 800 0 0 0 VSRC
+port 9 nsew
+flabel space 684 3397 712 3430 0 FreeSans 800 0 0 0 VBIAS
+<< properties >>
+string FIXED_BBOX 0 0 6824 8000
 << end >>

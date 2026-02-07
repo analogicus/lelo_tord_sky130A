@@ -73,27 +73,27 @@ def main(name):
   # Plot internal voltage nodes during transient simulation
   # 
 
-  # fig_internal, axs_internal = plt.subplot_mosaic([["vindrn"], ["vipdrn"], ["vbias"], ["vsrc"]], figsize=(fig_width, fig_height), dpi=300) # , sharex=True)
+  fig_internal, axs_internal = plt.subplot_mosaic([["vindrn"], ["vipdrn"], ["vbias"], ["vsrc"]], figsize=(fig_width, fig_height), dpi=300) # , sharex=True)
   
-  # axs_internal["vindrn"].plot(df["time"], df["v(vindrn)"], label="vindrn")
-  # axs_internal["vipdrn"].plot(df["time"], df["v(vipdrn)"], label="vipdrn")
-  # axs_internal["vbias"].plot(df["time"], df["v(vbias)"], label="vbias")
-  # axs_internal["vsrc"].plot(df["time"], df["v(vsrc)"], label="vsrc")
+  axs_internal["vindrn"].plot(df["time"], df["v(vindrn)"], label="vindrn")
+  axs_internal["vipdrn"].plot(df["time"], df["v(vipdrn)"], label="vipdrn")
+  axs_internal["vbias"].plot(df["time"], df["v(vbias)"], label="vbias")
+  axs_internal["vsrc"].plot(df["time"], df["v(vsrc)"], label="vsrc")
 
-  # for ax in axs_internal.values():
-  #   ax.tick_params(axis="both", labelsize=ticks_fontsize)
-  #   ax.legend(loc="best", fontsize=legend_fontsize)
-  #   ax.grid()
+  for ax in axs_internal.values():
+    ax.tick_params(axis="both", labelsize=ticks_fontsize)
+    ax.legend(loc="best", fontsize=legend_fontsize)
+    ax.grid()
 
-  # axs_internal["vindrn"].set_title(f"{name} - Internal Voltages", fontsize=title_fontsize, fontweight="bold")
-  # axs_internal["vindrn"].set_ylabel("Voltage (V)", fontsize=label_fontsize)
-  # axs_internal["vipdrn"].set_ylabel("Voltage (V)", fontsize=label_fontsize)
-  # axs_internal["vbias"].set_ylabel("Voltage (V)", fontsize=label_fontsize)
-  # axs_internal["vsrc"].set_ylabel("Voltage (V)", fontsize=label_fontsize)
-  # axs_internal["vsrc"].set_xlabel("Time (us)", fontsize=label_fontsize)
+  axs_internal["vindrn"].set_title(f"{name} - Internal Voltages", fontsize=title_fontsize, fontweight="bold")
+  axs_internal["vindrn"].set_ylabel("Voltage (V)", fontsize=label_fontsize)
+  axs_internal["vipdrn"].set_ylabel("Voltage (V)", fontsize=label_fontsize)
+  axs_internal["vbias"].set_ylabel("Voltage (V)", fontsize=label_fontsize)
+  axs_internal["vsrc"].set_ylabel("Voltage (V)", fontsize=label_fontsize)
+  axs_internal["vsrc"].set_xlabel("Time (us)", fontsize=label_fontsize)
 
-  # fig_internal.tight_layout()
-  # fig_internal.savefig(f"figures/{name.split('/')[-1]}_internal_voltages.png", bbox_inches="tight", dpi=300)
+  fig_internal.tight_layout()
+  fig_internal.savefig(f"figures/{name.split('/')[-1]}_internal_voltages.png", bbox_inches="tight", dpi=300)
 
   #
   # Parse AC simulation data saved in .out file

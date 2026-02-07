@@ -3,9 +3,9 @@
 * Include
 *----------------------------------------------------------------
 #ifdef Lay
-.include ../../../work/lpe/LELO_TORD_lpe.spi
+.include ../../../work/lpe/cmp_two_stage_nmos_cross_coupled_lpe.spi
 #else
-.include ../../../work/xsch/LELO_TORD.spice
+.include ../../../work/xsch/cmp_two_stage_nmos_cross_coupled.spice
 #endif
 
 *-----------------------------------------------------------------

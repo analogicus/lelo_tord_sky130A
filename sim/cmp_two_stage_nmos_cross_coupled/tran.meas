@@ -1,4 +1,4 @@
-* Measure LELO_TORD
+* Measure cmp_two_stage_nmos_cross_coupled
 .control
 
 echo "MEAS_START"
@@ -12,21 +12,21 @@ echo "MEAS_END"
 
 load {cicname}.raw
 
-* let v(vindrn) = v(xdut.x1.vindrn)
-* let v(vipdrn) = v(xdut.x1.vipdrn)
-* let v(vsrc) = v(xdut.x1.vsrc)
-* let v(vbias) = v(xdut.x1.vbias)
-
-echo writing transient analysis simulation results to file named {cicname}.out
-
 set wr_singlescale
 set wr_vecnames
 option numdgt = 5
 
+echo writing transient analysis simulation results to file named {cicname}.out
+
+let v(vindrn) = v(xdut.vindrn)
+let v(vipdrn) = v(xdut.vipdrn)
+let v(vsrc) = v(xdut.vsrc)
+let v(vbias) = v(xdut.vbias)
+
 wrdata {cicname}.out
 + v(vin) v(vip) v(vout)
 + v(vss) v(vdd)
-* + v(vindrn) v(vipdrn) v(vsrc) v(vbias)
++ v(vindrn) v(vipdrn) v(vsrc) v(vbias)
 
 
 *
@@ -35,11 +35,11 @@ wrdata {cicname}.out
 
 load {cicname}_ac.raw
 
-echo writing ac analysis simulation results to file named {cicname}_ac.out
-
 set wr_singlescale
 set wr_vecnames
 option numdgt = 5
+
+echo writing ac analysis simulation results to file named {cicname}_ac.out
 
 wrdata {cicname}_ac.out
 + vm(vin) vr(vin) vi(vin) vp(vin)
@@ -54,16 +54,16 @@ wrdata {cicname}_ac.out
 
 * load {cicname}_dc.raw
 
-* let v(vindrn) = v(xdut.x1.vindrn)
-* let v(vipdrn) = v(xdut.x1.vipdrn)
-* let v(vsrc) = v(xdut.x1.vsrc)
-* let v(vnbias) = v(xdut.x1.vnbias)
-
-* echo writing transient analysis simulation results to file named {cicname}.out
+* let v(vindrn) = v(xdut.vindrn)
+* let v(vipdrn) = v(xdut.vipdrn)
+* let v(vsrc) = v(xdut.vsrc)
+* let v(vnbias) = v(xdut.vnbias)
 
 * set wr_singlescale
 * set wr_vecnames
 * option numdgt = 5
+
+* echo writing transient analysis simulation results to file named {cicname}.out
 
 * wrdata {cicname}_dc.out
 * + v(vin) v(vip) v(vout) v(vout_pmos)
@@ -76,4 +76,3 @@ wrdata {cicname}_ac.out
 rusage
 
 .endc
-

@@ -1,2 +1,23 @@
+#
+# ChatGPT's suggestions to avoid not finding 4C5F0 NMOS transistors layout
+# due to stacking ../design/LELO_TORD/../design/LELO_TORD
+#
+
+
+# Load technology setup 
 source ../tech/magic/.magicrc
+
 addpath ../design/LELO_TORD_SKY130A
+addpath ../JNW_ATR_SKY130A
+addpath ../JNW_TR_SKY130A
+addpath ../LELO_ATR_SKY130A
+addpath ../LELO_TORD_SKY130A
+
+# reset paths to not inherit default paths
+# path reset
+
+# Add project libraries (ABSOLUTE PATHS)
+addpath /home/tordos/pro/aicex/ip/lelo_tord_sky130A/design/LELO_TORD_SKY130A
+addpath /home/tordos/pro/aicex/ip/lelo_tord_sky130A/design/JNW_TR_SKY130A
+addpath /home/tordos/pro/aicex/ip/lelo_tord_sky130A/design/LELO_ATR_SKY130A
+addpath /home/tordos/pro/aicex/ip/lelo_tord_sky130A/design/JNW_ATR_SKY130A

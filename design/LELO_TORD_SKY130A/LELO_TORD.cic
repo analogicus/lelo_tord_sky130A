@@ -1,0 +1,205 @@
+{
+    "cells": [
+        {
+            "class": "LayoutCell",
+            "x1": 0,
+            "y1": 0,
+            "x2": 682400.0,
+            "y2": 800000.0,
+            "layer": "",
+            "net": "",
+            "name": "LELO_TORD",
+            "has_pr": false,
+            "ckt": {
+                "class": "",
+                "name": "LELO_TORD",
+                "nodes": [
+                    "VSS",
+                    "VDD",
+                    "VIN",
+                    "VIP",
+                    "VOUT",
+                    "VOUT_N"
+                ],
+                "properties": {},
+                "devices": [],
+                "instances": [
+                    {
+                        "class": "",
+                        "name": "x1",
+                        "nodes": [
+                            "VDD",
+                            "VOUT",
+                            "VIP",
+                            "VIN",
+                            "VOUT_N",
+                            "VSS"
+                        ],
+                        "properties": {},
+                        "subcktName": "cmp_two_stage_nmos_cross_coupled",
+                        "groupName": "x",
+                        "deviceName": "subckt",
+                        "groupTag": "1"
+                    }
+                ]
+            },
+            "children": [
+                {
+                    "class": "Instance",
+                    "x1": 0,
+                    "y1": 0,
+                    "x2": 594800.0,
+                    "y2": 800000.0,
+                    "layer": "PR",
+                    "net": "",
+                    "name": "cmp_two_stage_nmos_cross_coupled",
+                    "has_pr": false,
+                    "ckt": {},
+                    "children": [
+                        {
+                            "class": "Port",
+                            "x1": 203600.0,
+                            "y1": 516400.0,
+                            "x2": 213200.0,
+                            "y2": 520400.0,
+                            "layer": "M2",
+                            "net": "",
+                            "name": "VDD",
+                            "spicePort": true
+                        },
+                        {
+                            "class": "Port",
+                            "x1": 672800.0,
+                            "y1": 408400.0,
+                            "x2": 682400.0,
+                            "y2": 412400.0,
+                            "layer": "M2",
+                            "net": "",
+                            "name": "VOUT",
+                            "spicePort": true
+                        },
+                        {
+                            "class": "Port",
+                            "x1": 557200.0,
+                            "y1": 254400.0,
+                            "x2": 560400.0,
+                            "y2": 258400.0,
+                            "layer": "M2",
+                            "net": "",
+                            "name": "VIP",
+                            "spicePort": true
+                        },
+                        {
+                            "class": "Port",
+                            "x1": 287200.0,
+                            "y1": 254400.0,
+                            "x2": 290400.0,
+                            "y2": 258400.0,
+                            "layer": "M2",
+                            "net": "",
+                            "name": "VIN",
+                            "spicePort": true
+                        },
+                        {
+                            "class": "Port",
+                            "x1": 222800.0,
+                            "y1": 408400.0,
+                            "x2": 232400.0,
+                            "y2": 412400.0,
+                            "layer": "M2",
+                            "net": "",
+                            "name": "VOUT_N",
+                            "spicePort": true
+                        },
+                        {
+                            "class": "Port",
+                            "x1": 274400.0,
+                            "y1": 254400.0,
+                            "x2": 284000.0,
+                            "y2": 258400.0,
+                            "layer": "M1",
+                            "net": "",
+                            "name": "VSS",
+                            "spicePort": true
+                        }
+                    ],
+                    "instanceName": "x1",
+                    "angle": "",
+                    "cell": "cmp_two_stage_nmos_cross_coupled",
+                    "libpath": "LELO_TORD_SKY130A",
+                    "xcell": 0,
+                    "ycell": 0
+                },
+                {
+                    "class": "Port",
+                    "x1": 274400.0,
+                    "y1": 254400.0,
+                    "x2": 284000.0,
+                    "y2": 258400.0,
+                    "layer": "M1",
+                    "net": "",
+                    "name": "VSS",
+                    "spicePort": true
+                },
+                {
+                    "class": "Port",
+                    "x1": 203600.0,
+                    "y1": 516400.0,
+                    "x2": 213200.0,
+                    "y2": 520400.0,
+                    "layer": "M2",
+                    "net": "",
+                    "name": "VDD",
+                    "spicePort": true
+                },
+                {
+                    "class": "Port",
+                    "x1": 287200.0,
+                    "y1": 254400.0,
+                    "x2": 290400.0,
+                    "y2": 258400.0,
+                    "layer": "M2",
+                    "net": "",
+                    "name": "VIN",
+                    "spicePort": true
+                },
+                {
+                    "class": "Port",
+                    "x1": 557200.0,
+                    "y1": 254400.0,
+                    "x2": 560400.0,
+                    "y2": 258400.0,
+                    "layer": "M2",
+                    "net": "",
+                    "name": "VIP",
+                    "spicePort": true
+                },
+                {
+                    "class": "Port",
+                    "x1": 672800.0,
+                    "y1": 408400.0,
+                    "x2": 682400.0,
+                    "y2": 412400.0,
+                    "layer": "M2",
+                    "net": "",
+                    "name": "VOUT",
+                    "spicePort": true
+                },
+                {
+                    "class": "Port",
+                    "x1": 222800.0,
+                    "y1": 408400.0,
+                    "x2": 232400.0,
+                    "y2": 412400.0,
+                    "layer": "M2",
+                    "net": "",
+                    "name": "VOUT_N",
+                    "spicePort": true
+                }
+            ],
+            "useHalfHeight": false,
+            "alternateGroup": false,
+            "noPowerRoute": false
+        }
+    ]
+}
