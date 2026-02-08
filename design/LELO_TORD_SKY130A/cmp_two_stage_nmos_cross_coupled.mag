@@ -257,7 +257,7 @@ rect 4704 2883 5572 2915
 rect 5604 2883 5611 2915
 rect 4672 2880 4704 2883
 rect 5559 2877 5611 2883
-use JNWATR_NCH_4C5F0  xa8<0> ~/pro/aicex/ip/lelo_tord_sky130A/design/JNW_ATR_SKY130A
+use JNWATR_NCH_4C5F0  xa8<0> ../JNW_ATR_SKY130A
 timestamp 1770500839
 transform 1 0 2792 0 1 2364
 box -92 -64 668 464
@@ -317,7 +317,7 @@ use JNWATR_NCH_4C5F0  xc11
 timestamp 1770500839
 transform 1 0 6392 0 1 4064
 box -92 -64 668 464
-use JNWATR_PCH_4C5F0  xd2<0> ~/pro/aicex/ip/lelo_tord_sky130A/design/LELO_TORD_SKY130A/../JNW_ATR_SKY130A
+use JNWATR_PCH_4C5F0  xd2<0> ../LELO_TORD_SKY130A/../JNW_ATR_SKY130A
 timestamp 1770384003
 transform 1 0 1892 0 1 4864
 box -92 -64 668 464
@@ -397,7 +397,7 @@ use JNWATR_PCH_4C5F0  xd7<1>
 timestamp 1770384003
 transform 1 0 6392 0 1 5264
 box -92 -64 668 464
-use JNWTR_RPPO16  xr1 ~/pro/aicex/ip/lelo_tord_sky130A/design/LELO_TORD_SKY130A/../JNW_TR_SKY130A
+use JNWTR_RPPO16  xr1 ../JNW_TR_SKY130A
 timestamp 1770374940
 transform 0 1 -200 -1 0 5736
 box 0 0 2236 1720
