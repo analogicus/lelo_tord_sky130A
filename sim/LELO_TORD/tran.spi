@@ -4,8 +4,10 @@
 *----------------------------------------------------------------
 #ifdef Lay
 .include ../../../work/lpe/LELO_TORD_lpe.spi
+.param schematic_or_layout = 0
 #else
 .include ../../../work/xsch/LELO_TORD.spice
+.param schematic_or_layout = 1
 #endif
 
 *-----------------------------------------------------------------
@@ -48,21 +50,22 @@ set color0=white
 set color1=black
 unset askquit
 
-optran 0 0 0 1ns 10us 0
 
 echo begining transient analysis simulation
 
+optran 0 0 0 1ns 10us 0
 tran 1ns 10us 1ps
 write {cicname}.raw
 
 reset
 
-op
 
 echo beginning ac analysis simulation
 
+op
 ac dec 100 1Hz 100MegHz
 write {cicname}_ac.raw
+
 
 * echo beginning dc analysis simulation
 

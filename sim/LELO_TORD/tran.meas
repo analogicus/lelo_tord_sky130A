@@ -12,11 +12,6 @@ echo "MEAS_END"
 
 load {cicname}.raw
 
-* let v(vindrn) = v(xdut.x1.vindrn)
-* let v(vipdrn) = v(xdut.x1.vipdrn)
-* let v(vsrc) = v(xdut.x1.vsrc)
-* let v(vbias) = v(xdut.x1.vbias)
-
 echo writing transient analysis simulation results to file named {cicname}.out
 
 set wr_singlescale
@@ -26,7 +21,6 @@ option numdgt = 5
 wrdata {cicname}.out
 + v(vin) v(vip) v(vout)
 + v(vss) v(vdd)
-* + v(vindrn) v(vipdrn) v(vsrc) v(vbias)
 
 
 *
@@ -66,8 +60,9 @@ wrdata {cicname}_ac.out
 * option numdgt = 5
 
 * wrdata {cicname}_dc.out
-* + v(vin) v(vip) v(vout) v(vout_pmos)
+* + v(vin) v(vip) v(vout) v(vout_n)
 * + v(vss) v(vdd)
+* + v(vindrn) v(vipdrn) v(vsrc) v(vbias)
 
 *
 * Print system data usage

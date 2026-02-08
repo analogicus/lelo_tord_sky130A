@@ -13,8 +13,7 @@ legend_fontsize = font_size
 ticks_fontsize = font_size
 
 def main(name):
-  # Delete next line if you want to use python post processing
-  # return
+
   yamlfile = name + ".yaml"
 
   # Read result yaml file
@@ -39,9 +38,8 @@ def main(name):
   AVout = max(df["v(vout)"]) - min(df["v(vout)"])
   AVip = max(df["v(vip)"]) - min(df["v(vip)"])
   
-  print(f"AVout: {AVout} V, AVip: {AVip} V")
-  print(f"tran Gain: {AVout/AVip} V/V")
-  print(f"tran Gain: {20 * np.log10(AVout/AVip)} dB")
+  # print(f"AVout: {AVout} V, AVip: {AVip} V")
+  # print(f"tran Gain: {AVout/AVip} V/V ({20 * np.log10(AVout/AVip)} dB)")
 
   #
   # Plot transient simulation data saved in .out file
@@ -67,33 +65,34 @@ def main(name):
   # axs[1].set_ylim(bottom=0 - (max(df["v(vout)"]) * 0.05))
 
   fig.tight_layout()
-  fig.savefig(f"figures/{name.split('/')[-1]}.png", bbox_inches="tight", dpi=300)
+  fig.savefig(f"figures/{name.split('/')[-1].split('_')[-1]}_tran.png", bbox_inches="tight", dpi=300)
 
   # 
   # Plot internal voltage nodes during transient simulation
-  # 
+  #  
 
-  # fig_internal, axs_internal = plt.subplot_mosaic([["vindrn"], ["vipdrn"], ["vbias"], ["vsrc"]], figsize=(fig_width, fig_height), dpi=300) # , sharex=True)
-  
-  # axs_internal["vindrn"].plot(df["time"], df["v(vindrn)"], label="vindrn")
-  # axs_internal["vipdrn"].plot(df["time"], df["v(vipdrn)"], label="vipdrn")
-  # axs_internal["vbias"].plot(df["time"], df["v(vbias)"], label="vbias")
-  # axs_internal["vsrc"].plot(df["time"], df["v(vsrc)"], label="vsrc")
+  # if "Sch" in name:
+  #   fig_internal, axs_internal = plt.subplot_mosaic([["vindrn"], ["vipdrn"], ["vbias"], ["vsrc"]], figsize=(fig_width, fig_height), dpi=300) # , sharex=True)
+    
+  #   axs_internal["vindrn"].plot(df["time"], df["v(vindrn)"], label="vindrn")
+  #   axs_internal["vipdrn"].plot(df["time"], df["v(vipdrn)"], label="vipdrn")
+  #   axs_internal["vbias"].plot(df["time"], df["v(vbias)"], label="vbias")
+  #   axs_internal["vsrc"].plot(df["time"], df["v(vsrc)"], label="vsrc")
 
-  # for ax in axs_internal.values():
-  #   ax.tick_params(axis="both", labelsize=ticks_fontsize)
-  #   ax.legend(loc="best", fontsize=legend_fontsize)
-  #   ax.grid()
+  #   for ax in axs_internal.values():
+  #     ax.tick_params(axis="both", labelsize=ticks_fontsize)
+  #     ax.legend(loc="best", fontsize=legend_fontsize)
+  #     ax.grid()
 
-  # axs_internal["vindrn"].set_title(f"{name} - Internal Voltages", fontsize=title_fontsize, fontweight="bold")
-  # axs_internal["vindrn"].set_ylabel("Voltage (V)", fontsize=label_fontsize)
-  # axs_internal["vipdrn"].set_ylabel("Voltage (V)", fontsize=label_fontsize)
-  # axs_internal["vbias"].set_ylabel("Voltage (V)", fontsize=label_fontsize)
-  # axs_internal["vsrc"].set_ylabel("Voltage (V)", fontsize=label_fontsize)
-  # axs_internal["vsrc"].set_xlabel("Time (us)", fontsize=label_fontsize)
+  #   axs_internal["vindrn"].set_title(f"{name} - Internal Voltages", fontsize=title_fontsize, fontweight="bold")
+  #   axs_internal["vindrn"].set_ylabel("Voltage (V)", fontsize=label_fontsize)
+  #   axs_internal["vipdrn"].set_ylabel("Voltage (V)", fontsize=label_fontsize)
+  #   axs_internal["vbias"].set_ylabel("Voltage (V)", fontsize=label_fontsize)
+  #   axs_internal["vsrc"].set_ylabel("Voltage (V)", fontsize=label_fontsize)
+  #   axs_internal["vsrc"].set_xlabel("Time (us)", fontsize=label_fontsize)
 
-  # fig_internal.tight_layout()
-  # fig_internal.savefig(f"figures/{name.split('/')[-1]}_internal_voltages.png", bbox_inches="tight", dpi=300)
+  #   fig_internal.tight_layout()
+  #   fig_internal.savefig(f"figures/{name.split('/')[-1].split('_')[-1]}_internal_voltages.png", bbox_inches="tight", dpi=300)
 
   #
   # Parse AC simulation data saved in .out file
@@ -132,15 +131,16 @@ def main(name):
   ac_axs[0].set_ylabel("Voltage (V)", fontsize=label_fontsize)
   ac_axs[1].set_ylabel("Gain (V/V)", fontsize=label_fontsize)
   ac_axs[2].set_ylabel("Gain (dB)", fontsize=label_fontsize)
-  
+
   ac_fig.tight_layout()
-  ac_fig.savefig(f"figures/{name.split('/')[-1]}_ac.png", bbox_inches="tight", dpi=300)
+  ac_fig.savefig(f"figures/{name.split('/')[-1].split('_')[-1]}_ac.png", bbox_inches="tight", dpi=300)
 
   #
-  # Plot figures
+  # Plot figures only if process, temperature and voltage are all in the typical corner
   #  
 
-  plt.show()
+  if "GtKttTtVt" in name:
+    plt.show()
 
 
 
