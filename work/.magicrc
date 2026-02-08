@@ -17,7 +17,7 @@ addpath ../LELO_TORD_SKY130A
 # path reset
 
 # Add project libraries (ABSOLUTE PATHS)
-addpath /home/tordos/pro/aicex/ip/lelo_tord_sky130A/design/LELO_TORD_SKY130A
-addpath /home/tordos/pro/aicex/ip/lelo_tord_sky130A/design/JNW_TR_SKY130A
-addpath /home/tordos/pro/aicex/ip/lelo_tord_sky130A/design/LELO_ATR_SKY130A
-addpath /home/tordos/pro/aicex/ip/lelo_tord_sky130A/design/JNW_ATR_SKY130A
+# addpath /home/tordos/pro/aicex/ip/lelo_tord_sky130A/design/LELO_TORD_SKY130A
+# addpath /home/tordos/pro/aicex/ip/lelo_tord_sky130A/design/JNW_TR_SKY130A
+# addpath /home/tordos/pro/aicex/ip/lelo_tord_sky130A/design/LELO_ATR_SKY130A
+# addpath /home/tordos/pro/aicex/ip/lelo_tord_sky130A/design/JNW_ATR_SKY130A
