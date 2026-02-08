@@ -1,6 +1,6 @@
 magic
 tech sky130A
-timestamp 1770504968
+timestamp 1770587718
 << locali >>
 rect 2744 2544 2840 2584
 << metal1 >>
@@ -10,9 +10,9 @@ rect 6728 4084 6824 4124
 rect 2872 2544 2904 2584
 rect 5572 2544 5604 2584
 use cmp_two_stage_nmos_cross_coupled  x1 ../LELO_TORD_SKY130A
-timestamp 1770504890
+timestamp 1770505916
 transform 1 0 0 0 1 0
-box -200 -13 7060 5800
+box -200 2070 7060 5800
 << labels >>
 flabel locali s 2744 2544 2840 2584 0 FreeSans 200 0 0 0 VSS
 port 1 nsew ground bidirectional
