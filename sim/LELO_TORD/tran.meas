@@ -12,6 +12,8 @@ echo "MEAS_END"
 
 load {cicname}.raw
 
+meas tran vnbias find v(xdut.x1.vbias) at=9ns
+
 echo writing transient analysis simulation results to file named {cicname}.out
 
 set wr_singlescale

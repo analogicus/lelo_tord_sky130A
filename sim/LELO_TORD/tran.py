@@ -21,6 +21,8 @@ def main(name):
     obj = yaml.safe_load(fi)
 
   # Do something to parameters
+  if "Sch" in name:
+    print(obj)
 
   # Save new yaml file
   with open(yamlfile,"w") as fo:
@@ -64,8 +66,13 @@ def main(name):
 
   # axs[1].set_ylim(bottom=0 - (max(df["v(vout)"]) * 0.05))
 
+  if "mm" in name:
+    image_name = '_'.join(name.split('/')[-1].split('_')[-2:])
+  else:
+    image_name = name.split('/')[-1].split('_')[-1]
+
   fig.tight_layout()
-  fig.savefig(f"figures/{name.split('/')[-1].split('_')[-1]}_tran.png", bbox_inches="tight", dpi=300)
+  fig.savefig(f"figures/{image_name}_tran.png", bbox_inches="tight", dpi=300)
 
   # 
   # Plot internal voltage nodes during transient simulation
@@ -102,8 +109,8 @@ def main(name):
   ac_df = pd.read_csv(ac_outfile, sep="\s+")
 
   ac_df["frequency"] = ac_df["frequency"] * 1e-3 # in kHz
-  ac_df["gain"] = ac_df["vm(vout)"] / ac_df["vm(vip)"] # AC Gain ≈ V(out) / V(in)
-  ac_df["gain_db"] = 20 * np.log10(ac_df["gain"])
+  ac_df["gain_vv"] = ac_df["vm(vout)"] / ac_df["vm(vip)"] # AC Gain ≈ V(out) / V(in)
+  ac_df["gain_db"] = 20 * np.log10(ac_df["gain_vv"])
   ac_df["gain_db_alt"] = ac_df["vdb(vout)"] - ac_df["vdb(vip)"]
 
   #
@@ -116,7 +123,7 @@ def main(name):
   ac_axs[0].plot(ac_df["frequency"], ac_df["vm(vip)"], label=f"vip")
   ac_axs[0].plot(ac_df["frequency"], ac_df["vm(vin)"], label=f"vin")
   
-  ac_axs[1].plot(ac_df["frequency"], ac_df["gain"], label=f"gain at 1Hz: {ac_df['gain'].iloc[0]:.2f} V/V")
+  ac_axs[1].plot(ac_df["frequency"], ac_df["gain_vv"], label=f"gain at 1Hz: {ac_df['gain_vv'].iloc[0]:.2f} V/V")
   ac_axs[2].plot(ac_df["frequency"], ac_df["gain_db"], label=f"gain at 1Hz: {ac_df['gain_db'].iloc[0]:.2f} dB")
 
   for ax in ac_axs:
@@ -133,7 +140,7 @@ def main(name):
   ac_axs[2].set_ylabel("Gain (dB)", fontsize=label_fontsize)
 
   ac_fig.tight_layout()
-  ac_fig.savefig(f"figures/{name.split('/')[-1].split('_')[-1]}_ac.png", bbox_inches="tight", dpi=300)
+  ac_fig.savefig(f"figures/{image_name}_ac.png", bbox_inches="tight", dpi=300)
 
   #
   # Plot figures only if process, temperature and voltage are all in the typical corner
@@ -141,6 +148,7 @@ def main(name):
 
   if "GtKttTtVt" in name:
     plt.show()
-
+  else:
+    plt.close("all")
 
 
