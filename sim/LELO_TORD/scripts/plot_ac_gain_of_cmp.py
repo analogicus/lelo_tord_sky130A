@@ -9,12 +9,12 @@ fig_height = 3
 font_size = 8
 title_fontsize = font_size + 2
 label_fontsize = font_size
-legend_fontsize = 3
+legend_fontsize = font_size - 2
 ticks_fontsize = font_size
 
 fend = ".out" # File extension for output files, can be changed to ".yaml", ".csv" or others if needed
-view = "Sch" # Sets schematic as default view if noen is specified
-# view = "Lay" # Sets layout as default view if noen is specified
+# view = "Sch" # Sets schematic as default view if noen is specified
+view = "Lay" # Sets layout as default view if noen is specified
 
 mc_runs = 30
 num_of_bins = 5
@@ -28,9 +28,11 @@ if len(args) == 0 or all(arg not in ["typical", "etc", "mc"] for arg in args):
 for arg in args:
     if arg in ["sch"]:
         view = "Sch"
+        args.pop(args.index(arg))
         print(f"View set to: {view}")
     elif arg in ["lay"]:
         view = "Lay"
+        args.pop(args.index(arg))
         print(f"View set to: {view}")
 
 files = []
@@ -46,7 +48,7 @@ if "mc" in args:
         files.append(f"output_tran/tran_{view}GtKttmmTtVt_{n}")
 
 fig, axs = plt.subplot_mosaic([["gain_vv"], ["gain_db"]], figsize=(fig_width, fig_height), dpi=300)
-fig.suptitle(f"Gain - AC sims: {', '.join(args)}", fontsize=title_fontsize)
+fig.suptitle(f"Gain AC sim: {view} {', '.join(args)}", fontsize=title_fontsize)
 
 gains_vv = dict()
 gains_db = dict()
@@ -94,7 +96,7 @@ for ax in axs.values():
     ax.set_xscale('log')
 
     if ax is axs["gain_vv"]:
-        ax.legend(loc="best", fontsize=legend_fontsize, bbox_to_anchor=(1.05, 1.05), ncol=2)
+        ax.legend(loc="best", fontsize=legend_fontsize, bbox_to_anchor=(1.05, 1.05), ncol=1)
     elif ax is not axs["gain_db"]:
         ax.legend(loc="best", fontsize=legend_fontsize)
 
@@ -104,7 +106,7 @@ axs["gain_db"].set_xlabel("Frequency (kHz)", fontsize=label_fontsize)
 
 
 fig_hist, ax_hist= plt.subplots(1, 1, figsize=(fig_width, fig_height), dpi=300)
-ax_hist.set_title(f"Gain histogram: {', '.join(args)}")
+ax_hist.set_title(f"Gain histogram: {view} {', '.join(args)}")
 
 if "mm" in fname:
     label_add_on =  f"MC runs={mc_runs}, bins={num_of_bins}"

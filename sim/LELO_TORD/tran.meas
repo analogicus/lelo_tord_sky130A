@@ -1,41 +1,106 @@
 * Measure LELO_TORD
 .control
 
-
 *
-* Transient analysis simulated data parsing
-*
-
-load {cicname}.raw
-
-echo writing transient analysis simulation results to file named {cicname}.out
-
-set wr_singlescale
-set wr_vecnames
-option numdgt = 5
-
-wrdata {cicname}.out
-+ v(vin) v(vip) v(vout)
-+ v(vss) v(vdd)
-
-
-*
-* AC analysis simulated data parsing
+* I have todifferenciate bewteen layout simulations and schematic simulations, as I was 
+* only able to name the internal nodes of the schematic with recognizable names so that 
+* I could write their voltages to out-files in order to post-process the data with python
 *
 
-load {cicname}_ac.raw
+* If the first value of circuit_view.raw is 8 => the simulations was done on layout exptracted parasitics
+* If the first value if circuit_view.raw is 9 => the simulations was done on schematic generated netlist
+load circuit_view.raw
+meas tran schematic_or_layout find sch_or_lay at=1e-11      ; = 8 for layout, = 9 for schematic 
 
-echo writing ac analysis simulation results to file named {cicname}_ac.out
+if $&schematic_or_layout > 8
 
-set wr_singlescale
-set wr_vecnames
-option numdgt = 5
+    *
+    * Transient analysis of schematic
+    *
 
-wrdata {cicname}_ac.out
-+ vm(vin) vr(vin) vi(vin) vp(vin)
-+ vm(vip) vr(vip) vi(vip) vp(vip) vdb(vip)
-+ vm(vout) vr(vout) vi(vout) vp(vout) vdb(vout)
-+ v(vss) v(vdd)
+    echo "Layout view detected as simulated circuit view"
+    load {cicname}.raw
+
+    let v(vindrn) = v(xdut.x1.vindrn)
+    let v(vipdrn) = v(xdut.x1.vipdrn)
+    let v(vsrc) = v(xdut.x1.vsrc)
+    let v(vbias) = v(xdut.x1.vbias)
+
+    echo writing transient analysis simulation results to file named {cicname}.out
+
+    set wr_singlescale
+    set wr_vecnames
+    option numdgt = 5
+
+    wrdata {cicname}.out
+    + v(vin) v(vip) v(vout)
+    + v(vss) v(vdd)
+    + v(vindrn) v(vipdrn) v(vbias) v(vsrc)
+
+
+    *
+    * AC analysis of schematic
+    *
+
+    load {cicname}_ac.raw
+
+    let v(vindrn) = v(xdut.x1.vindrn)
+    let v(vipdrn) = v(xdut.x1.vipdrn)
+    let v(vsrc) = v(xdut.x1.vsrc)
+    let v(vbias) = v(xdut.x1.vbias)
+
+    echo writing ac analysis simulation results to file named {cicname}_ac.out
+
+    set wr_singlescale
+    set wr_vecnames
+    option numdgt = 5
+
+    wrdata {cicname}_ac.out
+    + vm(vin) vr(vin) vi(vin) vp(vin)
+    + vm(vip) vr(vip) vi(vip) vp(vip) vdb(vip)
+    + vm(vout) vr(vout) vi(vout) vp(vout) vdb(vout)
+    + v(vss) v(vdd)
+    * + v(vindrn) v(vipdrn) v(vbias) v(vsrc)
+
+else
+
+    *
+    * Transient analysis of layout
+    *
+
+    echo "Layout view detected as simulated circuit view"
+    load {cicname}.raw
+
+    echo writing transient analysis simulation results to file named {cicname}.out
+
+    set wr_singlescale
+    set wr_vecnames
+    option numdgt = 5
+
+    wrdata {cicname}.out
+    + v(vin) v(vip) v(vout)
+    + v(vss) v(vdd)
+
+
+    *
+    * AC analysis of layout
+    *
+
+    load {cicname}_ac.raw
+
+    echo writing ac analysis simulation results to file named {cicname}_ac.out
+
+    set wr_singlescale
+    set wr_vecnames
+    option numdgt = 5
+
+    wrdata {cicname}_ac.out
+    + vm(vin) vr(vin) vi(vin) vp(vin)
+    + vm(vip) vr(vip) vi(vip) vp(vip) vdb(vip)
+    + vm(vout) vr(vout) vi(vout) vp(vout) vdb(vout)
+    + v(vss) v(vdd)
+
+end
 
 
 *
@@ -60,35 +125,12 @@ wrdata {cicname}_ac.out
 * + v(vss) v(vdd)
 * + v(vindrn) v(vipdrn) v(vsrc) v(vbias)
 
-#
-# measure internal voltages in comparator (only valid when schematic is simulated, and)
-#
-
-echo "MEAS_START"
-
-load circuit_view.raw
-
-meas tran schematic_or_layout find sch_or_lay at=1e-11
-
-if $&schematic_or_layout > 8
-    echo "Schematic"
-
-    meas tran vindrn find v(xdut.x1.vindrn) at=1e-11
-    meas tran vipdrn find v(xdut.x1.vipdrn) at=1e-11
-    meas tran vbias find v(xdut.x1.vbias) at=1e-11
-    meas tran vsrc find v(xdut.x1.vsrc) at=1e-11
-
-
-end
-
-echo "MEAS_END"
-
 
 *
 * Print system data usage
 *
 
-* rusage
+rusage
 
 .endc
 
