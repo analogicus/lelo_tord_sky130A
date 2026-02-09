@@ -13,8 +13,8 @@ legend_fontsize = 3
 ticks_fontsize = font_size
 
 fend = ".out" # File extension for output files, can be changed to ".yaml", ".csv" or others if needed
-# view = "Sch" # Sets schematic as default view if noen is specified
-view = "Lay" # Sets layout as default view if noen is specified
+view = "Sch" # Sets schematic as default view if noen is specified
+# view = "Lay" # Sets layout as default view if noen is specified
 
 mc_runs = 30
 num_of_bins = 5

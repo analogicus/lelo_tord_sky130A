@@ -1,18 +1,12 @@
 * Measure LELO_TORD
 .control
 
-echo "MEAS_START"
-
-echo "MEAS_END"
-
 
 *
 * Transient analysis simulated data parsing
 *
 
 load {cicname}.raw
-
-meas tran vnbias find v(xdut.x1.vbias) at=9ns
 
 echo writing transient analysis simulation results to file named {cicname}.out
 
@@ -66,11 +60,35 @@ wrdata {cicname}_ac.out
 * + v(vss) v(vdd)
 * + v(vindrn) v(vipdrn) v(vsrc) v(vbias)
 
+#
+# measure internal voltages in comparator (only valid when schematic is simulated, and)
+#
+
+echo "MEAS_START"
+
+load circuit_view.raw
+
+meas tran schematic_or_layout find sch_or_lay at=1e-11
+
+if $&schematic_or_layout > 8
+    echo "Schematic"
+
+    meas tran vindrn find v(xdut.x1.vindrn) at=1e-11
+    meas tran vipdrn find v(xdut.x1.vipdrn) at=1e-11
+    meas tran vbias find v(xdut.x1.vbias) at=1e-11
+    meas tran vsrc find v(xdut.x1.vsrc) at=1e-11
+
+
+end
+
+echo "MEAS_END"
+
+
 *
 * Print system data usage
 *
 
-rusage
+* rusage
 
 .endc
 
