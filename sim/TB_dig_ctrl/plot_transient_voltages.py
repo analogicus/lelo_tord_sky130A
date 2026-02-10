@@ -17,7 +17,7 @@ elif "typical" in args:
     for corner in ["tt"]:
         for temperature in [27]: # Celsius (degree C)
             for frequency in [0.5, 1, 2]: # Mega Hertz (MHz)
-                for dutycycle in [30, 40, 50, 60, 70]: # Percent (%)
+                for dutycycle in [20, 30, 40, 50, 60, 70, 80]: # Percent (%)
                     for voltage in [1.8]: # Volt (V)
                         Vx = "Vl" if voltage == 1.7 else "Vt" if voltage == 1.8 else "Vh" if voltage == 1.9 else "Oops"
                         files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_temperature{temperature}celsius_frequency{frequency}mhz_dutycycle{dutycycle}percent_vdd{voltage}volt.out")
@@ -33,7 +33,7 @@ elif "all" in args:
     for corner in ["tt", "ss", "ff", "sf", "fs"]:
         for temperature in [-40, -20, 0, 27, 60, 90, 125]: # Celsius (degree C)
             for frequency in [0.5, 1, 2]: # Mega Hertz (MHz)
-                for dutycycle in [30, 40, 50, 60, 70]: # Percent (%)
+                for dutycycle in [20, 30, 40, 50, 60, 70, 80]: # Percent (%)
                     for voltage in [1.7, 1.8, 1.9]: # Volt (V)
                         Vx = "Vl" if voltage == 1.7 else "Vt" if voltage == 1.8 else "Vh" if voltage == 1.9 else "Oops"
                         files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_temperature{temperature}celsius_frequency{frequency}mhz_dutycycle{dutycycle}percent_vdd{voltage}volt.out")
@@ -41,7 +41,7 @@ elif "etc" in args:
     for corner in ["ss", "ff", "sf", "fs"]:
         for temperature in [-40, -20, 0, 27, 60, 90, 125]: # Celsius (degree C)
             for frequency in [0.5, 1, 2]: # Mega Hertz (MHz)
-                for dutycycle in [30, 40, 50, 60, 70]: # Percent (%)
+                for dutycycle in [20, 30, 40, 50, 60, 70, 80]: # Percent (%)
                     for voltage in [1.7, 1.9]: # Volt (V)
                         Vx = "Vl" if voltage == 1.7 else "Vt" if voltage == 1.8 else "Vh" if voltage == 1.9 else "Oops"
                         files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_temperature{temperature}celsius_frequency{frequency}mhz_dutycycle{dutycycle}percent_vdd{voltage}volt.out")
@@ -94,46 +94,45 @@ for file in files:
     df['time'] = df['time'] * 1e9 # in ns
     df['diff'] = df['v(v1)']-df['v(v2)']
 
-    fig, axs = plt.subplots(4, 1, figsize=(fig_width, fig_height), sharex=True, dpi=300)
-    ax_iout = axs[0].twinx()
+    fig, axs = plt.subplots(5, 1, figsize=(fig_width, fig_height), sharex=True, dpi=300)
+    # ax_iout = axs[0].twinx()
 
-    ax_iout.plot(df["time"], df["i(v.xdut.v1)"]*1e6, label="iout", color="tab:orange") # in uA
-    axs[0].plot(df["time"], df["v(vout)"], label="vout", color="tab:blue") # in V
+    # ax_iout.plot(df["time"], df["i(v.xdut.v1)"]*1e6, label="iout", color="tab:orange") # in uA
+    # axs[0].plot(df["time"], df["v(vout)"], label="vout", color="tab:blue") # in V
 
-    axs[1].plot(df["time"], df["v(v1)"]-df["v(v2)"], label="v1-v2", linestyle="solid")
-    axs[1].plot(df["time"], df["v(v1a)"]-df["v(v2a)"], label="v1a-v2a", linestyle="dashed")
-    axs[1].plot(df["time"], df["v(v1b)"]-df["v(v2b)"], label="v1b-v2b", linestyle="dotted")
+    axs[0].plot(df["time"], df["v(v1)"]-df["v(v2)"], label="v1-v2", linestyle="solid")
+    axs[0].plot(df["time"], df["v(v1a)"]-df["v(v2a)"], label="v1a-v2a", linestyle="dashed")
+    axs[0].plot(df["time"], df["v(v1b)"]-df["v(v2b)"], label="v1b-v2b", linestyle="dotted")
     
-    axs[2].plot(df["time"], df["v(v1)"], label="v1")
-    # axs[2].plot(df["time"], df["v(v1a)"], label="v1a")
-    # axs[2].plot(df["time"], df["v(v1b)"], label="v1b")
-    axs[2].plot(df["time"], df["v(v2)"], label="v2")
-    # axs[2].plot(df["time"], df["v(v2a)"], label="v2a")
-    # axs[2].plot(df["time"], df["v(v2b)"], label="v2b")
-    # axs[2].plot(df["time"], df["v(v2c)"], label="v2c")
+    axs[1].plot(df["time"], df["v(v1)"], label="v1")
+    # axs[1].plot(df["time"], df["v(v1a)"], label="v1a")
+    # axs[1].plot(df["time"], df["v(v1b)"], label="v1b")
+    axs[1].plot(df["time"], df["v(v2)"], label="v2")
+    # axs[1].plot(df["time"], df["v(v2a)"], label="v2a")
+    # axs[1].plot(df["time"], df["v(v2b)"], label="v2b")
+    # axs[1].plot(df["time"], df["v(v2c)"], label="v2c")
 
-    axs[3].plot(df["time"], df["v(bt)"], label="bt", linestyle="solid")
-    axs[3].plot(df["time"], df["v(x1.ctl)"], label="ctl")
-    axs[3].plot(df["time"], df["v(slp)"], label="slp")
-    axs[3].plot(df["time"], df["v(cmp)"], label="cmp")
+    axs[2].plot(df["time"], df["v(bt)"], label="bt", linestyle="solid")
+    axs[2].plot(df["time"], df["v(x1.ctl)"], label="ctl")
+    axs[2].plot(df["time"], df["v(slp)"], label="slp")
+    axs[2].plot(df["time"], df["v(cmp)"], label="cmp")
+    axs[3].plot(df["time"], df["v(dec_b)"], label="dec_b")
+    axs[4].plot(df["time"], df["v(clk)"], label="clk")
+    axs[4].plot(df["time"], df["v(reset)"], label="reset")
+    # axs[5].plot(df["time"], df["v(flag)"], label="flag")
 
     for ax in axs:
         ax.set_ylabel("Voltage (V)", fontsize=label_fontsize)
         ax.tick_params(axis="both", labelsize=ticks_fontsize)
         ax.grid()
-
-    axs[0].legend(loc="upper left", fontsize=legend_fontsize)
-    axs[1].legend(loc="upper left", fontsize=legend_fontsize)
-    axs[2].legend(loc="upper left", fontsize=legend_fontsize)
-    axs[3].legend(loc="upper left", fontsize=legend_fontsize)
-
-    ax_iout.set_ylabel("Current (uA)", fontsize=label_fontsize)
-    ax_iout.legend(loc="lower right", fontsize=legend_fontsize)
-    ax_iout.tick_params(axis='both', labelsize=ticks_fontsize)
-
-    axs[-1].set_xlabel("Time (ns)", fontsize=label_fontsize)
+        ax.legend(loc="upper left", fontsize=legend_fontsize)
 
     axs[0].set_title(f"{process_corner} corner, {voltage_supply} V, {circuit_temperature} °C, {clock_frequency} MHz, {duty_cycle} %", fontsize=title_fontsize, fontweight='bold')
+    axs[-1].set_xlabel("Time (ns)", fontsize=label_fontsize)
+
+    # ax_iout.set_ylabel("Current (uA)", fontsize=label_fontsize)
+    # ax_iout.legend(loc="lower right", fontsize=legend_fontsize)
+    # ax_iout.tick_params(axis='both', labelsize=ticks_fontsize)
 
     fig.tight_layout()
     fig.savefig(f"figures/{file.split('/')[-1].split('.out')[0]}.png", dpi=300, bbox_inches="tight")

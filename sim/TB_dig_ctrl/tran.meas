@@ -1,7 +1,7 @@
 * Measure TB_dig_ctrl
 .control
 
-load {cicname}.raw
+* load {cicname}.raw
 
 echo "MEAS_START"
 

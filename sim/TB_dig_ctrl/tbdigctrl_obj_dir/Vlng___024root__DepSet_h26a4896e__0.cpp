@@ -12,14 +12,18 @@ void Vlng___024root___eval_act(Vlng___024root* vlSelf) {
 }
 
 void Vlng___024root___nba_sequent__TOP__0(Vlng___024root* vlSelf);
+void Vlng___024root___nba_sequent__TOP__1(Vlng___024root* vlSelf);
 
 void Vlng___024root___eval_nba(Vlng___024root* vlSelf) {
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vlng___024root___eval_nba\n"); );
     Vlng__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
-    if ((1ULL & vlSelfRef.__VnbaTriggered.word(0U))) {
+    if ((2ULL & vlSelfRef.__VnbaTriggered.word(0U))) {
         Vlng___024root___nba_sequent__TOP__0(vlSelf);
+    }
+    if ((1ULL & vlSelfRef.__VnbaTriggered.word(0U))) {
+        Vlng___024root___nba_sequent__TOP__1(vlSelf);
     }
 }
 
@@ -28,9 +32,16 @@ VL_INLINE_OPT void Vlng___024root___nba_sequent__TOP__0(Vlng___024root* vlSelf) 
     Vlng__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
-    vlSelfRef.b = ((IData)(vlSelfRef.TB_dig_ctrl__DOT__rst)
+    vlSelfRef.b = ((IData)(vlSelfRef.tbdigctrl__DOT__rst)
                     ? 0U : (0x1fU & ((IData)(1U) + (IData)(vlSelfRef.b))));
-    vlSelfRef.TB_dig_ctrl__DOT__rst = vlSelfRef.reset;
+}
+
+VL_INLINE_OPT void Vlng___024root___nba_sequent__TOP__1(Vlng___024root* vlSelf) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vlng___024root___nba_sequent__TOP__1\n"); );
+    Vlng__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
+    auto& vlSelfRef = std::ref(*vlSelf).get();
+    // Body
+    vlSelfRef.tbdigctrl__DOT__rst = vlSelfRef.reset;
 }
 
 void Vlng___024root___eval_triggers__act(Vlng___024root* vlSelf);
@@ -40,7 +51,7 @@ bool Vlng___024root___eval_phase__act(Vlng___024root* vlSelf) {
     Vlng__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Init
-    VlTriggerVec<1> __VpreTriggered;
+    VlTriggerVec<2> __VpreTriggered;
     CData/*0:0*/ __VactExecute;
     // Body
     Vlng___024root___eval_triggers__act(vlSelf);
@@ -90,7 +101,7 @@ void Vlng___024root___eval(Vlng___024root* vlSelf) {
 #ifdef VL_DEBUG
             Vlng___024root___dump_triggers__nba(vlSelf);
 #endif
-            VL_FATAL_MT("../../rtl/TB_dig_ctrl.v", 1, "", "NBA region did not converge.");
+            VL_FATAL_MT("../../rtl/tbdigctrl.v", 1, "", "NBA region did not converge.");
         }
         __VnbaIterCount = ((IData)(1U) + __VnbaIterCount);
         __VnbaContinue = 0U;
@@ -101,7 +112,7 @@ void Vlng___024root___eval(Vlng___024root* vlSelf) {
 #ifdef VL_DEBUG
                 Vlng___024root___dump_triggers__act(vlSelf);
 #endif
-                VL_FATAL_MT("../../rtl/TB_dig_ctrl.v", 1, "", "Active region did not converge.");
+                VL_FATAL_MT("../../rtl/tbdigctrl.v", 1, "", "Active region did not converge.");
             }
             vlSelfRef.__VactIterCount = ((IData)(1U) 
                                          + vlSelfRef.__VactIterCount);
@@ -124,6 +135,8 @@ void Vlng___024root___eval_debug_assertions(Vlng___024root* vlSelf) {
     // Body
     if (VL_UNLIKELY(((vlSelfRef.clk & 0xfeU)))) {
         Verilated::overWidthError("clk");}
+    if (VL_UNLIKELY(((vlSelfRef.cmp & 0xfeU)))) {
+        Verilated::overWidthError("cmp");}
     if (VL_UNLIKELY(((vlSelfRef.reset & 0xfeU)))) {
         Verilated::overWidthError("reset");}
 }

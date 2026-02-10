@@ -1,5 +1,7 @@
-*Automatic generated instance fron ../../tech/scripts/genxdut TB_dig_ctrl
-adut [clk
+*Automatic generated instance fron ../../tech/scripts/genxdut tbdigctrl
+*.include ../../rtl/tbdigctrl.v
+adut_tbdigctrl [clk
++ cmp
 + reset
 + ]
 + [b.4
@@ -7,21 +9,22 @@ adut [clk
 + b.2
 + b.1
 + b.0
-+ ] null dut
-.model dut d_cosim simulation="../TB_dig_ctrl.so" delay=10p
++ ] null dut_tbdigctrl
+.model dut_tbdigctrl d_cosim simulation="../tbdigctrl.so" delay=10p
 
 * Inputs
-Rsvi0 clk 0 1G
-Rsvi1 reset 0 1G
+Rsvi_tbdigctrl0 clk 0 1G
+Rsvi_tbdigctrl1 cmp 0 1G
+Rsvi_tbdigctrl2 reset 0 1G
 
 * Outputs
-Rsvi2 b.4 0 1G
-Rsvi3 b.3 0 1G
-Rsvi4 b.2 0 1G
-Rsvi5 b.1 0 1G
-Rsvi6 b.0 0 1G
+Rsvi_tbdigctrl3 b.4 0 1G
+Rsvi_tbdigctrl4 b.3 0 1G
+Rsvi_tbdigctrl5 b.2 0 1G
+Rsvi_tbdigctrl6 b.1 0 1G
+Rsvi_tbdigctrl7 b.0 0 1G
 
-E_STATE_b dec_b 0 value={( 0 
+E_STATE_tbdigctrlb dec_b 0 value={( 0 
 + + 16*v(b.4)/AVDD
 + + 8*v(b.3)/AVDD
 + + 4*v(b.2)/AVDD

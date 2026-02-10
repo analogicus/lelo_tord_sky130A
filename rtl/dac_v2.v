@@ -1,3 +1,7 @@
+//
+// vlnggen does not work with file names that include underscores!!!
+//
+
 module dac_v2(
     input wire clk,
     input wire rst,
@@ -38,3 +42,8 @@ module dac_v2(
     end
 
 endmodule
+
+//
+// vlnggen does not work with file names that include underscores!!!
+//
+
