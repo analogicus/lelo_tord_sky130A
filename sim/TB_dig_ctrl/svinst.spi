@@ -30,6 +30,6 @@ E_STATE_tbdigctrlb dec_b 0 value={( 0
 + + 4*v(b.2)/AVDD
 + + 2*v(b.1)/AVDD
 + + 1*v(b.0)/AVDD
-+)/1000}
++)}
 .save v(dec_b)
 
