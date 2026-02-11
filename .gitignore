@@ -17,3 +17,4 @@ work/gds
 work/drc
 work/xsch
 *.pickle
+*_obj_dir

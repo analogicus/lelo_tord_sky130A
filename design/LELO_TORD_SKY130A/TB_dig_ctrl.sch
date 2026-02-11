@@ -146,9 +146,9 @@ N 1060 720 1100 720 {lab=B9}
 N 1060 840 1100 840 {lab=B15}
 N 1060 820 1100 820 {lab=B14}
 N 1060 800 1100 800 {lab=B13}
-N 2820 630 2860 630 {lab=V1}
-N 2820 650 2860 650 {lab=V2}
-N 3160 610 3200 610 {lab=#net1}
+N 2820 630 2860 630 {lab=#net1}
+N 2820 650 2860 650 {lab=V1}
+N 3160 610 3200 610 {lab=CMP}
 N 2860 670 2860 710 {lab=VSS}
 N 2860 570 2860 610 {lab=VDD}
 C {devices/ipin.sym} 1060 560 0 0 {name=p17 lab=B1}
@@ -267,8 +267,8 @@ C {devices/ipin.sym} 1060 800 0 0 {name=p76 lab=B13}
 C {devices/ipin.sym} 1060 820 0 0 {name=p77 lab=B14}
 C {devices/ipin.sym} 1060 840 0 0 {name=p7 lab=B15}
 C {devices/lab_wire.sym} 2860 600 0 0 {name=p78 sig_type=std_logic lab=VDD}
-C {devices/lab_wire.sym} 2850 630 0 0 {name=p79 sig_type=std_logic lab=V1}
-C {devices/lab_wire.sym} 2850 650 0 0 {name=p81 sig_type=std_logic lab=V2}
+C {devices/lab_wire.sym} 2850 650 0 0 {name=p79 sig_type=std_logic lab=V1}
+C {devices/lab_wire.sym} 2850 630 0 0 {name=p81 sig_type=std_logic lab=V2}
 C {devices/lab_wire.sym} 2860 680 2 1 {name=p82 sig_type=std_logic lab=VSS}
 C {devices/opin.sym} 3200 610 2 1 {name=p83 lab=CMP}
 C {LELO_TORD_SKY130A/cmp.sym} 3010 640 0 0 {name=x2}

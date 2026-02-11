@@ -27,74 +27,75 @@
 .csparam circuit_temperature_csparam = {circuit_temperature}
 
 * Time averaging finetuning duty cycle is given in percent (%)
-.param finetuning_dutycycle = 40
+.param finetuning_dutycycle = 50
 .csparam finetuning_dutycycle_csparam = {finetuning_dutycycle}
 
-.param ratio = finetuning_dutycycle/100
+.param ratio = {finetuning_dutycycle/100}
 
-* finetuning_frequency = 2 MHz => finetuning_periode = 0.5 us
-* finetuning_frequency = 1 MHz => finetuning_periode = 1.0 us
+* finetuning_frequency = 2.0 MHz => finetuning_periode = 0.5 us
+* finetuning_frequency = 1.0 MHz => finetuning_periode = 1.0 us
+* finetuning_frequency = 0.5 MHz => finetuning_periode = 2.0 us
 .param finetuning_frequency = 1
 .csparam finetuning_frequency_csparam = {finetuning_frequency}
 
-.param finetuning_frequency_MHz = finetuning_frequency*1MegHz
-.param finetuning_periode = 1/finetuning_frequency_MHz
-.param TD = finetuning_periode
-.param TR = finetuning_periode/100
+.param finetuning_frequency_mhz = {finetuning_frequency * 1MegHz}
+.param finetuning_periode = {1/finetuning_frequency_mhz}
+.param TD = 0us
+.param TR = {finetuning_periode/100}
 .param TF = TR
 .param PW = finetuning_periode
 .param PER = finetuning_periode
 
 * Stepping Current out of DAC
-.param step_start = 20us
+.param step_start = 30us
 .param step_length = 5.0us
 
-.csparam simulation_length_csparam = 70us
-* .csparam simulation_length_csparam = {step_start + 7*step_length}
+* .csparam simulation_length_csparam = 70us
+.csparam simulation_length_csparam = {step_start + 3*step_length}
 
 *-----------------------------------------------------------------
 * FORCE
 *-----------------------------------------------------------------
-VSS  VSS  0    dc  0V
-VDD  VDD  VSS  dc  {AVDD}
-VSLP SLP  VSS  pwl 0.02us {AVDD} 0.03us 0V
+VSS  VSS 0   dc 0V
+VDD  VDD VSS dc {AVDD}
+VSLP SLP VSS dc 0V
 
-VCLK CLK VSS PULSE(0V {AVDD} {TD} {TR} {TF} {PW*ratio} {PER})
-VRST RESET VSS PWL 30us 0V 31us {AVDD} 42us {AVDD} 42.5us 0V
+* VRST RESET VSS pwl 30us 0V 31us {AVDD} 42us {AVDD} 42.5us 0V
+VRST RESET VSS dc 0V
+VCLK CLK   VSS pulse(0V {AVDD} {TD} {TR} {TF} {PW*ratio} {PER})
+VBT  BT    VSS pulse(0V {AVDD} {TD} {TR} {TF} {PW*ratio} {PER})
 
-* VB1  B1   VSS  dc pwl {step_start + 1*step_length}  0V {step_start + 1*step_length  + 0.01us} {AVDD}
-* VB2  B2   VSS  dc pwl {step_start + 2*step_length}  0V {step_start + 2*step_length  + 0.01us} {AVDD}
-* VB3  B3   VSS  dc pwl {step_start + 3*step_length}  0V {step_start + 3*step_length  + 0.01us} {AVDD}
-VB4  B4   VSS  dc pwl {step_start + 4*step_length}  0V {step_start + 4*step_length  + 0.01us} {AVDD}
-VB5  B5   VSS  dc pwl {step_start + 5*step_length}  0V {step_start + 5*step_length  + 0.01us} {AVDD}
-VB6  B6   VSS  dc pwl {step_start + 6*step_length}  0V {step_start + 6*step_length  + 0.01us} {AVDD}
-* VB7  B7   VSS  dc pwl {step_start + 7*step_length}  0V {step_start + 7*step_length  + 0.01us} {AVDD}
-* VB8  B8   VSS  dc pwl {step_start + 8*step_length}  0V {step_start + 8*step_length  + 0.01us} {AVDD}
-* VB9  B9   VSS  dc pwl {step_start + 9*step_length}  0V {step_start + 9*step_length  + 0.01us} {AVDD}
-* VB10 B10  VSS  dc pwl {step_start + 10*step_length} 0V {step_start + 10*step_length + 0.01us} {AVDD}
-* VB11 B11  VSS  dc pwl {step_start + 11*step_length} 0V {step_start + 11*step_length + 0.01us} {AVDD}
-* VB12 B12  VSS  dc pwl {step_start + 12*step_length} 0V {step_start + 12*step_length + 0.01us} {AVDD}
-* VB13 B13  VSS  dc pwl {step_start + 13*step_length} 0V {step_start + 13*step_length + 0.01us} {AVDD}
-* VB14 B14  VSS  dc pwl {step_start + 14*step_length} 0V {step_start + 14*step_length + 0.01us} {AVDD}
-* VB15 B15  VSS  dc pwl {step_start + 15*step_length} 0V {step_start + 15*step_length + 0.01us} {AVDD}
+* VB1  B1   VSS  dc pwl {step_start + 0*step_length}  0V {step_start + 0*step_length  + 0.01us} {AVDD}
+* VB2  B2   VSS  dc pwl {step_start + 1*step_length}  0V {step_start + 1*step_length  + 0.01us} {AVDD}
+* VB3  B3   VSS  dc pwl {step_start + 2*step_length}  0V {step_start + 2*step_length  + 0.01us} {AVDD}
+VB4  B4   VSS  dc pwl {step_start + 0*step_length}  0V {step_start + 0*step_length  + 0.01us} {AVDD}
+VB5  B5   VSS  dc pwl {step_start + 1*step_length}  0V {step_start + 1*step_length  + 0.01us} {AVDD}
+VB6  B6   VSS  dc pwl {step_start + 2*step_length}  0V {step_start + 2*step_length  + 0.01us} {AVDD}
+* VB7  B7   VSS  dc pwl {step_start + 6*step_length}  0V {step_start + 6*step_length  + 0.01us} {AVDD}
+* VB8  B8   VSS  dc pwl {step_start + 7*step_length}  0V {step_start + 7*step_length  + 0.01us} {AVDD}
+* VB9  B9   VSS  dc pwl {step_start + 8*step_length}  0V {step_start + 8*step_length  + 0.01us} {AVDD}
+* VB10 B10  VSS  dc pwl {step_start + 9*step_length}  0V {step_start + 9*step_length + 0.01us}  {AVDD}
+* VB11 B11  VSS  dc pwl {step_start + 10*step_length} 0V {step_start + 10*step_length + 0.01us} {AVDD}
+* VB12 B12  VSS  dc pwl {step_start + 11*step_length} 0V {step_start + 11*step_length + 0.01us} {AVDD}
+* VB13 B13  VSS  dc pwl {step_start + 12*step_length} 0V {step_start + 12*step_length + 0.01us} {AVDD}
+* VB14 B14  VSS  dc pwl {step_start + 13*step_length} 0V {step_start + 13*step_length + 0.01us} {AVDD}
+* VB15 B15  VSS  dc pwl {step_start + 14*step_length} 0V {step_start + 14*step_length + 0.01us} {AVDD}
 
-VB1  B1   VSS  dc {AVDD}
-VB2  B2   VSS  dc {AVDD}
-VB3  B3   VSS  dc {AVDD}
-* VB4  B4   VSS  dc {AVDD}
-* VB5  B5   VSS  dc {AVDD}
-* VB6  B6   VSS  dc 0V
-VB7  B7   VSS  dc 0V
-VB8  B8   VSS  dc 0V
-VB9  B9   VSS  dc 0V
-VB10  B10   VSS  dc 0V
-VB11  B11   VSS  dc 0V
-VB12  B12   VSS  dc 0V
-VB13  B13   VSS  dc 0V
-VB14  B14   VSS  dc 0V
-VB15  B15   VSS  dc 0V
-
-VBT  BT   VSS  PULSE(0V {AVDD} {TD} {TR} {TF} {PW*ratio} {PER})
+VB1	 B1  VSS dc {AVDD}
+VB2  B2  VSS dc {AVDD}
+VB3  B3  VSS dc {AVDD}
+* VB4  B4  VSS dc {AVDD}
+* VB5  B5  VSS dc {AVDD}
+* VB6  B6  VSS dc 0V
+VB7  B7  VSS dc 0V
+VB8  B8  VSS dc 0V
+VB9  B9  VSS dc 0V
+VB10 B10 VSS dc 0V
+VB11 B11 VSS dc 0V
+VB12 B12 VSS dc 0V
+VB13 B13 VSS dc 0V
+VB14 B14 VSS dc 0V
+VB15 B15 VSS dc 0V
 
 VSWBRANCH1 SWBRN1 VSS dc {AVDD}
 VSWBRANCH2 SWBRN2 VSS dc {AVDD}
@@ -174,15 +175,17 @@ set clkper = {1/$clkfreq}
 set dcycle = {$&finetuning_dutycycle_csparam}
 set simlen = {$&simulation_length_csparam}
 
-echo $vsupply
-echo $cirtemp
-echo $clkfreq
-echo $clkper
-echo $dcycle
-echo $simlen
+echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+echo "CSPARAMS:
+echo "supply voltage: {$vsupply} V"
+echo "circuit temperature: {$cirtemp} C"
+echo "clock frequency {$clkfreq} MHz => clock periode {$clkper} s"
+echo "duty cycle {$dcycle} %"
+echo "simulation length: {$simlen} s"
+echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
 
-* temperature options: -40 -20 0 27 60 90 125
-* dutycycle options:  10 20 30 40 50 60 70 80 90
+* temperature options to choose from: -40 -20 0 27 60 90 125
+* dutycycle options to choose from: 10 20 30 40 50 60 70 80 90
 
 set fend = .raw
 foreach cirtemp 27
@@ -194,19 +197,20 @@ foreach cirtemp 27
             reset
 
 			* if your netlist uses derived params like ratio from dutycycle,
-			* they will re-evaluate automatically as long as they are expressions:
+			* they will re-evaluate automatically as long as they are expressions,
+			* for example:
 			*   .param clkper = {1/clkfreq}
 			*   .param ratio = {dcycle/100}
 
 			let clkper = {1/$clkfreq}
 
 			echo ------------------------------------------------------------
-			echo VDD: $vsupply V
-			echo Temperature: $cirtemp C
-			echo Finetuning frequency: $clkfreq MHz, Period: $clkper us
-			echo Duty cycle: $dcycle %
-			echo Corner: {cicname}
-			echo Simulation lenght: $simlen seconds.
+			echo "view and pvt corner: {cicname}"
+			echo "supply voltage: {$vsupply} V"
+			echo "circuit temperature: {$cirtemp} C"
+			echo "clock frequency {$clkfreq} MHz => clock periode {$clkper} s"
+			echo "duty cycle {$dcycle} %"
+			echo "simulation length: {$simlen} s"
 			echo ------------------------------------------------------------
 
 			*- Override the default digital output bridge.
