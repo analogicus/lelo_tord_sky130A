@@ -11,7 +11,7 @@
 *-----------------------------------------------------------------
 * OPTIONS
 *-----------------------------------------------------------------
-.option TNOM=27 GMIN=1e-15 reltol=1e-3
+.option TNOM=27 GMIN=1e-10 reltol=2e-3
 
 *-----------------------------------------------------------------
 * PARAMETERS
@@ -40,18 +40,28 @@
 
 .param finetuning_frequency_mhz = {finetuning_frequency * 1MegHz}
 .param finetuning_periode = {1/finetuning_frequency_mhz}
+.csparam finetuning_periode_csparam = {finetuning_periode}
+
 .param TD = 0us
 .param TR = {finetuning_periode/100}
 .param TF = TR
-.param PW = finetuning_periode
 .param PER = finetuning_periode
+.param PW = {PER * ratio}
 
-* Stepping Current out of DAC
-.param step_start = 30us
-.param step_length = 5.0us
+.param clock_frequency = 10
+.csparam clock_frequency_csparam = {clock_frequency}
 
-* .csparam simulation_length_csparam = 70us
-.csparam simulation_length_csparam = {step_start + 3*step_length}
+.param clock_frequency_mhz = {clock_frequency * 1MegHz}
+.param clock_periode = {1/clock_frequency_mhz}
+.csparam clock_periode_csparam = {clock_periode}
+
+.param TDCLK = 0us
+.param TRCLK = {clock_periode/100}
+.param TFCLK = TRCLK
+.param PERCLK = clock_periode
+.param PWCLK = {PERCLK * ratio}
+
+.csparam simulation_length_csparam = 250us
 
 *-----------------------------------------------------------------
 * FORCE
@@ -60,53 +70,65 @@ VSS  VSS 0   dc 0V
 VDD  VDD VSS dc {AVDD}
 VSLP SLP VSS dc 0V
 
-* VRST RESET VSS pwl 30us 0V 31us {AVDD} 42us {AVDD} 42.5us 0V
-VRST RESET VSS dc 0V
-VCLK CLK   VSS pulse(0V {AVDD} {TD} {TR} {TF} {PW*ratio} {PER})
-VBT  BT    VSS pulse(0V {AVDD} {TD} {TR} {TF} {PW*ratio} {PER})
+VCLK CLK VSS pulse(0V {AVDD} {TDCLK} {TRCLK} {TFCLK} {PWCLK} {PERCLK})
+VRST RST VSS pwl 1.0us 0V 1.1us {AVDD} 2.9us {AVDD} 3.0us 0V 25.1us 0V 25.2us {AVDD} 25.4us {AVDD} 25.5us 0V 
 
-* VB1  B1   VSS  dc pwl {step_start + 0*step_length}  0V {step_start + 0*step_length  + 0.01us} {AVDD}
-* VB2  B2   VSS  dc pwl {step_start + 1*step_length}  0V {step_start + 1*step_length  + 0.01us} {AVDD}
-* VB3  B3   VSS  dc pwl {step_start + 2*step_length}  0V {step_start + 2*step_length  + 0.01us} {AVDD}
-VB4  B4   VSS  dc pwl {step_start + 0*step_length}  0V {step_start + 0*step_length  + 0.01us} {AVDD}
-VB5  B5   VSS  dc pwl {step_start + 1*step_length}  0V {step_start + 1*step_length  + 0.01us} {AVDD}
-VB6  B6   VSS  dc pwl {step_start + 2*step_length}  0V {step_start + 2*step_length  + 0.01us} {AVDD}
-* VB7  B7   VSS  dc pwl {step_start + 6*step_length}  0V {step_start + 6*step_length  + 0.01us} {AVDD}
-* VB8  B8   VSS  dc pwl {step_start + 7*step_length}  0V {step_start + 7*step_length  + 0.01us} {AVDD}
-* VB9  B9   VSS  dc pwl {step_start + 8*step_length}  0V {step_start + 8*step_length  + 0.01us} {AVDD}
-* VB10 B10  VSS  dc pwl {step_start + 9*step_length}  0V {step_start + 9*step_length + 0.01us}  {AVDD}
-* VB11 B11  VSS  dc pwl {step_start + 10*step_length} 0V {step_start + 10*step_length + 0.01us} {AVDD}
-* VB12 B12  VSS  dc pwl {step_start + 11*step_length} 0V {step_start + 11*step_length + 0.01us} {AVDD}
-* VB13 B13  VSS  dc pwl {step_start + 12*step_length} 0V {step_start + 12*step_length + 0.01us} {AVDD}
-* VB14 B14  VSS  dc pwl {step_start + 13*step_length} 0V {step_start + 13*step_length + 0.01us} {AVDD}
-* VB15 B15  VSS  dc pwl {step_start + 14*step_length} 0V {step_start + 14*step_length + 0.01us} {AVDD}
+* VBT  BT  VSS pulse(0V {AVDD} {TD} {TR} {TF} {PW} {PER})
+Vconn0 finetuning_signal BT dc 0V
 
-VB1	 B1  VSS dc {AVDD}
-VB2  B2  VSS dc {AVDD}
-VB3  B3  VSS dc {AVDD}
-* VB4  B4  VSS dc {AVDD}
-* VB5  B5  VSS dc {AVDD}
-* VB6  B6  VSS dc 0V
-VB7  B7  VSS dc 0V
-VB8  B8  VSS dc 0V
-VB9  B9  VSS dc 0V
-VB10 B10 VSS dc 0V
-VB11 B11 VSS dc 0V
-VB12 B12 VSS dc 0V
-VB13 B13 VSS dc 0V
-VB14 B14 VSS dc 0V
-VB15 B15 VSS dc 0V
+Vconn1 coarse_step1.0 B1 dc 0V
+Vconn2 coarse_step1.1 B2 dc 0V
+Vconn3 coarse_step1.2 B3 dc 0V
+Vconn4 coarse_step1.3 B4 dc 0V
+Vconn5 coarse_step1.4 B5 dc 0V
+Vconn6 coarse_step1.5 B6 dc 0V
+Vconn7 coarse_step1.6 B7 dc 0V
+Vconn8 coarse_step1.7 B8 dc 0V
+Vconn9 coarse_step2.0 B9 dc 0V
+Vcon10 coarse_step2.1 B10 dc 0V
+Vcon11 coarse_step2.2 B11 dc 0V
+Vcon12 coarse_step2.3 B12 dc 0V
+Vcon13 coarse_step2.4 B13 dc 0V
+Vcon14 coarse_step2.5 B14 dc 0V
+Vcon15 coarse_step2.6 B15 dc 0V
 
-VSWBRANCH1 SWBRN1 VSS dc {AVDD}
-VSWBRANCH2 SWBRN2 VSS dc {AVDD}
-VSWBRANCH3 SWBRN3 VSS dc {AVDD}
+* Rconn1 VDD B1 1m 
+* Rconn2 VDD B2 1m
+* Rconn3 VDD B3 1m
+* Rconn4 VDD B4 1m
+* Rconn5 VDD B5 1m
+* Rconn6 VDD B6 1m
+* Rconn7 VSS B7 1m
+* Rconn8 VSS B8 1m
+* Rconn9 VSS B9 1m
+* Rcon10 VSS B10 1m
+* Rcon11 VSS B11 1m
+* Rcon12 VSS B12 1m
+* Rcon13 VSS B13 1m
+* Rcon14 VSS B14 1m
+* Rcon15 VSS B15 1m
 
-VSWBGR1 SWBGR1 VSS dc 0V
-VSWBGR2 SWBGR2 VSS dc 0V
+* VSWBRANCH1 SWBRN1 VSS dc {AVDD}
+* VSWBRANCH2 SWBRN2 VSS dc {AVDD}
+* VSWBRANCH3 SWBRN3 VSS dc {AVDD}
 
-VSWCAP1 SWCAP1 VSS dc {AVDD}
-VSWCAP2 SWCAP2 VSS dc {AVDD}
-VSWCAP3 SWCAP3 VSS dc {AVDD}
+RSWBRANCH1 SWBRN1 VDD 1m
+RSWBRANCH2 SWBRN2 VDD 1m
+RSWBRANCH3 SWBRN3 VDD 1m
+
+* VSWBGR1 SWBGR1 VSS dc 0V
+* VSWBGR2 SWBGR2 VSS dc 0V
+
+RSWBGR1 SWBGR1 VSS 1m
+RSWBGR2 SWBGR2 VSS 1m
+
+* VSWCAP1 SWCAP1 VSS dc {AVDD}
+* VSWCAP2 SWCAP2 VSS dc {AVDD}
+* VSWCAP3 SWCAP3 VSS dc {AVDD}
+
+RSWCAP1 SWCAP1 VDD 1m
+RSWCAP2 SWCAP2 VDD 1m
+RSWCAP3 SWCAP3 VDD 1m
 
 * VSWDRAIN1 SWDRN1 VSS dc 0V
 * VSWDRAIN2 SWDRN2 VSS dc 0V
@@ -122,20 +144,13 @@ RSWDRAIN3 SWDRN3 VSS 1m
 .include ../xdut.spi
 .include ../svinst.spi
 
-* Translate names (Do not use the letter t or any number to replace x in VBx, as they have already most likely been used)
-VBa b.0 b<0> dc 0
-VBb b.1 b<1> dc 0
-VBc b.2 b<2> dc 0
-VBd b.3 b<3> dc 0
-VBe b.4 b<4> dc 0
-
 *----------------------------------------------------------------
 * PROBE
 *----------------------------------------------------------------
 * .save all
 
 .save 
-+ v(clk) v(reset)
++ v(clk) v(rst)
 + v(b1) v(b2) v(b3)  v(b4)  v(b5)  v(b6)  v(b7)
 + v(b8) v(b9) v(b10) v(b11) v(b12) v(b13) v(b14) v(b15) 
 + v(bt)
@@ -170,7 +185,9 @@ unset askquit
 
 set vsupply = {$&voltage_supply_csparam}
 set cirtemp = {$&circuit_temperature_csparam}
-set clkfreq = {$&finetuning_frequency_csparam}
+set finfreq = {$&finetuning_frequency_csparam}
+set clkfreq = {$&clock_frequency_csparam}
+set finper = {1/$finfreq}
 set clkper = {1/$clkfreq}
 set dcycle = {$&finetuning_dutycycle_csparam}
 set simlen = {$&simulation_length_csparam}
@@ -179,35 +196,40 @@ echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
 echo "CSPARAMS:
 echo "supply voltage: {$vsupply} V"
 echo "circuit temperature: {$cirtemp} C"
+echo "finetuning frequency {$finfreq} MHz => finetuning periode {$finper} s"
 echo "clock frequency {$clkfreq} MHz => clock periode {$clkper} s"
 echo "duty cycle {$dcycle} %"
 echo "simulation length: {$simlen} s"
 echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+
 
 * temperature options to choose from: -40 -20 0 27 60 90 125
 * dutycycle options to choose from: 10 20 30 40 50 60 70 80 90
 
 set fend = .raw
 foreach cirtemp 27
-	foreach clkfreq 1
+	foreach finfreq 1
 		foreach dcycle 50
-			option temp = $cirtemp
-			alterparam finetuning_frequency = {$clkfreq}
+			alterparam finetuning_frequency = {$finfreq}
 			alterparam finetuning_dutycycle = {$dcycle}
-            reset
+            
+			reset
+			
+			option temp = $cirtemp
 
 			* if your netlist uses derived params like ratio from dutycycle,
 			* they will re-evaluate automatically as long as they are expressions,
 			* for example:
-			*   .param clkper = {1/clkfreq}
+			*   .param finper = {1/finfreq}
 			*   .param ratio = {dcycle/100}
 
-			let clkper = {1/$clkfreq}
+			let finper = {1/$finfreq}
 
 			echo ------------------------------------------------------------
 			echo "view and pvt corner: {cicname}"
 			echo "supply voltage: {$vsupply} V"
 			echo "circuit temperature: {$cirtemp} C"
+			echo "finetuning frequency {$finfreq} MHz => finetuning periode {$finper} s"
 			echo "clock frequency {$clkfreq} MHz => clock periode {$clkper} s"
 			echo "duty cycle {$dcycle} %"
 			echo "simulation length: {$simlen} s"
@@ -219,16 +241,16 @@ foreach cirtemp 27
 				+   "auto_bridge%d [ %s ] [ %s ] auto_dac" )
 
 			optran 0 0 0 1ns 1us 0
-			tran 1ns {$simlen} 1ps
+			tran 1ns {$simlen}
 			* tran 1ns 100us 1ps
 
-			write {cicname}_temperature{$cirtemp}celsius_frequency{$clkfreq}mhz_dutycycle{$dcycle}percent_vdd{$vsupply}volt{$fend}
+			write {cicname}_temperature{$cirtemp}celsius_frequency{$finfreq}mhz_dutycycle{$dcycle}percent_vdd{$vsupply}volt{$fend}
 
 			*
 			* This last part used to be in tran.meas, but was moved to ensure all simulations are written to .out-files
 			*
 
-			load {cicname}_temperature{$cirtemp}celsius_frequency{$clkfreq}mhz_dutycycle{$dcycle}percent_vdd{$vsupply}volt{$fend}
+			load {cicname}_temperature{$cirtemp}celsius_frequency{$finfreq}mhz_dutycycle{$dcycle}percent_vdd{$vsupply}volt{$fend}
 
 			let v(x1.vt) = v(xdut.x1.vt)
 			let v(x1.ctl) = v(xdut.x1.ctl)
@@ -250,8 +272,8 @@ foreach cirtemp 27
 			set wr_singlescale
 			set wr_vecnames
 			option numdgt = 5
-			echo writing to {cicname}_temperature{$cirtemp}celsius_frequency{$clkfreq}mhz_dutycycle{$dcycle}percent_vdd{$vsupply}volt{$fend}
-			wrdata {cicname}_temperature{$cirtemp}celsius_frequency{$clkfreq}mhz_dutycycle{$dcycle}percent_vdd{$vsupply}volt{$fend}
+			echo writing to {cicname}_temperature{$cirtemp}celsius_frequency{$finfreq}mhz_dutycycle{$dcycle}percent_vdd{$vsupply}volt{$fend}
+			wrdata {cicname}_temperature{$cirtemp}celsius_frequency{$finfreq}mhz_dutycycle{$dcycle}percent_vdd{$vsupply}volt{$fend}
             + v(b1) v(b2) v(b3) v(b4) v(b5) v(b6) v(b7) 
             + v(b8) v(b9) v(b10) v(b11) v(b12) v(b13) v(b14) v(b15) 
             + v(bt)
@@ -259,7 +281,7 @@ foreach cirtemp 27
 			+ v(src1) v(src2) v(src3)
 			+ v(vref) v(vout)
             + v(cmp) 
-			+ v(clk) v(reset)
+			+ v(clk) v(rst)
 			+ v(v1)
 			+ v(v1a) v(v1b) 
 			+ v(v2) 
@@ -268,8 +290,17 @@ foreach cirtemp 27
 			+ v(vss) v(vdd) v(slp)
 			+ i(v.xdut.v1)
 			+ i(vdd) i(vss)
-			+ v(dec_b)
-			* + v(flag)
+			+ v(cmp_sync1)
+			+ v(cmp_sync2)
+			+ v(cmp_rising)
+			+ v(dec_timeout_counter)
+			+ v(dec_coarse_step_counter)
+			+ v(dec_coarse_step1)
+			+ v(dec_coarse_step2)
+			+ v(dec_finetuning_duty_cycle)
+			+ v(dec_finetuning_periode)
+			+ v(dec_finetuning_counter)
+			+ v(finetuning_signal)
 		end
 	end
 end

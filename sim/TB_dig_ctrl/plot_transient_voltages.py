@@ -61,14 +61,14 @@ if xx == "ttmm" and len(args) > 6:
 
 fig_width = 3
 fig_height = 4
-font_size = 8
+font_size = 6
 title_fontsize = font_size
 label_fontsize = font_size
 legend_fontsize = font_size
 ticks_fontsize = font_size
 
 for file in files:
-    print(f"Plotting Vout transient results from file: {file}")
+    # print(f"Plotting Vout transient results from file: {file}")
 
     circuit_temperature = float(file.split("temperature")[-1].split("celsius")[0]) # in Celsius degree
     clock_frequency = float(file.split("frequency")[-1].split("mhz")[0]) # in Mega Hertz
@@ -77,25 +77,32 @@ for file in files:
     voltage_supply = float(file.split("vdd")[-1].split("volt")[0]) # in Volt
     process_corner = "Typical" if "tt" in file else "Slow-Slow" if "ss" in file else "Slow-Fast" if "sf" in file else "Fast-Slow" if "fs" in file else "Fast-Fast" if "ff" in file else "Oops, something is wrong!"
 
-    print(f"Circuit temperature: {circuit_temperature} Celsius degree.")
-    print(f"Clock frequency of finetuning signal: {clock_frequency} Mega Hertz, and clock periode is: {clock_periode} micro seconds.")
-    print(f"Duty cycle of fine tuning signal: {duty_cycle} %.")
-    print(f"Supply voltage (VDD): {voltage_supply} Volt.")
-    print(f"Circuit process corners: {process_corner}.")
+    # print(f"Circuit temperature: {circuit_temperature} Celsius degree.")
+    # print(f"Clock frequency of finetuning signal: {clock_frequency} Mega Hertz, and clock periode is: {clock_periode} micro seconds.")
+    # print(f"Duty cycle of fine tuning signal: {duty_cycle} %.")
+    # print(f"Supply voltage (VDD): {voltage_supply} Volt.")
+    # print(f"Circuit process corners: {process_corner}.")
 
     df = pd.read_csv(file, sep="\s+")
 
     # print(f"Data columns: {df.columns.tolist()}")
     # print(f"Dataframe shape: {df.shape}")
-    print(f"Dataframe head:\n{df.head()}")
+    # print(f"Dataframe head:\n{df.head()}")    
     # print(f"Dataframe tail:\n{df.tail()}")
 
     df['time'] = df['time'] * 1e9 # in ns
     df['diff'] = df['v(v1)']-df['v(v2)']
 
-    fig, axs = plt.subplots(5, 1, figsize=(fig_width, fig_height), sharex=True, dpi=300)
-    # ax_iout = axs[0].twinx()
+    # if df['v(dec_b)'].max() < 4:
+    #     print(f"Skipping plot for file {file} because dec_b counts less than 4V.")
+    #     continue    
+    # else:
+    #     print(f"Plotting results from: {file}")
 
+
+    fig, axs = plt.subplots(4, 1, figsize=(fig_width, fig_height), sharex=True, dpi=300)
+
+    # ax_iout = axs[0].twinx()
     # ax_iout.plot(df["time"], df["i(v.xdut.v1)"]*1e6, label="iout", color="tab:orange") # in uA
     # axs[0].plot(df["time"], df["v(vout)"], label="vout", color="tab:blue") # in V
 
@@ -111,20 +118,25 @@ for file in files:
     # axs[1].plot(df["time"], df["v(v2b)"], label="v2b")
     # axs[1].plot(df["time"], df["v(v2c)"], label="v2c")
 
-    axs[2].plot(df["time"], df["v(bt)"], label="bt", linestyle="solid")
+    axs[2].plot(df["time"], df["v(clk)"], label="clk")
+    axs[2].plot(df["time"], df["v(bt)"], label="bt")
     axs[2].plot(df["time"], df["v(x1.ctl)"], label="ctl")
-    axs[2].plot(df["time"], df["v(slp)"], label="slp")
+    # axs[2].plot(df["time"], df["v(slp)"], label="slp")
     axs[2].plot(df["time"], df["v(cmp)"], label="cmp")
-    axs[3].plot(df["time"], df["v(dec_b)"], label="dec_b")
-    axs[4].plot(df["time"], df["v(clk)"], label="clk")
-    axs[4].plot(df["time"], df["v(reset)"], label="reset")
-    # axs[5].plot(df["time"], df["v(flag)"], label="flag")
+    axs[2].plot(df["time"], df["v(rst)"], label="rst")
+    # axs[2].plot(df["time"], df["v(timeout)"], label="timeout")
+    axs[3].plot(df["time"], df["v(dec_timeout_counter)"], label="timeout_counter")
+    axs[3].plot(df["time"], df["v(dec_coarse_step_counter)"], label="coarse_step_counter")
+    # axs[3].plot(df["time"], df["v(dec_coarse_step1)"], label="coarse_step1")
+    # axs[3].plot(df["time"], df["v(dec_coarse_step2)"], label="coarse_step2")
+    axs[3].plot(df["time"], df["v(dec_finetuning_counter)"], label="finetuning_counter")
+    axs[3].plot(df["time"], df["v(dec_finetuning_duty_cycle)"], label="finetuning_duty_cycle")
 
     for ax in axs:
         ax.set_ylabel("Voltage (V)", fontsize=label_fontsize)
         ax.tick_params(axis="both", labelsize=ticks_fontsize)
         ax.grid()
-        ax.legend(loc="upper left", fontsize=legend_fontsize)
+        ax.legend(loc="upper left", ncol=2, fontsize=legend_fontsize)
 
     axs[0].set_title(f"{process_corner} corner, {voltage_supply} V, {circuit_temperature} °C, {clock_frequency} MHz, {duty_cycle} %", fontsize=title_fontsize, fontweight='bold')
     axs[-1].set_xlabel("Time (ns)", fontsize=label_fontsize)
@@ -135,5 +147,70 @@ for file in files:
 
     fig.tight_layout()
     fig.savefig(f"figures/{file.split('/')[-1].split('.out')[0]}.png", dpi=300, bbox_inches="tight")
+
+    # fig_2, axs_2 = plt.subplots(6, 1, figsize=(fig_width, fig_height), sharex=True, dpi=300)
+    
+    # axs_2[0].plot(df["time"], df["v(bt)"], label="v(bt)")
+    # axs_2[1].plot(df["time"], df["v(clk)"], label="v(clk)")
+    # axs_2[2].plot(df["time"], df["v(cmp)"], label="v(cmp)")
+    # axs_2[3].plot(df["time"], df["v(cmp_sync1)"], label="v(cmp_sync1)")
+    # axs_2[4].plot(df["time"], df["v(cmp_sync2)"], label="v(cmp_sync2)")
+    # axs_2[5].plot(df["time"], df["v(cmp_rising)"], label="v(cmp_rising)")
+
+    # for i, ax in enumerate(axs_2):
+    #     ax.set_ylabel("Voltage (V)", fontsize=label_fontsize)
+    #     ax.tick_params(axis="both", labelsize=ticks_fontsize)
+    #     ax.grid()
+    #     ax.legend(loc="best", fontsize=legend_fontsize)
+
+    # axs_2[-1].set_xlabel("Time (ns)", fontsize=label_fontsize)
+    # fig_2.tight_layout()
+
+    # fig_3, axs_3 = plt.subplots(8, 2, figsize=(fig_width, fig_height), sharex=True, dpi=300)
+    
+    # axs_3[0, 0].plot(df["time"], df["v(b1)"], label="v(b1)")
+    # axs_3[1, 0].plot(df["time"], df["v(b2)"], label="v(b2)")
+    # axs_3[2, 0].plot(df["time"], df["v(b3)"], label="v(b3)")
+    # axs_3[3, 0].plot(df["time"], df["v(b4)"], label="v(b4)")
+    # axs_3[4, 0].plot(df["time"], df["v(b5)"], label="v(b5)")
+    # axs_3[5, 0].plot(df["time"], df["v(b6)"], label="v(b6)")
+    # axs_3[6, 0].plot(df["time"], df["v(b7)"], label="v(b7)")
+    # axs_3[7, 0].plot(df["time"], df["v(b8)"], label="v(b8)")
+    # axs_3[0, 1].plot(df["time"], df["v(b9)"], label="v(b9)")
+    # axs_3[1, 1].plot(df["time"], df["v(b10)"], label="v(b10)")
+    # axs_3[2, 1].plot(df["time"], df["v(b11)"], label="v(b11)")
+    # axs_3[3, 1].plot(df["time"], df["v(b12)"], label="v(b12)")
+    # axs_3[4, 1].plot(df["time"], df["v(b13)"], label="v(b13)")
+    # axs_3[5, 1].plot(df["time"], df["v(b14)"], label="v(b14)")
+    # axs_3[6, 1].plot(df["time"], df["v(b15)"], label="v(b15)")
+    # axs_3[7, 1].plot(df["time"], df["v(dec_coarse_step1)"], label="v(dec_coarse_step1)")
+    # axs_3[7, 1].plot(df["time"], df["v(dec_coarse_step2)"], label="v(dec_coarse_step2)")
+
+    # for i, ax in enumerate(axs_3.flat):
+    #     ax.set_ylabel("Voltage (V)", fontsize=label_fontsize)
+    #     ax.tick_params(axis="both", labelsize=ticks_fontsize)
+    #     ax.grid()
+    #     ax.legend(loc="best", fontsize=legend_fontsize)
+
+    # # axs_3[-1].set_xlabel("Time (ns)", fontsize=label_fontsize)
+    # fig_3.tight_layout()
+
+    fig_4, axs_4 = plt.subplots(4, 1, figsize=(fig_width, fig_height), sharex=True, dpi=300)
+    
+    axs_4[0].plot(df["time"], df["v(clk)"], label="v(clk)")
+    axs_4[1].plot(df["time"], df["v(finetuning_signal)"], label="v(finetuning_signal)")
+    axs_4[2].plot(df["time"], df["v(dec_finetuning_counter)"], label="v(dec_finetuning_counter)")
+    axs_4[3].plot(df["time"], df["v(dec_finetuning_duty_cycle)"], label="v(dec_finetuning_duty_cycle)")
+    axs_4[3].plot(df["time"], df["v(dec_finetuning_periode)"], label="v(dec_finetuning_periode)")
+    axs_4[3].plot(df["time"], df["v(dec_coarse_step_counter)"], label="v(dec_coarse_step_counter)")
+
+    for i, ax in enumerate(axs_4):
+        ax.set_ylabel("Voltage (V)", fontsize=label_fontsize)
+        ax.tick_params(axis="both", labelsize=ticks_fontsize)
+        ax.grid()
+        ax.legend(loc="best", fontsize=legend_fontsize)
+
+    axs_4[-1].set_xlabel("Time (ns)", fontsize=label_fontsize)
+    fig_4.tight_layout()
 
 plt.show()
