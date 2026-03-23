@@ -99,7 +99,6 @@ for file in files:
     # else:
     #     print(f"Plotting results from: {file}")
 
-
     fig, axs = plt.subplots(4, 1, figsize=(fig_width, fig_height), sharex=True, dpi=300)
 
     # ax_iout = axs[0].twinx()
@@ -117,6 +116,7 @@ for file in files:
     # axs[1].plot(df["time"], df["v(v2a)"], label="v2a")
     # axs[1].plot(df["time"], df["v(v2b)"], label="v2b")
     # axs[1].plot(df["time"], df["v(v2c)"], label="v2c")
+    axs[1].plot(df["time"], df["v(vout)"], label="vout")
 
     axs[2].plot(df["time"], df["v(clk)"], label="clk")
     axs[2].plot(df["time"], df["v(bt)"], label="bt")
@@ -126,10 +126,10 @@ for file in files:
     axs[2].plot(df["time"], df["v(rst)"], label="rst")
     # axs[2].plot(df["time"], df["v(timeout)"], label="timeout")
     axs[3].plot(df["time"], df["v(dec_timeout_counter)"], label="timeout_counter")
+    axs[3].plot(df["time"], df["v(dec_finetuning_counter)"], label="finetuning_counter")
     axs[3].plot(df["time"], df["v(dec_coarse_step_counter)"], label="coarse_step_counter")
     # axs[3].plot(df["time"], df["v(dec_coarse_step1)"], label="coarse_step1")
     # axs[3].plot(df["time"], df["v(dec_coarse_step2)"], label="coarse_step2")
-    axs[3].plot(df["time"], df["v(dec_finetuning_counter)"], label="finetuning_counter")
     axs[3].plot(df["time"], df["v(dec_finetuning_duty_cycle)"], label="finetuning_duty_cycle")
 
     for ax in axs:

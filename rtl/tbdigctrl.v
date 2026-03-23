@@ -1,8 +1,8 @@
 module tbdigctrl #(
     parameter DAC_WIDTH                     = 15, // DAC control resolution
     parameter TIMEOUT_LIMIT                 = 50,
-    parameter INITIAL_COARSE_STEP_COUNT     = 2,   // initial coarse DAC step
-    parameter INITIAL_FINETUNING_DUTY_CYCLE = 7,  // finetunig pulse length in tens if percent (5=50%)
+    parameter INITIAL_COARSE_STEP_COUNT     = 1,   // initial coarse DAC step
+    parameter INITIAL_FINETUNING_DUTY_CYCLE = 3,  // finetunig pulse length in tens if percent (5=50%)
     parameter INITIAL_FINETUNING_PERIODE    = 10  // finetuning periode lenght
 )(
     input  logic       clk, // 10 MHz clock
@@ -21,8 +21,18 @@ module tbdigctrl #(
     output logic [7:0] finetuning_duty_cycle, // sets duty cycle of finetuning signal in number of clock cycles
     output logic [7:0] finetuning_periode,    // sets periode (and thus frequency) of finetuning signal in number of clock cycles
     output logic [7:0] finetuning_counter, 
-    output logic       finetuning_signal
+    output logic       finetuning_signal,
+
+    output logic [3:0] coarse_step_counter_saved,
+    output logic [7:0] finetuning_duty_cycle_saved,
+    output logic [7:0] finetuning_periode_saved
 );
+
+    initial begin
+        coarse_step_counter_saved   = INITIAL_COARSE_STEP_COUNT;
+        finetuning_duty_cycle_saved = INITIAL_FINETUNING_DUTY_CYCLE;
+        finetuning_periode_saved    = INITIAL_FINETUNING_PERIODE;
+    end
 
     always_ff @(posedge clk) begin
         cmp_sync1  <= cmp;
@@ -47,12 +57,14 @@ module tbdigctrl #(
     always_ff @(posedge clk or posedge rst) begin
         if (rst) begin
             timeout_counter       <= 0;
-            coarse_step_counter   <= INITIAL_COARSE_STEP_COUNT;
-            finetuning_duty_cycle <= INITIAL_FINETUNING_DUTY_CYCLE;
-            finetuning_periode    <= INITIAL_FINETUNING_PERIODE;
+            coarse_step_counter   <= coarse_step_counter_saved;
+            finetuning_duty_cycle <= finetuning_duty_cycle_saved;
+            finetuning_periode    <= finetuning_periode_saved;
         end 
         else if (cmp_rising) begin
             timeout_counter <= 0;
+            coarse_step_counter_saved <= coarse_step_counter;
+            finetuning_duty_cycle_saved <= finetuning_duty_cycle;
         end 
         else if (timeout_counter == TIMEOUT_LIMIT - 1) begin  
             timeout_counter <= 0;

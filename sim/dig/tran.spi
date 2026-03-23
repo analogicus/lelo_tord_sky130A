@@ -1,11 +1,11 @@
-* TB_SUN_TR_SKY130NM/TB_NCM
+*TB_SUN_TR_SKY130NM/TB_NCM
 *----------------------------------------------------------------
 * Include
 *----------------------------------------------------------------
 #ifdef Lay
-.include ../../../work/lpe/TB_dig_ctrl_lpe.spi
+.include ../../../work/lpe/dig_lpe.spi
 #else
-.include ../../../work/xsch/TB_dig_ctrl.spice
+.include ../../../work/xsch/dig.spice
 #endif
 
 *-----------------------------------------------------------------
@@ -61,7 +61,7 @@
 .param PERCLK = clock_periode
 .param PWCLK = {PERCLK * ratio}
 
-.csparam simulation_length_csparam = 250us
+.csparam simulation_length_csparam = 2000us
 
 *-----------------------------------------------------------------
 * FORCE
@@ -72,9 +72,9 @@ VSLP SLP VSS dc 0V
 
 VCLK CLK VSS pulse(0V {AVDD} {TDCLK} {TRCLK} {TFCLK} {PWCLK} {PERCLK})
 VRST RST VSS pwl 
-+ 1.0us 0V 1.1us {AVDD} 2.9us {AVDD} 3.0us 0V 
++ 1.0us 0V 1.1us {AVDD} 9.9us {AVDD} 10.0us 0V 
 + 25.1us 0V 25.2us {AVDD} 25.4us {AVDD} 25.5us 0V 
-+ 205.1us 0V 205.2us {AVDD} 215.4us {AVDD} 215.5us 0V 
+* + 275.1us 0V 275.2us {AVDD} 285.4us {AVDD} 285.5us 0V 
 
 * VBT  BT  VSS pulse(0V {AVDD} {TD} {TR} {TF} {PW} {PER})
 Vconn0 finetuning_signal BT dc 0V
@@ -111,31 +111,19 @@ Vcon15 coarse_step2.6 B15 dc 0V
 * Rcon14 VSS B14 1m
 * Rcon15 VSS B15 1m
 
-* VSWBRANCH1 SWBRN1 VSS dc {AVDD}
-* VSWBRANCH2 SWBRN2 VSS dc {AVDD}
-* VSWBRANCH3 SWBRN3 VSS dc {AVDD}
+* RSWBRANCH1 SWBRN1 VDD 1m
+* RSWBRANCH2 SWBRN2 VDD 1m
+* RSWBRANCH3 SWBRN3 VDD 1m
 
-RSWBRANCH1 SWBRN1 VDD 1m
-RSWBRANCH2 SWBRN2 VDD 1m
-RSWBRANCH3 SWBRN3 VDD 1m
+* RSWBGR1 SWBGR1 VSS 1m
+* RSWBGR2 SWBGR2 VSS 1m
 
-* VSWBGR1 SWBGR1 VSS dc 0V
-* VSWBGR2 SWBGR2 VSS dc 0V
+RSWBGR1 SWBGR1 VDD 1m
+RSWBGR2 SWBGR2 VDD 1m
 
-RSWBGR1 SWBGR1 VSS 1m
-RSWBGR2 SWBGR2 VSS 1m
-
-* VSWCAP1 SWCAP1 VSS dc {AVDD}
-* VSWCAP2 SWCAP2 VSS dc {AVDD}
-* VSWCAP3 SWCAP3 VSS dc {AVDD}
-
-RSWCAP1 SWCAP1 VDD 1m
-RSWCAP2 SWCAP2 VDD 1m
-RSWCAP3 SWCAP3 VDD 1m
-
-* VSWDRAIN1 SWDRN1 VSS dc 0V
-* VSWDRAIN2 SWDRN2 VSS dc 0V
-* VSWDRAIN3 SWDRN3 VSS dc 0V
+* RSWCAP1 SWCAP1 VDD 1m
+* RSWCAP2 SWCAP2 VDD 1m
+* RSWCAP3 SWCAP3 VDD 1m
 
 RSWDRAIN1 SWDRN1 VSS 1m
 RSWDRAIN2 SWDRN2 VSS 1m
@@ -158,16 +146,15 @@ RSWDRAIN3 SWDRN3 VSS 1m
 + v(b8) v(b9) v(b10) v(b11) v(b12) v(b13) v(b14) v(b15) 
 + v(bt)
 + v(xdut.iout)
-+ v(xdut.src1) v(xdut.src2) v(xdut.src3)
 + v(xdut.vref) v(vout)
 + v(cmp)
 + v(v1) 
 + v(xdut.v1a) v(xdut.v1b) 
 + v(v2) 
 + v(xdut.v2a) v(xdut.v2b) v(xdut.v2c)
++ v(SWBRN1) v(SWBRN2) v(SWBRN3) v(SWBGR1) v(SWBGR2) v(SWCAP1) v(SWCAP2) v(SWCAP3) v(SWDRN1) v(SWDRN2) v(SWDRN3)
 + v(xdut.x1.ctl) v(xdut.x1.ctlb) v(xdut.x1.vt)
 + v(vss) v(vdd) v(slp)
-+ i(v.xdut.v1)
 + i(vss) i(vdd)
 * + v(xdut.r1) v(xdut.r2)
 * + v(xdut.x1.b1_n) v(xdut.x1.b2_n) v(xdut.x1.b3_n)  v(xdut.x1.b4_n)  v(xdut.x1.b5_n)  v(xdut.x1.b6_n)  v(xdut.x1.b7_n)
@@ -175,7 +162,6 @@ RSWDRAIN3 SWDRN3 VSS 1m
 * + v(xdut.x1.bt_n)
 * + v(xdut.x1.pbias) v(xdut.x1.nbias) 
 * + v(xdut.x1.v0) v(xdut.x1.v1) v(xdut.x1.v2) v(xdut.x1.v3) v(xdut.x1.v4) v(xdut.x1.v5) v(xdut.x1.v6) v(xdut.x1.v7)
-* + v(SWBRN1) v(SWBRN2) v(SWBRN3) v(SWBGR1) v(SWBGR2) v(SWCAP1) v(SWCAP2) v(SWCAP3) v(SWDRN1) v(SWDRN2) v(SWDRN3)
 
 *----------------------------------------------------------------
 * NGSPICE control
@@ -210,7 +196,7 @@ echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
 * dutycycle options to choose from: 10 20 30 40 50 60 70 80 90
 
 set fend = .raw
-foreach cirtemp 27
+foreach cirtemp 0 5 10 15 20 25 27 30 35 40 45 50 55 60 65 70 75 80 85 90 95 100 105 110 115 120 125
 	foreach finfreq 1
 		foreach dcycle 50
 			alterparam finetuning_frequency = {$finfreq}
@@ -259,11 +245,6 @@ foreach cirtemp 27
 			let v(x1.ctl) = v(xdut.x1.ctl)
 			let v(x1.ctlb) = v(xdut.x1.ctlb)
 
-			let v(iout) = v(xdut.iout)
-
-			let v(src1) = v(xdut.src1) 
-			let v(src2) = v(xdut.src2)
-			let v(src3) = v(xdut.src3)
 			let v(v1a) = v(xdut.v1a)
 			let v(v1b) = v(xdut.v1b)
 			let v(v2a) = v(xdut.v2a)
@@ -279,9 +260,9 @@ foreach cirtemp 27
 			wrdata {cicname}_temperature{$cirtemp}celsius_frequency{$finfreq}mhz_dutycycle{$dcycle}percent_vdd{$vsupply}volt{$fend}
             + v(b1) v(b2) v(b3) v(b4) v(b5) v(b6) v(b7) 
             + v(b8) v(b9) v(b10) v(b11) v(b12) v(b13) v(b14) v(b15) 
+            + v(SWBRN1) v(SWBRN2) v(SWBRN3) v(SWBGR1) v(SWBGR2) v(SWCAP1) v(SWCAP2) v(SWCAP3) v(SWDRN1) v(SWDRN2) v(SWDRN3)
             + v(bt)
-			+ v(iout)
-			+ v(src1) v(src2) v(src3)
+			+ v(xdut.iout)
 			+ v(vref) v(vout)
             + v(cmp) 
 			+ v(clk) v(rst)
@@ -291,7 +272,6 @@ foreach cirtemp 27
 			+ v(v2a) v(v2b) v(v2c)
 			+ v(x1.ctl) v(x1.ctlb) v(x1.vt)
 			+ v(vss) v(vdd) v(slp)
-			+ i(v.xdut.v1)
 			+ i(vdd) i(vss)
 			+ v(cmp_sync1)
 			+ v(cmp_sync2)
