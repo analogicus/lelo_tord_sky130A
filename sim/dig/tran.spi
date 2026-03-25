@@ -61,7 +61,7 @@
 .param PERCLK = clock_periode
 .param PWCLK = {PERCLK * ratio}
 
-.csparam simulation_length_csparam = 2000us
+.csparam simulation_length_csparam = 100us
 
 *-----------------------------------------------------------------
 * FORCE
@@ -195,8 +195,10 @@ echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
 * temperature options to choose from: -40 -20 0 27 60 90 125
 * dutycycle options to choose from: 10 20 30 40 50 60 70 80 90
 
+* -40 -35 -30 -25 -20 -15 -10 -5 0 5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95 100 105 110 115 120 125
+
 set fend = .raw
-foreach cirtemp 0 5 10 15 20 25 27 30 35 40 45 50 55 60 65 70 75 80 85 90 95 100 105 110 115 120 125
+foreach cirtemp -40 -35 -30 -25 -20 -15 -10 -5 0 5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95 100 105 110 115 120 125
 	foreach finfreq 1
 		foreach dcycle 50
 			alterparam finetuning_frequency = {$finfreq}
@@ -215,7 +217,7 @@ foreach cirtemp 0 5 10 15 20 25 27 30 35 40 45 50 55 60 65 70 75 80 85 90 95 100
 			let finper = {1/$finfreq}
 
 			echo ------------------------------------------------------------
-			echo "view and pvt corner: {cicname}"
+			echo "view and pvt corner: {cicname}_bgr"
 			echo "supply voltage: {$vsupply} V"
 			echo "circuit temperature: {$cirtemp} C"
 			echo "finetuning frequency {$finfreq} MHz => finetuning periode {$finper} s"
@@ -233,13 +235,13 @@ foreach cirtemp 0 5 10 15 20 25 27 30 35 40 45 50 55 60 65 70 75 80 85 90 95 100
 			tran 10ns {$simlen}
 			* tran 1ns 100us 1ps
 
-			write {cicname}_temperature{$cirtemp}celsius_frequency{$finfreq}mhz_dutycycle{$dcycle}percent_vdd{$vsupply}volt{$fend}
+			write {cicname}_bgr_temperature{$cirtemp}celsius_frequency{$finfreq}mhz_dutycycle{$dcycle}percent_vdd{$vsupply}volt{$fend}
 
 			*
 			* This last part used to be in tran.meas, but was moved to ensure all simulations are written to .out-files
 			*
 
-			load {cicname}_temperature{$cirtemp}celsius_frequency{$finfreq}mhz_dutycycle{$dcycle}percent_vdd{$vsupply}volt{$fend}
+			load {cicname}_bgr_temperature{$cirtemp}celsius_frequency{$finfreq}mhz_dutycycle{$dcycle}percent_vdd{$vsupply}volt{$fend}
 
 			let v(x1.vt) = v(xdut.x1.vt)
 			let v(x1.ctl) = v(xdut.x1.ctl)
@@ -256,8 +258,8 @@ foreach cirtemp 0 5 10 15 20 25 27 30 35 40 45 50 55 60 65 70 75 80 85 90 95 100
 			set wr_singlescale
 			set wr_vecnames
 			option numdgt = 5
-			echo writing to {cicname}_temperature{$cirtemp}celsius_frequency{$finfreq}mhz_dutycycle{$dcycle}percent_vdd{$vsupply}volt{$fend}
-			wrdata {cicname}_temperature{$cirtemp}celsius_frequency{$finfreq}mhz_dutycycle{$dcycle}percent_vdd{$vsupply}volt{$fend}
+			echo writing to file named {cicname}_bgr_temperature{$cirtemp}celsius_frequency{$finfreq}mhz_dutycycle{$dcycle}percent_vdd{$vsupply}volt{$fend}
+			wrdata {cicname}_bgr_temperature{$cirtemp}celsius_frequency{$finfreq}mhz_dutycycle{$dcycle}percent_vdd{$vsupply}volt{$fend}
             + v(b1) v(b2) v(b3) v(b4) v(b5) v(b6) v(b7) 
             + v(b8) v(b9) v(b10) v(b11) v(b12) v(b13) v(b14) v(b15) 
             + v(SWBRN1) v(SWBRN2) v(SWBRN3) v(SWBGR1) v(SWBGR2) v(SWCAP1) v(SWCAP2) v(SWCAP3) v(SWDRN1) v(SWDRN2) v(SWDRN3)

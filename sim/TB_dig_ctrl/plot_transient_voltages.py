@@ -9,25 +9,22 @@ xx = "xx"
 
 # example input arguments: python plot_temperature_transients.py ss Tl 125 2 30 1.7 0
 
+bgr = ""
+if "bgr" in args:
+    bgr = "_bgr"
+    print("bgr")
+
 if len(args) == 0:
     print("No arguments provided. Plotting for typical corner, voltage (1.8 Volt) and temperature (27 Celsius).")
     files.append("output_tran/tran_SchGtKttTtVt_temperature27celsius_frequency2mhz_dutycycle40percent_vdd1.8volt.out")
 elif "typical" in args:
     for corner in ["tt"]:
         for temperature in [27]: # Celsius (degree C)
-            for frequency in [0.5, 1, 2]: # Mega Hertz (MHz)
-                for dutycycle in [20, 30, 40, 50, 60, 70, 80]: # Percent (%)
-                    for voltage in [1.8]: # Volt (V)
-                        Vx = "Vl" if voltage == 1.7 else "Vt" if voltage == 1.8 else "Vh" if voltage == 1.9 else "Oops"
-                        files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_temperature{temperature}celsius_frequency{frequency}mhz_dutycycle{dutycycle}percent_vdd{voltage}volt.out")
-elif "test" in args:
-    for corner in ["tt"]:
-        for temperature in [27]: # Celsius (degree C)
             for frequency in [1]: # Mega Hertz (MHz)
                 for dutycycle in [50]: # Percent (%)
                     for voltage in [1.8]: # Volt (V)
                         Vx = "Vl" if voltage == 1.7 else "Vt" if voltage == 1.8 else "Vh" if voltage == 1.9 else "Oops"
-                        files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_temperature{temperature}celsius_frequency{frequency}mhz_dutycycle{dutycycle}percent_vdd{voltage}volt.out")
+                        files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}{bgr}_temperature{temperature}celsius_frequency{frequency}mhz_dutycycle{dutycycle}percent_vdd{voltage}volt.out")
 elif "all" in args:
     for corner in ["tt", "ss", "ff", "sf", "fs"]:
         for temperature in [-40, -20, 0, 27, 60, 90, 125]: # Celsius (degree C)
@@ -35,7 +32,7 @@ elif "all" in args:
                 for dutycycle in [20, 30, 40, 50, 60, 70, 80]: # Percent (%)
                     for voltage in [1.7, 1.8, 1.9]: # Volt (V)
                         Vx = "Vl" if voltage == 1.7 else "Vt" if voltage == 1.8 else "Vh" if voltage == 1.9 else "Oops"
-                        files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_temperature{temperature}celsius_frequency{frequency}mhz_dutycycle{dutycycle}percent_vdd{voltage}volt.out")
+                        files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}{bgr}_temperature{temperature}celsius_frequency{frequency}mhz_dutycycle{dutycycle}percent_vdd{voltage}volt.out")
 elif "etc" in args:
     for corner in ["ss", "ff", "sf", "fs"]:
         for temperature in [-40, -20, 0, 27, 60, 90, 125]: # Celsius (degree C)
@@ -43,7 +40,39 @@ elif "etc" in args:
                 for dutycycle in [20, 30, 40, 50, 60, 70, 80]: # Percent (%)
                     for voltage in [1.7, 1.9]: # Volt (V)
                         Vx = "Vl" if voltage == 1.7 else "Vt" if voltage == 1.8 else "Vh" if voltage == 1.9 else "Oops"
-                        files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_temperature{temperature}celsius_frequency{frequency}mhz_dutycycle{dutycycle}percent_vdd{voltage}volt.out")
+                        files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}{bgr}_temperature{temperature}celsius_frequency{frequency}mhz_dutycycle{dutycycle}percent_vdd{voltage}volt.out")
+elif "test" in args:
+    for corner in ["tt"]:
+        for temperature in [-20, -15, -10]: # Celsius (degree C)
+            for frequency in [1]: # Mega Hertz (MHz)
+                for dutycycle in [50]: # Percent (%)
+                    for voltage in [1.8]: # Volt (V)
+                        Vx = "Vl" if voltage == 1.7 else "Vt" if voltage == 1.8 else "Vh" if voltage == 1.9 else "Oops"
+                        files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}{bgr}_temperature{temperature}celsius_frequency{frequency}mhz_dutycycle{dutycycle}percent_vdd{voltage}volt.out")
+elif "temp" in args:
+    for corner in ["tt"]:
+        for temperature in [90, 125]: # Celsius (degree C)
+            for frequency in [1]: # Mega Hertz (MHz)
+                for dutycycle in [50]: # Percent (%)
+                    for voltage in [1.8]: # Volt (V)
+                        Vx = "Vl" if voltage == 1.7 else "Vt" if voltage == 1.8 else "Vh" if voltage == 1.9 else "Oops"
+                        files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}{bgr}_temperature{temperature}celsius_frequency{frequency}mhz_dutycycle{dutycycle}percent_vdd{voltage}volt.out")
+elif "temps" in args:
+    for corner in ["tt"]:
+        for temperature in [-40, -35, -30, -25, -20, -15, -10, -5, 0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125]: # Celsius (degree C)
+            for frequency in [1]: # Mega Hertz (MHz)
+                for dutycycle in [50]: # Percent (%)
+                    for voltage in [1.8]: # Volt (V)
+                        Vx = "Vl" if voltage == 1.7 else "Vt" if voltage == 1.8 else "Vh" if voltage == 1.9 else "Oops"
+                        files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}{bgr}_temperature{temperature}celsius_frequency{frequency}mhz_dutycycle{dutycycle}percent_vdd{voltage}volt.out")
+elif "partialtemps" in args:
+    for corner in ["tt"]:
+        for temperature in [-40, -35, -30, -25, -15, -5, 0, 5, 15, 20, 25, 30, 35, 40, 45, 50, 60, 70, 75, 85, 95]: # Celsius (degree C)
+            for frequency in [1]: # Mega Hertz (MHz)
+                for dutycycle in [50]: # Percent (%)
+                    for voltage in [1.8]: # Volt (V)
+                        Vx = "Vl" if voltage == 1.7 else "Vt" if voltage == 1.8 else "Vh" if voltage == 1.9 else "Oops"
+                        files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}{bgr}_temperature{temperature}celsius_frequency{frequency}mhz_dutycycle{dutycycle}percent_vdd{voltage}volt.out")
 else:
     print("Plotting with file data passed as argument.")
     xx = "tt" if args[0] == "tt" else "ff" if args[0] == "ff" else "ss" if args[0] == "ss" else "sf" if args[0] == "sf" else "fs" if args[0] == "fs" else "ttmm" if args[0] == "ttmm" else "Oops, Somethings wrong!"
@@ -52,7 +81,7 @@ else:
     print(f'Temperature corner: {Tx}')
     Vx = "Vl" if float(args[5]) == 1.7 else "Vt" if float(args[5]) == 1.8 else "Vh" if float(args[5]) == 1.9 else "Oops"
     print(f'Voltage corner: {Vx}')
-    files.append(f"output_tran/tran_SchGtK{xx}{Tx}{Vx}_temperature{args[2]}celsius_frequency{args[3]}mhz_dutycycle{args[4]}percent_vdd{args[5]}volt.out") # plots file name passed as argument
+    files.append(f"output_tran/tran_SchGtK{xx}{Tx}{Vx}{bgr}_temperature{args[2]}celsius_frequency{args[3]}mhz_dutycycle{args[4]}percent_vdd{args[5]}volt.out") # plots file name passed as argument
 
 if xx == "ttmm" and len(args) > 6:   
     c = args[6]
@@ -67,8 +96,11 @@ label_fontsize = font_size
 legend_fontsize = font_size
 ticks_fontsize = font_size
 
+y = []
+x = []
+
 for file in files:
-    # print(f"Plotting Vout transient results from file: {file}")
+    print(f"Plotting Vout transient results from file: {file}")
 
     circuit_temperature = float(file.split("temperature")[-1].split("celsius")[0]) # in Celsius degree
     clock_frequency = float(file.split("frequency")[-1].split("mhz")[0]) # in Mega Hertz
@@ -126,7 +158,7 @@ for file in files:
     axs[2].plot(df["time"], df["v(rst)"], label="rst")
     # axs[2].plot(df["time"], df["v(timeout)"], label="timeout")
     axs[3].plot(df["time"], df["v(dec_timeout_counter)"], label="timeout_counter")
-    axs[3].plot(df["time"], df["v(dec_finetuning_counter)"], label="finetuning_counter")
+    # axs[3].plot(df["time"], df["v(dec_finetuning_counter)"], label="finetuning_counter")
     axs[3].plot(df["time"], df["v(dec_coarse_step_counter)"], label="coarse_step_counter")
     # axs[3].plot(df["time"], df["v(dec_coarse_step1)"], label="coarse_step1")
     # axs[3].plot(df["time"], df["v(dec_coarse_step2)"], label="coarse_step2")
@@ -148,6 +180,7 @@ for file in files:
     fig.tight_layout()
     fig.savefig(f"figures/{file.split('/')[-1].split('.out')[0]}.png", dpi=300, bbox_inches="tight")
 
+
     # fig_2, axs_2 = plt.subplots(6, 1, figsize=(fig_width, fig_height), sharex=True, dpi=300)
     
     # axs_2[0].plot(df["time"], df["v(bt)"], label="v(bt)")
@@ -165,6 +198,7 @@ for file in files:
 
     # axs_2[-1].set_xlabel("Time (ns)", fontsize=label_fontsize)
     # fig_2.tight_layout()
+
 
     # fig_3, axs_3 = plt.subplots(8, 2, figsize=(fig_width, fig_height), sharex=True, dpi=300)
     
@@ -195,22 +229,54 @@ for file in files:
     # # axs_3[-1].set_xlabel("Time (ns)", fontsize=label_fontsize)
     # fig_3.tight_layout()
 
-    fig_4, axs_4 = plt.subplots(4, 1, figsize=(fig_width, fig_height), sharex=True, dpi=300)
+
+    # fig_4, axs_4 = plt.subplots(4, 1, figsize=(fig_width, fig_height), sharex=True, dpi=300)
     
-    axs_4[0].plot(df["time"], df["v(clk)"], label="v(clk)")
-    axs_4[1].plot(df["time"], df["v(finetuning_signal)"], label="v(finetuning_signal)")
-    axs_4[2].plot(df["time"], df["v(dec_finetuning_counter)"], label="v(dec_finetuning_counter)")
-    axs_4[3].plot(df["time"], df["v(dec_finetuning_duty_cycle)"], label="v(dec_finetuning_duty_cycle)")
-    axs_4[3].plot(df["time"], df["v(dec_finetuning_periode)"], label="v(dec_finetuning_periode)")
-    axs_4[3].plot(df["time"], df["v(dec_coarse_step_counter)"], label="v(dec_coarse_step_counter)")
+    # axs_4[0].plot(df["time"], df["v(clk)"], label="v(clk)")
+    # axs_4[1].plot(df["time"], df["v(finetuning_signal)"], label="v(finetuning_signal)")
+    # axs_4[2].plot(df["time"], df["v(dec_finetuning_counter)"], label="v(dec_finetuning_counter)")
+    # axs_4[3].plot(df["time"], df["v(dec_finetuning_duty_cycle)"], label="v(dec_finetuning_duty_cycle)")
+    # axs_4[3].plot(df["time"], df["v(dec_finetuning_periode)"], label="v(dec_finetuning_periode)")
+    # axs_4[3].plot(df["time"], df["v(dec_coarse_step_counter)"], label="v(dec_coarse_step_counter)")
 
-    for i, ax in enumerate(axs_4):
-        ax.set_ylabel("Voltage (V)", fontsize=label_fontsize)
-        ax.tick_params(axis="both", labelsize=ticks_fontsize)
-        ax.grid()
-        ax.legend(loc="best", fontsize=legend_fontsize)
+    # for i, ax in enumerate(axs_4):
+    #     ax.set_ylabel("Voltage (V)", fontsize=label_fontsize)
+    #     ax.tick_params(axis="both", labelsize=ticks_fontsize)
+    #     ax.grid()
+    #     ax.legend(loc="best", fontsize=legend_fontsize)
 
-    axs_4[-1].set_xlabel("Time (ns)", fontsize=label_fontsize)
-    fig_4.tight_layout()
+    # axs_4[-1].set_xlabel("Time (ns)", fontsize=label_fontsize)
+    # fig_4.tight_layout()
+
+
+    # fig_5, axs_5 = plt.subplots(6, 1, figsize=(fig_width, fig_height), sharex=True, dpi=300)
+
+    # axs_5[0].plot(df["time"], df["v(swbrn1)"], label="v(swbrn1)")
+    # axs_5[1].plot(df["time"], df["v(swbrn2)"], label="v(swbrn2)")
+    # axs_5[2].plot(df["time"], df["v(swbrn3)"], label="v(swbrn3)")
+    # # axs_5[1].plot(df["time"], df["v(swbgr1)"], label="v(swbgr1)")
+    # # axs_5[1].plot(df["time"], df["v(swbgr2)"], label="v(swbgr2)")
+    # axs_5[3].plot(df["time"], df["v(swcap1)"], label="v(swcap1)")
+    # axs_5[4].plot(df["time"], df["v(swcap2)"], label="v(swcap2)")
+    # axs_5[5].plot(df["time"], df["v(swcap3)"], label="v(swcap3)")
+    # # axs_5[3].plot(df["time"], df["v(swdrn1)"], label="v(swdrn1)")
+    # # axs_5[3].plot(df["time"], df["v(swdrn2)"], label="v(swdrn2)")
+    # # axs_5[3].plot(df["time"], df["v(swdrn3)"], label="v(swdrn3)")
+
+    # for i, ax in enumerate(axs_5):
+    #     ax.set_ylabel("Voltage (V)", fontsize=label_fontsize)
+    #     ax.tick_params(axis="both", labelsize=ticks_fontsize)
+    #     ax.grid()
+    #     ax.legend(loc="best", fontsize=legend_fontsize)
+
+    # axs_5[-1].set_xlabel("Time (ns)", fontsize=label_fontsize)
+    # fig_5.tight_layout()
+
+    # append the last value of v(vout) to y list
+    y.append(df["v(vout)"].iloc[-1])
+    x.append(circuit_temperature)
+    
+df_6 = pd.DataFrame({"Temperature (°C)": x, "Output voltage (V)": y}).sort_values(by="Temperature (°C)")
+df_6.to_csv(f"figures/{'_'.join(args)}.csv", index=False)
 
 plt.show()

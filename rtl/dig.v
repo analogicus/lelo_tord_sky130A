@@ -1,8 +1,8 @@
 module dig #(
      parameter DAC_WIDTH                     = 15, // DAC control resolution
      parameter TIMEOUT_LIMIT                 = 100,
-     parameter INITIAL_COARSE_STEP_COUNT     = 1,   // initial coarse DAC step
-     parameter INITIAL_FINETUNING_DUTY_CYCLE = 3,   // finetunig pulse length in tens if percent (5=50%)
+     parameter INITIAL_COARSE_STEP_COUNT     = 10,   // initial coarse DAC step
+     parameter INITIAL_FINETUNING_DUTY_CYCLE = 6,   // finetunig pulse length in tens if percent (5=50%)
      parameter INITIAL_FINETUNING_PERIODE    = 10   // finetuning periode lenght,
 )(
      input  logic       clk, // 10 MHz clock
