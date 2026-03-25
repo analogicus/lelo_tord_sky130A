@@ -51,7 +51,7 @@ elif "test" in args:
                         files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}{bgr}_temperature{temperature}celsius_frequency{frequency}mhz_dutycycle{dutycycle}percent_vdd{voltage}volt.out")
 elif "temp" in args:
     for corner in ["tt"]:
-        for temperature in [90, 125]: # Celsius (degree C)
+        for temperature in [100]: # Celsius (degree C)
             for frequency in [1]: # Mega Hertz (MHz)
                 for dutycycle in [50]: # Percent (%)
                     for voltage in [1.8]: # Volt (V)
@@ -177,18 +177,19 @@ for file in files:
     # ax_iout.legend(loc="lower right", fontsize=legend_fontsize)
     # ax_iout.tick_params(axis='both', labelsize=ticks_fontsize)
 
-    fig.tight_layout()
-    fig.savefig(f"figures/{file.split('/')[-1].split('.out')[0]}.png", dpi=300, bbox_inches="tight")
+    # fig.tight_layout()
+    # fig.savefig(f"figures/{file.split('/')[-1].split('.out')[0]}.png", dpi=300, bbox_inches="tight")
 
 
-    # fig_2, axs_2 = plt.subplots(6, 1, figsize=(fig_width, fig_height), sharex=True, dpi=300)
+    # fig_2, axs_2 = plt.subplots(7, 1, figsize=(fig_width, fig_height), sharex=True, dpi=300)
     
+    # axs_2[0].plot(df["time"], df["v(clk)"], label="v(clk)")
     # axs_2[0].plot(df["time"], df["v(bt)"], label="v(bt)")
-    # axs_2[1].plot(df["time"], df["v(clk)"], label="v(clk)")
-    # axs_2[2].plot(df["time"], df["v(cmp)"], label="v(cmp)")
+    # axs_2[1].plot(df["time"], df["v(cmp)"], label="v(cmp)")
     # axs_2[3].plot(df["time"], df["v(cmp_sync1)"], label="v(cmp_sync1)")
-    # axs_2[4].plot(df["time"], df["v(cmp_sync2)"], label="v(cmp_sync2)")
-    # axs_2[5].plot(df["time"], df["v(cmp_rising)"], label="v(cmp_rising)")
+    # axs_2[3].plot(df["time"], df["v(cmp_sync2)"], label="v(cmp_sync2)")
+    # axs_2[4].plot(df["time"], df["v(cmp_rising)"], label="v(cmp_rising)")
+    # axs_2[5].plot(df["time"], df["v(dec_cmp_rising_counter)"], label="v(dec_cmp_rising_counter)")
 
     # for i, ax in enumerate(axs_2):
     #     ax.set_ylabel("Voltage (V)", fontsize=label_fontsize)

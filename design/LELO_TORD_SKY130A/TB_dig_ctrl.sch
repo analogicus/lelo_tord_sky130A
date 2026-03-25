@@ -16,7 +16,7 @@ N 1060 540 1100 540 {lab=BT}
 N 1060 700 1100 700 {lab=B8}
 N 1060 680 1100 680 {lab=B7}
 N 1060 660 1100 660 {lab=B6}
-N 1720 560 1720 640 {lab=SRC1}
+N 1720 580 1720 640 {lab=IOUT}
 N 2160 1120 2160 1180 {lab=V2C}
 N 2120 1080 2140 1080 {lab=VSS}
 N 2120 1080 2120 1280 {lab=VSS}
@@ -36,7 +36,7 @@ N 2080 720 2120 720 {lab=VDD}
 N 2080 690 2120 690 {lab=SWBRN2}
 N 2340 1110 2340 1280 {lab=VSS}
 N 2340 900 2340 1040 {lab=V2}
-N 2160 560 2160 640 {lab=SRC2}
+N 2160 580 2160 640 {lab=IOUT}
 N 1720 740 1720 890 {lab=V1A}
 N 1540 1110 1540 1280 {lab=VSS}
 N 1720 910 1720 1180 {lab=V1A}
@@ -106,11 +106,7 @@ N 1060 1080 1100 1080 {lab=SWBGR2}
 N 1060 1110 1100 1110 {lab=SWDRN1}
 N 1060 1130 1100 1130 {lab=SWDRN2}
 N 1400 480 1480 480 {lab=IOUT}
-N 1720 460 1720 500 {lab=VDD}
-N 2160 460 2160 500 {lab=VDD}
 N 1480 480 1480 580 {lab=IOUT}
-N 1480 640 1480 710 {lab=VSS}
-N 2660 460 2660 500 {lab=VDD}
 N 2710 720 2750 720 {lab=VSS}
 N 2580 720 2620 720 {lab=VDD}
 N 2580 690 2620 690 {lab=SWBRN3}
@@ -122,7 +118,7 @@ N 2940 1070 2940 1120 {lab=VSS}
 N 2940 1120 2980 1120 {lab=VSS}
 N 2840 1280 2980 1280 {lab=VSS}
 N 3020 1070 3060 1070 {lab=SWDRN3}
-N 2660 560 2660 640 {lab=SRC3}
+N 2660 580 2660 640 {lab=IOUT}
 N 2660 740 2660 1040 {lab=VREF}
 N 2620 1080 2640 1080 {lab=VSS}
 N 2620 1080 2620 1280 {lab=VSS}
@@ -151,6 +147,9 @@ N 2820 650 2860 650 {lab=V1}
 N 3160 610 3200 610 {lab=CMP}
 N 2860 670 2860 710 {lab=VSS}
 N 2860 570 2860 610 {lab=VDD}
+N 1480 580 1720 580 {lab=IOUT}
+N 1720 580 2160 580 {lab=IOUT}
+N 2160 580 2660 580 {lab=IOUT}
 C {devices/ipin.sym} 1060 560 0 0 {name=p17 lab=B1}
 C {devices/ipin.sym} 1060 580 0 0 {name=p18 lab=B2}
 C {devices/ipin.sym} 1060 600 0 0 {name=p19 lab=B3}
@@ -162,8 +161,6 @@ C {devices/ipin.sym} 1060 540 0 0 {name=p4 lab=BT}
 C {devices/ipin.sym} 1060 640 0 0 {name=p5 lab=B5}
 C {devices/ipin.sym} 1060 660 0 0 {name=p6 lab=B6}
 C {devices/ipin.sym} 1060 680 0 0 {name=p8 lab=B7}
-C {devices/lab_wire.sym} 2160 610 0 1 {name=p41 sig_type=std_logic lab=SRC2}
-C {devices/lab_wire.sym} 1720 610 0 0 {name=p43 sig_type=std_logic lab=SRC1}
 C {sky130_fd_pr/pnp_05v5.sym} 1700 1210 0 0 {name=Q1
 model=pnp_05v5_W3p40L3p40
 m=1
@@ -230,16 +227,7 @@ C {devices/ipin.sym} 1060 1060 0 0 {name=p32 lab=SWBGR1}
 C {devices/ipin.sym} 1060 1080 0 0 {name=p33 lab=SWBGR2}
 C {devices/ipin.sym} 1060 1130 0 0 {name=p34 lab=SWDRN2}
 C {devices/lab_wire.sym} 1410 1280 0 0 {name=p35 sig_type=std_logic lab=VSS}
-C {devices/cccs.sym} 1720 530 0 0 {name=FCCCS1 vnam=V1 value=1}
-C {devices/cccs.sym} 2160 530 0 0 {name=FCCCS2 vnam=V1 value=1}
-C {devices/vsource.sym} 1480 610 0 0 {name=V1 value=0 savecurrent=true}
-C {devices/lab_wire.sym} 1480 710 0 0 {name=p9 sig_type=std_logic lab=VSS}
-C {devices/lab_wire.sym} 1720 480 0 0 {name=p10 sig_type=std_logic lab=VDD}
-C {devices/lab_wire.sym} 2160 480 0 1 {name=p11 sig_type=std_logic lab=VDD}
 C {devices/lab_wire.sym} 1480 480 0 1 {name=p12 sig_type=std_logic lab=IOUT}
-C {devices/lab_wire.sym} 2660 610 0 1 {name=p13 sig_type=std_logic lab=SRC3}
-C {devices/cccs.sym} 2660 530 0 0 {name=FCCCS3 vnam=V1 value=1}
-C {devices/lab_wire.sym} 2660 480 0 1 {name=p14 sig_type=std_logic lab=VDD}
 C {JNW_TR_SKY130A/JNWTR_TGX2_CV.sym} 2660 630 3 1 {name=x18}
 C {devices/lab_wire.sym} 2720 720 0 1 {name=p15 sig_type=std_logic lab=VSS}
 C {devices/lab_wire.sym} 2610 690 0 0 {name=p16 sig_type=std_logic lab=SWBRN3}

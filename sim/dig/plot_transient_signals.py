@@ -51,7 +51,7 @@ elif "test" in args:
                         files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}{bgr}_temperature{temperature}celsius_frequency{frequency}mhz_dutycycle{dutycycle}percent_vdd{voltage}volt.out")
 elif "temp" in args:
     for corner in ["tt"]:
-        for temperature in [125]: # Celsius (degree C)
+        for temperature in [95, 100, 105]: # Celsius (degree C)
             for frequency in [1]: # Mega Hertz (MHz)
                 for dutycycle in [50]: # Percent (%)
                     for voltage in [1.8]: # Volt (V)
@@ -131,51 +131,51 @@ for file in files:
     # else:
     #     print(f"Plotting results from: {file}")
 
-    # fig, axs = plt.subplots(4, 1, figsize=(fig_width, fig_height), sharex=True, dpi=300)
+    fig, axs = plt.subplots(4, 1, figsize=(fig_width, fig_height), sharex=True, dpi=300)
 
-    # # ax_iout = axs[0].twinx()
-    # # ax_iout.plot(df["time"], df["i(v.xdut.v1)"]*1e6, label="iout", color="tab:orange") # in uA
-    # # axs[0].plot(df["time"], df["v(vout)"], label="vout", color="tab:blue") # in V
+    # ax_iout = axs[0].twinx()
+    # ax_iout.plot(df["time"], df["i(v.xdut.v1)"]*1e6, label="iout", color="tab:orange") # in uA
+    # axs[0].plot(df["time"], df["v(vout)"], label="vout", color="tab:blue") # in V
 
-    # axs[0].plot(df["time"], df["v(v1)"]-df["v(v2)"], label="v1-v2", linestyle="solid")
-    # axs[0].plot(df["time"], df["v(v1a)"]-df["v(v2a)"], label="v1a-v2a", linestyle="dashed")
-    # axs[0].plot(df["time"], df["v(v1b)"]-df["v(v2b)"], label="v1b-v2b", linestyle="dotted")
+    axs[0].plot(df["time"], df["v(v1)"]-df["v(v2)"], label="v1-v2", linestyle="solid")
+    axs[0].plot(df["time"], df["v(v1a)"]-df["v(v2a)"], label="v1a-v2a", linestyle="dashed")
+    axs[0].plot(df["time"], df["v(v1b)"]-df["v(v2b)"], label="v1b-v2b", linestyle="dotted")
     
-    # axs[1].plot(df["time"], df["v(v1)"], label="v1")
-    # # axs[1].plot(df["time"], df["v(v1a)"], label="v1a")
-    # # axs[1].plot(df["time"], df["v(v1b)"], label="v1b")
-    # axs[1].plot(df["time"], df["v(v2)"], label="v2")
-    # # axs[1].plot(df["time"], df["v(v2a)"], label="v2a")
-    # # axs[1].plot(df["time"], df["v(v2b)"], label="v2b")
-    # # axs[1].plot(df["time"], df["v(v2c)"], label="v2c")
-    # axs[1].plot(df["time"], df["v(vout)"], label="vout")
+    axs[1].plot(df["time"], df["v(v1)"], label="v1")
+    # axs[1].plot(df["time"], df["v(v1a)"], label="v1a")
+    # axs[1].plot(df["time"], df["v(v1b)"], label="v1b")
+    axs[1].plot(df["time"], df["v(v2)"], label="v2")
+    # axs[1].plot(df["time"], df["v(v2a)"], label="v2a")
+    # axs[1].plot(df["time"], df["v(v2b)"], label="v2b")
+    # axs[1].plot(df["time"], df["v(v2c)"], label="v2c")
+    axs[1].plot(df["time"], df["v(vout)"], label="vout")
 
-    # axs[2].plot(df["time"], df["v(clk)"], label="clk")
-    # axs[2].plot(df["time"], df["v(bt)"], label="bt")
-    # axs[2].plot(df["time"], df["v(x1.ctl)"], label="ctl")
-    # # axs[2].plot(df["time"], df["v(slp)"], label="slp")
-    # axs[2].plot(df["time"], df["v(cmp)"], label="cmp")
-    # axs[2].plot(df["time"], df["v(rst)"], label="rst")
-    # # axs[2].plot(df["time"], df["v(timeout)"], label="timeout")
-    # axs[3].plot(df["time"], df["v(dec_timeout_counter)"], label="timeout_counter")
-    # # axs[3].plot(df["time"], df["v(dec_finetuning_counter)"], label="finetuning_counter")
-    # axs[3].plot(df["time"], df["v(dec_coarse_step_counter)"], label="coarse_step_counter")
-    # # axs[3].plot(df["time"], df["v(dec_coarse_step1)"], label="coarse_step1")
-    # # axs[3].plot(df["time"], df["v(dec_coarse_step2)"], label="coarse_step2")
-    # axs[3].plot(df["time"], df["v(dec_finetuning_duty_cycle)"], label="finetuning_duty_cycle")
+    axs[2].plot(df["time"], df["v(clk)"], label="clk")
+    axs[2].plot(df["time"], df["v(bt)"], label="bt")
+    axs[2].plot(df["time"], df["v(x1.ctl)"], label="ctl")
+    # axs[2].plot(df["time"], df["v(slp)"], label="slp")
+    axs[2].plot(df["time"], df["v(cmp)"], label="cmp")
+    axs[2].plot(df["time"], df["v(rst)"], label="rst")
+    # axs[2].plot(df["time"], df["v(timeout)"], label="timeout")
+    axs[3].plot(df["time"], df["v(dec_timeout_counter)"], label="timeout_counter")
+    # axs[3].plot(df["time"], df["v(dec_finetuning_counter)"], label="finetuning_counter")
+    axs[3].plot(df["time"], df["v(dec_coarse_step_counter)"], label="coarse_step_counter")
+    # axs[3].plot(df["time"], df["v(dec_coarse_step1)"], label="coarse_step1")
+    # axs[3].plot(df["time"], df["v(dec_coarse_step2)"], label="coarse_step2")
+    axs[3].plot(df["time"], df["v(dec_finetuning_duty_cycle)"], label="finetuning_duty_cycle")
 
-    # for ax in axs:
-    #     ax.set_ylabel("Voltage (V)", fontsize=label_fontsize)
-    #     ax.tick_params(axis="both", labelsize=ticks_fontsize)
-    #     ax.grid()
-    #     ax.legend(loc="upper left", ncol=2, fontsize=legend_fontsize)
+    for ax in axs:
+        ax.set_ylabel("Voltage (V)", fontsize=label_fontsize)
+        ax.tick_params(axis="both", labelsize=ticks_fontsize)
+        ax.grid()
+        ax.legend(loc="upper left", ncol=2, fontsize=legend_fontsize)
 
-    # axs[0].set_title(f"{process_corner} corner, {voltage_supply} V, {circuit_temperature} °C, {clock_frequency} MHz, {duty_cycle} %", fontsize=title_fontsize, fontweight='bold')
-    # axs[-1].set_xlabel("Time (ns)", fontsize=label_fontsize)
+    axs[0].set_title(f"{process_corner} corner, {voltage_supply} V, {circuit_temperature} °C, {clock_frequency} MHz, {duty_cycle} %", fontsize=title_fontsize, fontweight='bold')
+    axs[-1].set_xlabel("Time (ns)", fontsize=label_fontsize)
 
-    # # ax_iout.set_ylabel("Current (uA)", fontsize=label_fontsize)
-    # # ax_iout.legend(loc="lower right", fontsize=legend_fontsize)
-    # # ax_iout.tick_params(axis='both', labelsize=ticks_fontsize)
+    # ax_iout.set_ylabel("Current (uA)", fontsize=label_fontsize)
+    # ax_iout.legend(loc="lower right", fontsize=legend_fontsize)
+    # ax_iout.tick_params(axis='both', labelsize=ticks_fontsize)
 
     # fig.tight_layout()
     # fig.savefig(f"figures/{file.split('/')[-1].split('.out')[0]}.png", dpi=300, bbox_inches="tight")
@@ -184,11 +184,12 @@ for file in files:
     # fig_2, axs_2 = plt.subplots(6, 1, figsize=(fig_width, fig_height), sharex=True, dpi=300)
     
     # axs_2[0].plot(df["time"], df["v(bt)"], label="v(bt)")
-    # axs_2[1].plot(df["time"], df["v(clk)"], label="v(clk)")
-    # axs_2[2].plot(df["time"], df["v(cmp)"], label="v(cmp)")
-    # axs_2[3].plot(df["time"], df["v(cmp_sync1)"], label="v(cmp_sync1)")
-    # axs_2[4].plot(df["time"], df["v(cmp_sync2)"], label="v(cmp_sync2)")
-    # axs_2[5].plot(df["time"], df["v(cmp_rising)"], label="v(cmp_rising)")
+    # axs_2[0].plot(df["time"], df["v(clk)"], label="v(clk)")
+    # axs_2[1].plot(df["time"], df["v(cmp)"], label="v(cmp)")
+    # axs_2[2].plot(df["time"], df["v(cmp_sync1)"], label="v(cmp_sync1)")
+    # axs_2[3].plot(df["time"], df["v(cmp_sync2)"], label="v(cmp_sync2)")
+    # axs_2[4].plot(df["time"], df["v(cmp_rising)"], label="v(cmp_rising)")
+    # axs_2[5].plot(df["time"], df["v(dec_cmp_rising_counter)"], label="v(dec_cmp_rising_counter)")
 
     # for i, ax in enumerate(axs_2):
     #     ax.set_ylabel("Voltage (V)", fontsize=label_fontsize)

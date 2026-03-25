@@ -210,16 +210,19 @@ module dig #(
 
           case (branch_sel)
                BRANCH_1: begin
-                    swbrn1 = 1'b1;
-                    swcap1 = 1'b1;
+                    swcap2 = 0; swbrn2 = 0;
+                    swcap3 = 0; swbrn3 = 0;
+                    swbrn1 = 1'b1; swcap1 = 1'b1;
                end
                BRANCH_2: begin
-                    swbrn2 = 1'b1;
-                    swcap2 = 1'b1;
+                    swcap1 = 0; swbrn1 = 0;
+                    swcap3 = 0; swbrn3 = 0;
+                    swbrn2 = 1'b1; swcap2 = 1'b1;
                end
                BRANCH_3: begin
-                    swbrn3 = 1'b1;
-                    swcap3 = 1'b1;
+                    swcap1 = 0; swbrn1 = 0;
+                    swcap2 = 0; swbrn2 = 0;
+                    swbrn3 = 1'b1; swcap3 = 1'b1;
                end
                default: ;
           endcase
