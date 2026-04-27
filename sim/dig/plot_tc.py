@@ -17,6 +17,14 @@ df = pd.read_csv(f"figures/{'_'.join(args)}.csv")
 
 x = df["Temperature (°C)"].tolist()
 y = df["Reference voltage (V)"].tolist()
+coarse_code = df["Coarse code"].tolist()
+fine_code = df["Fine code"].tolist()
+
+coarse_code = [int(code*1e3) for code in coarse_code]
+fine_code = [int(code*1e3) for code in fine_code]
+
+print(f"coarse code: {coarse_code}")
+print(f"fine code: {fine_code}")
 
 tmax = max(x)
 print(f"Maximum temperature: {tmax:.2f} °C")
@@ -32,7 +40,6 @@ tc = (vmax - vmin) / (vavg * (tmax - tmin)) * 1e6 # temperature coefficient in p
 print(f"Temperature coefficient (TC) of the reference voltage: {tc:.2f} ppm/°C")
 
 fig_6, axs_6 = plt.subplots(1, 1, figsize=(5, 5), sharex=True, dpi=300)
-
 axs_6.plot(x, y, marker="o", linestyle="dashed", label="Temperature coefficient (TC) = {:.2f} ppm/°C".format(tc))
 
 axs_6.set_xlabel("Temperature (°C)", fontsize=label_fontsize)
@@ -43,6 +50,25 @@ axs_6.legend(loc="best", fontsize=legend_fontsize)
 # axs_6.set_xticks(x)
 
 fig_6.tight_layout()
-fig_6.savefig(f"figures/{'_'.join(args)}_tc.png", dpi=300, bbox_inches="tight")
+fig_6.savefig(f"figures/{'_'.join(args)}_temp_vs_refv.png", dpi=300, bbox_inches="tight")
+
+#
+# Don't actually need to plot DAC code for reference voltage
+#
+
+# dac_code = [coarse * 10 + (fine - 1) for coarse, fine in zip(coarse_code, fine_code)]
+
+# fig_7, axs_7 = plt.subplots(1, 1, figsize=(5, 5), sharex=True, dpi=300)
+# axs_7.plot(x, dac_code, marker="o", linestyle="dashed")
+
+# axs_7.set_xlabel("Temperature (°C)", fontsize=label_fontsize)
+# axs_7.set_ylabel("DAC code", fontsize=label_fontsize)
+# axs_7.grid()
+# axs_7.legend(loc="best", fontsize=legend_fontsize)
+# axs_7.set_yticks([0, max(dac_code)/2, 1.1*max(dac_code)])
+# # axs_7.set_xticks(x)
+
+# fig_7.tight_layout()
+# fig_7.savefig(f"figures/{'_'.join(args)}_temp_vs_dac_code.png", dpi=300, bbox_inches="tight")
 
 plt.show()

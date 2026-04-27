@@ -12,6 +12,7 @@
 * OPTIONS
 *-----------------------------------------------------------------
 .option TNOM=27 GMIN=1e-10 reltol=2e-3
+.option sparse
 
 *-----------------------------------------------------------------
 * PARAMETERS
@@ -61,19 +62,19 @@
 .param PERCLK = clock_periode
 .param PWCLK = {PERCLK * ratio}
 
-.csparam simulation_length_csparam = 450us
+.csparam simulation_length_csparam = 850us
 
 *-----------------------------------------------------------------
 * FORCE
 *-----------------------------------------------------------------
 VSS  VSS 0   dc 0V
 VDD  VDD VSS dc {AVDD}
-VSLP SLP VSS dc 0V
+* VSLP SLP VSS dc 0V
 
 VCLK CLK VSS pulse(0V {AVDD} {TDCLK} {TRCLK} {TFCLK} {PWCLK} {PERCLK})
 VRST RST VSS pwl 
-+ 1.0us 0V 1.1us {AVDD} 9.9us {AVDD} 10.0us 0V 
-+ 25.1us 0V 25.2us {AVDD} 25.4us {AVDD} 25.5us 0V 
++ 1.0us 0V 1.1us {AVDD} 24.9us {AVDD} 25.0us 0V 
+* + 440.1us 0V 440.2us {AVDD} 440.4us {AVDD} 440.5us 0V 
 * + 275.1us 0V 275.2us {AVDD} 285.4us {AVDD} 285.5us 0V 
 
 * VBT  BT  VSS pulse(0V {AVDD} {TD} {TR} {TF} {PW} {PER})
@@ -141,7 +142,7 @@ RSWDRAIN3 SWDRN3 VSS 1m
 * .save all
 
 .save 
-+ v(clk) v(rst)
++ v(clk) v(rst) v(slp)
 + v(b1) v(b2) v(b3)  v(b4)  v(b5)  v(b6)  v(b7)
 + v(b8) v(b9) v(b10) v(b11) v(b12) v(b13) v(b14) v(b15) 
 + v(bt)
@@ -154,7 +155,7 @@ RSWDRAIN3 SWDRN3 VSS 1m
 + v(xdut.v2a) v(xdut.v2b) v(xdut.v2c)
 + v(SWBRN1) v(SWBRN2) v(SWBRN3) v(SWBGR1) v(SWBGR2) v(SWCAP1) v(SWCAP2) v(SWCAP3) v(SWDRN1) v(SWDRN2) v(SWDRN3)
 + v(xdut.x1.ctl) v(xdut.x1.ctlb) v(xdut.x1.vt)
-+ v(vss) v(vdd) v(slp)
++ v(vss) v(vdd)
 + i(vss) i(vdd)
 * + v(xdut.r1) v(xdut.r2)
 * + v(xdut.x1.b1_n) v(xdut.x1.b2_n) v(xdut.x1.b3_n)  v(xdut.x1.b4_n)  v(xdut.x1.b5_n)  v(xdut.x1.b6_n)  v(xdut.x1.b7_n)
@@ -193,12 +194,13 @@ echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
 
 
 * temperature options to choose from: -40 -20 0 27 60 90 125
+* 								  or: -40 -20 0 25 50 75 100 125
 * dutycycle options to choose from: 10 20 30 40 50 60 70 80 90
 
 * -40 -35 -30 -25 -20 -15 -10 -5 0 5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95 100 105 110 115 120 125
 
 set fend = .raw
-foreach cirtemp 100
+foreach cirtemp 110
 	foreach finfreq 1
 		foreach dcycle 50
 			alterparam finetuning_frequency = {$finfreq}
@@ -252,7 +254,7 @@ foreach cirtemp 100
 			let v(v2a) = v(xdut.v2a)
 			let v(v2b) = v(xdut.v2b)
 			let v(v2c) = v(xdut.v2c)
-			let v(vref) = v(xdut.vref)
+			let v(vref) = v(xdut.vref)	
 
 			set fend = .out
 			set wr_singlescale
@@ -278,7 +280,9 @@ foreach cirtemp 100
 			+ v(cmp_sync1)
 			+ v(cmp_sync2)
 			+ v(cmp_rising)
+			+ v(cmp_falling)
 			+ v(dec_cmp_rising_counter)
+			+ v(dec_cmp_switching_counter)
 			+ v(dec_timeout_counter)
 			+ v(dec_coarse_step_counter)
 			+ v(dec_coarse_step1)
@@ -287,6 +291,7 @@ foreach cirtemp 100
 			+ v(dec_finetuning_periode)
 			+ v(dec_finetuning_counter)
 			+ v(finetuning_signal)
+			+ v(stepping_up) 
 		end
 	end
 end

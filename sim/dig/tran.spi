@@ -12,6 +12,7 @@
 * OPTIONS
 *-----------------------------------------------------------------
 .option TNOM=27 GMIN=1e-10 reltol=2e-3
+.option sparse
 
 *-----------------------------------------------------------------
 * PARAMETERS
@@ -61,7 +62,8 @@
 .param PERCLK = clock_periode
 .param PWCLK = {PERCLK * ratio}
 
-.csparam simulation_length_csparam = 100us
+* .csparam simulation_length_csparam = 100us
+.csparam simulation_length_csparam = 10us
 
 *-----------------------------------------------------------------
 * FORCE
@@ -198,7 +200,7 @@ echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
 * -40 -35 -30 -25 -20 -15 -10 -5 0 5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95 100 105 110 115 120 125
 
 set fend = .raw
-foreach cirtemp 100
+foreach cirtemp 0
 	foreach finfreq 1
 		foreach dcycle 50
 			alterparam finetuning_frequency = {$finfreq}
