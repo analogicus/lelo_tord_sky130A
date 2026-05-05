@@ -1,0 +1,238 @@
+*TB_SUN_TR_SKY130NM/TB_NCM
+*----------------------------------------------------------------
+* Include
+*----------------------------------------------------------------
+#ifdef Lay
+.include ../../../work/lpe/TB_reference_lpe.spi
+#else
+.include ../../../work/xsch/TB_reference.spice
+#endif
+
+*-----------------------------------------------------------------
+* OPTIONS
+*-----------------------------------------------------------------
+* .option TNOM=27 GMIN=1e-15 reltol=1e-3
+.option TNOM=27 GMIN=1e-10 reltol=2e-3
+* .option sparse
+
+*-----------------------------------------------------------------
+* PARAMETERS
+*-----------------------------------------------------------------
+.param TRF = 10p
+
+* Analog supply voltage given in Volts (V)
+.param AVDD = {vdda}
+.csparam voltage_supply_csparam = {vdda}
+
+.param clock_frequency = 10
+.csparam clock_frequency_csparam = {clock_frequency}
+
+.param clock_frequency_mhz = {clock_frequency * 1MegHz}
+.param clock_periode = {1/clock_frequency_mhz}
+.csparam clock_periode_csparam = {clock_periode}
+
+.param TDCLK = 0us
+.param TRCLK = {clock_periode/100}
+.param TFCLK = TRCLK
+.param PERCLK = clock_periode
+.param PWCLK = {PERCLK / 2}
+
+* Finetuning parameters
+.param TD = 0us
+.param TR = TRCLK
+.param TF = TR
+.param PER = {10 * PERCLK}
+.param PW = {PER / 2}
+
+.csparam simulation_length_csparam = 200us
+
+*-----------------------------------------------------------------
+* FORCE
+*-----------------------------------------------------------------
+VSS  VSS 0   dc 0V
+VDD  VDD VSS dc {AVDD}
+
+VCLK CLK VSS pulse(0V {AVDD} {TDCLK} {TRCLK} {TFCLK} {PWCLK} {PERCLK})
+
+VSLP SLP VSS pwl 750.0us 0V 750.1us {AVDD} 799.9us {AVDD} 800.0us 0V 
+VRST RST VSS pwl 1.0us 0V 1.1us {AVDD} 14.9us {AVDD} 15.0us 0V 
+* + 440.1us 0V 440.2us {AVDD} 440.4us {AVDD} 440.5us 0V 
+* + 275.1us 0V 275.2us {AVDD} 285.4us {AVDD} 285.5us 0V 
+
+* REFERENCE MODE = 1, TEMPERATURE MODE = 0
+VMODE MODE VSS dc {AVDD}
+
+* VB0  B0  VSS pulse(0V {AVDD} {TD} {TR} {TF} {PW} {PER})
+Vconn0 finetuning_signal B0 dc 0V
+
+Vconn1 coarse_step1.0 B1 dc 0V
+Vconn2 coarse_step1.1 B2 dc 0V
+Vconn3 coarse_step1.2 B3 dc 0V
+Vconn4 coarse_step1.3 B4 dc 0V
+Vconn5 coarse_step1.4 B5 dc 0V
+Vconn6 coarse_step1.5 B6 dc 0V
+Vconn7 coarse_step1.6 B7 dc 0V
+Vconn8 coarse_step1.7 B8 dc 0V
+Vconn9 coarse_step2.0 B9 dc 0V
+Vcon10 coarse_step2.1 B10 dc 0V
+Vcon11 coarse_step2.2 B11 dc 0V
+Vcon12 coarse_step2.3 B12 dc 0V
+Vcon13 coarse_step2.4 B13 dc 0V
+Vcon14 coarse_step2.5 B14 dc 0V
+Vcon15 coarse_step2.6 B15 dc 0V
+
+RSWDRAIN1 SWDRN1 VSS 1m
+RSWDRAIN2 SWDRN2 VSS 1m
+RSWDRAIN3 SWDRN3 VSS 1m
+
+*-----------------------------------------------------------------
+* DUT
+*-----------------------------------------------------------------
+.include ../xdut.spi
+.include ../svinst.spi
+
+*----------------------------------------------------------------
+* PROBE
+*----------------------------------------------------------------
+* .save all
+
+.save 
++ v(clk) v(rst) v(slp) v(mode)
++ v(b0)
++ v(b1) v(b2) v(b3)  v(b4)  v(b5)  v(b6)  v(b7)
++ v(b8) v(b9) v(b10) v(b11) v(b12) v(b13) v(b14) v(b15) 
++ v(cmp_async)
++ v(xdut.iout)
++ v(v1) v(xdut.v1a) v(xdut.v1b) 
++ v(v2) v(xdut.v2a) v(xdut.v2b) v(xdut.v2c)
++ v(xdut.vref) v(vout)
++ v(xdut.x1.ctl) v(xdut.x1.ctlb) v(xdut.x1.vt)
++ v(SWBRN1) v(SWBRN2) v(SWBRN3) v(SWBGR1) v(SWBGR2) v(SWCAP1) v(SWCAP2) v(SWCAP3) v(SWDRN1) v(SWDRN2) v(SWDRN3)
++ v(vss) v(vdd)
++ i(vss) i(vdd)
++ v(xdut.r1) v(xdut.r2)
++ v(xdut.x1.b1_n) v(xdut.x1.b2_n) v(xdut.x1.b3_n)  v(xdut.x1.b4_n)  v(xdut.x1.b5_n)  v(xdut.x1.b6_n)  v(xdut.x1.b7_n)
++ v(xdut.x1.b8_n) v(xdut.x1.b9_n) v(xdut.x1.b10_n) v(xdut.x1.b11_n) v(xdut.x1.b12_n) v(xdut.x1.b13_n) v(xdut.x1.b14_n) v(xdut.x1.b15_n)
++ v(xdut.x1.b0_n)
++ v(xdut.x1.b1_mid) v(xdut.x1.b2_mid) v(xdut.x1.b3_mid)  v(xdut.x1.b4_mid)  v(xdut.x1.b5_mid)  v(xdut.x1.b6_mid)  v(xdut.x1.b7_mid)
++ v(xdut.x1.b8_mid) v(xdut.x1.b9_mid) v(xdut.x1.b10_mid) v(xdut.x1.b11_mid) v(xdut.x1.b12_mid) v(xdut.x1.b13_mid) v(xdut.x1.b14_mid) v(xdut.x1.b15_mid)
++ v(xdut.x1.pbias) v(xdut.x1.nbias) 
++ v(xdut.x2.x1.vbias) v(xdut.x2.x1.vipdrn) v(xdut.x2.x1.vindrn) v(xdut.x2.x1.vsrc) 
++ v(xdut.x2.x1.vout_n)
+
+* + v(xdut.x1.v0) v(xdut.x1.v1) v(xdut.x1.v2) v(xdut.x1.v3) v(xdut.x1.v4) v(xdut.x1.v5) v(xdut.x1.v6) v(xdut.x1.v7)
+
+*----------------------------------------------------------------
+* NGSPICE control
+*----------------------------------------------------------------
+.control
+set num_threads=8
+set color0=white
+set color1=black
+unset askquit
+
+set vsupply = {$&voltage_supply_csparam}
+set clkfreq = {$&clock_frequency_csparam}
+set clkper = {1/$clkfreq}
+set simlen = {$&simulation_length_csparam}
+
+* temperature options to choose from: -40 -20 0 27 60 90 125
+* 								  or: -40 -20 0 25 50 75 100 125
+* 								  or: -40 0 40 80 125
+* dutycycle options to choose from: 10 20 30 40 50 60 70 80 90
+
+* -40 -35 -30 -25 -20 -15 -10 -5 0 5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95 100 105 110 115 120 125
+
+set fend = .raw
+foreach cirtemp -35 -30 -25 -20 -15 -10 -5 0 5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95 100 105 110 115 120
+            
+    reset
+    option temp = $cirtemp
+
+    echo ------------------------------------------------------------
+    echo "view and pvt corner: {cicname}"
+    echo "supply voltage: {$vsupply} V"
+    echo "circuit temperature: {$cirtemp} C"
+    echo "clock frequency {$clkfreq} MHz => clock periode {$clkper} us"
+    echo "simulation length: {$simlen} s"
+    echo ------------------------------------------------------------
+
+    *- Override the default digital output bridge.
+    pre_set auto_bridge_d_out =
+        + ( ".model auto_dac dac_bridge(out_low = 0.0 out_high = 1.8)"
+        +   "auto_bridge%d [ %s ] [ %s ] auto_dac" )
+
+    optran 0 0 0 1ns 1us 0
+    tran 10ns {$simlen}
+    * tran 1ns 100us 1ps
+
+    write {cicname}_sim2_temperature{$cirtemp}C_vdd{$vsupply}V{$fend}
+
+    *
+    * This last part used to be in tran.meas, but was moved to ensure all simulations are written to .out-files
+    *
+
+    load {cicname}_sim2_temperature{$cirtemp}C_vdd{$vsupply}V{$fend}
+
+    let v(x1.vt) = v(xdut.x1.vt)
+    let v(x1.ctl) = v(xdut.x1.ctl)
+    let v(x1.ctlb) = v(xdut.x1.ctlb)
+    let v(v1a) = v(xdut.v1a)
+    let v(v1b) = v(xdut.v1b)
+    let v(v2a) = v(xdut.v2a)
+    let v(v2b) = v(xdut.v2b)
+    let v(v2c) = v(xdut.v2c)
+    let v(vref) = v(xdut.vref)	
+
+    set fend = .out
+    set wr_singlescale
+    set wr_vecnames
+    option numdgt = 5
+    echo writing to file named {cicname}_sim2_temperature{$cirtemp}C_vdd{$vsupply}V{$fend}
+    
+    wrdata {cicname}_sim2_temperature{$cirtemp}C_vdd{$vsupply}V{$fend}
+    + v(clk) v(rst) v(slp) v(mode)
+    + v(b0)
+    + v(b1) v(b2) v(b3) v(b4) v(b5) v(b6) v(b7) 
+    + v(b8) v(b9) v(b10) v(b11) v(b12) v(b13) v(b14) v(b15) 
+    + v(cmp_async) 
+    + v(xdut.iout)
+    + v(v1) v(v1a) v(v1b) 
+    + v(v2) v(v2a) v(v2b) v(v2c)
+    + v(vref) v(vout)
+    + v(x1.ctl) v(x1.ctlb) v(x1.vt)
+    + v(SWBRN1) v(SWBRN2) v(SWBRN3) v(SWBGR1) v(SWBGR2) v(SWCAP1) v(SWCAP2) v(SWCAP3) v(SWDRN1) v(SWDRN2) v(SWDRN3)
+    + v(vss) v(vdd)
+    + i(vdd) i(vss)
+    + v(xdut.r1) v(xdut.r2)
+    + v(xdut.x1.b1_n) v(xdut.x1.b2_n) v(xdut.x1.b3_n)  v(xdut.x1.b4_n)  v(xdut.x1.b5_n)  v(xdut.x1.b6_n)  v(xdut.x1.b7_n)
+    + v(xdut.x1.b8_n) v(xdut.x1.b9_n) v(xdut.x1.b10_n) v(xdut.x1.b11_n) v(xdut.x1.b12_n) v(xdut.x1.b13_n) v(xdut.x1.b14_n) v(xdut.x1.b15_n)
+    + v(xdut.x1.b0_n)
+    + v(xdut.x1.b1_mid) v(xdut.x1.b2_mid) v(xdut.x1.b3_mid)  v(xdut.x1.b4_mid)  v(xdut.x1.b5_mid)  v(xdut.x1.b6_mid)  v(xdut.x1.b7_mid)
+    + v(xdut.x1.b8_mid) v(xdut.x1.b9_mid) v(xdut.x1.b10_mid) v(xdut.x1.b11_mid) v(xdut.x1.b12_mid) v(xdut.x1.b13_mid) v(xdut.x1.b14_mid) v(xdut.x1.b15_mid)
+    + v(xdut.x1.pbias) v(xdut.x1.nbias) 
+    + v(xdut.x2.x1.vbias) v(xdut.x2.x1.vipdrn) v(xdut.x2.x1.vindrn) v(xdut.x2.x1.vsrc) 
+    + v(rst_meta) v(reset)
+    + v(slp_meta) v(sleep)
+    + v(mode_meta) v(operation)
+    + v(cmp_meta) v(cmp_sync)
+    + v(cmp_rising) v(cmp_falling)
+    + v(dec_cmp_rising_counter)
+    + v(dec_cmp_switching_counter)
+    + v(dec_timeout_counter)
+    + v(dec_coarse_step_counter)
+    + v(dec_coarse_step1)
+    + v(dec_coarse_step2)
+    + v(dec_finetuning_duty_cycle)
+    + v(dec_finetuning_periode)
+    + v(dec_finetuning_counter)
+    + v(finetuning_signal)
+    + v(stepping_up) 
+
+end
+
+quit
+
+.endc
+
+.end

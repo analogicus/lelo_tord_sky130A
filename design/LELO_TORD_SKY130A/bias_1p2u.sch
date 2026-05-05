@@ -29,15 +29,11 @@ N 860 380 860 430 {lab=PBIAS}
 N 860 430 920 430 {lab=PBIAS}
 N 960 330 960 380 {lab=VDD}
 N 820 250 820 270 {lab=VDD}
-N 380 1320 420 1320 {lab=SLEEP}
-N 460 1360 460 1400 {lab=VSS}
-N 460 1240 460 1280 {lab=VDD}
-N 500 1320 540 1320 {lab=SLEEP_N}
 N 1000 1150 1040 1150 {lab=PBIAS}
 N 1000 1170 1040 1170 {lab=NBIAS}
 N 460 1140 500 1140 {lab=VDD}
 N 460 1160 500 1160 {lab=SLEEP}
-N 460 1180 500 1180 {lab=VSS}
+N 460 1200 500 1200 {lab=VSS}
 N 740 1390 780 1390 {lab=SLEEP}
 N 700 1270 760 1270 {lab=NBIAS}
 N 700 1250 700 1290 {lab=NBIAS}
@@ -54,7 +50,7 @@ N 920 250 920 350 {lab=VDD}
 N 820 350 820 380 {lab=PBIAS}
 N 820 380 860 380 {lab=PBIAS}
 N 860 250 860 300 {lab=VDD}
-N 920 430 920 1290 {lab=#net1}
+N 920 430 920 1290 {lab=PBIAS}
 N 660 850 680 850 {lab=VSS}
 N 660 970 680 970 {lab=VSS}
 N 700 890 700 930 {lab=V5}
@@ -73,6 +69,7 @@ N 660 850 660 970 {lab=VSS}
 N 660 730 660 850 {lab=VSS}
 N 660 610 660 730 {lab=VSS}
 N 660 490 660 610 {lab=VSS}
+N 460 1180 500 1180 {lab=SLEEP}
 C {JNW_ATR_SKY130A/JNWATR_PCH_2C5F0.sym} 660 380 0 0 {name=x1 }
 C {JNW_TR_SKY130A/JNWTR_RPPO16.sym} 700 1130 1 1 {name=x2}
 C {JNW_TR_SKY130A/JNWTR_RPPO16.sym} 700 1250 1 1 {name=x3}
@@ -85,12 +82,7 @@ C {devices/lab_wire.sym} 630 1440 0 0 {name=p1 sig_type=std_logic lab=VSS}
 C {devices/lab_wire.sym} 690 250 0 0 {name=p2 sig_type=std_logic lab=VDD}
 C {devices/ipin.sym} 460 1140 0 0 {name=p3 lab=VDD}
 C {devices/ipin.sym} 460 1160 0 0 {name=p4 lab=SLEEP}
-C {devices/ipin.sym} 460 1180 0 0 {name=p6 lab=VSS}
-C {JNW_TR_SKY130A/JNWTR_IVX1_CV.sym} 420 1320 0 0 {name=x10 }
-C {devices/lab_wire.sym} 410 1320 0 0 {name=p7 sig_type=std_logic lab=SLEEP}
-C {devices/lab_wire.sym} 510 1320 0 1 {name=p8 sig_type=std_logic lab=SLEEP_N}
-C {devices/lab_wire.sym} 460 1390 0 0 {name=p9 sig_type=std_logic lab=VSS}
-C {devices/lab_wire.sym} 460 1270 0 0 {name=p10 sig_type=std_logic lab=VDD}
+C {devices/ipin.sym} 460 1200 0 0 {name=p6 lab=VSS}
 C {devices/lab_wire.sym} 650 380 0 0 {name=p11 sig_type=std_logic lab=SLEEP}
 C {devices/opin.sym} 1040 1150 0 0 {name=p13 lab=PBIAS}
 C {devices/opin.sym} 1040 1170 0 0 {name=p14 lab=NBIAS}
@@ -111,3 +103,4 @@ C {devices/lab_wire.sym} 700 440 0 1 {name=p21 sig_type=std_logic lab=V1}
 C {devices/lab_wire.sym} 700 680 0 1 {name=p22 sig_type=std_logic lab=V3}
 C {devices/lab_wire.sym} 700 920 0 1 {name=p23 sig_type=std_logic lab=V5}
 C {devices/lab_wire.sym} 700 1160 0 1 {name=p24 sig_type=std_logic lab=V7}
+C {devices/ipin.sym} 460 1180 0 0 {name=p25 lab=SLEEP_N}

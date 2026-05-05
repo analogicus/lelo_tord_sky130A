@@ -2,22 +2,18 @@
 *.include ../../rtl/tbdigctrl.v
 adut_tbdigctrl [clk
 + rst
-+ cmp
++ slp
++ mode
++ cmp_async
 + ]
-+ [slp
-+ swbrn1
-+ swbrn2
-+ swbrn3
-+ swcap1
-+ swcap2
-+ swcap3
-+ sw_counter.4
-+ sw_counter.3
-+ sw_counter.2
-+ sw_counter.1
-+ sw_counter.0
-+ cmp_sync1
-+ cmp_sync2
++ [rst_meta
++ reset
++ slp_meta
++ sleep
++ mode_meta
++ operation
++ cmp_meta
++ cmp_sync
 + cmp_rising
 + cmp_falling
 + cmp_rising_counter.7
@@ -36,6 +32,19 @@ adut_tbdigctrl [clk
 + cmp_switching_counter.2
 + cmp_switching_counter.1
 + cmp_switching_counter.0
++ swbrn1
++ swbrn2
++ swbrn3
++ swbgr1
++ swbgr2
++ swcap1
++ swcap2
++ swcap3
++ switch_counter.4
++ switch_counter.3
++ switch_counter.2
++ switch_counter.1
++ switch_counter.0
 + timeout_counter.7
 + timeout_counter.6
 + timeout_counter.5
@@ -88,26 +97,26 @@ adut_tbdigctrl [clk
 + finetuning_counter.1
 + finetuning_counter.0
 + finetuning_signal
-+ coarse_step_counter_saved.3
-+ coarse_step_counter_saved.2
-+ coarse_step_counter_saved.1
-+ coarse_step_counter_saved.0
-+ finetuning_duty_cycle_saved.7
-+ finetuning_duty_cycle_saved.6
-+ finetuning_duty_cycle_saved.5
-+ finetuning_duty_cycle_saved.4
-+ finetuning_duty_cycle_saved.3
-+ finetuning_duty_cycle_saved.2
-+ finetuning_duty_cycle_saved.1
-+ finetuning_duty_cycle_saved.0
-+ finetuning_periode_saved.7
-+ finetuning_periode_saved.6
-+ finetuning_periode_saved.5
-+ finetuning_periode_saved.4
-+ finetuning_periode_saved.3
-+ finetuning_periode_saved.2
-+ finetuning_periode_saved.1
-+ finetuning_periode_saved.0
++ saved_coarse_step_counter.3
++ saved_coarse_step_counter.2
++ saved_coarse_step_counter.1
++ saved_coarse_step_counter.0
++ saved_finetuning_duty_cycle.7
++ saved_finetuning_duty_cycle.6
++ saved_finetuning_duty_cycle.5
++ saved_finetuning_duty_cycle.4
++ saved_finetuning_duty_cycle.3
++ saved_finetuning_duty_cycle.2
++ saved_finetuning_duty_cycle.1
++ saved_finetuning_duty_cycle.0
++ saved_finetuning_periode.7
++ saved_finetuning_periode.6
++ saved_finetuning_periode.5
++ saved_finetuning_periode.4
++ saved_finetuning_periode.3
++ saved_finetuning_periode.2
++ saved_finetuning_periode.1
++ saved_finetuning_periode.0
 + stepping_up
 + ] null dut_tbdigctrl
 .model dut_tbdigctrl d_cosim simulation="../tbdigctrl.so" delay=10p
@@ -115,141 +124,139 @@ adut_tbdigctrl [clk
 * Inputs
 Rsvi_tbdigctrl0 clk 0 1G
 Rsvi_tbdigctrl1 rst 0 1G
-Rsvi_tbdigctrl2 cmp 0 1G
+Rsvi_tbdigctrl2 slp 0 1G
+Rsvi_tbdigctrl3 mode 0 1G
+Rsvi_tbdigctrl4 cmp_async 0 1G
 
 * Outputs
-Rsvi_tbdigctrl3 slp 0 1G
-Rsvi_tbdigctrl4 swbrn1 0 1G
-Rsvi_tbdigctrl5 swbrn2 0 1G
-Rsvi_tbdigctrl6 swbrn3 0 1G
-Rsvi_tbdigctrl7 swcap1 0 1G
-Rsvi_tbdigctrl8 swcap2 0 1G
-Rsvi_tbdigctrl9 swcap3 0 1G
-Rsvi_tbdigctrl10 sw_counter.4 0 1G
-Rsvi_tbdigctrl11 sw_counter.3 0 1G
-Rsvi_tbdigctrl12 sw_counter.2 0 1G
-Rsvi_tbdigctrl13 sw_counter.1 0 1G
-Rsvi_tbdigctrl14 sw_counter.0 0 1G
-Rsvi_tbdigctrl15 cmp_sync1 0 1G
-Rsvi_tbdigctrl16 cmp_sync2 0 1G
-Rsvi_tbdigctrl17 cmp_rising 0 1G
-Rsvi_tbdigctrl18 cmp_falling 0 1G
-Rsvi_tbdigctrl19 cmp_rising_counter.7 0 1G
-Rsvi_tbdigctrl20 cmp_rising_counter.6 0 1G
-Rsvi_tbdigctrl21 cmp_rising_counter.5 0 1G
-Rsvi_tbdigctrl22 cmp_rising_counter.4 0 1G
-Rsvi_tbdigctrl23 cmp_rising_counter.3 0 1G
-Rsvi_tbdigctrl24 cmp_rising_counter.2 0 1G
-Rsvi_tbdigctrl25 cmp_rising_counter.1 0 1G
-Rsvi_tbdigctrl26 cmp_rising_counter.0 0 1G
-Rsvi_tbdigctrl27 cmp_switching_counter.7 0 1G
-Rsvi_tbdigctrl28 cmp_switching_counter.6 0 1G
-Rsvi_tbdigctrl29 cmp_switching_counter.5 0 1G
-Rsvi_tbdigctrl30 cmp_switching_counter.4 0 1G
-Rsvi_tbdigctrl31 cmp_switching_counter.3 0 1G
-Rsvi_tbdigctrl32 cmp_switching_counter.2 0 1G
-Rsvi_tbdigctrl33 cmp_switching_counter.1 0 1G
-Rsvi_tbdigctrl34 cmp_switching_counter.0 0 1G
-Rsvi_tbdigctrl35 timeout_counter.7 0 1G
-Rsvi_tbdigctrl36 timeout_counter.6 0 1G
-Rsvi_tbdigctrl37 timeout_counter.5 0 1G
-Rsvi_tbdigctrl38 timeout_counter.4 0 1G
-Rsvi_tbdigctrl39 timeout_counter.3 0 1G
-Rsvi_tbdigctrl40 timeout_counter.2 0 1G
-Rsvi_tbdigctrl41 timeout_counter.1 0 1G
-Rsvi_tbdigctrl42 timeout_counter.0 0 1G
-Rsvi_tbdigctrl43 coarse_step_counter.3 0 1G
-Rsvi_tbdigctrl44 coarse_step_counter.2 0 1G
-Rsvi_tbdigctrl45 coarse_step_counter.1 0 1G
-Rsvi_tbdigctrl46 coarse_step_counter.0 0 1G
-Rsvi_tbdigctrl47 coarse_step1.7 0 1G
-Rsvi_tbdigctrl48 coarse_step1.6 0 1G
-Rsvi_tbdigctrl49 coarse_step1.5 0 1G
-Rsvi_tbdigctrl50 coarse_step1.4 0 1G
-Rsvi_tbdigctrl51 coarse_step1.3 0 1G
-Rsvi_tbdigctrl52 coarse_step1.2 0 1G
-Rsvi_tbdigctrl53 coarse_step1.1 0 1G
-Rsvi_tbdigctrl54 coarse_step1.0 0 1G
-Rsvi_tbdigctrl55 coarse_step2.6 0 1G
-Rsvi_tbdigctrl56 coarse_step2.5 0 1G
-Rsvi_tbdigctrl57 coarse_step2.4 0 1G
-Rsvi_tbdigctrl58 coarse_step2.3 0 1G
-Rsvi_tbdigctrl59 coarse_step2.2 0 1G
-Rsvi_tbdigctrl60 coarse_step2.1 0 1G
-Rsvi_tbdigctrl61 coarse_step2.0 0 1G
-Rsvi_tbdigctrl62 finetuning_duty_cycle.7 0 1G
-Rsvi_tbdigctrl63 finetuning_duty_cycle.6 0 1G
-Rsvi_tbdigctrl64 finetuning_duty_cycle.5 0 1G
-Rsvi_tbdigctrl65 finetuning_duty_cycle.4 0 1G
-Rsvi_tbdigctrl66 finetuning_duty_cycle.3 0 1G
-Rsvi_tbdigctrl67 finetuning_duty_cycle.2 0 1G
-Rsvi_tbdigctrl68 finetuning_duty_cycle.1 0 1G
-Rsvi_tbdigctrl69 finetuning_duty_cycle.0 0 1G
-Rsvi_tbdigctrl70 finetuning_periode.7 0 1G
-Rsvi_tbdigctrl71 finetuning_periode.6 0 1G
-Rsvi_tbdigctrl72 finetuning_periode.5 0 1G
-Rsvi_tbdigctrl73 finetuning_periode.4 0 1G
-Rsvi_tbdigctrl74 finetuning_periode.3 0 1G
-Rsvi_tbdigctrl75 finetuning_periode.2 0 1G
-Rsvi_tbdigctrl76 finetuning_periode.1 0 1G
-Rsvi_tbdigctrl77 finetuning_periode.0 0 1G
-Rsvi_tbdigctrl78 finetuning_counter.7 0 1G
-Rsvi_tbdigctrl79 finetuning_counter.6 0 1G
-Rsvi_tbdigctrl80 finetuning_counter.5 0 1G
-Rsvi_tbdigctrl81 finetuning_counter.4 0 1G
-Rsvi_tbdigctrl82 finetuning_counter.3 0 1G
-Rsvi_tbdigctrl83 finetuning_counter.2 0 1G
-Rsvi_tbdigctrl84 finetuning_counter.1 0 1G
-Rsvi_tbdigctrl85 finetuning_counter.0 0 1G
-Rsvi_tbdigctrl86 finetuning_signal 0 1G
-Rsvi_tbdigctrl87 coarse_step_counter_saved.3 0 1G
-Rsvi_tbdigctrl88 coarse_step_counter_saved.2 0 1G
-Rsvi_tbdigctrl89 coarse_step_counter_saved.1 0 1G
-Rsvi_tbdigctrl90 coarse_step_counter_saved.0 0 1G
-Rsvi_tbdigctrl91 finetuning_duty_cycle_saved.7 0 1G
-Rsvi_tbdigctrl92 finetuning_duty_cycle_saved.6 0 1G
-Rsvi_tbdigctrl93 finetuning_duty_cycle_saved.5 0 1G
-Rsvi_tbdigctrl94 finetuning_duty_cycle_saved.4 0 1G
-Rsvi_tbdigctrl95 finetuning_duty_cycle_saved.3 0 1G
-Rsvi_tbdigctrl96 finetuning_duty_cycle_saved.2 0 1G
-Rsvi_tbdigctrl97 finetuning_duty_cycle_saved.1 0 1G
-Rsvi_tbdigctrl98 finetuning_duty_cycle_saved.0 0 1G
-Rsvi_tbdigctrl99 finetuning_periode_saved.7 0 1G
-Rsvi_tbdigctrl100 finetuning_periode_saved.6 0 1G
-Rsvi_tbdigctrl101 finetuning_periode_saved.5 0 1G
-Rsvi_tbdigctrl102 finetuning_periode_saved.4 0 1G
-Rsvi_tbdigctrl103 finetuning_periode_saved.3 0 1G
-Rsvi_tbdigctrl104 finetuning_periode_saved.2 0 1G
-Rsvi_tbdigctrl105 finetuning_periode_saved.1 0 1G
-Rsvi_tbdigctrl106 finetuning_periode_saved.0 0 1G
-Rsvi_tbdigctrl107 stepping_up 0 1G
+Rsvi_tbdigctrl5 rst_meta 0 1G
+Rsvi_tbdigctrl6 reset 0 1G
+Rsvi_tbdigctrl7 slp_meta 0 1G
+Rsvi_tbdigctrl8 sleep 0 1G
+Rsvi_tbdigctrl9 mode_meta 0 1G
+Rsvi_tbdigctrl10 operation 0 1G
+Rsvi_tbdigctrl11 cmp_meta 0 1G
+Rsvi_tbdigctrl12 cmp_sync 0 1G
+Rsvi_tbdigctrl13 cmp_rising 0 1G
+Rsvi_tbdigctrl14 cmp_falling 0 1G
+Rsvi_tbdigctrl15 cmp_rising_counter.7 0 1G
+Rsvi_tbdigctrl16 cmp_rising_counter.6 0 1G
+Rsvi_tbdigctrl17 cmp_rising_counter.5 0 1G
+Rsvi_tbdigctrl18 cmp_rising_counter.4 0 1G
+Rsvi_tbdigctrl19 cmp_rising_counter.3 0 1G
+Rsvi_tbdigctrl20 cmp_rising_counter.2 0 1G
+Rsvi_tbdigctrl21 cmp_rising_counter.1 0 1G
+Rsvi_tbdigctrl22 cmp_rising_counter.0 0 1G
+Rsvi_tbdigctrl23 cmp_switching_counter.7 0 1G
+Rsvi_tbdigctrl24 cmp_switching_counter.6 0 1G
+Rsvi_tbdigctrl25 cmp_switching_counter.5 0 1G
+Rsvi_tbdigctrl26 cmp_switching_counter.4 0 1G
+Rsvi_tbdigctrl27 cmp_switching_counter.3 0 1G
+Rsvi_tbdigctrl28 cmp_switching_counter.2 0 1G
+Rsvi_tbdigctrl29 cmp_switching_counter.1 0 1G
+Rsvi_tbdigctrl30 cmp_switching_counter.0 0 1G
+Rsvi_tbdigctrl31 swbrn1 0 1G
+Rsvi_tbdigctrl32 swbrn2 0 1G
+Rsvi_tbdigctrl33 swbrn3 0 1G
+Rsvi_tbdigctrl34 swbgr1 0 1G
+Rsvi_tbdigctrl35 swbgr2 0 1G
+Rsvi_tbdigctrl36 swcap1 0 1G
+Rsvi_tbdigctrl37 swcap2 0 1G
+Rsvi_tbdigctrl38 swcap3 0 1G
+Rsvi_tbdigctrl39 switch_counter.4 0 1G
+Rsvi_tbdigctrl40 switch_counter.3 0 1G
+Rsvi_tbdigctrl41 switch_counter.2 0 1G
+Rsvi_tbdigctrl42 switch_counter.1 0 1G
+Rsvi_tbdigctrl43 switch_counter.0 0 1G
+Rsvi_tbdigctrl44 timeout_counter.7 0 1G
+Rsvi_tbdigctrl45 timeout_counter.6 0 1G
+Rsvi_tbdigctrl46 timeout_counter.5 0 1G
+Rsvi_tbdigctrl47 timeout_counter.4 0 1G
+Rsvi_tbdigctrl48 timeout_counter.3 0 1G
+Rsvi_tbdigctrl49 timeout_counter.2 0 1G
+Rsvi_tbdigctrl50 timeout_counter.1 0 1G
+Rsvi_tbdigctrl51 timeout_counter.0 0 1G
+Rsvi_tbdigctrl52 coarse_step_counter.3 0 1G
+Rsvi_tbdigctrl53 coarse_step_counter.2 0 1G
+Rsvi_tbdigctrl54 coarse_step_counter.1 0 1G
+Rsvi_tbdigctrl55 coarse_step_counter.0 0 1G
+Rsvi_tbdigctrl56 coarse_step1.7 0 1G
+Rsvi_tbdigctrl57 coarse_step1.6 0 1G
+Rsvi_tbdigctrl58 coarse_step1.5 0 1G
+Rsvi_tbdigctrl59 coarse_step1.4 0 1G
+Rsvi_tbdigctrl60 coarse_step1.3 0 1G
+Rsvi_tbdigctrl61 coarse_step1.2 0 1G
+Rsvi_tbdigctrl62 coarse_step1.1 0 1G
+Rsvi_tbdigctrl63 coarse_step1.0 0 1G
+Rsvi_tbdigctrl64 coarse_step2.6 0 1G
+Rsvi_tbdigctrl65 coarse_step2.5 0 1G
+Rsvi_tbdigctrl66 coarse_step2.4 0 1G
+Rsvi_tbdigctrl67 coarse_step2.3 0 1G
+Rsvi_tbdigctrl68 coarse_step2.2 0 1G
+Rsvi_tbdigctrl69 coarse_step2.1 0 1G
+Rsvi_tbdigctrl70 coarse_step2.0 0 1G
+Rsvi_tbdigctrl71 finetuning_duty_cycle.7 0 1G
+Rsvi_tbdigctrl72 finetuning_duty_cycle.6 0 1G
+Rsvi_tbdigctrl73 finetuning_duty_cycle.5 0 1G
+Rsvi_tbdigctrl74 finetuning_duty_cycle.4 0 1G
+Rsvi_tbdigctrl75 finetuning_duty_cycle.3 0 1G
+Rsvi_tbdigctrl76 finetuning_duty_cycle.2 0 1G
+Rsvi_tbdigctrl77 finetuning_duty_cycle.1 0 1G
+Rsvi_tbdigctrl78 finetuning_duty_cycle.0 0 1G
+Rsvi_tbdigctrl79 finetuning_periode.7 0 1G
+Rsvi_tbdigctrl80 finetuning_periode.6 0 1G
+Rsvi_tbdigctrl81 finetuning_periode.5 0 1G
+Rsvi_tbdigctrl82 finetuning_periode.4 0 1G
+Rsvi_tbdigctrl83 finetuning_periode.3 0 1G
+Rsvi_tbdigctrl84 finetuning_periode.2 0 1G
+Rsvi_tbdigctrl85 finetuning_periode.1 0 1G
+Rsvi_tbdigctrl86 finetuning_periode.0 0 1G
+Rsvi_tbdigctrl87 finetuning_counter.7 0 1G
+Rsvi_tbdigctrl88 finetuning_counter.6 0 1G
+Rsvi_tbdigctrl89 finetuning_counter.5 0 1G
+Rsvi_tbdigctrl90 finetuning_counter.4 0 1G
+Rsvi_tbdigctrl91 finetuning_counter.3 0 1G
+Rsvi_tbdigctrl92 finetuning_counter.2 0 1G
+Rsvi_tbdigctrl93 finetuning_counter.1 0 1G
+Rsvi_tbdigctrl94 finetuning_counter.0 0 1G
+Rsvi_tbdigctrl95 finetuning_signal 0 1G
+Rsvi_tbdigctrl96 saved_coarse_step_counter.3 0 1G
+Rsvi_tbdigctrl97 saved_coarse_step_counter.2 0 1G
+Rsvi_tbdigctrl98 saved_coarse_step_counter.1 0 1G
+Rsvi_tbdigctrl99 saved_coarse_step_counter.0 0 1G
+Rsvi_tbdigctrl100 saved_finetuning_duty_cycle.7 0 1G
+Rsvi_tbdigctrl101 saved_finetuning_duty_cycle.6 0 1G
+Rsvi_tbdigctrl102 saved_finetuning_duty_cycle.5 0 1G
+Rsvi_tbdigctrl103 saved_finetuning_duty_cycle.4 0 1G
+Rsvi_tbdigctrl104 saved_finetuning_duty_cycle.3 0 1G
+Rsvi_tbdigctrl105 saved_finetuning_duty_cycle.2 0 1G
+Rsvi_tbdigctrl106 saved_finetuning_duty_cycle.1 0 1G
+Rsvi_tbdigctrl107 saved_finetuning_duty_cycle.0 0 1G
+Rsvi_tbdigctrl108 saved_finetuning_periode.7 0 1G
+Rsvi_tbdigctrl109 saved_finetuning_periode.6 0 1G
+Rsvi_tbdigctrl110 saved_finetuning_periode.5 0 1G
+Rsvi_tbdigctrl111 saved_finetuning_periode.4 0 1G
+Rsvi_tbdigctrl112 saved_finetuning_periode.3 0 1G
+Rsvi_tbdigctrl113 saved_finetuning_periode.2 0 1G
+Rsvi_tbdigctrl114 saved_finetuning_periode.1 0 1G
+Rsvi_tbdigctrl115 saved_finetuning_periode.0 0 1G
+Rsvi_tbdigctrl116 stepping_up 0 1G
 
-.save v(slp)
+.save v(rst_meta)
 
-.save v(swbrn1)
+.save v(reset)
 
-.save v(swbrn2)
+.save v(slp_meta)
 
-.save v(swbrn3)
+.save v(sleep)
 
-.save v(swcap1)
+.save v(mode_meta)
 
-.save v(swcap2)
+.save v(operation)
 
-.save v(swcap3)
+.save v(cmp_meta)
 
-E_STATE_tbdigctrlsw_counter dec_sw_counter 0 value={( 0 
-+ + 16*v(sw_counter.4)/AVDD
-+ + 8*v(sw_counter.3)/AVDD
-+ + 4*v(sw_counter.2)/AVDD
-+ + 2*v(sw_counter.1)/AVDD
-+ + 1*v(sw_counter.0)/AVDD
-+)/1000}
-.save v(dec_sw_counter)
-
-.save v(cmp_sync1)
-
-.save v(cmp_sync2)
+.save v(cmp_sync)
 
 .save v(cmp_rising)
 
@@ -278,6 +285,31 @@ E_STATE_tbdigctrlcmp_switching_counter dec_cmp_switching_counter 0 value={( 0
 + + 1*v(cmp_switching_counter.0)/AVDD
 +)/1000}
 .save v(dec_cmp_switching_counter)
+
+.save v(swbrn1)
+
+.save v(swbrn2)
+
+.save v(swbrn3)
+
+.save v(swbgr1)
+
+.save v(swbgr2)
+
+.save v(swcap1)
+
+.save v(swcap2)
+
+.save v(swcap3)
+
+E_STATE_tbdigctrlswitch_counter dec_switch_counter 0 value={( 0 
++ + 16*v(switch_counter.4)/AVDD
++ + 8*v(switch_counter.3)/AVDD
++ + 4*v(switch_counter.2)/AVDD
++ + 2*v(switch_counter.1)/AVDD
++ + 1*v(switch_counter.0)/AVDD
++)/1000}
+.save v(dec_switch_counter)
 
 E_STATE_tbdigctrltimeout_counter dec_timeout_counter 0 value={( 0 
 + + 128*v(timeout_counter.7)/AVDD
@@ -360,37 +392,37 @@ E_STATE_tbdigctrlfinetuning_counter dec_finetuning_counter 0 value={( 0
 
 .save v(finetuning_signal)
 
-E_STATE_tbdigctrlcoarse_step_counter_saved dec_coarse_step_counter_saved 0 value={( 0 
-+ + 8*v(coarse_step_counter_saved.3)/AVDD
-+ + 4*v(coarse_step_counter_saved.2)/AVDD
-+ + 2*v(coarse_step_counter_saved.1)/AVDD
-+ + 1*v(coarse_step_counter_saved.0)/AVDD
+E_STATE_tbdigctrlsaved_coarse_step_counter dec_saved_coarse_step_counter 0 value={( 0 
++ + 8*v(saved_coarse_step_counter.3)/AVDD
++ + 4*v(saved_coarse_step_counter.2)/AVDD
++ + 2*v(saved_coarse_step_counter.1)/AVDD
++ + 1*v(saved_coarse_step_counter.0)/AVDD
 +)/1000}
-.save v(dec_coarse_step_counter_saved)
+.save v(dec_saved_coarse_step_counter)
 
-E_STATE_tbdigctrlfinetuning_duty_cycle_saved dec_finetuning_duty_cycle_saved 0 value={( 0 
-+ + 128*v(finetuning_duty_cycle_saved.7)/AVDD
-+ + 64*v(finetuning_duty_cycle_saved.6)/AVDD
-+ + 32*v(finetuning_duty_cycle_saved.5)/AVDD
-+ + 16*v(finetuning_duty_cycle_saved.4)/AVDD
-+ + 8*v(finetuning_duty_cycle_saved.3)/AVDD
-+ + 4*v(finetuning_duty_cycle_saved.2)/AVDD
-+ + 2*v(finetuning_duty_cycle_saved.1)/AVDD
-+ + 1*v(finetuning_duty_cycle_saved.0)/AVDD
+E_STATE_tbdigctrlsaved_finetuning_duty_cycle dec_saved_finetuning_duty_cycle 0 value={( 0 
++ + 128*v(saved_finetuning_duty_cycle.7)/AVDD
++ + 64*v(saved_finetuning_duty_cycle.6)/AVDD
++ + 32*v(saved_finetuning_duty_cycle.5)/AVDD
++ + 16*v(saved_finetuning_duty_cycle.4)/AVDD
++ + 8*v(saved_finetuning_duty_cycle.3)/AVDD
++ + 4*v(saved_finetuning_duty_cycle.2)/AVDD
++ + 2*v(saved_finetuning_duty_cycle.1)/AVDD
++ + 1*v(saved_finetuning_duty_cycle.0)/AVDD
 +)/1000}
-.save v(dec_finetuning_duty_cycle_saved)
+.save v(dec_saved_finetuning_duty_cycle)
 
-E_STATE_tbdigctrlfinetuning_periode_saved dec_finetuning_periode_saved 0 value={( 0 
-+ + 128*v(finetuning_periode_saved.7)/AVDD
-+ + 64*v(finetuning_periode_saved.6)/AVDD
-+ + 32*v(finetuning_periode_saved.5)/AVDD
-+ + 16*v(finetuning_periode_saved.4)/AVDD
-+ + 8*v(finetuning_periode_saved.3)/AVDD
-+ + 4*v(finetuning_periode_saved.2)/AVDD
-+ + 2*v(finetuning_periode_saved.1)/AVDD
-+ + 1*v(finetuning_periode_saved.0)/AVDD
+E_STATE_tbdigctrlsaved_finetuning_periode dec_saved_finetuning_periode 0 value={( 0 
++ + 128*v(saved_finetuning_periode.7)/AVDD
++ + 64*v(saved_finetuning_periode.6)/AVDD
++ + 32*v(saved_finetuning_periode.5)/AVDD
++ + 16*v(saved_finetuning_periode.4)/AVDD
++ + 8*v(saved_finetuning_periode.3)/AVDD
++ + 4*v(saved_finetuning_periode.2)/AVDD
++ + 2*v(saved_finetuning_periode.1)/AVDD
++ + 1*v(saved_finetuning_periode.0)/AVDD
 +)/1000}
-.save v(dec_finetuning_periode_saved)
+.save v(dec_saved_finetuning_periode)
 
 .save v(stepping_up)
 

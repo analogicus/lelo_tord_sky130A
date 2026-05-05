@@ -1,2 +1,2 @@
-Temperature (°C),Output voltage (V),Coarse code,Fine code
-110.0,0.550157,0.005,0.006
+Temperature (°C),Output voltage (V),Coarse code,Fine code,Minimum power (uW),Maximum power (uW),Average power (uW)
+-40.0,0.323865,0.002,0.007,-98.7516,1161.6083999999998,87.63736780898373

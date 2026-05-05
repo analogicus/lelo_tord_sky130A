@@ -511,3 +511,26 @@ endmodule
                 default: ;
             endcase
         end
+
+
+
+    always_ff @(posedge clk or posedge rst) begin
+        if (rst)
+            reset <= 1'b1;
+        else
+            reset <= 1'b0;
+    end
+
+    always_ff @(posedge clk or posedge slp) begin
+        if (slp)
+            sleep <= 1'b1;
+        else
+            sleep <= 1'b0;
+    end
+
+    always_ff @(posedge clk or posedge mode) begin
+        if (mode)
+            operation <= 1'b1; // BGR mode
+        else
+            operation <= 1'b0; // Temperatture sensing mode
+    end
