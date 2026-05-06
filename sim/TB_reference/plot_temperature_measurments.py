@@ -14,12 +14,20 @@ ticks_font_size = font_size
 
 arguments = sys.argv[1:]
 
+stepping_direction = ""
+if "up" in arguments:
+    stepping_direction = "up"
+    print("Plotting for transient signals stepping upwards")
+else: 
+    stepping_direction = "down"
+    print("Plotting for transient signals stepping downwards")
+
 
 #
 # Plot last output voltage detected in transient simulations vs temperature and calculate temperature sensitivity in mV/°C
 #
 
-dataframe1 = pd.read_csv(f"figures/{'_'.join(arguments)}_df1.csv")
+dataframe1 = pd.read_csv(f"figures/{'_'.join(arguments)}_stepping_{stepping_direction}_df1.csv")
 
 temperatures = dataframe1["Temperature (°C)"].tolist()
 voltages = dataframe1["Output voltage (V)"].tolist()
@@ -57,7 +65,7 @@ axs.tick_params(axis='both', labelsize=ticks_font_size)
 axs.grid()
 
 fig.tight_layout()
-fig.savefig(f"figures/{'_'.join(arguments)}_temperature_vs_output_voltage_dataframe1.png", bbox_inches="tight")
+fig.savefig(f"figures/{'_'.join(arguments)}_stepping_{stepping_direction}_temperature_vs_output_voltage_dataframe1.png", bbox_inches="tight")
 
 
 #
@@ -88,14 +96,14 @@ axs_1.tick_params(axis='both', labelsize=ticks_font_size)
 axs_1.grid()
 
 fig_1.tight_layout()
-fig_1.savefig(f"figures/{'_'.join(arguments)}_temperature_vs_dac_code_dataframe1.png", dpi=300, bbox_inches="tight")
+fig_1.savefig(f"figures/{'_'.join(arguments)}_stepping_{stepping_direction}_temperature_vs_dac_code_dataframe1.png", dpi=300, bbox_inches="tight")
 
 
 #
 # Plot output voltage vs temperature again, but this time at the first value aquired in the transient simulation
 #
 
-dataframe2 = pd.read_csv(f"figures/{'_'.join(arguments)}_df2.csv")
+dataframe2 = pd.read_csv(f"figures/{'_'.join(arguments)}_stepping_{stepping_direction}_df2.csv")
 
 temperatures2 = dataframe2["Temperature (°C)"].tolist()
 voltages2 = dataframe2["Output voltage (V)"].tolist()
@@ -132,7 +140,7 @@ axs_2.tick_params(axis='both', labelsize=ticks_font_size)
 axs_2.grid()
 
 fig_2.tight_layout()
-fig_2.savefig(f"figures/{'_'.join(arguments)}_temperature_vs_output_voltage_dataframe2.png", dpi=300, bbox_inches="tight")
+fig_2.savefig(f"figures/{'_'.join(arguments)}_stepping_{stepping_direction}_temperature_vs_output_voltage_dataframe2.png", dpi=300, bbox_inches="tight")
 
 
 #
@@ -163,7 +171,7 @@ axs_3.tick_params(axis='both', labelsize=ticks_font_size)
 axs_3.grid()
 
 fig_3.tight_layout()
-fig_3.savefig(f"figures/{'_'.join(arguments)}_temperature_vs_dac_code_dataframe2.png", dpi=300, bbox_inches="tight")
+fig_3.savefig(f"figures/{'_'.join(arguments)}_stepping_{stepping_direction}_temperature_vs_dac_code_dataframe2.png", dpi=300, bbox_inches="tight")
 
 
 
@@ -187,7 +195,7 @@ axs_4.grid()
 axs_4.set_ylim(bottom=0, top=1.8) # set y-axis limit to 20% more than the maximum moving average power consumption
 
 fig_4.tight_layout()
-fig_4.savefig(f"figures/{'_'.join(arguments)}_output_voltage_vs_temperature_combined.png", dpi=300, bbox_inches="tight")
+fig_4.savefig(f"figures/{'_'.join(arguments)}_stepping_{stepping_direction}_output_voltage_vs_temperature_combined.png", dpi=300, bbox_inches="tight")
 
 
 plt.show()

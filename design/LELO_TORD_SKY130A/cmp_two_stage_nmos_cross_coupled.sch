@@ -108,7 +108,7 @@ N 950 830 990 830 {lab=SLP}
 N 990 230 1030 230 {lab=SLP_N}
 N 520 480 520 690 {lab=VSS}
 N 560 400 560 440 {lab=#net1}
-N 480 370 520 370 {lab=SLP_N}
+N 480 370 520 370 {lab=SLP}
 N 1410 260 1450 260 {lab=VINDRN}
 N 1410 200 1450 200 {lab=VDD}
 N 1410 230 1450 230 {lab=VDD}
@@ -142,7 +142,7 @@ C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} 860 370 0 1 {name=xd2[1:0]}
 C {JNW_ATR_SKY130A/JNWATR_NCH_4C5F0.sym} 860 620 0 1 {name=xc10}
 C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} 940 370 0 0 {name=xd3[3:0]}
 C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} 1620 370 0 0 {name=xd7[1:0]}
-C {devices/lab_wire.sym} 630 620 0 1 {name=p7 sig_type=std_logic lab=VBIAS}
+C {devices/lab_wire.sym} 630 620 0 1 {name=p7 sig_type=std_logic lab=VBN}
 C {devices/lab_wire.sym} 1220 580 0 1 {name=p8 sig_type=std_logic lab=VSRC}
 C {devices/lab_wire.sym} 1040 440 0 1 {name=p9 sig_type=std_logic lab=VIPDRN}
 C {devices/lab_wire.sym} 1380 440 0 1 {name=p10 sig_type=std_logic lab=VINDRN}

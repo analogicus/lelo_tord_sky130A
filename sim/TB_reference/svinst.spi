@@ -40,6 +40,9 @@ adut_tbreference [clk
 + swcap1
 + swcap2
 + swcap3
++ swdrn1
++ swdrn2
++ swdrn3
 + switch_counter.4
 + switch_counter.3
 + switch_counter.2
@@ -163,84 +166,87 @@ Rsvi_tbreference35 swbgr2 0 1G
 Rsvi_tbreference36 swcap1 0 1G
 Rsvi_tbreference37 swcap2 0 1G
 Rsvi_tbreference38 swcap3 0 1G
-Rsvi_tbreference39 switch_counter.4 0 1G
-Rsvi_tbreference40 switch_counter.3 0 1G
-Rsvi_tbreference41 switch_counter.2 0 1G
-Rsvi_tbreference42 switch_counter.1 0 1G
-Rsvi_tbreference43 switch_counter.0 0 1G
-Rsvi_tbreference44 timeout_counter.7 0 1G
-Rsvi_tbreference45 timeout_counter.6 0 1G
-Rsvi_tbreference46 timeout_counter.5 0 1G
-Rsvi_tbreference47 timeout_counter.4 0 1G
-Rsvi_tbreference48 timeout_counter.3 0 1G
-Rsvi_tbreference49 timeout_counter.2 0 1G
-Rsvi_tbreference50 timeout_counter.1 0 1G
-Rsvi_tbreference51 timeout_counter.0 0 1G
-Rsvi_tbreference52 coarse_step_counter.3 0 1G
-Rsvi_tbreference53 coarse_step_counter.2 0 1G
-Rsvi_tbreference54 coarse_step_counter.1 0 1G
-Rsvi_tbreference55 coarse_step_counter.0 0 1G
-Rsvi_tbreference56 coarse_step1.7 0 1G
-Rsvi_tbreference57 coarse_step1.6 0 1G
-Rsvi_tbreference58 coarse_step1.5 0 1G
-Rsvi_tbreference59 coarse_step1.4 0 1G
-Rsvi_tbreference60 coarse_step1.3 0 1G
-Rsvi_tbreference61 coarse_step1.2 0 1G
-Rsvi_tbreference62 coarse_step1.1 0 1G
-Rsvi_tbreference63 coarse_step1.0 0 1G
-Rsvi_tbreference64 coarse_step2.6 0 1G
-Rsvi_tbreference65 coarse_step2.5 0 1G
-Rsvi_tbreference66 coarse_step2.4 0 1G
-Rsvi_tbreference67 coarse_step2.3 0 1G
-Rsvi_tbreference68 coarse_step2.2 0 1G
-Rsvi_tbreference69 coarse_step2.1 0 1G
-Rsvi_tbreference70 coarse_step2.0 0 1G
-Rsvi_tbreference71 finetuning_duty_cycle.7 0 1G
-Rsvi_tbreference72 finetuning_duty_cycle.6 0 1G
-Rsvi_tbreference73 finetuning_duty_cycle.5 0 1G
-Rsvi_tbreference74 finetuning_duty_cycle.4 0 1G
-Rsvi_tbreference75 finetuning_duty_cycle.3 0 1G
-Rsvi_tbreference76 finetuning_duty_cycle.2 0 1G
-Rsvi_tbreference77 finetuning_duty_cycle.1 0 1G
-Rsvi_tbreference78 finetuning_duty_cycle.0 0 1G
-Rsvi_tbreference79 finetuning_periode.7 0 1G
-Rsvi_tbreference80 finetuning_periode.6 0 1G
-Rsvi_tbreference81 finetuning_periode.5 0 1G
-Rsvi_tbreference82 finetuning_periode.4 0 1G
-Rsvi_tbreference83 finetuning_periode.3 0 1G
-Rsvi_tbreference84 finetuning_periode.2 0 1G
-Rsvi_tbreference85 finetuning_periode.1 0 1G
-Rsvi_tbreference86 finetuning_periode.0 0 1G
-Rsvi_tbreference87 finetuning_counter.7 0 1G
-Rsvi_tbreference88 finetuning_counter.6 0 1G
-Rsvi_tbreference89 finetuning_counter.5 0 1G
-Rsvi_tbreference90 finetuning_counter.4 0 1G
-Rsvi_tbreference91 finetuning_counter.3 0 1G
-Rsvi_tbreference92 finetuning_counter.2 0 1G
-Rsvi_tbreference93 finetuning_counter.1 0 1G
-Rsvi_tbreference94 finetuning_counter.0 0 1G
-Rsvi_tbreference95 finetuning_signal 0 1G
-Rsvi_tbreference96 saved_coarse_step_counter.3 0 1G
-Rsvi_tbreference97 saved_coarse_step_counter.2 0 1G
-Rsvi_tbreference98 saved_coarse_step_counter.1 0 1G
-Rsvi_tbreference99 saved_coarse_step_counter.0 0 1G
-Rsvi_tbreference100 saved_finetuning_duty_cycle.7 0 1G
-Rsvi_tbreference101 saved_finetuning_duty_cycle.6 0 1G
-Rsvi_tbreference102 saved_finetuning_duty_cycle.5 0 1G
-Rsvi_tbreference103 saved_finetuning_duty_cycle.4 0 1G
-Rsvi_tbreference104 saved_finetuning_duty_cycle.3 0 1G
-Rsvi_tbreference105 saved_finetuning_duty_cycle.2 0 1G
-Rsvi_tbreference106 saved_finetuning_duty_cycle.1 0 1G
-Rsvi_tbreference107 saved_finetuning_duty_cycle.0 0 1G
-Rsvi_tbreference108 saved_finetuning_periode.7 0 1G
-Rsvi_tbreference109 saved_finetuning_periode.6 0 1G
-Rsvi_tbreference110 saved_finetuning_periode.5 0 1G
-Rsvi_tbreference111 saved_finetuning_periode.4 0 1G
-Rsvi_tbreference112 saved_finetuning_periode.3 0 1G
-Rsvi_tbreference113 saved_finetuning_periode.2 0 1G
-Rsvi_tbreference114 saved_finetuning_periode.1 0 1G
-Rsvi_tbreference115 saved_finetuning_periode.0 0 1G
-Rsvi_tbreference116 stepping_up 0 1G
+Rsvi_tbreference39 swdrn1 0 1G
+Rsvi_tbreference40 swdrn2 0 1G
+Rsvi_tbreference41 swdrn3 0 1G
+Rsvi_tbreference42 switch_counter.4 0 1G
+Rsvi_tbreference43 switch_counter.3 0 1G
+Rsvi_tbreference44 switch_counter.2 0 1G
+Rsvi_tbreference45 switch_counter.1 0 1G
+Rsvi_tbreference46 switch_counter.0 0 1G
+Rsvi_tbreference47 timeout_counter.7 0 1G
+Rsvi_tbreference48 timeout_counter.6 0 1G
+Rsvi_tbreference49 timeout_counter.5 0 1G
+Rsvi_tbreference50 timeout_counter.4 0 1G
+Rsvi_tbreference51 timeout_counter.3 0 1G
+Rsvi_tbreference52 timeout_counter.2 0 1G
+Rsvi_tbreference53 timeout_counter.1 0 1G
+Rsvi_tbreference54 timeout_counter.0 0 1G
+Rsvi_tbreference55 coarse_step_counter.3 0 1G
+Rsvi_tbreference56 coarse_step_counter.2 0 1G
+Rsvi_tbreference57 coarse_step_counter.1 0 1G
+Rsvi_tbreference58 coarse_step_counter.0 0 1G
+Rsvi_tbreference59 coarse_step1.7 0 1G
+Rsvi_tbreference60 coarse_step1.6 0 1G
+Rsvi_tbreference61 coarse_step1.5 0 1G
+Rsvi_tbreference62 coarse_step1.4 0 1G
+Rsvi_tbreference63 coarse_step1.3 0 1G
+Rsvi_tbreference64 coarse_step1.2 0 1G
+Rsvi_tbreference65 coarse_step1.1 0 1G
+Rsvi_tbreference66 coarse_step1.0 0 1G
+Rsvi_tbreference67 coarse_step2.6 0 1G
+Rsvi_tbreference68 coarse_step2.5 0 1G
+Rsvi_tbreference69 coarse_step2.4 0 1G
+Rsvi_tbreference70 coarse_step2.3 0 1G
+Rsvi_tbreference71 coarse_step2.2 0 1G
+Rsvi_tbreference72 coarse_step2.1 0 1G
+Rsvi_tbreference73 coarse_step2.0 0 1G
+Rsvi_tbreference74 finetuning_duty_cycle.7 0 1G
+Rsvi_tbreference75 finetuning_duty_cycle.6 0 1G
+Rsvi_tbreference76 finetuning_duty_cycle.5 0 1G
+Rsvi_tbreference77 finetuning_duty_cycle.4 0 1G
+Rsvi_tbreference78 finetuning_duty_cycle.3 0 1G
+Rsvi_tbreference79 finetuning_duty_cycle.2 0 1G
+Rsvi_tbreference80 finetuning_duty_cycle.1 0 1G
+Rsvi_tbreference81 finetuning_duty_cycle.0 0 1G
+Rsvi_tbreference82 finetuning_periode.7 0 1G
+Rsvi_tbreference83 finetuning_periode.6 0 1G
+Rsvi_tbreference84 finetuning_periode.5 0 1G
+Rsvi_tbreference85 finetuning_periode.4 0 1G
+Rsvi_tbreference86 finetuning_periode.3 0 1G
+Rsvi_tbreference87 finetuning_periode.2 0 1G
+Rsvi_tbreference88 finetuning_periode.1 0 1G
+Rsvi_tbreference89 finetuning_periode.0 0 1G
+Rsvi_tbreference90 finetuning_counter.7 0 1G
+Rsvi_tbreference91 finetuning_counter.6 0 1G
+Rsvi_tbreference92 finetuning_counter.5 0 1G
+Rsvi_tbreference93 finetuning_counter.4 0 1G
+Rsvi_tbreference94 finetuning_counter.3 0 1G
+Rsvi_tbreference95 finetuning_counter.2 0 1G
+Rsvi_tbreference96 finetuning_counter.1 0 1G
+Rsvi_tbreference97 finetuning_counter.0 0 1G
+Rsvi_tbreference98 finetuning_signal 0 1G
+Rsvi_tbreference99 saved_coarse_step_counter.3 0 1G
+Rsvi_tbreference100 saved_coarse_step_counter.2 0 1G
+Rsvi_tbreference101 saved_coarse_step_counter.1 0 1G
+Rsvi_tbreference102 saved_coarse_step_counter.0 0 1G
+Rsvi_tbreference103 saved_finetuning_duty_cycle.7 0 1G
+Rsvi_tbreference104 saved_finetuning_duty_cycle.6 0 1G
+Rsvi_tbreference105 saved_finetuning_duty_cycle.5 0 1G
+Rsvi_tbreference106 saved_finetuning_duty_cycle.4 0 1G
+Rsvi_tbreference107 saved_finetuning_duty_cycle.3 0 1G
+Rsvi_tbreference108 saved_finetuning_duty_cycle.2 0 1G
+Rsvi_tbreference109 saved_finetuning_duty_cycle.1 0 1G
+Rsvi_tbreference110 saved_finetuning_duty_cycle.0 0 1G
+Rsvi_tbreference111 saved_finetuning_periode.7 0 1G
+Rsvi_tbreference112 saved_finetuning_periode.6 0 1G
+Rsvi_tbreference113 saved_finetuning_periode.5 0 1G
+Rsvi_tbreference114 saved_finetuning_periode.4 0 1G
+Rsvi_tbreference115 saved_finetuning_periode.3 0 1G
+Rsvi_tbreference116 saved_finetuning_periode.2 0 1G
+Rsvi_tbreference117 saved_finetuning_periode.1 0 1G
+Rsvi_tbreference118 saved_finetuning_periode.0 0 1G
+Rsvi_tbreference119 stepping_up 0 1G
 
 .save v(rst_meta)
 
@@ -301,6 +307,12 @@ E_STATE_tbreferencecmp_switching_counter dec_cmp_switching_counter 0 value={( 0
 .save v(swcap2)
 
 .save v(swcap3)
+
+.save v(swdrn1)
+
+.save v(swdrn2)
+
+.save v(swdrn3)
 
 E_STATE_tbreferenceswitch_counter dec_switch_counter 0 value={( 0 
 + + 16*v(switch_counter.4)/AVDD
