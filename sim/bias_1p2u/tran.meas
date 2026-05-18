@@ -3,15 +3,21 @@
 
 load {cicname}.raw
 
-let v(v1) = v(xdut.v1)
-let v(v2) = v(xdut.v2)
-let v(v3) = v(xdut.v3)
-let v(v4) = v(xdut.v4)
-let v(v5) = v(xdut.v5)
-let v(v6) = v(xdut.v6)
-let v(v7) = v(xdut.v7)
+let v(v1) = v(xdut.vr1)
+let v(v2) = v(xdut.vr2)
+let v(v3) = v(xdut.vr3)
+let v(v4) = v(xdut.vr4)
+let v(v5) = v(xdut.vr5)
+let v(v6) = v(xdut.vr6)
+let v(v7) = v(xdut.vr7)
 
-let v(sleep_n) = v(xdut.sleep_n)
+* let v(sleep_n) = v(xdut.sleep_n)
+
+let v(sleep) = v(slp)
+let v(sleep_n) = v(slp_n)
+
+let v(nbias) = v(vbn)
+let v(pbias) = b(vbp)
 
 let R     = 7535
 let R2    = 2 * R
@@ -53,15 +59,21 @@ echo "MEAS_END"
 
 load {cicname}_sleep_high.raw
 
-let v(v1) = v(xdut.v1)
-let v(v2) = v(xdut.v2)
-let v(v3) = v(xdut.v3)
-let v(v4) = v(xdut.v4)
-let v(v5) = v(xdut.v5)
-let v(v6) = v(xdut.v6)
-let v(v7) = v(xdut.v7)
+let v(v1) = v(xdut.vr1)
+let v(v2) = v(xdut.vr2)
+let v(v3) = v(xdut.vr3)
+let v(v4) = v(xdut.vr4)
+let v(v5) = v(xdut.vr5)
+let v(v6) = v(xdut.vr6)
+let v(v7) = v(xdut.vr7)
 
-let v(sleep_n) = v(xdut.sleep_n)
+* let v(sleep_n) = v(xdut.sleep_n)
+
+let v(sleep) = v(slp)
+let v(sleep_n) = v(slp_n)
+
+let v(nbias) = v(vbn)
+let v(pbias) = b(vbp)
 
 let R     = 7535
 let R2    = 2 * R
@@ -79,6 +91,7 @@ let ibias = vdiff2 / Rtot
 set wr_singlescale
 set wr_vecnames
 option numdgt = 5
+
 wrdata {cicname}_sleep_high.out
 + v(sleep) v(sleep_n)
 + v(v1) v(v2) v(v3) v(v4) v(v5) v(v6) v(v7)

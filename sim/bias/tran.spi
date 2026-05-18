@@ -18,17 +18,14 @@
 *-----------------------------------------------------------------
 .param TRF = 10p
 .param AVDD = {vdda}
-.param delay = 10ns
-.param rise = 1ns
-.param width = 100ns
-.param fall = 1ns
 
 *-----------------------------------------------------------------
 * FORCE
 *-----------------------------------------------------------------
-VSS VSS 0   dc 0
-VDD VDD VSS dc {AVDD}
-VSLEEP SLEEP VSS pwl {delay} 0V {delay+rise} {AVDD} {delay+rise+width} {AVDD} {delay+rise+width+fall} 0V
+VSS VSS 0 DC 0
+VDD VDD VSS DC {AVDD}
+VSLP SLP VSS PWL(100n {AVDD} 101n 0 199n 0 200n {AVDD})
+VSLPN SLP_N VSS PWL(100n 0 101n {AVDD} 199n {AVDD} 200n 0)
 
 *-----------------------------------------------------------------
 * DUT
@@ -39,7 +36,7 @@ VSLEEP SLEEP VSS pwl {delay} 0V {delay+rise} {AVDD} {delay+rise+width} {AVDD} {d
 * PROBE
 *----------------------------------------------------------------
 .save all
-.option savecurrents
+* .option savecurrents
 
 *----------------------------------------------------------------
 * NGSPICE control
@@ -53,7 +50,7 @@ unset askquit
 optran 0 0 0 1ns 1us 0
 
 
-tran 1ns 200ns 1ps
+tran 1ns 250ns 1ps
 write
 quit
 

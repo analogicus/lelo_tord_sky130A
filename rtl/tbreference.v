@@ -3,11 +3,15 @@ module tbreference  #(
     parameter INITIAL_COARSE_STEP_COUNT     = 10,  // initial coarse DAC step
     parameter INITIAL_FINETUNING_DUTY_CYCLE = 3,   // initial finetunig pulse length in number of clock cycles
     parameter INITIAL_FINETUNING_PERIODE    = 10,  // initial finetuning periode in number of clock cycles
-    parameter SW_TIMEOUT                    = 3    // how many clock periods to wait in each switch state before moving on to the next.
+    parameter SW_TIMEOUT                    = 3,   // how many clock periods to wait in each switch state before moving on to the next.
+    parameter SLEEP_TIMEOUT                 = 100  // timeout before sleep mode turns of after activation in number of clock cycles
 )(
     input  logic       clk,  // the external (10 MHz) clock signal gives a clock periode of 0.1 us = 100 ns
     input  logic       rst,  // the external active high reset signal resetting circuit operation to initial values as defined in parameters
-    input  logic       slp,  // the external active high sleep signal enabling a power saving sleep mode
+    
+    // input  logic       slp,  // the external active high sleep signal enabling a power saving sleep mode
+    output  logic       slp,  // the external active high sleep signal enabling a power saving sleep mode
+
     input  logic       mode, // the external operational mode signal (1 = reference generation, 0 = tempearture sensing)
     input  logic       cmp_async, // the asynchrounous input from the internal comparator
     
@@ -60,9 +64,11 @@ module tbreference  #(
     output logic [7:0] saved_finetuning_duty_cycle,
     output logic [7:0] saved_finetuning_periode,
 
-    output logic       stepping_up
+    output logic       stepping_up,
 
-    // output logic       output_found
+    output logic       correct_output_found,
+    output logic [7:0] correct_output_counter,
+    output logic [7:0] sleep_counter
 );
 
     // ----- DEFINITIONS -----
@@ -137,14 +143,26 @@ module tbreference  #(
 
 
     // ----- TEMPORARY SLEEP SIGNAL GENERATION -----
+    always_ff @(posedge clk) begin
 
-    // always_ff @(posedge clk) begin
-    //     if (output_found) begin
-    //         slp <= 1;
-    //     end else begin
-    //         slp <= 0;
-    //     end
-    // end
+        if (correct_output_counter > 2 ) begin
+            slp <= 1;
+
+            if (sleep_counter >= SLEEP_TIMEOUT - 1) begin
+                sleep_counter <= 0;
+                correct_output_counter <= 0;
+            end else begin
+                sleep_counter <= sleep_counter + 1;
+            end
+
+        end else if (correct_output_counter == 2 && (selected_branch == BRANCH_1)) begin
+            correct_output_found <= 1;
+        end else if (correct_output_counter == 2 && (selected_branch == BRANCH_2)) begin
+            correct_output_found <= 0;
+        end else begin
+            slp <= 0;
+        end
+    end
 
 
     // ----- MAIN FSM -----
@@ -156,7 +174,8 @@ module tbreference  #(
             selected_branch <= BRANCH_1;
             stepping_up <= 1;
 
-            // output_found <= 0;
+            correct_output_counter <= 0;
+            correct_output_found <= 0;
             
             swbgr1 <= 0;
             swbgr2 <= 0;
@@ -177,6 +196,9 @@ module tbreference  #(
             timeout_counter <= 0;
             selected_branch <= BRANCH_1;
             stepping_up <= 1;
+
+            // correct_output_counter <= 0;
+            correct_output_found <= 0;
             
             swbgr1 <= 0;
             swbgr2 <= 0;
@@ -226,7 +248,7 @@ module tbreference  #(
 
                 case (selected_branch)
                     BRANCH_1: begin
-                            selected_branch <= BRANCH_2;
+                        selected_branch <= BRANCH_2;
                     end
 
                     BRANCH_2: begin
@@ -246,6 +268,8 @@ module tbreference  #(
                                 finetuning_duty_cycle <= 1;
                                 coarse_step_counter   <= coarse_step_counter + 1;
                             end 
+
+                            correct_output_counter <= 0;
                         end
 
                         // STEP-DOWN (cmp is high => too much current, needs less):
@@ -262,12 +286,17 @@ module tbreference  #(
                                 finetuning_duty_cycle <= finetuning_periode - 1;
                                 coarse_step_counter   <= coarse_step_counter - 1;
                             end
+
+                            correct_output_counter <= 0;
                         end
+
+                        // correct_output_counter <= 0;
                     end
 
                     BRANCH_3: begin
-                            selected_branch <= BRANCH_1;
-                            // output_found <= 1;
+                        selected_branch <= BRANCH_1;
+
+                        correct_output_counter <= correct_output_counter + 1;
                     end
 
                     default: ;

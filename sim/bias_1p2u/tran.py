@@ -51,9 +51,9 @@ def main(name):
     print(f"mean iref: {np.mean(df['iref'])}")
     print(f"mean ibias: {np.mean(df['ibias'])}")
 
-    print(df.columns)
-    print(df.head())
-    print(df.tail())
+    # print(df.columns)
+    # print(df.head())
+    # print(df.tail())
 
     idxs = {'iref': 0, 'vbias': 1, 'v': 2, 'sleep': 3}  # Adjust this index to change position of plots
 

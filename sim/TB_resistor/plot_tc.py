@@ -1,0 +1,397 @@
+import sys
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+from scipy import stats    
+
+def extract_temeratures_and_resistances(files=["output_tran/tran_SchGtKttTtVt"]):
+
+    ts = list()
+    rs  = list()
+
+    for file in files:
+        print(f"Now processing file: {file}.out")
+        df = pd.read_csv(file + ".out", sep='\s+')
+
+        idd = (float(df.iloc[-1]['i(vdd)']))
+        vdd = (float(df.iloc[-1]['v(vdd)']))
+
+        idd = -idd # flips the sign of the current from negative to positive
+
+        ts.append(float(file.split("_")[-1].replace("celsius", "")))
+        rs.append(vdd / idd)
+
+    return ts, rs
+
+
+args = sys.argv[1:]
+view = "Sch" # Sets schematic as default view if noen is specified
+
+resistance_specified = 7535 # in Ohm
+temperatures = [-40, -35, -30, -25, -20, -15, -10, -5, 0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125]
+
+if "typical" in args:
+    plot_name = "typical"
+
+    fig = plt.figure(dpi=300)
+    ax_r = fig.add_subplot(1, 1, 1)
+    ax_r.set_title(plot_name)
+
+    files = []
+    for temperature in temperatures:
+        files.append(f"output_tran/tran_{view}GtKttTtVt_{temperature}celsius")
+    ts, rs = extract_temeratures_and_resistances(files)
+
+    slope, intercept, r_value, p_value, standard_error = stats.linregress(ts, rs)
+    linear_fit = slope * np.array(ts) + intercept
+
+    ax_r.plot(ts, rs, label="Measured resistance (V/I)")
+    ax_r.plot(ts, linear_fit, linestyle="dashed", label=f"Lin. fit: {slope:.2f} Ω/°C + {intercept:.1f} Ω,\nR²={r_value**2:.4f}")
+    
+    ax_r.plot(ts, [resistance_specified] * len(ts), linestyle="dotted", color="black", label=f"Specified resistance in schematic: {resistance_specified} Ω")
+
+    ax_r.set_xlabel("Temperature (°C)")
+    ax_r.set_ylabel("Resistance (Ω)")
+    ax_r.legend(loc="best")
+    ax_r.grid(True)
+
+    fig.tight_layout()
+    fig_name = f"{plot_name}_temperature_vs_resistance"
+    fig.savefig(f"{fig_name}.png", dpi=300)
+
+    plt.show()
+
+if "slowslow" in args:
+    plot_name = "slowslow"
+
+    fig = plt.figure(dpi=300)
+    ax_r = fig.add_subplot(1, 1, 1)
+    ax_r.set_title(plot_name)
+
+    for voltage in ["Vl", "Vt", "Vh"]:
+        files = []
+        for temperature in temperatures:
+            files.append(f"output_tran/tran_{view}GtKssTt{voltage}_{temperature}celsius")
+        ts, rs = extract_temeratures_and_resistances(files)
+
+        slope, intercept, r_value, p_value, standard_error = stats.linregress(ts, rs)
+        linear_fit = slope * np.array(ts) + intercept
+
+        ax_r.plot(ts, rs, label=f"tran_{view}GtKssTt{voltage}")
+        last_color = ax_r.get_lines()[-1].get_color()
+        ax_r.plot(ts, linear_fit, linestyle="dashed", color=last_color, label=f"Lin. fit: {slope:.2f} Ω/°C + {intercept:.1f} Ω,\nR²={r_value**2:.4f}")
+    
+    ax_r.plot(ts, [resistance_specified] * len(ts), linestyle="dotted", color="black", label=f"Specified resistance in schematic: {resistance_specified} Ω")
+
+    ax_r.set_xlabel("Temperature (°C)")
+    ax_r.set_ylabel("Resistance (Ω)")
+    ax_r.legend(loc="best")
+    ax_r.grid(True)
+
+    fig.tight_layout()
+    fig_name = f"{plot_name}_temperature_vs_resistance"
+    fig.savefig(f"{fig_name}.png", dpi=300)
+
+    plt.show()
+
+if "fastfast" in args:
+    plot_name = "fastfast"
+
+    fig = plt.figure(dpi=300)
+    ax_r = fig.add_subplot(1, 1, 1)
+    ax_r.set_title(plot_name)
+
+    for voltage in ["Vl", "Vt", "Vh"]:
+        files = []
+        for temperature in temperatures:
+            files.append(f"output_tran/tran_{view}GtKffTt{voltage}_{temperature}celsius")
+        ts, rs = extract_temeratures_and_resistances(files)
+
+        slope, intercept, r_value, p_value, standard_error = stats.linregress(ts, rs)
+        linear_fit = slope * np.array(ts) + intercept
+
+        ax_r.plot(ts, rs, label=f"tran_{view}GtKffTt{voltage}")
+        last_color = ax_r.get_lines()[-1].get_color()
+        ax_r.plot(ts, linear_fit, linestyle="dashed", color=last_color, label=f"Lin. fit: {slope:.2f} Ω/°C + {intercept:.1f} Ω,\nR²={r_value**2:.4f}")
+    
+    ax_r.plot(ts, [resistance_specified] * len(ts), linestyle="dotted", color="black", label=f"Specified resistance in schematic: {resistance_specified} Ω")
+
+    ax_r.set_xlabel("Temperature (°C)")
+    ax_r.set_ylabel("Resistance (Ω)")
+    ax_r.legend(loc="best")
+    ax_r.grid(True)
+
+    fig.tight_layout()
+    fig_name = f"{plot_name}_temperature_vs_resistance"
+    fig.savefig(f"{fig_name}.png", dpi=300)
+
+    plt.show()
+
+if "slowfast" in args:
+    plot_name = "slowfast"
+
+    fig = plt.figure(dpi=300)
+    ax_r = fig.add_subplot(1, 1, 1)
+    ax_r.set_title(plot_name)
+
+    for voltage in ["Vl", "Vt", "Vh"]:
+        files = []
+        for temperature in temperatures:
+            files.append(f"output_tran/tran_{view}GtKsfTt{voltage}_{temperature}celsius")
+        ts, rs = extract_temeratures_and_resistances(files)
+
+        slope, intercept, r_value, p_value, standard_error = stats.linregress(ts, rs)
+        linear_fit = slope * np.array(ts) + intercept
+
+        ax_r.plot(ts, rs, label=f"tran_{view}GtKsfTt{voltage}")
+        last_color = ax_r.get_lines()[-1].get_color()
+        ax_r.plot(ts, linear_fit, linestyle="dashed", color=last_color, label=f"Lin. fit: {slope:.2f} Ω/°C + {intercept:.1f} Ω,\nR²={r_value**2:.4f}")
+        
+    ax_r.plot(ts, [resistance_specified] * len(ts), linestyle="dotted", color="black", label=f"Specified resistance in schematic: {resistance_specified} Ω")
+
+    ax_r.set_xlabel("Temperature (°C)")
+    ax_r.set_ylabel("Resistance (Ω)")
+    ax_r.legend(loc="best")
+    ax_r.grid(True)
+
+    fig.tight_layout()
+    fig_name = f"{plot_name}_temperature_vs_resistance"
+    fig.savefig(f"{fig_name}.png", dpi=300)
+
+    plt.show()
+
+if "fastslow" in args:
+    plot_name = "fastslow"
+
+    fig = plt.figure(dpi=300)
+    ax_r = fig.add_subplot(1, 1, 1)
+    ax_r.set_title(plot_name)
+
+    for voltage in ["Vl", "Vt", "Vh"]:
+        files = []
+        for temperature in temperatures:
+            files.append(f"output_tran/tran_{view}GtKfsTt{voltage}_{temperature}celsius")
+        ts, rs = extract_temeratures_and_resistances(files)
+
+        slope, intercept, r_value, p_value, standard_error = stats.linregress(ts, rs)
+        linear_fit = slope * np.array(ts) + intercept
+
+        ax_r.plot(ts, rs, label=f"tran_{view}GtKfsTt{voltage}")
+        last_color = ax_r.get_lines()[-1].get_color()
+        ax_r.plot(ts, linear_fit, linestyle="dashed", color=last_color, label=f"Lin. fit: {slope:.4f} Ω/°C + {intercept:.1f} Ω,\nR²={r_value**2:.4f}")
+    
+    ax_r.plot(ts, [resistance_specified] * len(ts), linestyle="dotted", color="black", label=f"Specified resistance in schematic: {resistance_specified} Ω")
+
+    ax_r.set_xlabel("Temperature (°C)")
+    ax_r.set_ylabel("Resistance (Ω)")
+    ax_r.legend(loc="best")
+    ax_r.grid(True)
+
+    fig.tight_layout()
+    fig_name = f"{plot_name}_temperature_vs_resistance"
+    fig.savefig(f"{fig_name}.png", dpi=300)
+
+    plt.show()
+
+if "voltagetypical" in args:
+    plot_name = "voltagetypical"
+
+    fig = plt.figure(dpi=300)
+    ax_r = fig.add_subplot(1, 1, 1)
+    ax_r.set_title(plot_name)
+
+    for process in ["tt", "ff", "ss", "sf", "fs"]:
+        files = []
+        for temperature in temperatures:
+            files.append(f"output_tran/tran_{view}GtK{process}TtVt_{temperature}celsius")
+        ts, rs = extract_temeratures_and_resistances(files)
+
+        ax_r.plot(ts, rs, label=f"tran_{view}GtK{process}TtVt")
+        last_color = ax_r.get_lines()[-1].get_color()
+    
+    ax_r.plot(ts, [resistance_specified] * len(ts), linestyle="dotted", color="black", label=f"Specified resistance in schematic: {resistance_specified} Ω")
+
+    ax_r.set_xlabel("Temperature (°C)")
+    ax_r.set_ylabel("Resistance (Ω)")
+    ax_r.legend(loc="best")
+    ax_r.grid(True)
+
+    fig.tight_layout()
+    fig_name = f"{plot_name}_temperature_vs_resistance"
+    fig.savefig(f"{fig_name}.png", dpi=300)
+
+    plt.show()
+
+if "voltagelow" in args:
+    plot_name = "voltagelow"
+
+    fig = plt.figure(dpi=300)
+    ax_r = fig.add_subplot(1, 1, 1)
+    ax_r.set_title(plot_name)
+
+    for process in ["tt", "ff", "ss", "sf", "fs"]:
+        files = []
+        for temperature in temperatures:
+            files.append(f"output_tran/tran_{view}GtK{process}TtVl_{temperature}celsius")
+        ts, rs = extract_temeratures_and_resistances(files)
+
+        ax_r.plot(ts, rs, label=f"tran_{view}GtK{process}TtVl")
+        last_color = ax_r.get_lines()[-1].get_color()
+    
+    ax_r.plot(ts, [resistance_specified] * len(ts), linestyle="dotted", color="black", label=f"Specified resistance in schematic: {resistance_specified} Ω")
+
+    ax_r.set_xlabel("Temperature (°C)")
+    ax_r.set_ylabel("Resistance (Ω)")
+    ax_r.legend(loc="best")
+    ax_r.grid(True)
+
+    fig.tight_layout()
+    fig_name = f"{plot_name}_temperature_vs_resistance"
+    fig.savefig(f"{fig_name}.png", dpi=300)
+
+    plt.show()
+
+if "voltagehigh" in args:
+    plot_name = "voltagehigh"
+
+    fig = plt.figure(dpi=300)
+    ax_r = fig.add_subplot(1, 1, 1)
+    ax_r.set_title(plot_name)
+
+    for process in ["tt", "ff", "ss", "sf", "fs"]:
+        files = []
+        for temperature in temperatures:
+            files.append(f"output_tran/tran_{view}GtK{process}TtVh_{temperature}celsius")
+        ts, rs = extract_temeratures_and_resistances(files)
+
+        ax_r.plot(ts, rs, label=f"tran_{view}GtK{process}TtVh")
+        last_color = ax_r.get_lines()[-1].get_color()
+    
+    ax_r.plot(ts, [resistance_specified] * len(ts), linestyle="dotted", color="black", label=f"Specified resistance in schematic: {resistance_specified} Ω")
+
+    ax_r.set_xlabel("Temperature (°C)")
+    ax_r.set_ylabel("Resistance (Ω)")
+    ax_r.legend(loc="best")
+    ax_r.grid(True)
+
+    fig.tight_layout()
+    fig_name = f"{plot_name}_temperature_vs_resistance"
+    fig.savefig(f"{fig_name}.png", dpi=300)
+
+    plt.show()
+
+if "mc" in args:
+    plot_name = "montecarlo"
+
+    runs = 300
+    bin_count = 7
+    distribution_temperature = 0
+
+
+    #
+    # Plot mean resistance and standard deviation across temperatures
+    #
+
+    fig_tran = plt.figure(dpi=300)
+    ax_tran = fig_tran.add_subplot(1, 1, 1)
+    ax_tran.set_title(f"{plot_name} mean resitance and standard deviation after {runs} runs")
+
+    tts = list()
+    rrs = list()
+
+    for run in range(0, runs):
+        files = []
+        for temperature in temperatures:
+            if run == 0:
+                files.append(f"output_tran/tran_{view}GtKttmmTtVt_{temperature}celsius")
+            else:
+                files.append(f"output_tran/tran_{view}GtKttmmTtVt_{run}_{temperature}celsius")
+        ts, rs = extract_temeratures_and_resistances(files)
+
+        tts.append(ts)
+        rrs.append(rs)
+
+    rrs_array = np.array(rrs)  # shape: (runs, len(temperatures))
+    mean_r = np.mean(rrs_array, axis=0)
+    std_r  = np.std(rrs_array, axis=0)
+
+    ax_tran.plot(ts, mean_r, color="steelblue", label="Mean resistance")
+    ax_tran.fill_between(ts, mean_r - std_r, mean_r + std_r, alpha=0.15, color="steelblue", label="±1σ band")
+ 
+
+    #
+    # Calculates the confidence intervals of the mean
+    #
+
+    n = rrs_array.shape[0]
+    sem = std_r / np.sqrt(n)
+    t_crit = stats.t.ppf(0.975, df=n - 1)  # 95% confidence interval
+ 
+    ci_lower = mean_r - t_crit * sem
+    ci_upper = mean_r + t_crit * sem
+
+    ax_tran.fill_between(ts, ci_lower, ci_upper, alpha=0.3, color="steelblue", label=f"95% confidence interval of mean resistance")
+ 
+
+    ax_tran.plot(ts, [resistance_specified] * len(ts), linestyle="dotted", color="black", label=f"Specified resistance in schematic: {resistance_specified} Ω")
+
+    ax_tran.set_xlabel("Temperature (°C)")
+    ax_tran.set_ylabel("Resistance (Ω)")
+    ax_tran.legend(loc="best")
+    ax_tran.grid(True)
+
+    fig_tran.tight_layout()
+    fig_name = f"{plot_name}_temperature_vs_resistance"
+    fig_tran.savefig(f"{fig_name}.png", dpi=300)
+
+
+    #
+    # Find the distribution of resistances at 0 degrees temperature
+    # 
+
+    files = []
+    for run in range(0, runs):
+        if run == 0:
+            files.append(f"output_tran/tran_{view}GtKttmmTtVt_{distribution_temperature}celsius")
+        else:
+            files.append(f"output_tran/tran_{view}GtKttmmTtVt_{run}_{distribution_temperature}celsius")
+    
+    ts, rs = extract_temeratures_and_resistances(files)
+
+    rs_array = np.array(rs)
+    mean_r = np.mean(rs_array)
+    std_r  = np.std(rs_array)
+
+    print(f"mean resistance at {temperature} °C after {runs} runs: {mean_r} Ω")
+    print(f"standard error at {temperature} °C after {runs} runs: {std_r}")
+
+    fig_dist = plt.figure(dpi=300)
+    ax_dist = fig_dist.add_subplot(1, 1, 1)
+    ax_dist.set_title(f"{plot_name} distribution at {distribution_temperature}°C after {runs} runs")
+
+    sns.histplot(rs, bins=bin_count, kde=True, color="steelblue", edgecolor="black", ax=ax_dist)
+    sns.rugplot(rs, height=0.1, color="blue", ax=ax_dist)
+
+    ax_dist.axvline(mean_r, linestyle="dashed", color="black", label=f"μ = {mean_r:.2f} Ω")
+    ax_dist.grid(True)
+    fig_dist.gca().set_axisbelow(True)
+        
+    # Fill after seaborn has set the y-limits
+    ymin, ymax = ax_dist.get_ylim()
+    ax_dist.fill_between(
+        [mean_r - std_r, mean_r + std_r],
+        ymin, ymax,
+        alpha=0.2,
+        color="black",
+        label=f"μ ± σ = μ ± {std_r:.2f} Ω"
+    )
+    ax_dist.set_ylim(ymin, ymax)  # re-apply so fill_between doesn't expand the axis
+
+    ax_dist.legend(loc="best")
+    ax_dist.set_xlabel("Resistance (Ω)")
+    fig_dist.tight_layout()
+    fig_dist.savefig(f"{fig_name}_distribution.png")
+
+    plt.show()

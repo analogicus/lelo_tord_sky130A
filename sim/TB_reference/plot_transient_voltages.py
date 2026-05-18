@@ -1,6 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import sys
+import numpy as np
 
 args = sys.argv[1:]
 files = list()
@@ -48,30 +49,43 @@ if "etc" in args:
             for voltage in [1.7, 1.9]: # Volt (V)
                 Vx = "Vl" if voltage == 1.7 else "Vt" if voltage == 1.8 else "Vh" if voltage == 1.9 else "Oops"
                 files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_stepping_{stepping_direction}_{temperature}celsius_{voltage}volt.out")
+
 if "test" in args:
     for corner in ["tt"]:
         for temperature in [-40, 0, 40, 80, 125]: # Celsius (degree C)
             for voltage in [1.8]: # Volt (V)
                 Vx = "Vl" if voltage == 1.7 else "Vt" if voltage == 1.8 else "Vh" if voltage == 1.9 else "Oops"
                 files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_stepping_{stepping_direction}_{temperature}celsius_{voltage}volt.out")
+
 if "temp" in args:
+    if args[-1] == "temp": 
+        temp = -40
+    else: 
+        temp = int(args[-1])
     for corner in ["tt"]:
-        for temperature in [-40]: # Celsius (degree C)
+        for temperature in [temp]: # Celsius (degree C)
             for voltage in [1.8]: # Volt (V)
                 Vx = "Vl" if voltage == 1.7 else "Vt" if voltage == 1.8 else "Vh" if voltage == 1.9 else "Oops"
                 files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_stepping_{stepping_direction}_{temperature}celsius_{voltage}volt.out")
+
 if "temps" in args:
     for corner in ["tt"]:
         for temperature in [-40, -35, -30, -25, -20, -15, -10, -5, 0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125]: # Celsius (degree C)
             for voltage in [1.8]: # Volt (V)
                 Vx = "Vl" if voltage == 1.7 else "Vt" if voltage == 1.8 else "Vh" if voltage == 1.9 else "Oops"
                 files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_stepping_{stepping_direction}_{temperature}celsius_{voltage}volt.out")
+
 if "partialtemps" in args:
+    if args[-1] == "partialtemps": 
+        temps = [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5]
+    else: 
+        temps = [int(temp) for temp in args[-1].split(",")]
     for corner in ["tt"]:
-        for temperature in [-40, 0, 125]: # Celsius (degree C)
+        for temperature in temps : # Celsius (degree C)
             for voltage in [1.8]: # Volt (V)
                 Vx = "Vl" if voltage == 1.7 else "Vt" if voltage == 1.8 else "Vh" if voltage == 1.9 else "Oops"
                 files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_stepping_{stepping_direction}_{temperature}celsius_{voltage}volt.out")
+
 if "montecarlo" in args:
     for corner in ["ttmm"]:
         for temperature in [25]: # Celsius (degree C)
@@ -111,10 +125,6 @@ for file in files:
     else:
         process_corner = "Oops, something is wrong!"
 
-    print("process corner:" + process_corner + ", circuit temperature: " + str(circuit_temperature) + " °C, voltage supply: " + str(voltage_supply) + " V")
-
-
-
     df = pd.read_csv(file, sep="\s+")
 
     df['time'] = df['time'] * 1e9 # in ns
@@ -127,10 +137,10 @@ for file in files:
 
     fig, axs = plt.subplots(6, 1, figsize=(figure_width, figure_height), sharex=True, dpi=300)
     
-    axs[0].plot(df["time"], df["v(xdut.iout)"], label="v(iout)", color="tab:blue") # in V
+    axs[0].plot(df["time"], df["v(xdut.ifeed)"], label="v(ifeed)", color="tab:blue") # in V
 
-    # ax_iout = axs[0].twinx()
-    # axs[0].plot(df["time"], (df["v(xdut.iout)"] / (8*7535))*1e6, label="iout", color="tab:orange") # in uA
+    # ax_ifeed = axs[0].twinx()
+    # ax_ifeed.plot(df["time"], (df["v(xdut.ifeed)"] / (8*7535))*1e6, label="ifeed", color="tab:orange") # in uA
 
     # axs[0].plot(df["time"], df["v(bgr.v1)"]-df["v(bgr.v2)"], label="v1-v2", linestyle="solid")
     # axs[0].plot(df["time"], df["v(v1a)"]-df["v(v2a)"], label="v1a-v2a", linestyle="dashed")
@@ -146,6 +156,7 @@ for file in files:
     axs[2].plot(df["time"], df["v(bgr.v1)"], label="v(v1)")
     axs[2].plot(df["time"], df["v(bgr.v2)"], label="v(v2)")
     axs[2].plot(df["time"], df["v(vout)"], label="v(vout)")
+    axs[2].plot(df["time"], df["v(correct_output_found)"], label="correct_output_found")
 
     axs[3].plot(df["time"], df["v(clk)"], label="clk")
     axs[3].plot(df["time"], df["v(b0)"], label="b0")
@@ -165,14 +176,14 @@ for file in files:
         ax.set_ylabel("Voltage (V)", fontsize=label_font_size)
         ax.tick_params(axis="both", labelsize=ticks_font_size)
         ax.grid()
-        ax.legend(loc="upper left", ncols=2, fontsize=legend_font_size)
+        ax.legend(loc="best", ncols=2, fontsize=legend_font_size)
 
     axs[0].set_title(f"BGR core signals, {process_corner} corner, {voltage_supply} V, {circuit_temperature} °C", fontsize=title_font_size, fontweight='bold')
     axs[-1].set_xlabel("Time (ns)", fontsize=label_font_size)
 
-    # ax_iout.set_ylabel("Current (uA)", fontsize=label_font_size)
-    # ax_iout.legend(loc="lower right", fontsize=legend_font_size)
-    # ax_iout.tick_params(axis='both', labelsize=ticks_font_size)
+    # ax_ifeed.set_ylabel("Current (uA)", fontsize=label_font_size)
+    # ax_ifeed.legend(loc="lower right", fontsize=legend_font_size)
+    # ax_ifeed.tick_params(axis='both', labelsize=ticks_font_size)
 
     fig.tight_layout()
     fig.savefig(f"figures/{figure_name}_bgr_core_signals.png", dpi=300, bbox_inches="tight")
@@ -186,8 +197,8 @@ for file in files:
     
     axs_2[0].plot(df["time"], df["v(clk)"], label="v(clk)")
     axs_2[0].plot(df["time"], df["v(b0)"], label="v(b0)")
-    axs_2[0].plot(df["time"], df["v(dac.vctl)"], label="v(dac.vctl)")
-    axs_2[0].plot(df["time"], df["v(cmp_async)"], label="v(cmp_async)")
+    axs_2[0].plot(df["time"], df["v(dac.vctl)"], label="v(vctl)")
+    axs_2[0].plot(df["time"], df["v(cmp_async)"], label="v(cmp)")
     axs_2[0].plot(df["time"], df["v(rst)"], label="v(rst)")
     axs_2[0].plot(df["time"], df["v(slp)"], label="v(slp)")
 
@@ -201,6 +212,7 @@ for file in files:
     axs_2[3].plot(df["time"], df["v(cmp_rising)"], label="v(cmp_rising)")
     axs_2[3].plot(df["time"], df["v(cmp_falling)"], label="v(cmp_falling)")
     axs_2[3].plot(df["time"], df["v(stepping_up)"], label="v(stepping_up)")
+    axs_2[3].plot(df["time"], df["v(correct_output_found)"], label="correct_output_found")
 
     axs_2[4].plot(df["time"], df["v(dec_cmp_rising_counter)"], label="v(dec_cmp_rising_counter)")
     axs_2[4].plot(df["time"], df["v(dec_cmp_switching_counter)"], label="v(dec_cmp_switching_counter)")
@@ -230,7 +242,7 @@ for file in files:
     axs_3[0].plot(df["time"], df["v(rst)"], label="rst")
     axs_3[0].plot(df["time"], df["v(slp)"], label="slp")
 
-    axs_3[1].plot(df["time"], df["v(cmp.vbn)"], label="vbn")
+    axs_3[1].plot(df["time"], df["v(cmp.vbn)"], label="vbn (bias)")
 
     axs_3[2].plot(df["time"], df["v(cmp.vindrn)"], label="vindrn")
     axs_3[3].plot(df["time"], df["v(cmp.vipdrn)"], label="vipdrn")
@@ -283,7 +295,7 @@ for file in files:
     # axs_4[5, 1].plot(df["time"], df["v(dac.b14_mid)"], label="v(b14_mid)")
     axs_4[6, 1].plot(df["time"], df["v(b15)"], label="v(b15)")
     # axs_4[6, 1].plot(df["time"], df["v(dac.b15_mid)"], label="v(b15_mid)")
-    axs_4[6, 1].plot(df["time"], df["v(xdut.iout)"], label="v(iout)")
+    axs_4[6, 1].plot(df["time"], df["v(xdut.ifeed)"], label="v(ifeed)")
     axs_4[7, 1].plot(df["time"], df["v(dec_coarse_step1)"], label="v(dec_coarse_step1)")
     axs_4[7, 1].plot(df["time"], df["v(dec_coarse_step2)"], label="v(dec_coarse_step2)")
 
@@ -315,6 +327,7 @@ for file in files:
     axs_5[1].plot(df["time"], df["v(bgr.v1)"], label="v(v1)")
     axs_5[1].plot(df["time"], df["v(bgr.v2)"], label="v(v2)")
     axs_5[1].plot(df["time"], df["v(vout)"], label="v(vout)")
+    axs_5[1].plot(df["time"], df["v(correct_output_found)"], label="correct_output_found")
 
     axs_5[2].plot(df["time"], df["v(dec_finetuning_duty_cycle)"], label="v(dec_finetuning_duty_cycle)")
     axs_5[2].plot(df["time"], df["v(dec_coarse_step_counter)"], label="v(dec_coarse_step_counter)")
@@ -380,14 +393,20 @@ for file in files:
     # Plot power consumption
     #
 
+
+
+    window_size = 100 # in number of samples
     df["pwr"] = df["v(vdd)"] * -(df["i(vdd)"]) * 1e6 # in uW (micro Watt)
-    df["moving_avg_pwr"] = df["pwr"].rolling(window=100).mean() # moving average filter with window size of 100 applied to the power plot
+    df["moving_avg_pwr"] = df["pwr"].rolling(window=window_size).mean() # moving average filter with window size of 100 applied to the power plot
+    # df["filtered_pwr"] = df.loc[df['v(slp)'] >= 0.99 * df['v(vdd)'], 'moving_avg_pwr'] # moving average filter with window size of 100 applied to the power plot, but only for the datapoints where v(slp) is above 0.99 * VDD
+    df["filtered_pwr"] = df.loc[df['moving_avg_pwr'] < 0.025, 'moving_avg_pwr'] # moving average filter with window size of 100 applied to the power plot, but only for the datapoints where v(slp) is above 0.99 * VDD
 
     fig_7, axs_7 = plt.subplots(5, 1, figsize=(figure_width, figure_height), sharex=True, dpi=300)
     
     axs_7[0].plot(df["time"], df["v(bgr.v1)"], label="v1")
     axs_7[0].plot(df["time"], df["v(bgr.v2)"], label="v2")
     axs_7[0].plot(df["time"], df["v(vout)"], label="vout")
+    axs_7[0].plot(df["time"], df["v(correct_output_found)"], label="correct_output_found")
 
     axs_7[1].plot(df["time"], df["v(clk)"], label="clk")
     axs_7[1].plot(df["time"], df["v(b0)"], label="b0")
@@ -401,24 +420,40 @@ for file in files:
     axs_7[2].plot(df["time"], df["v(dec_coarse_step_counter)"], label="v(dec_coarse_step_counter)")
 
     # plot the current in axs_7[2] with a secondary y-axis
-    ax_iout_7 = axs_7[3].twinx()
-    ax_iout_7.plot(df["time"], -df["i(vdd)"]*1e6, label="idd", color="tab:orange") # in uA
-    ax_iout_7.set_ylabel("Current (uA)", fontsize=label_font_size)
-    ax_iout_7.legend(loc="upper right", ncols=2, fontsize=legend_font_size)
-    ax_iout_7.tick_params(axis="both", labelsize=ticks_font_size)
-    ax_iout_7.set_ylim(bottom=-5, top=(df["i(vdd)"]*1e6).max())
+    ax_ifeed_7 = axs_7[3].twinx()
+    ax_ifeed_7.plot(df["time"], -df["i(vdd)"]*1e6, label="idd", color="tab:orange") # in uA
+    ax_ifeed_7.set_ylabel("Current (uA)", fontsize=label_font_size)
+    ax_ifeed_7.legend(loc="upper right", ncols=2, fontsize=legend_font_size)
+    ax_ifeed_7.tick_params(axis="both", labelsize=ticks_font_size)
+    ax_ifeed_7.set_ylim(bottom=-5, top=(df["i(vdd)"]*1e6).max())
 
     axs_7[3].plot(df["time"], df["v(vdd)"], label="vdd", color="tab:blue")
     axs_7[4].plot(df["time"], df["pwr"], label="pwr", color="tab:blue") # remember: in uW (micro Watt)
 
-    # moving average filter with window size of 10 applied to the power plot
-    window_size = 100
     axs_7[4].plot(df["time"], df["moving_avg_pwr"], label=f"moving avg pwr, window={window_size})", color="tab:orange")
+
+    # plot the filtered power togheter with the moving average  power, but only for the datapoints where v(slp) is above 0.99 * VDD, the rest is set to NaN and will not be plotted
+
+    filtered_pwr_plot = df["filtered_pwr"].copy()
+    filtered_pwr_plot[df['v(slp)'] < 0.99 * df['v(vdd)']] = np.nan # set the datapoints where v(slp) is below 0.99 * VDD to NaN, so that they will not be plotted
+
+    axs_7[4].plot(df["time"], filtered_pwr_plot, label=f"filtered pwr", color="tab:green")
+
+    delay = 0 # in ns (nanosecond)
+    idx = df[df["v(correct_output_found)"] >= 0.99*df["v(vdd)"]].index[-1] if not df[df["v(correct_output_found)"] >= 0.99*df["v(vdd)"]].empty else None
+    timestamp = df["time"][idx] - delay if idx is not None else None
+    idx_timestamp = df[df["time"] >= timestamp].index[0] if timestamp is not None else None
+
+    axs_7[0].axvline(x=timestamp, color="black", linestyle="dashed", label=f"Measurment done\nat {df.loc[idx_timestamp, 'time']} ns")
+    axs_7[1].axvline(x=timestamp, color="black", linestyle="dashed")
+    axs_7[2].axvline(x=timestamp, color="black", linestyle="dashed")
+    axs_7[3].axvline(x=timestamp, color="black", linestyle="dashed")
+    axs_7[4].axvline(x=df.loc[idx_timestamp, "time"], color="black", linestyle="dashed")
 
     for i, ax in enumerate(axs_7):
         if ax == axs_7[4]:
             ax.set_ylabel("Power Consumption (uW)", fontsize=label_font_size)
-            ax.set_ylim(bottom=-5, top=(df["moving_avg_pwr"]).max()) # set y-axis limit to 20% more than the maximum moving average power consumption
+            ax.set_ylim(bottom=-5, top=(df["moving_avg_pwr"]).max()*1.2) # set y-axis limit to 20% more than the maximum moving average power consumption
             # ax.set_yticks([0, 20, 40, 60])
             # ax.set_xticks(x)   
         else:   
@@ -429,6 +464,7 @@ for file in files:
 
     axs_7[0].set_title(f"Power consumption, {process_corner} corner, {voltage_supply} V, {circuit_temperature} °C", fontsize=title_font_size, fontweight='bold')
     axs_7[-1].set_xlabel("Time (ns)", fontsize=label_font_size)
+    
     fig_7.tight_layout()
     fig_7.savefig(f"figures/{figure_name}_power_consumption.png", dpi=300, bbox_inches="tight")
 

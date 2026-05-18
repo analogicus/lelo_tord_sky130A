@@ -28,12 +28,13 @@ if "etc" in args:
             for voltage in ["Vl", "Vh"]:
                 files.append(f"output_tran/tran_{view}GtK{corner}{temperature}{voltage}")
 if "mc" in args:
+    files.append(f"output_tran/tran_{view}GtKttmmTtVt")
     for n in range(1, 30):
         files.append(f"output_tran/tran_{view}GtKttmmTtVt_{n}")
 
 fig, axs = plt.subplot_mosaic([['top_left', 'right'],
                                 ['bottom_left', 'right']],
-                                figsize=(12, 12))
+                                figsize=(12, 12), sharex=True, dpi=300)
 fig.suptitle('Bias Currents Comparison', fontsize=16)
 
 for file in files:
@@ -48,14 +49,14 @@ for file in files:
 
     labelname = fname.split('/')[-1].replace(fend, '')
 
-    axs['top_left'].plot(df['time'], df['ibias1']*1e6, label=f'{labelname}, ibias1') # in uA
+    axs['top_left'].plot(df['time'], df['ib_calc']*1e6, label=f'{labelname}, ibias1') # in uA
 
     line_color = axs['top_left'].lines[-1].get_color()
 
-    axs['bottom_left'].plot(df['time'], df['ibias3']*1e6, color=line_color, linestyle='--', label=f'{labelname}, ibias3') # in uA
+    axs['bottom_left'].plot(df['time'], df['ib_meas']*1e6, color=line_color, linestyle='--', label=f'{labelname}, ibias3') # in uA
     
-    axs['right'].plot(df['time'], df['ibias1']*1e6, color=line_color, label=f'{labelname}, ibias1') # in uA
-    axs['right'].plot(df['time'], df['ibias3']*1e6, color=line_color, linestyle='--', label=f'{labelname}, ibias3') # in uA
+    axs['right'].plot(df['time'], df['ib_calc']*1e6, color=line_color, label=f'{labelname}, ibias1') # in uA
+    axs['right'].plot(df['time'], df['ib_meas']*1e6, color=line_color, linestyle='--', label=f'{labelname}, ibias3') # in uA
 
 for ax in axs.values():
     ax.set(xlabel='Time (ns)', ylabel='Current (uA)')

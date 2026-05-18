@@ -56,7 +56,7 @@
 *
 .csparam upwards_or_downwards = 0
 
-.csparam simulation_length_csparam = 300us
+.csparam simulation_length_csparam = 400us
 
 *-----------------------------------------------------------------
 * FORCE
@@ -66,7 +66,7 @@ VDD  VDD VSS dc {AVDD}
 
 VCLK CLK VSS pulse(0V {AVDD} {TDCLK} {TRCLK} {TFCLK} {PWCLK} {PERCLK})
 
-VSLP SLP VSS pwl 750.0us 0V 750.1us {AVDD} 799.9us {AVDD} 800.0us 0V 
+* VSLP SLP VSS pwl 750.0us 0V 750.1us {AVDD} 799.9us {AVDD} 800.0us 0V 
 
 VRST RST VSS pwl 1.0us 0V 1.1us {AVDD} 14.9us {AVDD} 15.0us 0V 
 * + 440.1us 0V 440.2us {AVDD} 440.4us {AVDD} 440.5us 0V 
@@ -108,6 +108,7 @@ Vcon15 coarse_step2.6 B15 dc 0V
 * PROBE
 *----------------------------------------------------------------
 * .save all
+* .option savecurrents
 
 .save 
 + v(clk) v(rst) v(slp) v(mode)
@@ -117,7 +118,7 @@ Vcon15 coarse_step2.6 B15 dc 0V
 + v(b1) v(b2) v(b3) v(b4) v(b5) v(b6) v(b7) 
 + v(b8) v(b9) v(b10) v(b11) v(b12) v(b13) v(b14) v(b15) 
 + v(xdut.x1.vt) v(xdut.x1.vctl) v(xdut.x1.vctlb)
-+ v(xdut.iout)
++ v(xdut.ifeed)
 + v(SWBRN1) v(SWBRN2) v(SWBRN3) v(SWBGR1) v(SWBGR2) v(SWCAP1) v(SWCAP2) v(SWCAP3) v(SWDRN1) v(SWDRN2) v(SWDRN3)
 + v(xdut.v1) v(xdut.x2.v1a) v(xdut.x2.v1b) 
 + v(xdut.v2) v(xdut.x2.v2a) v(xdut.x2.v2b) v(xdut.x2.v2c)
@@ -163,10 +164,11 @@ end
 * -40 0 125
 * -40 125
 
-foreach cirtemp 55 65 70 75 80 85 95 100 105 110 115 120
+foreach cirtemp 125
 
     reset
     option temp = $cirtemp
+    echo "Current temperature is $temp C"
 
     echo ------------------------------------------------------------
     echo "view and pvt corner: {cicname}"
@@ -238,7 +240,7 @@ foreach cirtemp 55 65 70 75 80 85 95 100 105 110 115 120
     + v(b8) v(b9) v(b10) v(b11) v(b12) v(b13) v(b14) v(b15) 
     + v(dac.vt) v(dac.vctl) v(dac.vctlb)
     + v(dac.vbp) v(dac.vbn) 
-    + v(xdut.iout)
+    + v(xdut.ifeed)
     + v(SWBRN1) v(SWBRN2) v(SWBRN3) v(SWBGR1) v(SWBGR2) v(SWCAP1) v(SWCAP2) v(SWCAP3) v(SWDRN1) v(SWDRN2) v(SWDRN3)
     + v(bgr.v1) v(bgr.v1a) v(bgr.v1b) 
     + v(bgr.v2) v(bgr.v2a) v(bgr.v2b) v(bgr.v2c)
@@ -262,6 +264,7 @@ foreach cirtemp 55 65 70 75 80 85 95 100 105 110 115 120
     + v(dec_finetuning_counter)
     + v(finetuning_signal)
     + v(stepping_up) 
+    + v(correct_output_found)
 
 end
 

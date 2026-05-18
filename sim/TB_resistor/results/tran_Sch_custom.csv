@@ -1,0 +1,16 @@
+,vdd_9ns,idd_9ns,name,type,time,OK
+0,1.7,-216.2827,SchGtKttTtVl,Sch,Sat May 16 15:05:28 2026,True
+1,1.7,-192.2513,SchGtKssTtVl,Sch,Sat May 16 15:05:28 2026,True
+2,1.7,-247.1802,SchGtKffTtVl,Sch,Sat May 16 15:05:28 2026,True
+3,1.7,-216.2827,SchGtKsfTtVl,Sch,Sat May 16 15:05:28 2026,True
+4,1.7,-216.2827,SchGtKfsTtVl,Sch,Sat May 16 15:05:28 2026,True
+5,1.8,-229.0052,SchGtKttTtVt,Sch,Sat May 16 15:05:28 2026,True
+6,1.8,-203.56009999999998,SchGtKssTtVt,Sch,Sat May 16 15:05:28 2026,True
+7,1.8,-261.72020000000003,SchGtKffTtVt,Sch,Sat May 16 15:05:28 2026,True
+8,1.8,-229.0052,SchGtKsfTtVt,Sch,Sat May 16 15:05:28 2026,True
+9,1.8,-229.0052,SchGtKfsTtVt,Sch,Sat May 16 15:05:28 2026,True
+10,1.9,-241.7277,SchGtKttTtVh,Sch,Sat May 16 15:05:31 2026,True
+11,1.9,-214.869,SchGtKssTtVh,Sch,Sat May 16 15:05:31 2026,True
+12,1.9,-276.2602,SchGtKffTtVh,Sch,Sat May 16 15:05:31 2026,False
+13,1.9,-241.7277,SchGtKsfTtVh,Sch,Sat May 16 15:05:31 2026,True
+14,1.9,-241.7277,SchGtKfsTtVh,Sch,Sat May 16 15:05:31 2026,True

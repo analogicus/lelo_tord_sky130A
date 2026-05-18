@@ -20,7 +20,7 @@ if len(args) == 0:
     files.append("output_tran/tran_SchGtKttTtVt_stepping_" + stepping_direction + "_0celsius_1.8volt.out")
 if "typical" in args:
     for corner in ["tt"]:
-        for temperature in [-40, -20, 0, 30, 60, 90, 125]: # Celsius (degree C)
+        for temperature in [-40, -20, 0, 25, 50, 75, 100, 125]: # Celsius (degree C)
                 for voltage in [1.8]: # Volt (V)
                     Vx = "Vl" if voltage == 1.7 else "Vt" if voltage == 1.8 else "Vh" if voltage == 1.9 else "Oops"
                     files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_stepping_{stepping_direction}_{temperature}celsius_{voltage}volt.out")
@@ -68,7 +68,13 @@ if "temps" in args:
                 files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_stepping_{stepping_direction}_{temperature}celsius_{voltage}volt.out")
 if "partialtemps" in args:
     for corner in ["tt"]:
-        for temperature in [-40, 0, 125]: # Celsius (degree C)
+        for temperature in [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5]: # Celsius (degree C)
+            for voltage in [1.8]: # Volt (V)
+                Vx = "Vl" if voltage == 1.7 else "Vt" if voltage == 1.8 else "Vh" if voltage == 1.9 else "Oops"
+                files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_stepping_{stepping_direction}_{temperature}celsius_{voltage}volt.out")
+if "detailed" in args:
+    for corner in ["tt"]:
+        for temperature in [-40, -39, -38, -37, -36, -35, -34, -33, -32, -31, -30, -29, -28, -27, -26, -25, -24, -23, -22, -21, -20, -19, -18, -17, -16, -15, -14, -13, -12, -11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70]: # Celsius (degree C)
             for voltage in [1.8]: # Volt (V)
                 Vx = "Vl" if voltage == 1.7 else "Vt" if voltage == 1.8 else "Vh" if voltage == 1.9 else "Oops"
                 files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_stepping_{stepping_direction}_{temperature}celsius_{voltage}volt.out")
@@ -80,6 +86,7 @@ if "montecarlo" in args:
                 for run in range(1, 30 + 1): # Assuming 30 Monte Carlo runs
                     files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_{run}_stepping_{stepping_direction}_{temperature}celsius_{voltage}volt.out")
 
+timestamp = []
 coarse_code = []
 fine_code = []
 cir_temp = []
@@ -89,19 +96,12 @@ outp_volt = []
 min_pwr = []
 max_pwr = []
 avg_pwr = []
-
-coarse_code2 = []
-fine_code2 = []
-cir_temp2 = []
-volt_sup2 = []
-proc_cor2 = []
-outp_volt2 = []
-min_pwr2 = []
-max_pwr2 = []
-avg_pwr2 = []
+slp_min_pwr = []
+slp_avg_pwr = []
+slp_max_pwr = []
 
 for file in files:
-    print(f"Plotting Vout transient results from file: {file}")
+    print(f"Processing transient results from file: {file}")
 
     figure_name = file.split("/")[-1].split(".out")[0]
 
@@ -122,40 +122,33 @@ for file in files:
     else:
         process_corner = "Oops, something is wrong!"
 
-    print("process corner:" + process_corner + ", circuit temperature: " + str(circuit_temperature) + " °C, voltage supply: " + str(voltage_supply) + " V")
-
     df = pd.read_csv(file, sep="\s+")
 
-    df["pwr"] = df["v(vdd)"] * -(df["i(vdd)"]) * 1e6 # in uW (micro Watt)
-    df["moving_avg_pwr"] = df["pwr"].rolling(window=100).mean() # moving average filter with window size of 100 applied to the power plot
+    df['time'] = df['time'] * 1e9 # in ns
 
-    # append the last value of v(vout) to y list
-    outp_volt.append(df["v(vout)"].iloc[-1])
+    df["pwr"] = df["v(vdd)"] * -(df["i(vdd)"]) * 1e6 # in uW
+    df["moving_avg_pwr"] = df["pwr"].rolling(window=100).mean() # moving average filter with window size of 100 applied to the power plot
+    df["filtered_pwr"] = df.loc[df['moving_avg_pwr'] < 0.025, 'moving_avg_pwr'] # moving average filter with window size of 100 applied to the power plot, but only for the datapoints where v(slp) is above 0.99 * VDD
+
+    idx = df[df["v(correct_output_found)"] >= 0.99 * df["v(vdd)"]].index[-1] if not df[df["v(correct_output_found)"] >= 0.99*df["v(vdd)"]].empty else None
+
     cir_temp.append(circuit_temperature)
-    coarse_code.append(df["v(dec_coarse_step_counter)"].iloc[-1])
-    fine_code.append(df["v(dec_finetuning_duty_cycle)"].iloc[-1])
-    min_pwr.append((df["v(vdd)"] * -df["i(vdd)"]).min())
-    max_pwr.append((df["v(vdd)"] * -df["i(vdd)"]).max())
-    avg_pwr.append((df["v(vdd)"] * -df["i(vdd)"]).mean())
+    outp_volt.append(df.loc[idx, "v(vout)"] if idx is not None else None)
+    coarse_code.append(df.loc[idx, "v(dec_coarse_step_counter)"] if idx is not None else None)
+    fine_code.append(df.loc[idx, "v(dec_finetuning_duty_cycle)"] if idx is not None else None)
+    timestamp.append(df["time"][idx] if idx is not None else None)
     volt_sup.append(voltage_supply)
     proc_cor.append(process_corner)
+    min_pwr.append((df["moving_avg_pwr"]).min())
+    avg_pwr.append((df["moving_avg_pwr"]).mean())
+    max_pwr.append((df["moving_avg_pwr"]).max())
+    slp_min_pwr.append((df["filtered_pwr"]).min())
+    slp_avg_pwr.append((df["filtered_pwr"]).mean())
+    slp_max_pwr.append((df["filtered_pwr"]).max())
 
-    delay = 2400 # in number of data points, which corresponds to 2.4 micro seconds (us) after v(swbrn3) first reaches VDD V, which is approximately the time when the output voltage stabilizes after the step response
+df_out = pd.DataFrame({"Temperature (°C)": cir_temp, "Output voltage (V)": outp_volt, "Coarse code": coarse_code, "Fine code": fine_code, "Timestamp (ns)": timestamp, \
+                       "Minimum power (uW)": min_pwr, "Maximum power (uW)": max_pwr, "Average power (uW)": avg_pwr, \
+                       "Sleep min power (uW)": slp_min_pwr, "Sleep avg power (uW)": slp_avg_pwr, "Sleep max power (uW)": slp_max_pwr, \
+                       "Voltage supply (V)": volt_sup, "Process corner": proc_cor}).sort_values(by="Temperature (°C)")
+df_out.to_csv(f"figures/{'_'.join(args)}_stepping_{stepping_direction}.csv", index=False)
 
-    # append the value of v(vout) when v(swbrn3) first reaches VDD V to y list
-    idx = df[df["v(swbrn3)"] >= 0.99*df["v(vdd)"]].index[delay] if not df[df["v(swbrn3)"] >= 0.99*df["v(vdd)"]].empty else None
-    outp_volt2.append(df.loc[idx, "v(vout)"] if idx is not None else None)
-    cir_temp2.append(circuit_temperature)
-    coarse_code2.append(df.loc[idx, "v(dec_coarse_step_counter)"] if idx is not None else None)
-    fine_code2.append(df.loc[idx, "v(dec_finetuning_duty_cycle)"] if idx is not None else None)
-    min_pwr2.append((df["pwr"]).min())
-    max_pwr2.append((df["pwr"]).max())
-    avg_pwr2.append((df["pwr"]).mean())
-    volt_sup2.append(voltage_supply)
-    proc_cor2.append(process_corner)
-
-df1 = pd.DataFrame({"Temperature (°C)": cir_temp, "Output voltage (V)": outp_volt, "Coarse code": coarse_code, "Fine code": fine_code, "Minimum power (uW)": min_pwr, "Maximum power (uW)": max_pwr, "Average power (uW)": avg_pwr, "Voltage supply (V)": volt_sup, "Process corner": proc_cor}).sort_values(by="Temperature (°C)")
-df1.to_csv(f"figures/{'_'.join(args)}_stepping_{stepping_direction}_df1.csv", index=False)
-
-df2 = pd.DataFrame({"Temperature (°C)": cir_temp2, "Output voltage (V)": outp_volt2, "Coarse code": coarse_code2, "Fine code": fine_code2, "Minimum power (uW)": min_pwr2, "Maximum power (uW)": max_pwr2, "Average power (uW)": avg_pwr2, "Voltage supply (V)": volt_sup2, "Process corner": proc_cor2}).sort_values(by="Temperature (°C)")
-df2.to_csv(f"figures/{'_'.join(args)}_stepping_{stepping_direction}_df2.csv", index=False)

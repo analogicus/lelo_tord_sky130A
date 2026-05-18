@@ -1,2 +1,2 @@
-,ibias2,vnbias,vpbias,vsleep,name,type,time,OK
-0,2.3708869999999997,0.6730226,0.6954098,0.0,tran_SchGtKttTtVt,Sch,Fri Nov 14 14:31:28 2025,True
+,ibias_total,ibias_single,vbn,vbp,vsleep,name,type,time,OK
+0,1.528273,1.528273,0.02768057,1.517759,1.792406,SchGtKttTtVt,Sch,Mon May 11 22:39:28 2026,False

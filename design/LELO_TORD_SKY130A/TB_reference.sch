@@ -33,19 +33,19 @@ N 800 720 840 720 {lab=B11}
 N 800 700 840 700 {lab=B10}
 N 800 800 840 800 {lab=B15}
 N 800 780 840 780 {lab=B14}
-N 1400 760 1440 760 {lab=V2}
-N 1400 780 1440 780 {lab=V1}
-N 1740 740 1780 740 {lab=CMP_ASYNC}
-N 1400 840 1440 840 {lab=VSS}
-N 1400 740 1440 740 {lab=VDD}
+N 1400 740 1440 740 {lab=V2}
+N 1400 760 1440 760 {lab=V1}
+N 1740 720 1780 720 {lab=CMP_ASYNC}
+N 1400 820 1440 820 {lab=VSS}
+N 1400 720 1440 720 {lab=VDD}
 N 800 480 840 480 {lab=SLP_N}
-N 1280 790 1320 790 {lab=SLP_N}
-N 1200 750 1240 750 {lab=VDD}
-N 1200 830 1240 830 {lab=VSS}
-N 1160 790 1200 790 {lab=SLP}
-N 1400 800 1440 800 {lab=SLP}
-N 1400 820 1440 820 {lab=SLP_N}
-N 1140 440 1440 440 {lab=IOUT}
+N 1280 780 1320 780 {lab=SLP_N}
+N 1200 740 1240 740 {lab=VDD}
+N 1200 820 1240 820 {lab=VSS}
+N 1160 780 1200 780 {lab=SLP}
+N 1400 780 1440 780 {lab=SLP}
+N 1400 800 1440 800 {lab=SLP_N}
+N 1140 440 1440 440 {lab=IFEED}
 N 1400 420 1440 420 {lab=VDD}
 N 800 820 840 820 {lab=VSS}
 N 1740 440 1780 440 {lab=V1}
@@ -71,7 +71,7 @@ C {devices/ipin.sym} 1400 540 0 0 {name=p132 lab=SWCAP2}
 C {devices/ipin.sym} 1400 580 0 0 {name=p133 lab=SWBGR1}
 C {devices/ipin.sym} 1400 600 0 0 {name=p134 lab=SWBGR2}
 C {devices/ipin.sym} 1400 640 0 0 {name=p135 lab=SWDRN2}
-C {devices/lab_wire.sym} 1430 440 0 0 {name=p137 sig_type=std_logic lab=IOUT}
+C {devices/lab_wire.sym} 1430 440 0 0 {name=p137 sig_type=std_logic lab=IFEED}
 C {devices/ipin.sym} 1400 660 0 0 {name=p147 lab=SWDRN3}
 C {devices/ipin.sym} 1400 560 0 0 {name=p148 lab=SWCAP3}
 C {devices/ipin.sym} 1400 500 0 0 {name=p149 lab=SWBRN3}
@@ -84,23 +84,23 @@ C {devices/ipin.sym} 800 740 0 0 {name=p154 lab=B12}
 C {devices/ipin.sym} 800 760 0 0 {name=p155 lab=B13}
 C {devices/ipin.sym} 800 780 0 0 {name=p156 lab=B14}
 C {devices/ipin.sym} 800 800 0 0 {name=p157 lab=B15}
-C {devices/lab_wire.sym} 1430 740 0 0 {name=p158 sig_type=std_logic lab=VDD}
-C {devices/lab_wire.sym} 1430 780 0 0 {name=p159 sig_type=std_logic lab=V1}
-C {devices/lab_wire.sym} 1430 760 0 0 {name=p160 sig_type=std_logic lab=V2}
-C {devices/lab_wire.sym} 1430 840 0 0 {name=p161 sig_type=std_logic lab=VSS}
-C {LELO_TORD_SKY130A/cmp.sym} 1590 790 0 0 {name=x3}
-C {JNW_TR_SKY130A/JNWTR_IVX1_CV.sym} 1200 790 0 0 {name=x4}
-C {devices/lab_wire.sym} 1190 790 0 0 {name=p166 sig_type=std_logic lab=SLP}
-C {devices/lab_wire.sym} 1290 790 0 1 {name=p167 sig_type=std_logic lab=SLP_N}
-C {devices/lab_wire.sym} 1230 750 0 0 {name=p168 sig_type=std_logic lab=VDD}
-C {devices/lab_wire.sym} 1230 830 2 1 {name=p169 sig_type=std_logic lab=VSS}
+C {devices/lab_wire.sym} 1430 720 0 0 {name=p158 sig_type=std_logic lab=VDD}
+C {devices/lab_wire.sym} 1430 760 0 0 {name=p159 sig_type=std_logic lab=V1}
+C {devices/lab_wire.sym} 1430 740 0 0 {name=p160 sig_type=std_logic lab=V2}
+C {devices/lab_wire.sym} 1430 820 0 0 {name=p161 sig_type=std_logic lab=VSS}
+C {LELO_TORD_SKY130A/cmp.sym} 1590 770 0 0 {name=x3}
+C {JNW_TR_SKY130A/JNWTR_IVX1_CV.sym} 1200 780 0 0 {name=x4}
+C {devices/lab_wire.sym} 1190 780 0 0 {name=p166 sig_type=std_logic lab=SLP}
+C {devices/lab_wire.sym} 1290 780 0 1 {name=p167 sig_type=std_logic lab=SLP_N}
+C {devices/lab_wire.sym} 1230 740 0 0 {name=p168 sig_type=std_logic lab=VDD}
+C {devices/lab_wire.sym} 1230 820 2 1 {name=p169 sig_type=std_logic lab=VSS}
 C {devices/lab_pin.sym} 800 480 0 0 {name=p170 sig_type=std_logic lab=SLP_N}
-C {devices/lab_wire.sym} 1430 820 0 0 {name=p171 sig_type=std_logic lab=SLP_N}
-C {devices/lab_wire.sym} 1430 800 0 0 {name=p172 sig_type=std_logic lab=SLP}
+C {devices/lab_wire.sym} 1430 800 0 0 {name=p171 sig_type=std_logic lab=SLP_N}
+C {devices/lab_wire.sym} 1430 780 0 0 {name=p172 sig_type=std_logic lab=SLP}
 C {LELO_TORD_SKY130A/bandgap_core.sym} 1590 550 0 0 {name=x2}
 C {devices/opin.sym} 1780 420 2 1 {name=p3 lab=VOUT}
 C {devices/lab_pin.sym} 1780 460 0 1 {name=p4 sig_type=std_logic lab=V2}
 C {devices/lab_pin.sym} 1780 440 0 1 {name=p5 sig_type=std_logic lab=V1}
 C {devices/lab_wire.sym} 1430 420 0 0 {name=p1 sig_type=std_logic lab=VDD}
 C {devices/lab_wire.sym} 1430 680 0 0 {name=p6 sig_type=std_logic lab=VSS}
-C {devices/opin.sym} 1780 740 2 1 {name=p7 lab=CMP_ASYNC}
+C {devices/opin.sym} 1780 720 2 1 {name=p7 lab=CMP_ASYNC}

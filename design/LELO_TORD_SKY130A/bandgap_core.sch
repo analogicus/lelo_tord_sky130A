@@ -120,7 +120,7 @@ N 1480 480 1520 480 {lab=VDD}
 N 1480 740 1520 740 {lab=VSS}
 N 2260 500 2260 540 {lab=IIN}
 N 1820 500 1820 540 {lab=IIN}
-N 1780 500 2760 500 {lab=IIN}
+N 1520 500 2760 500 {lab=IIN}
 N 1520 800 1680 800 {lab=V1}
 N 3080 620 3120 620 {lab=V1}
 N 3080 640 3120 640 {lab=V2}
@@ -207,10 +207,9 @@ C {devices/ipin.sym} 1480 620 0 0 {name=p148 lab=SWCAP3}
 C {devices/ipin.sym} 1480 560 0 0 {name=p149 lab=SWBRN3}
 C {devices/ipin.sym} 1480 740 0 0 {name=p91 lab=VSS}
 C {devices/ipin.sym} 1480 480 0 0 {name=p92 lab=VDD}
-C {devices/ipin.sym} 1480 500 0 0 {name=p1 lab=IIN}
+C {devices/ipin.sym} 1480 500 0 0 {name=p1 lab=IFEED}
 C {devices/lab_wire.sym} 1520 810 2 1 {name=p2 sig_type=std_logic lab=V1}
 C {devices/lab_wire.sym} 2560 810 2 0 {name=p3 sig_type=std_logic lab=V2}
 C {devices/lab_wire.sym} 3080 830 0 1 {name=p4 sig_type=std_logic lab=VOUT}
 C {devices/opin.sym} 3120 620 2 1 {name=p5 lab=V1}
 C {devices/opin.sym} 3120 640 2 1 {name=p6 lab=V2}
-C {devices/lab_wire.sym} 1810 500 0 0 {name=p7 sig_type=std_logic lab=IIN}
