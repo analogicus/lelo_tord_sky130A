@@ -20,22 +20,26 @@
 .param AVDD = {vdda}
 .csparam voltage_supply_csparam = {vdda}
 
-.param sleep_signal = 0V
-.csparam sleep_signal_csparam = {sleep_signal}
-
+.param sleep_signal = 0
 .param sleep_signal_not = {AVDD}
-.csparam sleep_signal_not_csparam = {sleep_signal_not}
 
-.param simulation_length = 50
+.param simulation_length = 10
 .csparam simulation_length_csparam = {simulation_length}
+
+.param simulation_length_ns = {simulation_length * 1ns}
+.csparam simulation_length_ns_csparam = {simulation_length_ns}
 
 *-----------------------------------------------------------------
 * FORCE
 *-----------------------------------------------------------------
 VSS VSS 0 dc 0V
 VDD VDD VSS dc {AVDD}
+
 VSLEEP SLP VSS dc {sleep_signal}
 VSLEEPN SLP_N VSS dc {sleep_signal_not}
+
+* VSLEEP SLP VSS pwl(2.0ns {sleep_signal} 2.1ns {sleep_signal_not} 400.0ns {sleep_signal_not} 400.1ns {sleep_signal})
+* VSLEEPN SLP_N VSS pwl(2.0ns {sleep_signal_not} 2.1ns {sleep_signal} 400.0ns {sleep_signal} 400.1ns {sleep_signal_not})
 
 *-----------------------------------------------------------------
 * DUT
@@ -56,59 +60,79 @@ set num_threads=8
 set color0=white
 set color1=black
 unset askquit
+set filetype=ascii
 
-set sim_len = {$&simulation_length_csparam}
-set sim_len_in_ns = {$sim_len}n
-set slp_sig = {$&sleep_signal_csparam}
-set slp_sig_n = {$&sleep_signal_not_csparam}
-set v_sup = {$&voltage_supply_csparam}
+set vsupply  = {$&voltage_supply_csparam}
+set slenght = {$&simulation_length_csparam}
+set slenght_ns  = {$&simulation_length_ns_csparam}
 
-
-if slp_sig > 1.0
-    echo "sleep is set to low (0V)"
-    set sleep_high_or_low = high
-else
-    echo "sleep signal is set to high (1.7V or 1.8V or 1.9V)"
-    set sleep_high_or_low = high
-end
-
-echo ------------------------------------------------------------
+* ------------------------------------------------------------------
+* 1. Default simulation at TNOM=27, sleep low (initial .param state)
+* ------------------------------------------------------------------
+echo "============================================================"
 echo "view and pvt corner: {cicname}"
-echo "supply voltage: {$v_sup} V"
-* echo "circuit temperature: {$cirtemp} C"
-echo "simulation length: {$sim_len} ns"
-echo "sleep signal set to: {$sleep_high_or_low}"
-echo ------------------------------------------------------------
+echo "supply voltage: {$vsupply} V"
+echo "Default nominal temperature (TNOM): {$temp} C"
+echo "simulation length: {$slenght} ns"
+echo "============================================================"
 
 optran 0 0 0 1ns 1us 0
-tran 1ns $sim_len_in_ns 10ps
-write 
+tran 1ns {$slenght_ns} 10ps
+write {cicname}.raw
 
+* ------------------------------------------------------------------
+* 2. Temperature sweep: sleep LOW then sleep HIGH at each temperature
+* ------------------------------------------------------------------
 
-alterparam sleep_signal = {$v_sup}
-alterparam sleep_signal_not = 0V
-reset
+* temperature options to choose from:
+* -40 -35 -30 -25 -20 -15 -10 -5 0 5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95 100 105 110 115 120 125
+* -40 -20 0 25 50 75 100 125
+* -40 -20 0 30 60 90 125
+* -40 0 40 80 125
+* -40 0 125
+* -40 125
 
+foreach circuit_temperature -40 -35 -30 -25 -20 -15 -10 -5 0 5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95 100 105 110 115 120 125
 
-if slp_sig > 1.0
-    echo "sleep is set to low (0V)"
+    * --- Sleep LOW ---
+    alterparam sleep_signal = 0
+    alterparam sleep_signal_not = {$vsupply}
+    reset
+    option temp = {$circuit_temperature}
+    set sleep_high_or_low = low
+
+    echo "------------------------------------------------------------"
+    echo "view and pvt corner: {cicname}"
+    echo "supply voltage: {$vsupply} V"
+    echo "circuit temperature: {$temp} C"
+    echo "simulation length: {$slenght} ns"
+    echo "sleep signal set to: {$sleep_high_or_low}"
+    echo "------------------------------------------------------------"
+
+    optran 0 0 0 1ns 1us 0
+    tran 1ns {$slenght_ns} 10ps
+    write {cicname}_{$temp}celsius_sleep_{$sleep_high_or_low}.raw
+
+    * --- Sleep HIGH ---
+    alterparam sleep_signal = {$vsupply}
+    alterparam sleep_signal_not = 0
+    reset
+    option temp = {$circuit_temperature}
     set sleep_high_or_low = high
-else
-    echo "sleep signal is set to high (1.7V or 1.8V or 1.9V)"
-    set sleep_high_or_low = high
+
+    echo "------------------------------------------------------------"
+    echo "view and pvt corner: {cicname}"
+    echo "supply voltage: {$vsupply} V"
+    echo "circuit temperature: {$temp} C"
+    echo "simulation length: {$slenght} ns"
+    echo "sleep signal set to: {$sleep_high_or_low}"
+    echo "------------------------------------------------------------"
+
+    optran 0 0 0 1ns 1us 0
+    tran 1ns {$slenght_ns} 10ps
+    write {cicname}_{$temp}celsius_sleep_{$sleep_high_or_low}.raw
+
 end
-
-echo ------------------------------------------------------------
-echo "view and pvt corner: {cicname}"
-echo "supply voltage: {$v_sup} V"
-* echo "circuit temperature: {$cirtemp} C"
-echo "simulation length: {$sim_len} ns"
-echo "sleep signal set to: {$sleep_high_or_low}"
-echo ------------------------------------------------------------
-
-optran 0 0 0 1ns 1us 0
-tran 1ns $sim_len_in_ns 10ps
-write {cicname}_sleep_high.raw
 
 quit
 

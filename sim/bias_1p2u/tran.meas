@@ -3,102 +3,48 @@
 
 load {cicname}.raw
 
-let v(v1) = v(xdut.vr1)
-let v(v2) = v(xdut.vr2)
-let v(v3) = v(xdut.vr3)
-let v(v4) = v(xdut.vr4)
-let v(v5) = v(xdut.vr5)
-let v(v6) = v(xdut.vr6)
-let v(v7) = v(xdut.vr7)
-
-* let v(sleep_n) = v(xdut.sleep_n)
-
-let v(sleep) = v(slp)
-let v(sleep_n) = v(slp_n)
-
-let v(nbias) = v(vbn)
-let v(pbias) = b(vbp)
+let v(vr1) = v(xdut.vr1)
+let v(vr2) = v(xdut.vr2)
+let v(vr3) = v(xdut.vr3)
+let v(vr4) = v(xdut.vr4)
+let v(vr5) = v(xdut.vr5)
+let v(vr6) = v(xdut.vr6)
+let v(vr7) = v(xdut.vr7)
 
 let R     = 7535
 let R2    = 2 * R
 let R4    = 4 * R
 let R8    = 8 * R
 let R16   = 16 * R
-let Rtot  = 7 * R16
+let Rtot  = 8 * R16
 
 let vdiff1 = v(xdut.x14.xxa1.int_0) - v(xdut.x14.xxa1.int_1) 
 let iref = vdiff1 / R
 
-let vdiff2 = v(v1) - v(nbias)
+let vdiff2 = v(vr1) - v(vbn)
 let ibias = vdiff2 / Rtot
-
-set wr_singlescale
-set wr_vecnames
-option numdgt = 5
-
-wrdata {cicname}.out 
-+ v(v1) v(v2) v(v3) v(v4) v(v5) v(v6) v(v7)
-+ v(nbias) v(pbias)
-+ v(sleep) v(sleep_n)
-+ v(vss) v(vdd)
-+ i(vss) i(vdd)
-+ vdiff1 iref
-+ vdiff2 ibias
-
 
 echo "MEAS_START"
 
-meas tran vnbias_199ns find v(nbias) at=3ns
-meas tran vpbias_199ns find v(pbias) at=3ns
-meas tran vsleep_199ns find v(sleep) at=3ns
-meas tran iref_199ns find iref at=3ns
-meas tran ibias_199ns find ibias at=3ns
+meas tran vnbias_3ns find v(vbn) at=3ns
+meas tran vpbias_3ns find v(vbp) at=3ns
+meas tran vsleep_3ns find v(slp) at=3ns
+meas tran idd_3ns find i(vdd) at=3ns
+meas tran iref_3ns find iref at=3ns
+meas tran ibias_3ns find ibias at=3ns
 
 echo "MEAS_END"
-
-
-load {cicname}_sleep_high.raw
-
-let v(v1) = v(xdut.vr1)
-let v(v2) = v(xdut.vr2)
-let v(v3) = v(xdut.vr3)
-let v(v4) = v(xdut.vr4)
-let v(v5) = v(xdut.vr5)
-let v(v6) = v(xdut.vr6)
-let v(v7) = v(xdut.vr7)
-
-* let v(sleep_n) = v(xdut.sleep_n)
-
-let v(sleep) = v(slp)
-let v(sleep_n) = v(slp_n)
-
-let v(nbias) = v(vbn)
-let v(pbias) = b(vbp)
-
-let R     = 7535
-let R2    = 2 * R
-let R4    = 4 * R
-let R8    = 8 * R
-let R16   = 16 * R
-let Rtot  = 7 * R16
-
-let vdiff1 = v(xdut.x14.xxa1.int_0) - v(xdut.x14.xxa1.int_1) 
-let iref = vdiff1 / R
-
-let vdiff2 = v(v1) - v(nbias)
-let ibias = vdiff2 / Rtot
 
 set wr_singlescale
 set wr_vecnames
 option numdgt = 5
 
-wrdata {cicname}_sleep_high.out
-+ v(sleep) v(sleep_n)
-+ v(v1) v(v2) v(v3) v(v4) v(v5) v(v6) v(v7)
-+ v(nbias) v(pbias)
-+ v(vss) v(vdd)
-+ i(vss) i(vdd)
-+ vdiff1 iref
-+ vdiff2 ibias
+wrdata {cicname}.out
++ v(vbn) v(vbp)
++ v(slp) v(slp_n)
++ v(vr1) v(vr2) v(vr3) v(vr4) v(vr5) v(vr6) v(vr7)
++ v(vdd) v(vss)
++ i(vdd) i(vss)
++ iref ibias
 
 .endc
