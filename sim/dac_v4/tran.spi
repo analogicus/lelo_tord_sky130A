@@ -1,0 +1,221 @@
+*TB_SUN_TR_SKY130NM/TB_NCM
+*----------------------------------------------------------------
+* Include
+*----------------------------------------------------------------
+#ifdef Lay
+.include ../../../work/lpe/dac_v4_lpe.spi
+#else
+.include ../../../work/xsch/dac_v4.spice
+#endif
+
+*-----------------------------------------------------------------
+* OPTIONS
+*-----------------------------------------------------------------
+.option TNOM=27 GMIN=1e-15 reltol=1e-3
+
+*-----------------------------------------------------------------
+* PARAMETERS
+*-----------------------------------------------------------------
+.param TRF = 10p
+.param AVDD = {vdda}
+.csparam voltage_supply_csparam = {AVDD}
+
+.param FCLK = 1MegHz
+.param TCLK = {1/FCLK}
+
+.param TD = {2*TCLK}
+.param TR = {TCLK/100}
+.param TF = {TR}
+.param PW = {TCLK}
+.param PER = {TCLK}
+
+* Time averaging duty cycle is given in percent (%)
+.param DUTYCYCLE = 35
+.param RATIO = {DUTYCYCLE/100}
+
+.param VAL1 = {AVDD}
+.param VAL2 = {VAL1}
+.param VAL3 = {VAL2}
+.param VAL4 = {VAL3}
+.param VAL5 = {VAL4}
+.param VAL6 = {VAL5}
+.param VAL7 = {VAL6}
+.param VAL8 = {VAL7}
+.param VAL9 = {VAL8}
+.param VAL10 = {VAL9}
+.param VAL11 = {VAL10}
+.param VAL12 = {VAL11}
+.param VAL13 = {VAL12}
+.param VAL14 = {VAL13}
+.param VAL15 = {VAL14}
+
+* .param FEED = {AVDD}
+.param FEED = 1V
+
+* Stepping Current out of DAC
+.param STEPSTART = 8us
+.param STEPLENGTH = 2.0us
+
+.param simulation_length = 10ns
+* .param simulation_length = {STEPSTART + 20 * STEPLENGTH + STEPSTART}
+.csparam simulation_length_csparam = {simulation_length}
+
+*-----------------------------------------------------------------
+* FORCE
+*-----------------------------------------------------------------
+VSS   VSS 0   DC 0V
+VDD   VDD VSS DC {AVDD}
+
+VSLP  SLP   VSS DC 0V
+VSLPN SLP_N VSS DC {AVDD} 
+
+VB0  B0  VSS DC 0V
+
+* VB1  B1  VSS PWL({STEPSTART + 1*STEPLENGTH} 0V {STEPSTART + 1*STEPLENGTH + 0.01us} {AVDD})
+* VB2  B2  VSS PWL({STEPSTART + 2*STEPLENGTH} 0V {STEPSTART + 2*STEPLENGTH + 0.01us} {AVDD})
+* VB3  B3  VSS PWL({STEPSTART + 3*STEPLENGTH} 0V {STEPSTART + 3*STEPLENGTH + 0.01us} {AVDD})
+* VB4  B4  VSS PWL({STEPSTART + 4*STEPLENGTH} 0V {STEPSTART + 4*STEPLENGTH + 0.01us} {AVDD})
+* VB5  B5  VSS PWL({STEPSTART + 5*STEPLENGTH} 0V {STEPSTART + 5*STEPLENGTH + 0.01us} {AVDD})
+* VB6  B6  VSS PWL({STEPSTART + 6*STEPLENGTH} 0V {STEPSTART + 6*STEPLENGTH + 0.01us} {AVDD})
+* VB7  B7  VSS PWL({STEPSTART + 7*STEPLENGTH} 0V {STEPSTART + 7*STEPLENGTH + 0.01us} {AVDD})
+* VB8  B8  VSS PWL({STEPSTART + 8*STEPLENGTH} 0V {STEPSTART + 8*STEPLENGTH + 0.01us} {AVDD})
+* VB9  B9  VSS PWL({STEPSTART + 9*STEPLENGTH} 0V {STEPSTART + 9*STEPLENGTH + 0.01us} {AVDD})
+* VB10 B10 VSS PWL({STEPSTART + 10*STEPLENGTH} 0V {STEPSTART + 10*STEPLENGTH + 0.01us} {AVDD})
+
+* VB0   B0  VSS PULSE(0V {AVDD} {TD} {TR} {TF} {PW*RATIO} {PER})
+
+VB1  B1  VSS DC {VAL1}
+VB2  B2  VSS DC {VAL2}
+VB3  B3  VSS DC {VAL3}
+VB4  B4  VSS DC {VAL4}
+VB5  B5  VSS DC {VAL5}
+VB6  B6  VSS DC {VAL6}
+VB7  B7  VSS DC {VAL7}
+VB8  B8  VSS DC {VAL8}
+VB9  B9  VSS DC {VAL9}
+VB10 B10 VSS DC {VAL10}
+* VB11 B11 VSS DC {VAL11}
+* VB12 B12 VSS DC {VAL12}
+* VB13 B13 VSS DC {VAL13}
+* VB14 B14 VSS DC {VAL14}
+* VB15 B15 VSS DC {VAL15}
+
+* VB1  B1  VSS DC 0V
+* VB2  B2  VSS DC 0V
+* VB3  B3  VSS DC 0V
+* VB4  B4  VSS DC 0V
+* VB5  B5  VSS DC 0V
+* VB6  B6  VSS DC 0V
+* VB7  B7  VSS DC 0V
+* VB8  B8  VSS DC 0V
+* VB9  B9  VSS DC 0V
+* VB10 B10 VSS DC 0V
+VB11 B11 VSS DC 0V
+VB12 B12 VSS DC 0V
+VB13 B13 VSS DC 0V
+VB14 B14 VSS DC 0V
+VB15 B15 VSS DC 0V
+
+VFEED IFEED VSS {FEED}
+
+*-----------------------------------------------------------------
+* DUT
+*-----------------------------------------------------------------
+.include ../xdut.spi
+
+*----------------------------------------------------------------
+* PROBE
+*----------------------------------------------------------------
+.save all
+.option savecurrents
+
+*----------------------------------------------------------------
+* NGSPICE control
+*----------------------------------------------------------------
+.control
+set num_threads=8
+set color0=white
+set color1=black
+unset askquit
+
+* set filetype=ascii
+
+set vsupply  = {$&voltage_supply_csparam}
+set slenght = {$&simulation_length_csparam}
+
+echo "============================================================"
+echo "view and pvt corner: {cicname}"
+echo "supply voltage: {$vsupply} V"
+echo "Default nominal temperature (TNOM): {$temp} C"
+echo "simulation length: {$slenght} s"
+echo "============================================================"
+
+optran 0 0 0 1ns 1us 0
+tran 1ns {$slenght} 10ps
+
+write {cicname}.raw
+
+set wr_singlescale
+set wr_vecnames
+option numdgt = 5
+
+wrdata {cicname}.out
++ v(ifeed)
++ i(vfeed)
++ v(b0)
++ v(b1) v(b2) v(b3) v(b4) v(b5) v(b6) v(b7)
++ v(b8) v(b9) v(b10) v(b11) v(b12) v(b13) v(b14) v(b15)
++ v(vdd) v(vss)
++ v(slp) v(slp_n)
+
+* temperature options to choose from:
+* -40 -35 -30 -25 -20 -15 -10 -5 0 5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95 100 105 110 115 120 125
+* -40 -20 0 25 50 75 100 125
+* -40 -20 0 30 60 90 125
+* -40 0 40 80 125
+* -40 0 125
+* -40 125
+
+foreach circuit_temperature -40 -35 -30 -25 -20 -15 -10 -5 0 5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95 100 105 110 115 120 125
+    foreach sweep_voltage 0.2 0.4 0.6 0.8 1.0 1.2 1.4 1.6
+
+        alterparam FEED = {$sweep_voltage}
+        reset
+        set slenght = {$&simulation_length_csparam}
+        set vsupply = {$&voltage_supply_csparam}
+        option temp = {$circuit_temperature}
+
+        echo "------------------------------------------------------------"
+        echo "view and pvt corner: {cicname}"
+        echo "supply voltage: {$vsupply} V"
+        echo "circuit temperature: {$temp} C"
+        echo "sweep voltage: {$sweep_voltage} V"
+        echo "simulation length: {$slenght} s"
+        echo "------------------------------------------------------------"
+
+        optran 0 0 0 1ns 1us 0
+        tran 1ns {$slenght} 10ps
+
+        * write {cicname}_{$temp}celsius_{$sweep_voltage}volt.raw
+
+        set wr_singlescale
+        set wr_vecnames
+        option numdgt = 5
+
+        wrdata {cicname}_{$temp}celsius_{$sweep_voltage}volt.out
+        + v(ifeed)
+        + i(vfeed)
+        + v(b0)
+        + v(b1) v(b2) v(b3) v(b4) v(b5) v(b6) v(b7)
+        + v(b8) v(b9) v(b10) v(b11) v(b12) v(b13) v(b14) v(b15)
+        + v(vdd) v(vss)
+        + v(slp) v(slp_n)
+
+    end
+end
+
+quit
+
+.endc
+
+.end

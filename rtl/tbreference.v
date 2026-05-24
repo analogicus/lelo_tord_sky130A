@@ -2,7 +2,7 @@ module tbreference  #(
     parameter TIMEOUT_LIMIT                 = 100, // timeout before branches switch in number of clock cycles
     parameter INITIAL_COARSE_STEP_COUNT     = 10,  // initial coarse DAC step
     parameter INITIAL_FINETUNING_DUTY_CYCLE = 3,   // initial finetunig pulse length in number of clock cycles
-    parameter INITIAL_FINETUNING_PERIODE    = 10,  // initial finetuning periode in number of clock cycles
+    parameter INITIAL_FINETUNING_PERIODE    = 10,  // finetuning periode length in number of clock cycles
     parameter SW_TIMEOUT                    = 3,   // how many clock periods to wait in each switch state before moving on to the next.
     parameter SLEEP_TIMEOUT                 = 100  // timeout before sleep mode turns of after activation in number of clock cycles
 )(
