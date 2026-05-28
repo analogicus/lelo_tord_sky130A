@@ -39,13 +39,13 @@ if "fast" in args:
                 files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_stepping_{stepping_direction}_{temperature}celsius_{voltage}volt.out")
 if "all" in args:
     for corner in ["tt", "ss", "ff", "sf", "fs"]:
-        for temperature in [-40, -20, 0, 25, 50, 75, 100, 125]: # Celsius (degree C)
+        for temperature in [-40, 0, 40, 80, 125]: # Celsius (degree C)
             for voltage in [1.7, 1.8, 1.9]: # Volt (V)
                 Vx = "Vl" if voltage == 1.7 else "Vt" if voltage == 1.8 else "Vh" if voltage == 1.9 else "Oops"
                 files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_stepping_{stepping_direction}_{temperature}celsius_{voltage}volt.out")
 if "etc" in args:
     for corner in ["ss", "ff", "sf", "fs"]:
-        for temperature in [-40, -20, 0, 25, 50, 75, 100, 125]: # Celsius (degree C)
+        for temperature in [-40, 0, 40, 80, 125]: # Celsius (degree C)
             for voltage in [1.7, 1.9]: # Volt (V)
                 Vx = "Vl" if voltage == 1.7 else "Vt" if voltage == 1.8 else "Vh" if voltage == 1.9 else "Oops"
                 files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_stepping_{stepping_direction}_{temperature}celsius_{voltage}volt.out")
@@ -86,13 +86,19 @@ if "partialtemps" in args:
                 Vx = "Vl" if voltage == 1.7 else "Vt" if voltage == 1.8 else "Vh" if voltage == 1.9 else "Oops"
                 files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_stepping_{stepping_direction}_{temperature}celsius_{voltage}volt.out")
 
-if "montecarlo" in args:
+runs = 30
+
+if "mc" in args:
     for corner in ["ttmm"]:
-        for temperature in [25]: # Celsius (degree C)
+        for temperature in [-40, 0, 40, 80, 125]: # Celsius (degree C)
             for voltage in [1.8]: # Volt (V)
                 Vx = "Vl" if voltage == 1.7 else "Vt" if voltage == 1.8 else "Vh" if voltage == 1.9 else "Oops"
-                for run in range(1, 30 + 1): # Assuming 30 Monte Carlo runs
-                    files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_{run}_stepping_{stepping_direction}_{temperature}celsius_{voltage}volt.out")
+                for run in range(21, runs): # Assuming 30 Monte Carlo runs
+                    if run == 0:
+                        files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_stepping_{stepping_direction}_{temperature}celsius_{voltage}volt.out")
+                    else:
+                        files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_{run}_stepping_{stepping_direction}_{temperature}celsius_{voltage}volt.out")
+                    print(f"added output_tran/tran_SchGtK{corner}Tt{Vx}_{run}_stepping_{stepping_direction}_{temperature}celsius_{voltage}volt.out to files")
 
 figure_width = 4
 figure_height = 4.5
@@ -355,27 +361,28 @@ for file in files:
 
     fig_6, axs_6 = plt.subplots(4, 1, figsize=(figure_width, figure_height), sharex=True, dpi=300)
 
-    axs_6[0].plot(df["time"], df["v(clk)"], label="v(clk)")
+    axs_6[0].plot(df["time"], df["v(clk)"], label="clk")
     axs_6[0].plot(df["time"], df["v(b0)"], label="b0")
-    axs_6[0].plot(df["time"], df["v(rst)"], label="v(rst)")
-    axs_6[0].plot(df["time"], df["v(slp)"], label="v(slp)")
-    axs_6[0].plot(df["time"], df["v(mode)"], label="v(mode)")
-    axs_6[0].plot(df["time"], df["v(mode_meta)"], label="v(mode_meta)")
-    axs_6[0].plot(df["time"], df["v(operation)"], label="v(operation)")
+    axs_6[0].plot(df["time"], df["v(rst)"], label="rst")
+    axs_6[0].plot(df["time"], df["v(slp)"], label="slp")
+    axs_6[0].plot(df["time"], df["v(mode)"], label="mode")
+    axs_6[0].plot(df["time"], df["v(cmp_async)"], label="cmp")
+    # axs_6[0].plot(df["time"], df["v(mode_meta)"], label="v(mode_meta)")
+    # axs_6[0].plot(df["time"], df["v(operation)"], label="v(operation)")
 
-    axs_6[1].plot(df["time"], df["v(swbgr1)"], label="v(swbgr1)")
-    axs_6[1].plot(df["time"], df["v(swbrn1)"], label="v(swbrn1)")
-    axs_6[1].plot(df["time"], df["v(swcap1)"], label="v(swcap1)")
-    axs_6[1].plot(df["time"], df["v(swdrn1)"], label="v(swdrn1)")
+    axs_6[1].plot(df["time"], df["v(swbgr1)"], label="swbgr1")
+    axs_6[1].plot(df["time"], df["v(swbrn1)"], label="swbrn1")
+    axs_6[1].plot(df["time"], df["v(swcap1)"], label="swcap1")
+    axs_6[1].plot(df["time"], df["v(swdrn1)"], label="swdrn1")
 
-    axs_6[2].plot(df["time"], df["v(swbgr2)"], label="v(swbgr2)")
-    axs_6[2].plot(df["time"], df["v(swbrn2)"], label="v(swbrn2)")
-    axs_6[2].plot(df["time"], df["v(swcap2)"], label="v(swcap2)")
-    axs_6[2].plot(df["time"], df["v(swdrn2)"], label="v(swdrn2)")
+    axs_6[2].plot(df["time"], df["v(swbgr2)"], label="swbgr2")
+    axs_6[2].plot(df["time"], df["v(swbrn2)"], label="swbrn2")
+    axs_6[2].plot(df["time"], df["v(swcap2)"], label="swcap2")
+    axs_6[2].plot(df["time"], df["v(swdrn2)"], label="swdrn2")
 
-    axs_6[3].plot(df["time"], df["v(swbrn3)"], label="v(swbrn3)")
-    axs_6[3].plot(df["time"], df["v(swcap3)"], label="v(swcap3)")
-    axs_6[3].plot(df["time"], df["v(swdrn3)"], label="v(swdrn3)")
+    axs_6[3].plot(df["time"], df["v(swbrn3)"], label="swbrn3")
+    axs_6[3].plot(df["time"], df["v(swcap3)"], label="swcap3")
+    axs_6[3].plot(df["time"], df["v(swdrn3)"], label="swdrn3")
 
     for i, ax in enumerate(axs_6    ):
         ax.set_ylabel("Voltage (V)", fontsize=label_font_size)
@@ -392,8 +399,6 @@ for file in files:
     #
     # Plot power consumption
     #
-
-
 
     window_size = 100 # in number of samples
     df["pwr"] = df["v(vdd)"] * -(df["i(vdd)"]) * 1e6 # in uW (micro Watt)
@@ -440,15 +445,15 @@ for file in files:
     axs_7[4].plot(df["time"], filtered_pwr_plot, label=f"filtered pwr", color="tab:green")
 
     delay = 0 # in ns (nanosecond)
-    idx = df[df["v(correct_output_found)"] >= 0.99*df["v(vdd)"]].index[-1] if not df[df["v(correct_output_found)"] >= 0.99*df["v(vdd)"]].empty else None
-    timestamp = df["time"][idx] - delay if idx is not None else None
-    idx_timestamp = df[df["time"] >= timestamp].index[0] if timestamp is not None else None
+    # idx = df[df["v(correct_output_found)"] >= 0.99*df["v(vdd)"]].index[-1] if not df[df["v(correct_output_found)"] >= 0.99*df["v(vdd)"]].empty else None
+    # timestamp = df["time"][idx] - delay if idx is not None else None
+    # idx_timestamp = df[df["time"] >= timestamp].index[0] if timestamp is not None else None
 
-    axs_7[0].axvline(x=timestamp, color="black", linestyle="dashed", label=f"Measurment done\nat {df.loc[idx_timestamp, 'time']} ns")
-    axs_7[1].axvline(x=timestamp, color="black", linestyle="dashed")
-    axs_7[2].axvline(x=timestamp, color="black", linestyle="dashed")
-    axs_7[3].axvline(x=timestamp, color="black", linestyle="dashed")
-    axs_7[4].axvline(x=df.loc[idx_timestamp, "time"], color="black", linestyle="dashed")
+    # axs_7[0].axvline(x=timestamp, color="black", linestyle="dashed", label=f"Measurment done\nat {df.loc[idx_timestamp, 'time']} ns")
+    # axs_7[1].axvline(x=timestamp, color="black", linestyle="dashed")
+    # axs_7[2].axvline(x=timestamp, color="black", linestyle="dashed")
+    # axs_7[3].axvline(x=timestamp, color="black", linestyle="dashed")
+    # axs_7[4].axvline(x=df.loc[idx_timestamp, "time"], color="black", linestyle="dashed")
 
     for i, ax in enumerate(axs_7):
         if ax == axs_7[4]:

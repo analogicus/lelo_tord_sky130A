@@ -63,7 +63,7 @@ write {cicname}.raw
 * -40 0 125
 * -40 125
 
-foreach circuit_temperature -40
+foreach circuit_temperature -40 -35 -30 -25 -20 -15 -10 -5 0 5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95 100 105 110 115 120 125
 
     reset
     option temp = $circuit_temperature
@@ -73,13 +73,13 @@ foreach circuit_temperature -40
 
     write {cicname}_{$circuit_temperature}celsius.raw
 
-    set wr_singlescale
-    set wr_vecnames
-    option numdgt = 5
+    * set wr_singlescale
+    * set wr_vecnames
+    * option numdgt = 5
 
-    wrdata {cicname}_{$circuit_temperature}celsius.out
-    + v(vdd) i(vdd)
-    + v(vss) i(vss)
+    * wrdata {cicname}_{$circuit_temperature}celsius.out
+    * + v(vdd) i(vdd)
+    * + v(vss) i(vss)
 
     * + v(xdut.vr)
     * + i(v.xdut.v1)

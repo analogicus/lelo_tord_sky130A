@@ -164,7 +164,7 @@ end
 * -40 0 125
 * -40 125
 
-foreach cirtemp 125
+foreach cirtemp -40 0 40 80 125
 
     reset
     option temp = $cirtemp

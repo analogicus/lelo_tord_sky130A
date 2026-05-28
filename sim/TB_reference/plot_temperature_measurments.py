@@ -16,6 +16,7 @@ arguments = sys.argv[1:]
 
 stepping_direction = ""
 if "up" in arguments:
+    arguments.remove("up")
     stepping_direction = "up"
     print("Plotting for transient signals stepping upwards")
 else: 

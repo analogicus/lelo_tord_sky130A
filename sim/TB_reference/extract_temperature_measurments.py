@@ -9,6 +9,7 @@ xx = "xx"
 
 stepping_direction = ""
 if "up" in args:
+    args.remove("up")
     stepping_direction = "up"
     print("Plotting for transient signals stepping upwards")
 else: 
@@ -44,7 +45,7 @@ if "all" in args:
                 files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_stepping_{stepping_direction}_{temperature}celsius_{voltage}volt.out")
 if "etc" in args:
     for corner in ["ss", "ff", "sf", "fs"]:
-        for temperature in [-40, -20, 0, 25, 50, 75, 100, 125]: # Celsius (degree C)
+        for temperature in [-40, 0, 40, 80, 125]: # Celsius (degree C)
             for voltage in [1.7, 1.9]: # Volt (V)
                 Vx = "Vl" if voltage == 1.7 else "Vt" if voltage == 1.8 else "Vh" if voltage == 1.9 else "Oops"
                 files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_stepping_{stepping_direction}_{temperature}celsius_{voltage}volt.out")

@@ -12,12 +12,12 @@ meas tran idd_9ns find i(vdd) at=9ns
 
 echo "MEAS_END"
 
-set wr_singlescale
-set wr_vecnames
-option numdgt = 5
+* set wr_singlescale
+* set wr_vecnames
+* option numdgt = 5
 
-wrdata {cicname}.out
-+ v(vdd) i(vdd)
-+ v(vss) i(vss)
+* wrdata {cicname}.out
+* + v(vdd) i(vdd)
+* + v(vss) i(vss)
 
 .endc
