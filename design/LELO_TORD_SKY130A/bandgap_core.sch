@@ -29,11 +29,9 @@ N 1820 810 1820 1080 {lab=V1A}
 N 2000 800 2000 940 {lab=V1B}
 N 2000 1020 2000 1060 {lab=VR1}
 N 2000 1140 2000 1180 {lab=VSS}
-N 1960 980 1980 980 {lab=VSS}
 N 1960 980 1960 1180 {lab=VSS}
 N 1960 1100 1980 1100 {lab=VSS}
 N 2080 1020 2080 1060 {lab=VR2}
-N 2100 980 2120 980 {lab=VSS}
 N 2120 980 2120 1180 {lab=VSS}
 N 2100 1100 2120 1100 {lab=VSS}
 N 2080 1140 2080 1180 {lab=VSS}
@@ -91,7 +89,7 @@ N 3040 970 3040 1020 {lab=VSS}
 N 3040 1020 3080 1020 {lab=VSS}
 N 2940 1180 3080 1180 {lab=VSS}
 N 3120 970 3160 970 {lab=SWDRN3}
-N 2760 500 2760 540 {lab=IIN}
+N 2760 500 2760 540 {lab=IFEED}
 N 2760 640 2760 940 {lab=VREF}
 N 2720 980 2740 980 {lab=VSS}
 N 2720 980 2720 1180 {lab=VSS}
@@ -118,13 +116,15 @@ N 1480 620 1520 620 {lab=SWCAP3}
 N 1480 560 1520 560 {lab=SWBRN3}
 N 1480 480 1520 480 {lab=VDD}
 N 1480 740 1520 740 {lab=VSS}
-N 2260 500 2260 540 {lab=IIN}
-N 1820 500 1820 540 {lab=IIN}
-N 1520 500 2760 500 {lab=IIN}
+N 2260 500 2260 540 {lab=IFEED}
+N 1820 500 1820 540 {lab=IFEED}
+N 1520 500 2760 500 {lab=IFEED}
 N 1520 800 1680 800 {lab=V1}
 N 3080 620 3120 620 {lab=V1}
 N 3080 640 3120 640 {lab=V2}
-N 1480 500 1520 500 {lab=IIN}
+N 1480 500 1520 500 {lab=IFEED}
+N 2100 980 2120 980 {lab=VSS}
+N 1960 980 1980 980 {lab=VSS}
 C {sky130_fd_pr/pnp_05v5.sym} 1800 1110 0 0 {name=Q1
 model=pnp_05v5_W3p40L3p40
 m=1
@@ -175,8 +175,6 @@ C {devices/lab_wire.sym} 2260 1060 0 0 {name=p70 sig_type=std_logic lab=V2C}
 C {JNW_TR_SKY130A/JNWTR_RPPO16.sym} 2080 1060 3 1 {name=x14[1:0]}
 C {JNW_TR_SKY130A/JNWTR_RPPO16.sym} 2000 1060 1 0 {name=x12[1:0]}
 C {JNW_TR_SKY130A/JNWTR_RPPO2.sym} 2260 1020 1 1 {name=x15[1:0]}
-C {JNW_TR_SKY130A/JNWTR_RPPO8.sym} 2000 940 1 0 {name=x11[1:0] }
-C {JNW_TR_SKY130A/JNWTR_RPPO8.sym} 2080 940 3 1 {name=x13[1:0]}
 C {devices/lab_wire.sym} 2000 1050 0 0 {name=p71 sig_type=std_logic lab=VR1}
 C {devices/lab_wire.sym} 2080 1050 0 1 {name=p80 sig_type=std_logic lab=VR2}
 C {devices/lab_wire.sym} 1510 1180 0 0 {name=p35 sig_type=std_logic lab=VSS}
@@ -213,3 +211,5 @@ C {devices/lab_wire.sym} 2560 810 2 0 {name=p3 sig_type=std_logic lab=V2}
 C {devices/lab_wire.sym} 3080 830 0 1 {name=p4 sig_type=std_logic lab=VOUT}
 C {devices/opin.sym} 3120 620 2 1 {name=p5 lab=V1}
 C {devices/opin.sym} 3120 640 2 1 {name=p6 lab=V2}
+C {JNW_TR_SKY130A/JNWTR_RPPO2.sym} 2000 1020 1 1 {name=x11[5:0]}
+C {JNW_TR_SKY130A/JNWTR_RPPO2.sym} 2080 1020 3 0 {name=x13[5:0]}

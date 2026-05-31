@@ -25,6 +25,9 @@ slow: netlist
 fast: netlist
 	cicsim run --name ${VIEW}_fast ${TB} ${OPT} ${VIEW} Gt Kff "Tt" Vh
 
+sfVh: netlist
+	cicsim run --name ${VIEW}_sfVh ${TB} ${OPT} ${VIEW} Gt Ksf "Tt" Vh
+
 tfs: netlist
 	cicsim run --name ${VIEW}_tfs ${TB} ${OPT} ${VIEW} Gt "Ktt,Kss,Kff" "Tt" "Vt,Vl,Vh"
 
