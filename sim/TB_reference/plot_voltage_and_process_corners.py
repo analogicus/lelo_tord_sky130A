@@ -3,6 +3,24 @@ import numpy as np
 
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 
+from spicelib import RawRead
+
+# Load the raw simulation file
+raw_data = RawRead("output_tran/tran_SchGtKttmmTtVt_25_stepping_down_0celsius_1.8volt.raw")
+
+# Discover what data is inside the file
+print("Plot Name:", raw_data.get_plot_name())
+print("Available Signals:", raw_data.get_trace_names())
+
+# Extract specific time/frequency axis and trace arrays
+time = raw_data.get_trace("time").get_wave()
+print("Time:", time)
+
+# (Trace 0 is automatically assigned to the horizontal axis)
+vout = raw_data.get_trace("v(vout)").get_wave()
+print("v(vout) Trace:", vout)
+
+
 process_corners = dict(s=1, t=2, f=3)
 voltage_corners = dict(Vl=1.7, Vt=1.8, Vh=1.9)
 temperature_corners = dict(Tl=-40, Tt=25, Th=125)
@@ -122,5 +140,7 @@ ax.grid(True)
 
 fig.savefig("../../media/process_corners_and_voltages.png")
 
-plt.show()
+# plt.show()
+
+
 

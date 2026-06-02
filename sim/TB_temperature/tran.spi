@@ -3,9 +3,9 @@
 * Include
 *----------------------------------------------------------------
 #ifdef Lay
-.include ../../../work/lpe/TB_reference_lpe.spi
+.include ../../../work/lpe/TB_temperature_lpe.spi
 #else
-.include ../../../work/xsch/TB_reference.spice
+.include ../../../work/xsch/TB_temperature.spice
 #endif
 
 *-----------------------------------------------------------------
@@ -74,7 +74,7 @@ VRST RST VSS pwl 1.0us 0V 1.1us {AVDD} 14.9us {AVDD} 15.0us 0V
 * + 275.1us 0V 275.2us {AVDD} 285.4us {AVDD} 285.5us 0V 
 
 * REFERENCE MODE = 1, TEMPERATURE MODE = 0
-VMODE MODE VSS dc {AVDD}
+VMODE MODE VSS dc 0
 
 * VB0  B0  VSS pulse(0V {AVDD} {TD} {TR} {TF} {PW} {PER})
 Vconn0 finetuning_signal B0 dc 0V

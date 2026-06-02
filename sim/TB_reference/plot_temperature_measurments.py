@@ -211,7 +211,8 @@ if args[-1] == "etc":
             min_on_pwr = np.array(df.loc[(df['Process corner'] == process_corner) & (df["Voltage supply (V)"] == voltage), "Minimum active power (uW)"])
             max_on_pwr = np.array(df.loc[(df['Process corner'] == process_corner) & (df["Voltage supply (V)"] == voltage), "Maximum active power (uW)"])
 
-            axs_on_pwr.plot(temperatures, mean_on_pwr, linestyle="solid", marker="o", markersize=5, color=last_color, label=f"{corner}{Vx}")
+            axs_on_pwr.plot(temperatures, mean_on_pwr, linestyle="solid", marker="o", markersize=5, label=f"{corner}{Vx}")
+            last_color = axs_on_pwr.get_lines()[-1].get_color()
             # axs_on_pwr.plot(temperatures, min_on_pwr, linestyle="dashed", marker="s", markersize=5, color=last_color, label=f"{corner}{Vx}, minimum")
             # axs_on_pwr.plot(temperatures, max_on_pwr, linestyle="dotted", marker="v", markersize=5, color=last_color, label=f"{corner}{Vx}, maximum")
 
@@ -221,9 +222,16 @@ if args[-1] == "etc":
 
             off_pwr = np.array(df.loc[(df['Process corner'] == process_corner) & (df["Voltage supply (V)"] == voltage), "Sleep power (uW)"])
             
-            axs_off_pwr.plot(temperatures, off_pwr, marker="o", color=last_color, label=f"{corner}{Vx}")
+            axs_off_pwr.plot(temperatures, off_pwr, marker="o", label=f"{corner}{Vx}")
 
             print("")
+
+    mean_on_pwr = np.array(df.loc[(df['Process corner'] == "Typical") & (df["Voltage supply (V)"] == 1.8), "Mean active power (uW)"])
+    min_on_pwr = np.array(df.loc[(df['Process corner'] == "Typical") & (df["Voltage supply (V)"] == 1.8), "Minimum active power (uW)"])
+    max_on_pwr = np.array(df.loc[(df['Process corner'] == "Typical") & (df["Voltage supply (V)"] == 1.8), "Maximum active power (uW)"])
+    axs_on_pwr.plot(temperatures, mean_on_pwr, linestyle="solid", marker="o", markersize=5, label=f"ttVt")
+    off_pwr = np.array(df.loc[(df['Process corner'] == "Typical") & (df["Voltage supply (V)"] == 1.8), "Sleep power (uW)"])
+    axs_off_pwr.plot(temperatures, off_pwr, marker="o", label=f"ttVt")
 
     axs_v_0p.plot(ts_ttVt, vs_ttVt, marker="o", label=f"ttVt")
     axs_v_1p.plot(ts_ttVt, vs_ttVt, marker="o", label=f"ttVt")
@@ -272,7 +280,7 @@ if args[-1] == "etc":
     axs_v_0p.grid()
 
     fig_v_0p.tight_layout()
-    fig_v_0p.savefig(f"plots/{'_'.join(args)}_stepping_{stepping_direction}_uncalibrated_temperature_vs_reference_voltage.png", dpi=300, bbox_inches="tight")
+    fig_v_0p.savefig(f"plots/{'_'.join(args)}_stepping_{stepping_direction}_uncalibrated_temperature_vs_reference_voltage_new_resistance_v2.png", dpi=300, bbox_inches="tight")
 
 
     axs_dac.set_title(f"DAC input", fontsize=title_font_size, fontweight='bold')
@@ -283,7 +291,7 @@ if args[-1] == "etc":
     axs_dac.grid()
 
     fig_dac.tight_layout()
-    fig_dac.savefig(f"plots/{'_'.join(args)}_stepping_{stepping_direction}_uncalibrated_temperature_vs_dac_code.png", dpi=300, bbox_inches="tight")
+    fig_dac.savefig(f"plots/{'_'.join(args)}_stepping_{stepping_direction}_uncalibrated_temperature_vs_dac_code_new_resistance_v2.png", dpi=300, bbox_inches="tight")
 
 
     axs_v_1p.set_title(f"Reference voltage 1 point calibrated", fontsize=title_font_size, fontweight='bold')
@@ -294,7 +302,7 @@ if args[-1] == "etc":
     axs_v_1p.grid()
 
     fig_v_1p.tight_layout()
-    fig_v_1p.savefig(f"plots/{'_'.join(args)}_stepping_{stepping_direction}_onepointcalibrated_temperature_vs_reference_voltage.png", dpi=300, bbox_inches="tight")
+    fig_v_1p.savefig(f"plots/{'_'.join(args)}_stepping_{stepping_direction}_onepointcalibrated_temperature_vs_reference_voltage_new_resistance_v2.png", dpi=300, bbox_inches="tight")
 
     
     axs_v_2p.set_title(f"Reference voltage 2 point calibrated", fontsize=title_font_size, fontweight='bold')
@@ -305,7 +313,7 @@ if args[-1] == "etc":
     axs_v_2p.grid()
 
     fig_v_2p.tight_layout()
-    fig_v_2p.savefig(f"plots/{'_'.join(args)}_stepping_{stepping_direction}_twopointcalibrated_temperature_vs_reference_voltage.png", dpi=300, bbox_inches="tight")
+    fig_v_2p.savefig(f"plots/{'_'.join(args)}_stepping_{stepping_direction}_twopointcalibrated_temperature_vs_reference_voltage_new_resistance_v2.png", dpi=300, bbox_inches="tight")
 
 
     axs_on_pwr.set_title(f"Active power consumption", fontsize=title_font_size, fontweight='bold')
@@ -316,7 +324,7 @@ if args[-1] == "etc":
     axs_on_pwr.grid()
 
     fig_on_pwr.tight_layout()
-    fig_on_pwr.savefig(f"plots/{'_'.join(args)}_stepping_{stepping_direction}_temperature_vs_active_power_new_resistance.png", dpi=300, bbox_inches="tight")
+    fig_on_pwr.savefig(f"plots/{'_'.join(args)}_stepping_{stepping_direction}_temperature_vs_active_power_new_resistance_v2.png", dpi=300, bbox_inches="tight")
 
     axs_off_pwr.set_title(f"Sleep power consumption", fontsize=title_font_size, fontweight='bold')
     axs_off_pwr.set_xlabel("Temperature (°C)", fontsize=label_font_size)
@@ -326,4 +334,4 @@ if args[-1] == "etc":
     axs_off_pwr.grid()
 
     fig_off_pwr.tight_layout()
-    fig_off_pwr.savefig(f"plots/{'_'.join(args)}_stepping_{stepping_direction}_temperature_vs_sleep_power_new_resistance.png", dpi=300, bbox_inches="tight")
+    fig_off_pwr.savefig(f"plots/{'_'.join(args)}_stepping_{stepping_direction}_temperature_vs_sleep_power_new_resistance_v2.png", dpi=300, bbox_inches="tight")

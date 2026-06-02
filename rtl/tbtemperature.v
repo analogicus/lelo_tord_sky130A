@@ -1,6 +1,6 @@
-module tbreference  #(
+module tbtemperature  #(
     parameter TIMEOUT_LIMIT                 = 100, // timeout before branches switch in number of clock cycles
-    parameter INITIAL_COARSE_STEP_COUNT     = 11,  // initial coarse DAC step
+    parameter INITIAL_COARSE_STEP_COUNT     = 5,  // initial coarse DAC step
     parameter INITIAL_FINETUNING_DUTY_CYCLE = 4,   // initial finetunig pulse length in number of clock cycles
     parameter INITIAL_FINETUNING_PERIODE    = 10,  // finetuning periode length in number of clock cycles
     parameter SW_TIMEOUT                    = 3,   // how many clock periods to wait in each switch state before moving on to the next.

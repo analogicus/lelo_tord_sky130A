@@ -41,6 +41,23 @@ if "ttVt" in args:
             for temperature in tempeartures: # Celsius (degree C)
                 files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_stepping_{stepping_direction}_{temperature}celsius_{voltage}volt.out")
 
+if "tfs" in args:
+    for corner in ["tt"]:
+        for voltage in [1.8]: # Volt (V)
+            Vx = "Vl" if voltage == 1.7 else "Vt" if voltage == 1.8 else "Vh" if voltage == 1.9 else "Oops"
+            for temperature in tempeartures: # Celsius (degree C)
+                files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_stepping_{stepping_direction}_{temperature}celsius_{voltage}volt.out")
+    for corner in ["ff"]:
+        for voltage in [1.9]: # Volt (V)
+            Vx = "Vl" if voltage == 1.7 else "Vt" if voltage == 1.8 else "Vh" if voltage == 1.9 else "Oops"
+            for temperature in tempeartures: # Celsius (degree C)
+                files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_stepping_{stepping_direction}_{temperature}celsius_{voltage}volt.out")
+    for corner in ["ss"]:
+        for voltage in [1.7]: # Volt (V)
+            Vx = "Vl" if voltage == 1.7 else "Vt" if voltage == 1.8 else "Vh" if voltage == 1.9 else "Oops"
+            for temperature in tempeartures: # Celsius (degree C)
+                files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_stepping_{stepping_direction}_{temperature}celsius_{voltage}volt.out")
+
 if "etc" in args:
     for corner in ["ss", "ff", "sf", "fs"]:
         for voltage in [1.7, 1.9]: # Volt (V)
@@ -106,13 +123,13 @@ for file in files:
 
     df = pd.read_csv(file, sep="\s+")
 
-    df['time'] = df['time'] * 1e9 # in ns
+    df['time'] = df['time'] * 1e6 # in u
 
     idx = df[df["v(correct_output_found)"] >= 0.99 * 1.8].index[-1] if not df[df["v(correct_output_found)"] >= 0.99 * 1.8].empty else None
     timestamps.append(df["time"][idx] if idx is not None else None)
     pwr_off_idx = df[df["v(slp)"] > 0.90 * 1.8].index[-10] if len(df[df["v(slp)"] > 0.90 * 1.8]) > 10 else 0
     pwr_timestamp = df["time"][pwr_off_idx] if pwr_off_idx is not None else None
-    print(f"Sleep power measured at {pwr_timestamp:.2f} ns")
+    print(f"Sleep power measured at {pwr_timestamp:.2f} us")
 
     df["verror"] = df["v(bgr.v1)"] - df["v(bgr.v2)"]
     df["vifeed"] = df["v(xdut.ifeed)"] if "v(xdut.ifeed)" in df.columns else df["v(xdut.iout)"]
@@ -137,10 +154,10 @@ for file in files:
     error_voltages.append(df.loc[idx, "verror"] if idx is not None else None)
     feed_voltages.append(df.loc[idx, "vifeed"] if idx is not None else None)
 
-    correct_output_found_time = df.loc[df["v(correct_output_found)"] > 0.99*1.8, "time"].max() # in ns
-    slp_low_time = df.loc[(df["v(slp)"] > 0.99*1.8) & (df["time"] < correct_output_found_time), "time"].max() # in ns
-    start_up_time = correct_output_found_time - slp_low_time # in ns
-    print(f"Correct output found at {correct_output_found_time:.2f} ns, slp low at {slp_low_time:.2f} ns, start-up time is {start_up_time:.2f} ns")
+    correct_output_found_time = df.loc[df["v(correct_output_found)"] > 0.99*1.8, "time"].max() # in us
+    slp_low_time = df.loc[(df["v(slp)"] > 0.99*1.8) & (df["time"] < correct_output_found_time), "time"].max() # in us
+    start_up_time = correct_output_found_time - slp_low_time # in us
+    print(f"Correct output found at {correct_output_found_time:.2f} us, slp low at {slp_low_time:.2f} us, start-up time is {start_up_time:.2f} us")
     start_up_times.append(start_up_time)
 
 df_out = pd.DataFrame({"Output voltage (V)": output_voltages,
@@ -149,14 +166,14 @@ df_out = pd.DataFrame({"Output voltage (V)": output_voltages,
                        "Temperature (°C)": circuit_temperatures,
                        "Coarse code": coarse_codes,
                        "Fine code": fine_codes,
-                       "Timestamp (ns)": timestamps,
+                       "Timestamp (us)": timestamps,
                        "Mean active power (uW)": mean_active_pwr,
                        "Minimum active power (uW)": min_active_pwr,
                        "Maximum active power (uW)": max_active_pwr,
                        "Sleep power (uW)": sleep_pwr,
                        "Error voltage (V)": error_voltages,
                        "Feed voltage (V)": feed_voltages,
-                       "Start-up time (ns)": start_up_times
+                       "Start-up time (us)": start_up_times
                        }).sort_values(by=["Temperature (°C)", "Process corner", "Voltage supply (V)"], ascending=[True, True, True])
-df_out.to_csv(f"plot_data/{'_'.join(args)}_stepping_{stepping_direction}.csv", index=False)
+df_out.to_csv(f"plotdata/{'_'.join(args)}_stepping_{stepping_direction}.csv", index=False)
 

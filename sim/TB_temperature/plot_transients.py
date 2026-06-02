@@ -21,6 +21,13 @@ else:
 print(f"Plotting for transient signals stepping {stepping_direction}")
 
 
+if "ttVt" in args:
+    for corner in ["tt"]:
+        for voltage in [1.8]: # Volt (V)
+            Vx = "Vl" if voltage == 1.7 else "Vt" if voltage == 1.8 else "Vh" if voltage == 1.9 else "Oops"
+            for temperature in tempeartures: # Celsius (degree C)
+                files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_stepping_{stepping_direction}_{temperature}celsius_{voltage}volt.out")
+
 if "custom" in args:
     corner = args[-3]
     voltage = float(args[-2]) # Volt (V)
@@ -28,14 +35,6 @@ if "custom" in args:
     temperature = int(args[-1]) # Celsius (degree C)
     print(f"Custom settings: corner={corner}, voltage={voltage} V, Vx={Vx}, temperature={temperature} °C")
     files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_stepping_{stepping_direction}_{temperature}celsius_{voltage}volt.out")
-
-if "typical" in args:
-    for corner in ["tt"]:
-        for voltage in [1.8]: # Volt (V)
-            Vx = "Vl" if voltage == 1.7 else "Vt" if voltage == 1.8 else "Vh" if voltage == 1.9 else "Oops"
-            for temperature in tempeartures: # Celsius (degree C)
-                files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_stepping_{stepping_direction}_{temperature}celsius_{voltage}volt.out")
-
 
 if "etc" in args:
     for corner in ["ss", "ff", "sf", "fs"]:

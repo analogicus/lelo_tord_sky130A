@@ -7,7 +7,7 @@ all: typical etc mc summary
 TB=tran
 VIEW=Sch
 #VIEW=Lay
-CELL=TB_reference
+CELL=TB_temperature
 LIB =LELO_TORD_SKY130A
 OPT=
 
