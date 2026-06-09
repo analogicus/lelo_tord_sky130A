@@ -29,6 +29,19 @@ if "custom" in args:
     print(f"Custom settings: corner={corner}, voltage={voltage} V, Vx={Vx}, temperature={temperature} °C")
     files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_stepping_{stepping_direction}_{temperature}celsius_{voltage}volt.out")
 
+if "mccustom" in args:
+    corner = "ttmm"
+    run = args[-3]
+    voltage = float(args[-2]) # Volt (V)
+    Vx = "Vl" if voltage == 1.7 else "Vt" if voltage == 1.8 else "Vh" if voltage == 1.9 else "Oops"
+    temperature = int(args[-1]) # Celsius (degree C)
+    print(f"Custom settings: corner={corner}, voltage={voltage} V, Vx={Vx}, temperature={temperature} °C")
+    if run == 0:
+        files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_stepping_{stepping_direction}_{temperature}celsius_{voltage}volt.out")
+    else:
+        files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_{run}_stepping_{stepping_direction}_{temperature}celsius_{voltage}volt.out")
+
+
 if "typical" in args:
     for corner in ["tt"]:
         for voltage in [1.8]: # Volt (V)
@@ -86,6 +99,8 @@ for file in files:
         process_corner = "Slow-Fast"
     elif process_shorthand == "fs":
         process_corner = "Fast-Slow"
+    elif process_shorthand == "ttmm":
+        process_corner = "Monte Carlo"
     else:
         process_corner = "Oops, something is wrong!"
 

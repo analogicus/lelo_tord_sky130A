@@ -32,14 +32,23 @@ N 420 300 420 340 {lab=VD}
 N 660 300 660 340 {lab=VD}
 N 180 300 180 340 {lab=VD}
 N 700 100 900 100 {lab=VS}
-N 900 100 900 140 {lab=VS}
-N 900 170 940 170 {lab=VS}
-N 940 100 940 170 {lab=VS}
-N 900 100 940 100 {lab=VS}
-N 820 170 860 170 {lab=#net4}
+N 820 170 860 170 {lab=VG}
 N 900 300 900 340 {lab=VD}
 N 660 340 900 340 {lab=VD}
-N 900 200 900 240 {lab=#net5}
+N 900 200 900 240 {lab=#net4}
+N 940 100 1140 100 {lab=VS}
+N 1140 100 1140 140 {lab=VS}
+N 1060 170 1100 170 {lab=VG}
+N 1140 300 1140 340 {lab=VD}
+N 900 340 1140 340 {lab=VD}
+N 1140 200 1140 240 {lab=#net5}
+N 900 100 900 140 {lab=VS}
+N 900 100 940 100 {lab=VS}
+N 1140 170 1180 170 {lab=VS}
+N 1180 100 1180 170 {lab=VS}
+N 1140 100 1180 100 {lab=VS}
+N 900 170 940 170 {lab=VS}
+N 940 100 940 170 {lab=VS}
 C {JNW_ATR_SKY130A/JNWATR_PCH_4C5F0.sym} 140 170 0 0 {name=x1 }
 C {JNW_ATR_SKY130A/JNWATR_PCH_8C5F0.sym} 380 170 0 0 {name=x2 }
 C {JNW_ATR_SKY130A/JNWATR_PCH_12C5F0.sym} 620 170 0 0 {name=x3 }
@@ -51,6 +60,35 @@ C {devices/vsource.sym} 420 270 0 0 {name=V2 value=0 savecurrent=true}
 C {devices/vsource.sym} 660 270 0 0 {name=V3 value=0 savecurrent=true}
 C {devices/lab_wire.sym} 360 170 0 0 {name=p4 sig_type=std_logic lab=VG}
 C {devices/lab_wire.sym} 600 170 0 0 {name=p5 sig_type=std_logic lab=VG}
-C {JNW_ATR_SKY130A/JNWATR_PCH_2C5F0.sym} 860 170 0 0 {name=x4 }
 C {devices/vsource.sym} 900 270 0 0 {name=V4 value=0 savecurrent=true}
 C {devices/lab_wire.sym} 840 170 0 0 {name=p6 sig_type=std_logic lab=VG}
+C {devices/lab_wire.sym} 1080 170 0 0 {name=p7 sig_type=std_logic lab=VG}
+C {devices/vsource.sym} 1140 270 0 0 {name=V5 value=0 savecurrent=true}
+C {sky130_fd_pr/pfet_01v8.sym} 880 170 0 0 {name=M1
+W=2.4
+L=0.94
+nf=2
+mult=1
+ad="'int((nf+1)/2) * W/nf * 0.29'" 
+pd="'2*int((nf+1)/2) * (W/nf + 0.29)'"
+as="'int((nf+2)/2) * W/nf * 0.29'" 
+ps="'2*int((nf+2)/2) * (W/nf + 0.29)'"
+nrd="'0.29 / W'" nrs="'0.29 / W'"
+sa=0 sb=0 sd=0
+model=pfet_01v8
+spiceprefix=X
+}
+C {sky130_fd_pr/pfet_01v8.sym} 1120 170 0 0 {name=M2
+W=1.2
+L=0.94
+nf=2
+mult=1
+ad="'int((nf+1)/2) * W/nf * 0.29'" 
+pd="'2*int((nf+1)/2) * (W/nf + 0.29)'"
+as="'int((nf+2)/2) * W/nf * 0.29'" 
+ps="'2*int((nf+2)/2) * (W/nf + 0.29)'"
+nrd="'0.29 / W'" nrs="'0.29 / W'"
+sa=0 sb=0 sd=0
+model=pfet_01v8
+spiceprefix=X
+}

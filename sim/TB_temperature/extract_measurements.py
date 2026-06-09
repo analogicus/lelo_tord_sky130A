@@ -34,7 +34,7 @@ if "highres" in args:
                 files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_stepping_{stepping_direction}_{temperature}celsius_{voltage}volt.out")
 
 
-if "ttVt" in args:
+if "ttvt" in args:
     for corner in ["tt"]:
         for voltage in [1.8]: # Volt (V)
             Vx = "Vl" if voltage == 1.7 else "Vt" if voltage == 1.8 else "Vh" if voltage == 1.9 else "Oops"
@@ -65,6 +65,19 @@ if "etc" in args:
             for temperature in tempeartures: # Celsius (degree C)
                 files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_stepping_{stepping_direction}_{temperature}celsius_{voltage}volt.out")
 
+if "ttvtetc" in args:
+    for corner in ["tt"]:
+        for voltage in [1.8]: # Volt (V)
+            Vx = "Vl" if voltage == 1.7 else "Vt" if voltage == 1.8 else "Vh" if voltage == 1.9 else "Oops"
+            for temperature in tempeartures: # Celsius (degree C)
+                files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_stepping_{stepping_direction}_{temperature}celsius_{voltage}volt.out")
+    for corner in ["ss", "ff", "sf", "fs"]:
+        for voltage in [1.7, 1.9]: # Volt (V)
+            Vx = "Vl" if voltage == 1.7 else "Vt" if voltage == 1.8 else "Vh" if voltage == 1.9 else "Oops"
+            for temperature in tempeartures: # Celsius (degree C)
+                files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_stepping_{stepping_direction}_{temperature}celsius_{voltage}volt.out")
+
+
 runs = 30
 
 if "mc" in args:
@@ -72,7 +85,7 @@ if "mc" in args:
         for voltage in [1.8]: # Volt (V)
             Vx = "Vl" if voltage == 1.7 else "Vt" if voltage == 1.8 else "Vh" if voltage == 1.9 else "Oops"
             for temperature in tempeartures: # Celsius (degree C)
-                for run in range(1, runs): # Assuming 30 Monte Carlo runs
+                for run in range(0, runs): # Assuming 30 Monte Carlo runs
                     if run == 0:
                         files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_stepping_{stepping_direction}_{temperature}celsius_{voltage}volt.out")
                     else:
@@ -95,7 +108,7 @@ sleep_pwr = []
 error_voltages = []
 feed_voltages = []
 start_up_times = []
-
+runs = []
 
 for file in files:
     print(f"Processing transient results from file: {file}")
@@ -116,6 +129,8 @@ for file in files:
         process_corner = "Slow-Fast"
     elif shorthand_name == "fs":
         process_corner = "Fast-Slow"
+    elif shorthand_name == "ttmm":
+        process_corner = "ttmm"
     else:
         process_corner = "Oops, something is wrong!"
 
@@ -130,6 +145,9 @@ for file in files:
     pwr_off_idx = df[df["v(slp)"] > 0.90 * 1.8].index[-10] if len(df[df["v(slp)"] > 0.90 * 1.8]) > 10 else 0
     pwr_timestamp = df["time"][pwr_off_idx] if pwr_off_idx is not None else None
     print(f"Sleep power measured at {pwr_timestamp:.2f} us")
+
+    run = int(figure_name.split("_")[-5]) if ("ttmm" in shorthand_name) and (figure_name.split("_")[-5].isdigit()) else 0
+    runs.append(run)
 
     df["verror"] = df["v(bgr.v1)"] - df["v(bgr.v2)"]
     df["vifeed"] = df["v(xdut.ifeed)"] if "v(xdut.ifeed)" in df.columns else df["v(xdut.iout)"]
@@ -173,7 +191,8 @@ df_out = pd.DataFrame({"Output voltage (V)": output_voltages,
                        "Sleep power (uW)": sleep_pwr,
                        "Error voltage (V)": error_voltages,
                        "Feed voltage (V)": feed_voltages,
-                       "Start-up time (us)": start_up_times
+                       "Start-up time (us)": start_up_times,
+                       "monte carlo run": runs
                        }).sort_values(by=["Temperature (°C)", "Process corner", "Voltage supply (V)"], ascending=[True, True, True])
 df_out.to_csv(f"plotdata/{'_'.join(args)}_stepping_{stepping_direction}.csv", index=False)
 

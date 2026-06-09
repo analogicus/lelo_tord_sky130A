@@ -48,14 +48,14 @@ if "etc" in args:
             for temperature in tempeartures: # Celsius (degree C)
                 files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_stepping_{stepping_direction}_{temperature}celsius_{voltage}volt.out")
 
-runs = 30
+mc_runs = 30
 
 if "mc" in args:
     for corner in ["ttmm"]:
         for voltage in [1.8]: # Volt (V)
             Vx = "Vl" if voltage == 1.7 else "Vt" if voltage == 1.8 else "Vh" if voltage == 1.9 else "Oops"
             for temperature in tempeartures: # Celsius (degree C)
-                for run in range(1, runs): # Assuming 30 Monte Carlo runs
+                for run in range(0, mc_runs): # Assuming 30 Monte Carlo runs
                     if run == 0:
                         files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_stepping_{stepping_direction}_{temperature}celsius_{voltage}volt.out")
                     else:
@@ -79,7 +79,7 @@ error_voltages = []
 feed_voltages = []
 start_up_times = []
 
-
+runs = []
 for file in files:
     print(f"Processing transient results from file: {file}")
 
@@ -99,9 +99,13 @@ for file in files:
         process_corner = "Slow-Fast"
     elif shorthand_name == "fs":
         process_corner = "Fast-Slow"
+    elif shorthand_name == "ttmm":
+        process_corner = "ttmm"
     else:
         process_corner = "Oops, something is wrong!"
 
+    run = int(figure_name.split("_")[-5]) if ("ttmm" in shorthand_name) and (figure_name.split("_")[-5].isdigit()) else 0
+    runs.append(run)
 
 
     df = pd.read_csv(file, sep="\s+")
@@ -156,7 +160,8 @@ df_out = pd.DataFrame({"Output voltage (V)": output_voltages,
                        "Sleep power (uW)": sleep_pwr,
                        "Error voltage (V)": error_voltages,
                        "Feed voltage (V)": feed_voltages,
-                       "Start-up time (ns)": start_up_times
+                       "Start-up time (ns)": start_up_times,
+                       "monte carlo run": runs
                        }).sort_values(by=["Temperature (°C)", "Process corner", "Voltage supply (V)"], ascending=[True, True, True])
 df_out.to_csv(f"plot_data/{'_'.join(args)}_stepping_{stepping_direction}.csv", index=False)
 

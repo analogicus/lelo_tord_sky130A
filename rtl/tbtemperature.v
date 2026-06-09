@@ -84,8 +84,8 @@ module tbtemperature  #(
     typedef enum logic [2:0] {
         SW_IDLE,
         SW_CAP_OFF,
-        SW_BR_OFF,
-        SW_BR_ON,
+        SW_BRN_OFF,
+        SW_BRN_ON,
         SW_CAP_ON
     } switch_state_t;
 
@@ -143,6 +143,7 @@ module tbtemperature  #(
 
 
     // ----- TEMPORARY SLEEP SIGNAL GENERATION -----
+    
     always_ff @(posedge clk) begin
 
         if (correct_output_counter > 2 ) begin
@@ -394,7 +395,8 @@ module tbtemperature  #(
         if (reset) begin
             switch_state   <= SW_IDLE;
             active_branch  <= BRANCH_1;
-            target_branch  <= BRANCH_1;
+            // target_branch  <= BRANCH_1;
+            selected_branch <= BRANCH_1;
             switch_counter <= 0;
 
             // branch 1 active at reset
@@ -407,15 +409,16 @@ module tbtemperature  #(
             swbrn3 <= 1'b0;
             swcap3 <= 1'b0;
 
-            // swdrn1 <= 1;
-            // swdrn2 <= 1;
-            // swdrn3 <= 1;
+            swdrn1 <= 1;
+            swdrn2 <= 1;
+            swdrn3 <= 1;
         end 
 
         else if (sleep) begin
             switch_state   <= SW_IDLE;
             active_branch  <= BRANCH_1;
-            target_branch  <= BRANCH_1;
+            // target_branch  <= BRANCH_1;
+            selected_branch <= BRANCH_1;
             switch_counter <= 0;
 
             // no branch active when asleep
@@ -428,16 +431,16 @@ module tbtemperature  #(
             swbrn3 <= 1'b0;
             swcap3 <= 1'b0;
 
-            // swdrn1 <= 1;
-            // swdrn2 <= 1;
-            // swdrn3 <= 1;
+            swdrn1 <= 1;
+            swdrn2 <= 1;
+            swdrn3 <= 1;
         end
         
         else begin
 
-            // swdrn1 <= 0;
-            // swdrn2 <= 0;
-            // swdrn3 <= 0;
+            swdrn1 <= 0;
+            swdrn2 <= 0;
+            swdrn3 <= 0;
 
             if (selected_branch != target_branch) begin
                 target_branch <= selected_branch;
@@ -461,14 +464,14 @@ module tbtemperature  #(
                         endcase
 
                         if (switch_counter >= SW_TIMEOUT - 1) begin
-                            switch_state   <= SW_BR_OFF;
+                            switch_state   <= SW_BRN_OFF;
                             switch_counter <= 0;
                         end else begin
                             switch_counter <= switch_counter + 1;
                         end
                 end
 
-                SW_BR_OFF: begin
+                SW_BRN_OFF: begin
                         case (active_branch)
                             BRANCH_1: swbrn1 <= 1'b0;
                             BRANCH_2: swbrn2 <= 1'b0;
@@ -477,14 +480,14 @@ module tbtemperature  #(
                         endcase
 
                         if (switch_counter >= SW_TIMEOUT - 1) begin
-                            switch_state   <= SW_BR_ON;
+                            switch_state   <= SW_BRN_ON;
                             switch_counter <= 0;
                         end else begin
                             switch_counter <= switch_counter + 1;
                         end
                 end
 
-                SW_BR_ON: begin
+                SW_BRN_ON: begin
                         case (target_branch)
                             BRANCH_1: swbrn1 <= 1'b1;
                             BRANCH_2: swbrn2 <= 1'b1;

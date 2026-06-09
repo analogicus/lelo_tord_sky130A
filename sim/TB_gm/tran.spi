@@ -47,20 +47,20 @@ set color0=white
 set color1=black
 unset askquit
 
+* set filetype=ascii
 
 op
 
 dc VSG 0 1.8 0.01
 
-set filetype=ascii
-write {cicname}.raw
+write cicname
 
 set wr_singlescale
 set wr_vecnames
 option numdgt = 5
 wrdata {cicname}.out
 + v(vs) v(vg) v(vd)
-+ i(v.xdut.v1) i(v.xdut.v2) i(v.xdut.v3) i(v.xdut.v4)
++ i(v.xdut.v1) i(v.xdut.v2) i(v.xdut.v3) i(v.xdut.v4) i(v.xdut.v5)
 * + i(vs) i(vg) i(vd)
  
 
