@@ -74,6 +74,8 @@ if args[-1] == "etc":
     tc_ttVt_in_ppm = (tc_ttVt / mean_v_ttVt) * 1e6 # in ppm/°C relative to average voltage
     print(f"Typical  Vt 0pc: Mean voltage: {mean_v_ttVt:.4f} V, TC: {tc_ttVt:.4f} V/°C, TC in mV/°C {tc_ttVt_in_mV_per_C:.2f}, TC in ppm/°C: {tc_ttVt_in_ppm:.2f}")
 
+    onepointcalibrated_vs_list = []
+    twopointcalibrated_vs_list = []
 
     for corner in ["ss", "ff", "sf", "fs"]:
 
@@ -144,6 +146,8 @@ if args[-1] == "etc":
 
             axs_v_1p.plot(ts, onepointcalibrated_vs, marker="o", label=f"{corner}{Vx}")
 
+            onepointcalibrated_vs_list.append(onepointcalibrated_vs)
+
             # # 
             # # 2 point calibrate the voltages at the calibration_t1 and calibration_t2 degrees Celsius voltage as the single point
             # # 
@@ -188,6 +192,9 @@ if args[-1] == "etc":
             print(f"{process_corner}{Vx} 2pc: Mean voltage: {mean_v_twopointcalibrated:.4f} V, TC: {tc_twopointcalibrated:.4f} V/°C, TC in mV/°C {tc_in_mV_per_C:.2f}, TC in ppm/°C: {tc_in_ppm:.2f}")
 
             axs_v_2p.plot(ts, twopointcalibrated_vs, marker="o", label=f"{corner}{Vx}")
+
+            twopointcalibrated_vs_list.append(twopointcalibrated_vs)
+
 
             #
             # DAC input settings
@@ -236,6 +243,7 @@ if args[-1] == "etc":
 
     axs_v_0p.plot(ts_ttVt, vs_ttVt, marker="o", label=f"ttVt")
     axs_v_1p.plot(ts_ttVt, vs_ttVt, marker="o", label=f"ttVt")
+    onepointcalibrated_vs_list.append(vs_ttVt)
 
     calibration_t1 = 0
     calibration_t2 = 80
@@ -266,6 +274,11 @@ if args[-1] == "etc":
     print(f"Typical   Vt 2pc: Mean voltage: {mean_v_twopointcalibrated:.4f} V, TC: {tc_twopointcalibrated:.4f} V/°C, TC in mV/°C {tc_in_mV_per_C:.2f}, TC in ppm/°C: {tc_in_ppm:.2f}")
 
     axs_v_2p.plot(ts, twopointcalibrated_vs, marker="o", label=f"ttVt")
+
+    twopointcalibrated_vs_list.append(twopointcalibrated_vs)
+
+    
+
 
 
     axs_dac.plot(ts_ttVt, dac_code_ttVt, marker="o", label=f"ttVt")
@@ -364,6 +377,12 @@ if args[-1] == "mc":
 
     fig_mc_errorbar = plt.figure(figsize=(figure_width, figure_height), dpi=300)
     axs_mc_errorbar = fig_mc_errorbar.add_subplot(1, 1, 1)
+
+    fig_mc_on_pwr = plt.figure(figsize=(figure_width, figure_height), dpi=300)
+    axs_mc_on_pwr = fig_mc_on_pwr.add_subplot(1, 1, 1)
+
+    fig_mc_off_pwr = plt.figure(figsize=(figure_width, figure_height), dpi=300)
+    axs_mc_off_pwr = fig_mc_off_pwr.add_subplot(1, 1, 1)
     
 
 
@@ -549,14 +568,16 @@ if args[-1] == "mc":
         v = [x for x in v if x == x]
         mean_v_list.append(np.mean(v))
         std_v_list.append(np.std(v))
-        print(f"Temperature: {temperature} °C, Mean voltage: {mean_v_list[-1]:.4f} V, Std voltage: {std_v_list[-1]*1e3:.2f} mV")
+        nruns = len(v)
+
+        print(f"Temperature: {temperature} °C, Mean voltage: {mean_v_list[-1]:.4f} V, Std voltage: {std_v_list[-1]*1e3:.2f} mV after {nruns} runs")
 
     nruns = len(v)
 
     axs_mc_errorbar.plot(temperatures, mean_v_list, marker="o", label=f"Mean voltage (μ)")
     axs_mc_errorbar.fill_between(temperatures, np.array(mean_v_list) - np.array(std_v_list), np.array(mean_v_list) + np.array(std_v_list), alpha=0.2, label=f"standard deviation (±σ)")
 
-    axs_mc_errorbar.set_title(f"Reference voltage after {nruns} runs", fontsize=title_font_size+2, fontweight='bold')
+    axs_mc_errorbar.set_title(f"Reference voltage", fontsize=title_font_size+2, fontweight='bold')
     axs_mc_errorbar.set_xlabel("Temperature (°C)", fontsize=label_font_size)
     axs_mc_errorbar.set_ylabel("Output voltage (V)", fontsize=label_font_size)
     axs_mc_errorbar.legend(loc="best", fontsize=legend_font_size+2)
@@ -566,9 +587,63 @@ if args[-1] == "mc":
     fig_mc_errorbar.tight_layout()
     fig_mc_errorbar.savefig(f"plots/{'_'.join(args)}_stepping_{stepping_direction}_mean_v_w_erorr_bars.png", dpi=300, bbox_inches="tight")
 
+    mean_on_pwr_list = []
+    std_on_pwr_list = []
+    for temperature in temperatures:
+        on_pwr = np.array(df.loc[(df['Process corner'] == "ttmm") & (df["Voltage supply (V)"] == 1.8) & (df["Temperature (°C)"] == temperature), "Mean active power (uW)"])
+        on_pwr = [x for x in on_pwr if x == x]
+        mean_on_pwr_list.append(np.mean(on_pwr))
+        std_on_pwr_list.append(np.std(on_pwr))
+        nruns = len(on_pwr)
+
+        print(f"Temperature: {temperature} °C, Mean voltage: {mean_on_pwr_list[-1]:.4f} uW, Std voltage: {std_on_pwr_list[-1]*1e3:.2f} mV after {nruns} runs")
+
+    nruns = len(on_pwr)
+
+    axs_mc_on_pwr.plot(temperatures, mean_on_pwr_list, marker="o", label=f"Mean voltage (μ)")
+    axs_mc_on_pwr.fill_between(temperatures, np.array(mean_on_pwr_list) - np.array(std_on_pwr_list), np.array(mean_on_pwr_list) + np.array(std_on_pwr_list), alpha=0.2, label=f"standard deviation (±σ)")
+
+    axs_mc_on_pwr.set_title(f"Active power consumption", fontsize=title_font_size+2, fontweight='bold')
+    axs_mc_on_pwr.set_xlabel("Temperature (°C)", fontsize=label_font_size)
+    axs_mc_on_pwr.set_ylabel("Power (uW)", fontsize=label_font_size)
+    axs_mc_on_pwr.legend(loc="best", fontsize=legend_font_size+2)
+    axs_mc_on_pwr.tick_params(axis='both', labelsize=ticks_font_size+2)
+    axs_mc_on_pwr.grid()
+
+    fig_mc_on_pwr.tight_layout()
+    fig_mc_on_pwr.savefig(f"plots/{'_'.join(args)}_stepping_{stepping_direction}_mean_on_pwr_mu_sigma.png", dpi=300, bbox_inches="tight")
+
+    mean_off_pwr_list = []
+    std_off_pwr_list = []
+    for temperature in temperatures:
+        off_pwr = np.array(df.loc[(df['Process corner'] == "ttmm") & (df["Voltage supply (V)"] == 1.8) & (df["Temperature (°C)"] == temperature), "Sleep power (uW)"])
+        off_pwr = [x for x in off_pwr if x == x]
+        mean_off_pwr_list.append(np.mean(off_pwr))
+        std_off_pwr_list.append(np.std(off_pwr))
+        nruns = len(off_pwr)
+
+        print(f"Temperature: {temperature} °C, Mean voltage: {mean_on_pwr_list[-1]:.4f} uW, Std voltage: {std_on_pwr_list[-1]*1e3:.2f} mV after {nruns} runs")
+
+    nruns = len(off_pwr)
+
+    axs_mc_off_pwr.plot(temperatures, mean_off_pwr_list, marker="o", label=f"Mean voltage (μ)")
+    axs_mc_off_pwr.fill_between(temperatures, np.array(mean_off_pwr_list) - np.array(std_off_pwr_list), np.array(mean_off_pwr_list) + np.array(std_off_pwr_list), alpha=0.2, label=f"standard deviation (±σ)")
+
+    axs_mc_off_pwr.set_title(f"Sleep power consumption", fontsize=title_font_size+2, fontweight='bold')
+    axs_mc_off_pwr.set_xlabel("Temperature (°C)", fontsize=label_font_size)
+    axs_mc_off_pwr.set_ylabel("Power (uW)", fontsize=label_font_size)
+    axs_mc_off_pwr.legend(loc="best", fontsize=legend_font_size+2)
+    axs_mc_off_pwr.tick_params(axis='both', labelsize=ticks_font_size+2)
+    axs_mc_off_pwr.grid()
+
+    fig_mc_off_pwr.tight_layout()
+    fig_mc_off_pwr.savefig(f"plots/{'_'.join(args)}_stepping_{stepping_direction}_mean_off_pwr_mu_sigma.png", dpi=300, bbox_inches="tight")
+
+
+
 
     # Plot the distribution of monte carlo runs at each temperature as  
-    distribution_temperature = 40
+    distribution_temperature = 0
     bin_count = 7
 
     v = np.array(df.loc[(df['Process corner'] == "ttmm") & (df["Voltage supply (V)"] == 1.8) & (df["Temperature (°C)"] == distribution_temperature), "Output voltage (V)"])
@@ -587,7 +662,7 @@ if args[-1] == "mc":
 
     fig_dist = plt.figure(dpi=300, figsize=(figure_width, figure_height))
     ax_dist = fig_dist.add_subplot(1, 1, 1)
-    ax_dist.set_title(f"MC distribution at {distribution_temperature}°C\nafter {nruns} runs")
+    ax_dist.set_title(f"MC distribution at {distribution_temperature}°C")
 
     sns.histplot(v, bins=bin_count, kde=True, color="steelblue", edgecolor="black", ax=ax_dist)
     sns.rugplot(v, height=0.1, color="blue", ax=ax_dist)
@@ -668,7 +743,7 @@ if args[-1] == "mc":
     fig_on_pwr.tight_layout()
     fig_on_pwr.savefig(f"plots/{'_'.join(args)}_stepping_{stepping_direction}_temperature_vs_active_power_new_resistance_v2.png", dpi=300, bbox_inches="tight")
 
-    axs_off_pwr.set_yscale("log")
+    # axs_off_pwr.set_yscale("log")
     axs_off_pwr.set_title(f"Sleep power consumption", fontsize=title_font_size, fontweight='bold')
     axs_off_pwr.set_xlabel("Temperature (°C)", fontsize=label_font_size)
     axs_off_pwr.set_ylabel("Power (uW)", fontsize=label_font_size)

@@ -28,7 +28,7 @@ if len(args) == 0:
 
 if "temp" in args:
     if args[-1] == "temp": 
-        temp = 27
+        temp = 0
     else: 
         temp = int(args[-1])
     for corner in ["tt"]:
@@ -38,9 +38,13 @@ if "temp" in args:
                 files.append(f"output_tran/tran_SchGtK{corner}Tt{Vx}_stepping_{stepping_direction}_{temperature}celsius_{voltage}volt.out")
 
 
-figure_width = 2.8
-figure_height = 4.5
-font_size = 6
+# figure_width = 2.8
+# figure_height = 4.5
+
+figure_width = 6
+figure_height = 2.5
+
+font_size = 10
 title_font_size = font_size
 label_font_size = font_size
 legend_font_size = font_size
@@ -87,229 +91,252 @@ for file in files:
     # plot switch voltages
     #
 
-    print(f"plotting full view")
+    # print(f"plotting full view")
 
-    fig_full, axs_full = plt.subplots(5, 1, figsize=(figure_width, figure_height), sharex=True, dpi=300)
+    # fig_full, axs_full = plt.subplots(5, 1, figsize=(figure_width, figure_height), sharex=True, dpi=300)
 
-    axs_full[0].plot(df["time"], df["v(clk)"], label="clk")
-    # axs_full[0].plot(df["time"], df["v(b0)"], label="b0")
-    # axs_full[0].plot(df["time"], df["v(rst)"], label="rst")
-    axs_full[0].plot(df["time"], df["v(mode)"], label="mode")
-    axs_full[0].plot(df["time"], df["v(slp)"], label="slp")
-    axs_full[0].plot(df["time"], df["v(cmp_async)"], label="cmp")
-    # axs_full[0].plot(df["time"], df["v(mode_meta)"], label="v(mode_meta)")
-    # axs_full[0].plot(df["time"], df["v(operation)"], label="v(operation)")
+    # axs_full[0].plot(df["time"], df["v(clk)"], label="clk")
+    # # axs_full[0].plot(df["time"], df["v(b0)"], label="b0")
+    # # axs_full[0].plot(df["time"], df["v(rst)"], label="rst")
+    # axs_full[0].plot(df["time"], df["v(mode)"], label="mode")
+    # axs_full[0].plot(df["time"], df["v(slp)"], label="slp")
+    # axs_full[0].plot(df["time"], df["v(cmp_async)"], label="cmp")
+    # # axs_full[0].plot(df["time"], df["v(mode_meta)"], label="v(mode_meta)")
+    # # axs_full[0].plot(df["time"], df["v(operation)"], label="v(operation)")
 
-    axs_full[1].plot(df["time"], df["v(bgr.v1)"], label="v1")
-    axs_full[1].plot(df["time"], df["v(bgr.v2)"], label="v2")
-    axs_full[1].plot(df["time"], df["v(vout)"], label="vout")
-    axs_full[1].plot(df["time"], df["v(correct_output_found)"], label="out_en")
+    # axs_full[1].plot(df["time"], df["v(bgr.v1)"], label="v1")
+    # axs_full[1].plot(df["time"], df["v(bgr.v2)"], label="v2")
+    # axs_full[1].plot(df["time"], df["v(vout)"], label="vout")
+    # axs_full[1].plot(df["time"], df["v(correct_output_found)"], label="out_en")
 
-    axs_full[2].plot(df["time"], df["v(swbgr1)"], label="swbgr1")
-    axs_full[2].plot(df["time"], df["v(swbrn1)"], label="swbrn1")
-    axs_full[2].plot(df["time"], df["v(swcap1)"], label="swcap1")
-    axs_full[2].plot(df["time"], df["v(swdrn1)"], label="swdrn1")
+    # axs_full[2].plot(df["time"], df["v(swbgr1)"], label="swbgr1")
+    # axs_full[2].plot(df["time"], df["v(swbrn1)"], label="swbrn1")
+    # axs_full[2].plot(df["time"], df["v(swcap1)"], label="swcap1")
+    # axs_full[2].plot(df["time"], df["v(swdrn1)"], label="swdrn1")
 
-    axs_full[3].plot(df["time"], df["v(swbgr2)"], label="swbgr2")
-    axs_full[3].plot(df["time"], df["v(swbrn2)"], label="swbrn2")
-    axs_full[3].plot(df["time"], df["v(swcap2)"], label="swcap2")
-    axs_full[3].plot(df["time"], df["v(swdrn2)"], label="swdrn2")
+    # axs_full[3].plot(df["time"], df["v(swbgr2)"], label="swbgr2")
+    # axs_full[3].plot(df["time"], df["v(swbrn2)"], label="swbrn2")
+    # axs_full[3].plot(df["time"], df["v(swcap2)"], label="swcap2")
+    # axs_full[3].plot(df["time"], df["v(swdrn2)"], label="swdrn2")
 
-    axs_full[4].plot(df["time"], df["v(swbrn3)"], label="swbrn3")
-    axs_full[4].plot(df["time"], df["v(swcap3)"], label="swcap3")
-    axs_full[4].plot(df["time"], df["v(swdrn3)"], label="swdrn3")
+    # axs_full[4].plot(df["time"], df["v(swbrn3)"], label="swbrn3")
+    # axs_full[4].plot(df["time"], df["v(swcap3)"], label="swcap3")
+    # axs_full[4].plot(df["time"], df["v(swdrn3)"], label="swdrn3")
 
-    for i, ax in enumerate(axs_full):
-        ax.set_ylabel("Voltage (V)", fontsize=label_font_size)
-        ax.tick_params(axis="both", labelsize=ticks_font_size)
-        ax.grid()
-        ax.legend(loc="best", ncol=2, fontsize=legend_font_size)
+    # for i, ax in enumerate(axs_full):
+    #     ax.set_ylabel("Voltage (V)", fontsize=label_font_size)
+    #     ax.tick_params(axis="both", labelsize=ticks_font_size)
+    #     ax.grid()
+    #     ax.legend(loc="best", ncol=2, fontsize=legend_font_size)
 
-        # y_min, y_max = ax.get_ylim()
-        # rect = mpatches.Rectangle(
-        #     (zoom_start, y_min),
-        #     zoom_stop - zoom_start,
-        #     y_max - y_min,
-        #     linewidth=1.25,
-        #     edgecolor="black",
-        #     facecolor="none",
-        #     linestyle="--",
-        #     transform=ax.transData,
-        #     clip_on=True,
-        #     zorder=5,
-        # )
-        # ax.add_patch(rect)
+    #     # y_min, y_max = ax.get_ylim()
+    #     # rect = mpatches.Rectangle(
+    #     #     (zoom_start, y_min),
+    #     #     zoom_stop - zoom_start,
+    #     #     y_max - y_min,
+    #     #     linewidth=1.25,
+    #     #     edgecolor="black",
+    #     #     facecolor="none",
+    #     #     linestyle="--",
+    #     #     transform=ax.transData,
+    #     #     clip_on=True,
+    #     #     zorder=5,
+    #     # )
+    #     # ax.add_patch(rect)
 
-    axs_full[0].set_title(f"Switch signals,\n{process_corner} corner, {voltage_supply} V, {circuit_temperature} °C", fontsize=title_font_size, fontweight='bold')
-    axs_full[-1].set_xlabel("Time (us)", fontsize=label_font_size)
-    fig_full.tight_layout()
-    fig_full.savefig(f"figures/{figure_name}_plot_switch_signals_full.png", dpi=300, bbox_inches="tight")
-
-
-    #
-    # plot switch voltages (zoomed view: zoom_start to zoom_stop us)
-    #
-
-    print(f"plotting zoomed between {zoom_start} us and {zoom_stop} us")
-
-    fig_zoom, axs_zoom = plt.subplots(5, 1, figsize=(figure_width, figure_height), sharex=True, dpi=300)
-
-    axs_zoom[0].plot(df["time"], df["v(clk)"], label="clk")
-    axs_zoom[0].plot(df["time"], df["v(mode)"], label="mode")
-    axs_zoom[0].plot(df["time"], df["v(slp)"], label="slp")
-    axs_zoom[0].plot(df["time"], df["v(cmp_async)"], label="cmp")
-
-    axs_zoom[1].plot(df["time"], df["v(bgr.v1)"], label="v1")
-    axs_zoom[1].plot(df["time"], df["v(bgr.v2)"], label="v2")
-    axs_zoom[1].plot(df["time"], df["v(vout)"], label="vout")
-    axs_zoom[1].plot(df["time"], df["v(correct_output_found)"], label="out_en")
-
-    axs_zoom[2].plot(df["time"], df["v(swbgr1)"], label="swbgr1")
-    axs_zoom[2].plot(df["time"], df["v(swbrn1)"], label="swbrn1")
-    axs_zoom[2].plot(df["time"], df["v(swcap1)"], label="swcap1")
-    axs_zoom[2].plot(df["time"], df["v(swdrn1)"], label="swdrn1")
-
-    axs_zoom[3].plot(df["time"], df["v(swbgr2)"], label="swbgr2")
-    axs_zoom[3].plot(df["time"], df["v(swbrn2)"], label="swbrn2")
-    axs_zoom[3].plot(df["time"], df["v(swcap2)"], label="swcap2")
-    axs_zoom[3].plot(df["time"], df["v(swdrn2)"], label="swdrn2")
-
-    axs_zoom[4].plot(df["time"], df["v(swbrn3)"], label="swbrn3")
-    axs_zoom[4].plot(df["time"], df["v(swcap3)"], label="swcap3")
-    axs_zoom[4].plot(df["time"], df["v(swdrn3)"], label="swdrn3")
-
-    for ax in axs_zoom:
-        ax.set_xlim(zoom_start, zoom_stop)
-        ax.set_ylabel("Voltage (V)", fontsize=label_font_size)
-        ax.tick_params(axis="both", labelsize=ticks_font_size)
-        ax.grid()
-        ax.legend(loc="best", ncol=2, fontsize=legend_font_size)
-
-        # y_min, y_max = ax.get_ylim()
-        # rect = mpatches.Rectangle(
-        #     (superzoom_start, y_min),
-        #     superzoom_stop - superzoom_start,
-        #     y_max - y_min,
-        #     linewidth=1.25,
-        #     edgecolor="black",
-        #     facecolor="none",
-        #     linestyle="--",
-        #     transform=ax.transData,
-        #     clip_on=True,
-        #     zorder=5,
-        # )
-        # ax.add_patch(rect)
-
-    axs_zoom[0].set_title(f"Switch signals zoomed in,\n{process_corner} corner, {voltage_supply} V, {circuit_temperature} °C", fontsize=title_font_size, fontweight='bold')
-    axs_zoom[-1].set_xlabel("Time (us)", fontsize=label_font_size)
-    fig_zoom.tight_layout()
-    fig_zoom.savefig(f"figures/{figure_name}_plot_switch_signals_zoom.png", dpi=300, bbox_inches="tight")
+    # axs_full[0].set_title(f"Switch signals,\n{process_corner} corner, {voltage_supply} V, {circuit_temperature} °C", fontsize=title_font_size, fontweight='bold')
+    # axs_full[-1].set_xlabel("Time (us)", fontsize=label_font_size)
+    # fig_full.tight_layout()
+    # fig_full.savefig(f"figures/{figure_name}_plot_switch_signals_full.png", dpi=300, bbox_inches="tight")
 
 
-    #
-    # plot switch voltages (super-zoomed view: superzoom_start to superzoom_stop us)
-    #
+    # #
+    # # plot switch voltages (zoomed view: zoom_start to zoom_stop us)
+    # #
 
-    print(f"plotting super-zoomed between {superzoom_start} us and {superzoom_stop} us")
+    # print(f"plotting zoomed between {zoom_start} us and {zoom_stop} us")
 
-    fig_superzoom, axs_superzoom = plt.subplots(5, 1, figsize=(figure_width, figure_height), sharex=True, dpi=300)
+    # fig_zoom, axs_zoom = plt.subplots(5, 1, figsize=(figure_width, figure_height), sharex=True, dpi=300)
 
-    axs_superzoom[0].plot(df["time"], df["v(clk)"], label="clk")
-    axs_superzoom[0].plot(df["time"], df["v(mode)"], label="mode")
-    axs_superzoom[0].plot(df["time"], df["v(slp)"], label="slp")
-    axs_superzoom[0].plot(df["time"], df["v(cmp_async)"], label="cmp")
+    # axs_zoom[0].plot(df["time"], df["v(clk)"], label="clk")
+    # axs_zoom[0].plot(df["time"], df["v(mode)"], label="mode")
+    # axs_zoom[0].plot(df["time"], df["v(slp)"], label="slp")
+    # axs_zoom[0].plot(df["time"], df["v(cmp_async)"], label="cmp")
 
-    axs_superzoom[1].plot(df["time"], df["v(bgr.v1)"], label="v1")
-    axs_superzoom[1].plot(df["time"], df["v(bgr.v2)"], label="v2")
-    axs_superzoom[1].plot(df["time"], df["v(vout)"], label="vout")
-    axs_superzoom[1].plot(df["time"], df["v(correct_output_found)"], label="out_en")
+    # axs_zoom[1].plot(df["time"], df["v(bgr.v1)"], label="v1")
+    # axs_zoom[1].plot(df["time"], df["v(bgr.v2)"], label="v2")
+    # axs_zoom[1].plot(df["time"], df["v(vout)"], label="vout")
+    # axs_zoom[1].plot(df["time"], df["v(correct_output_found)"], label="out_en")
 
-    axs_superzoom[2].plot(df["time"], df["v(swbgr1)"], label="swbgr1")
-    axs_superzoom[2].plot(df["time"], df["v(swbrn1)"], label="swbrn1")
-    axs_superzoom[2].plot(df["time"], df["v(swcap1)"], label="swcap1")
-    axs_superzoom[2].plot(df["time"], df["v(swdrn1)"], label="swdrn1")
+    # axs_zoom[2].plot(df["time"], df["v(swbgr1)"], label="swbgr1")
+    # axs_zoom[2].plot(df["time"], df["v(swbrn1)"], label="swbrn1")
+    # axs_zoom[2].plot(df["time"], df["v(swcap1)"], label="swcap1")
+    # axs_zoom[2].plot(df["time"], df["v(swdrn1)"], label="swdrn1")
 
-    axs_superzoom[3].plot(df["time"], df["v(swbgr2)"], label="swbgr2")
-    axs_superzoom[3].plot(df["time"], df["v(swbrn2)"], label="swbrn2")
-    axs_superzoom[3].plot(df["time"], df["v(swcap2)"], label="swcap2")
-    axs_superzoom[3].plot(df["time"], df["v(swdrn2)"], label="swdrn2")
+    # axs_zoom[3].plot(df["time"], df["v(swbgr2)"], label="swbgr2")
+    # axs_zoom[3].plot(df["time"], df["v(swbrn2)"], label="swbrn2")
+    # axs_zoom[3].plot(df["time"], df["v(swcap2)"], label="swcap2")
+    # axs_zoom[3].plot(df["time"], df["v(swdrn2)"], label="swdrn2")
 
-    axs_superzoom[4].plot(df["time"], df["v(swbrn3)"], label="swbrn3")
-    axs_superzoom[4].plot(df["time"], df["v(swcap3)"], label="swcap3")
-    axs_superzoom[4].plot(df["time"], df["v(swdrn3)"], label="swdrn3")
+    # axs_zoom[4].plot(df["time"], df["v(swbrn3)"], label="swbrn3")
+    # axs_zoom[4].plot(df["time"], df["v(swcap3)"], label="swcap3")
+    # axs_zoom[4].plot(df["time"], df["v(swdrn3)"], label="swdrn3")
 
-    for ax in axs_superzoom:
-        ax.set_xlim(superzoom_start, superzoom_stop)
-        ax.set_ylabel("Voltage (V)", fontsize=label_font_size)
-        ax.tick_params(axis="both", labelsize=ticks_font_size)
-        ax.grid()
-        ax.legend(loc="best", ncol=2, fontsize=legend_font_size)
+    # for ax in axs_zoom:
+    #     ax.set_xlim(zoom_start, zoom_stop)
+    #     ax.set_ylabel("Voltage (V)", fontsize=label_font_size)
+    #     ax.tick_params(axis="both", labelsize=ticks_font_size)
+    #     ax.grid()
+    #     ax.legend(loc="best", ncol=2, fontsize=legend_font_size)
 
-        # y_min, y_max = ax.get_ylim()
-        # rect = mpatches.Rectangle(
-        #     (supersuperzoom_start, y_min),
-        #     supersuperzoom_stop - supersuperzoom_start,
-        #     y_max - y_min,
-        #     linewidth=1.25,
-        #     edgecolor="black",
-        #     facecolor="none",
-        #     linestyle="--",
-        #     transform=ax.transData,
-        #     clip_on=True,
-        #     zorder=5,
-        # )
-        # ax.add_patch(rect)
+    #     # y_min, y_max = ax.get_ylim()
+    #     # rect = mpatches.Rectangle(
+    #     #     (superzoom_start, y_min),
+    #     #     superzoom_stop - superzoom_start,
+    #     #     y_max - y_min,
+    #     #     linewidth=1.25,
+    #     #     edgecolor="black",
+    #     #     facecolor="none",
+    #     #     linestyle="--",
+    #     #     transform=ax.transData,
+    #     #     clip_on=True,
+    #     #     zorder=5,
+    #     # )
+    #     # ax.add_patch(rect)
 
-    axs_superzoom[0].set_title(f"Switch signals zoomed in,\n{process_corner} corner, {voltage_supply} V, {circuit_temperature} °C", fontsize=title_font_size, fontweight='bold')
-    axs_superzoom[-1].set_xlabel("Time (us)", fontsize=label_font_size)
-    fig_superzoom.tight_layout()
-    fig_superzoom.savefig(f"figures/{figure_name}_plot_switch_signals_superzoom.png", dpi=300, bbox_inches="tight")
+    # axs_zoom[0].set_title(f"Switch signals zoomed in,\n{process_corner} corner, {voltage_supply} V, {circuit_temperature} °C", fontsize=title_font_size, fontweight='bold')
+    # axs_zoom[-1].set_xlabel("Time (us)", fontsize=label_font_size)
+    # fig_zoom.tight_layout()
+    # fig_zoom.savefig(f"figures/{figure_name}_plot_switch_signals_zoom.png", dpi=300, bbox_inches="tight")
 
-    # 
-    # plot switch voltages (super-super-zoomed view: superzoom_start to superzoom_stop us)
-    #
 
-    print(f"plotting super-super-zoomed between {supersuperzoom_start} us and {supersuperzoom_stop} us")
+    # #
+    # # plot switch voltages (super-zoomed view: superzoom_start to superzoom_stop us)
+    # #
 
-    fig_supersuperzoom, axs_supersuperzoom = plt.subplots(5, 1, figsize=(figure_width, figure_height), sharex=True, dpi=300)
+    # print(f"plotting super-zoomed between {superzoom_start} us and {superzoom_stop} us")
 
-    axs_supersuperzoom[0].plot(df["time"], df["v(clk)"], label="clk")
-    axs_supersuperzoom[0].plot(df["time"], df["v(mode)"], label="mode")
-    axs_supersuperzoom[0].plot(df["time"], df["v(slp)"], label="slp")
-    axs_supersuperzoom[0].plot(df["time"], df["v(cmp_async)"], label="cmp")
+    # fig_superzoom, axs_superzoom = plt.subplots(5, 1, figsize=(figure_width, figure_height), sharex=True, dpi=300)
 
-    axs_supersuperzoom[1].plot(df["time"], df["v(bgr.v1)"], label="v1")
-    axs_supersuperzoom[1].plot(df["time"], df["v(bgr.v2)"], label="v2")
-    axs_supersuperzoom[1].plot(df["time"], df["v(vout)"], label="vout")
-    axs_supersuperzoom[1].plot(df["time"], df["v(correct_output_found)"], label="out_en")
+    # axs_superzoom[0].plot(df["time"], df["v(clk)"], label="clk")
+    # axs_superzoom[0].plot(df["time"], df["v(mode)"], label="mode")
+    # axs_superzoom[0].plot(df["time"], df["v(slp)"], label="slp")
+    # axs_superzoom[0].plot(df["time"], df["v(cmp_async)"], label="cmp")
 
-    axs_supersuperzoom[2].plot(df["time"], df["v(swbgr1)"], label="swbgr1")
-    axs_supersuperzoom[2].plot(df["time"], df["v(swbrn1)"], label="swbrn1")
-    axs_supersuperzoom[2].plot(df["time"], df["v(swcap1)"], label="swcap1")
-    axs_supersuperzoom[2].plot(df["time"], df["v(swdrn1)"], label="swdrn1")
+    # axs_superzoom[1].plot(df["time"], df["v(bgr.v1)"], label="v1")
+    # axs_superzoom[1].plot(df["time"], df["v(bgr.v2)"], label="v2")
+    # axs_superzoom[1].plot(df["time"], df["v(vout)"], label="vout")
+    # axs_superzoom[1].plot(df["time"], df["v(correct_output_found)"], label="out_en")
 
-    axs_supersuperzoom[3].plot(df["time"], df["v(swbgr2)"], label="swbgr2")
-    axs_supersuperzoom[3].plot(df["time"], df["v(swbrn2)"], label="swbrn2")
-    axs_supersuperzoom[3].plot(df["time"], df["v(swcap2)"], label="swcap2")
-    axs_supersuperzoom[3].plot(df["time"], df["v(swdrn2)"], label="swdrn2")
+    # axs_superzoom[2].plot(df["time"], df["v(swbgr1)"], label="swbgr1")
+    # axs_superzoom[2].plot(df["time"], df["v(swbrn1)"], label="swbrn1")
+    # axs_superzoom[2].plot(df["time"], df["v(swcap1)"], label="swcap1")
+    # axs_superzoom[2].plot(df["time"], df["v(swdrn1)"], label="swdrn1")
 
-    axs_supersuperzoom[4].plot(df["time"], df["v(swbrn3)"], label="swbrn3")
-    axs_supersuperzoom[4].plot(df["time"], df["v(swcap3)"], label="swcap3")
-    axs_supersuperzoom[4].plot(df["time"], df["v(swdrn3)"], label="swdrn3")
+    # axs_superzoom[3].plot(df["time"], df["v(swbgr2)"], label="swbgr2")
+    # axs_superzoom[3].plot(df["time"], df["v(swbrn2)"], label="swbrn2")
+    # axs_superzoom[3].plot(df["time"], df["v(swcap2)"], label="swcap2")
+    # axs_superzoom[3].plot(df["time"], df["v(swdrn2)"], label="swdrn2")
 
-    for ax in axs_supersuperzoom:
-        ax.set_xlim(supersuperzoom_start, supersuperzoom_stop)
-        ax.set_ylabel("Voltage (V)", fontsize=label_font_size)
-        ax.tick_params(axis="both", labelsize=ticks_font_size)
-        ax.grid()
-        ax.legend(loc="best", ncol=2, fontsize=legend_font_size)
+    # axs_superzoom[4].plot(df["time"], df["v(swbrn3)"], label="swbrn3")
+    # axs_superzoom[4].plot(df["time"], df["v(swcap3)"], label="swcap3")
+    # axs_superzoom[4].plot(df["time"], df["v(swdrn3)"], label="swdrn3")
 
-    axs_supersuperzoom[0].set_title(f"Switch signals zoomed in,\n{process_corner} corner, {voltage_supply} V, {circuit_temperature} °C", fontsize=title_font_size, fontweight='bold')
-    axs_supersuperzoom[-1].set_xlabel("Time (us)", fontsize=label_font_size)
-    fig_supersuperzoom.tight_layout()
-    fig_supersuperzoom.savefig(f"figures/{figure_name}_plot_switch_signals_supersuperzoom.png", dpi=300, bbox_inches="tight")
+    # for ax in axs_superzoom:
+    #     ax.set_xlim(superzoom_start, superzoom_stop)
+    #     ax.set_ylabel("Voltage (V)", fontsize=label_font_size)
+    #     ax.tick_params(axis="both", labelsize=ticks_font_size)
+    #     ax.grid()
+    #     ax.legend(loc="best", ncol=2, fontsize=legend_font_size)
 
-    if args[-1] == "temp":
-        plt.show()
-    else:
-        plt.close("all")
+    #     # y_min, y_max = ax.get_ylim()
+    #     # rect = mpatches.Rectangle(
+    #     #     (supersuperzoom_start, y_min),
+    #     #     supersuperzoom_stop - supersuperzoom_start,
+    #     #     y_max - y_min,
+    #     #     linewidth=1.25,
+    #     #     edgecolor="black",
+    #     #     facecolor="none",
+    #     #     linestyle="--",
+    #     #     transform=ax.transData,
+    #     #     clip_on=True,
+    #     #     zorder=5,
+    #     # )
+    #     # ax.add_patch(rect)
+
+    # axs_superzoom[0].set_title(f"Switch signals zoomed in,\n{process_corner} corner, {voltage_supply} V, {circuit_temperature} °C", fontsize=title_font_size, fontweight='bold')
+    # axs_superzoom[-1].set_xlabel("Time (us)", fontsize=label_font_size)
+    # fig_superzoom.tight_layout()
+    # fig_superzoom.savefig(f"figures/{figure_name}_plot_switch_signals_superzoom.png", dpi=300, bbox_inches="tight")
+
+    # # 
+    # # plot switch voltages (super-super-zoomed view: superzoom_start to superzoom_stop us)
+    # #
+
+    # print(f"plotting super-super-zoomed between {supersuperzoom_start} us and {supersuperzoom_stop} us")
+
+    # fig_supersuperzoom, axs_supersuperzoom = plt.subplots(5, 1, figsize=(figure_width, figure_height), sharex=True, dpi=300)
+
+    # axs_supersuperzoom[0].plot(df["time"], df["v(clk)"], label="clk")
+    # axs_supersuperzoom[0].plot(df["time"], df["v(mode)"], label="mode")
+    # axs_supersuperzoom[0].plot(df["time"], df["v(slp)"], label="slp")
+    # axs_supersuperzoom[0].plot(df["time"], df["v(cmp_async)"], label="cmp")
+
+    # axs_supersuperzoom[1].plot(df["time"], df["v(bgr.v1)"], label="v1")
+    # axs_supersuperzoom[1].plot(df["time"], df["v(bgr.v2)"], label="v2")
+    # axs_supersuperzoom[1].plot(df["time"], df["v(vout)"], label="vout")
+    # axs_supersuperzoom[1].plot(df["time"], df["v(correct_output_found)"], label="out_en")
+
+    # axs_supersuperzoom[2].plot(df["time"], df["v(swbgr1)"], label="swbgr1")
+    # axs_supersuperzoom[2].plot(df["time"], df["v(swbrn1)"], label="swbrn1")
+    # axs_supersuperzoom[2].plot(df["time"], df["v(swcap1)"], label="swcap1")
+    # axs_supersuperzoom[2].plot(df["time"], df["v(swdrn1)"], label="swdrn1")
+
+    # axs_supersuperzoom[3].plot(df["time"], df["v(swbgr2)"], label="swbgr2")
+    # axs_supersuperzoom[3].plot(df["time"], df["v(swbrn2)"], label="swbrn2")
+    # axs_supersuperzoom[3].plot(df["time"], df["v(swcap2)"], label="swcap2")
+    # axs_supersuperzoom[3].plot(df["time"], df["v(swdrn2)"], label="swdrn2")
+
+    # axs_supersuperzoom[4].plot(df["time"], df["v(swbrn3)"], label="swbrn3")
+    # axs_supersuperzoom[4].plot(df["time"], df["v(swcap3)"], label="swcap3")
+    # axs_supersuperzoom[4].plot(df["time"], df["v(swdrn3)"], label="swdrn3")
+
+    # for ax in axs_supersuperzoom:
+    #     ax.set_xlim(supersuperzoom_start, supersuperzoom_stop)
+    #     ax.set_ylabel("Voltage (V)", fontsize=label_font_size)
+    #     ax.tick_params(axis="both", labelsize=ticks_font_size)
+    #     ax.grid()
+    #     ax.legend(loc="best", ncol=2, fontsize=legend_font_size)
+
+    # axs_supersuperzoom[0].set_title(f"Switch signals zoomed in,\n{process_corner} corner, {voltage_supply} V, {circuit_temperature} °C", fontsize=title_font_size, fontweight='bold')
+    # axs_supersuperzoom[-1].set_xlabel("Time (us)", fontsize=label_font_size)
+    # fig_supersuperzoom.tight_layout()
+    # fig_supersuperzoom.savefig(f"figures/{figure_name}_plot_switch_signals_supersuperzoom.png", dpi=300, bbox_inches="tight")
+
+    # if args[-1] == "temp":
+    #     plt.show()
+    # else:
+    #     plt.close("all")
+
+    fig = plt.figure(dpi=300, figsize=(figure_width, figure_height))
+    ax = fig.add_subplot(1, 1, 1)
+    ax.set_title(f"Switch signals from the FSM", fontsize=font_size, fontweight='bold')
+
+    ax.plot(df["time"], df["v(swbrn1)"], label="swbrn1")
+    ax.plot(df["time"], df["v(swcap1)"], label="swcap1")
+    ax.plot(df["time"], df["v(swbrn2)"], label="swbrn2")
+    ax.plot(df["time"], df["v(swcap2)"], label="swcap2")
+    ax.plot(df["time"], df["v(swbrn3)"], label="swbrn3")
+    ax.plot(df["time"], df["v(swcap3)"], label="swcap3")
+
+    ax.set_xlim(45, 82.5)
+    ax.set_xlabel("Time (us)", fontsize=font_size)
+    ax.set_ylabel("Voltage (V)", fontsize=font_size)
+    ax.legend(loc="center left", fontsize=font_size)
+    ax.tick_params(axis='both', labelsize=font_size)
+    ax.grid(True)
+
+    fig.tight_layout()
+    fig.savefig(f"plots/{figure_name}_switch_signals_from_fsm_zoomed.png")
+
+    plt.show()

@@ -25,7 +25,7 @@ print(f"Plotting for transient signals stepping {stepping_direction}")
 
 figure_width = 3
 figure_height = 3
-font_size = 7
+font_size = 10
 title_font_size = font_size
 label_font_size = font_size
 legend_font_size = font_size - 1
@@ -79,6 +79,13 @@ if args[-1] == "ttvtetc":
     tc_ttVt_in_mV_per_C = tc_ttVt * 1e3 # in mV/°C
     tc_ttVt_in_ppm = (tc_ttVt / mean_v_ttVt) * 1e6 # in ppm/°C relative to average voltage
 
+    nocalibrationlist = []
+    onepointcalibrationlist = []
+    twopointcalibrationlist = []
+
+    dac_nocalibrationlist = []
+    dac_onepointcalibrationlist = []
+    dac_twopointcalibrationlist = []
 
     for corner in ["ss", "ff", "sf", "fs"]:
 
@@ -134,6 +141,8 @@ if args[-1] == "ttvtetc":
             # axs_v_0p.plot(ts, linear_fit, linestyle="dashed", color=last_color, label=f"Linear fit v={slope*1e3:.2f}t mV/°C + {intercept*1e3:.1f} mV, R²={r_value**2:.4f}")
             # axs_v_0p.plot(avg_v_max_dev_t, avg_v_max_dev_v, linestyle="none", color=last_color, marker="x", markeredgewidth=2, label=f"Max deviation: {avg_v_max_dev_v*1e3:.2f} mV at {avg_v_max_dev_t} °C")
 
+            nocalibrationlist.append(vs)
+
             # 
             # 1 point calibrate the voltages in the calibration_t degrees Celsius voltage as the single point
             # 
@@ -150,6 +159,8 @@ if args[-1] == "ttvtetc":
             print(f"{process_corner}{Vx} 1pc: Mean voltage: {mean_v_onepointcalibrated:.4f} V, TC: {tc_onepointcalibrated:.4f} V/°C, TC in mV/°C {tc_in_mV_per_C:.2f}, TC in ppm/°C: {tc_in_ppm:.2f}")
 
             axs_v_1p.plot(ts, onepointcalibrated_vs, marker="o", label=f"{corner}{Vx}")
+
+            onepointcalibrationlist.append(onepointcalibrated_vs)
 
             # 
             # 2 point calibrate the voltages at calibration_t1 and calibration_t2
@@ -184,6 +195,8 @@ if args[-1] == "ttvtetc":
 
             axs_v_2p.plot(ts, twopointcalibrated_vs, marker="o", label=f"{corner}{Vx}")
 
+            twopointcalibrationlist.append(twopointcalibrated_vs)
+
             #
             # DAC input settings
             #
@@ -199,6 +212,7 @@ if args[-1] == "ttvtetc":
             # axs_dac.plot(ts, coarse_code, linestyle="dashed", marker="s", color=last_color)
             # axs_dac.plot(ts, fine_code, linestyle="dotted", marker="v", color=last_color)
 
+            dac_nocalibrationlist.append(dac_code)
 
             # 
             # 1 point calibrate the dac codes at the calibration_dac_t degrees Celsius
@@ -226,6 +240,8 @@ if args[-1] == "ttvtetc":
             print(f"{process_corner}{Vx} 1pc TC: {tc_onepointcalibrated:.4f} -/°C")
 
             axs_d_1p.plot(ts, onepointcalibrated_ds, marker="o", label=f"{corner}{Vx}")
+
+            dac_onepointcalibrationlist.append(onepointcalibrated_ds)
 
             # 
             # 2 point calibrate the dac codes at calibration_dac_t1 and calibration_dac_t2 degrees Celsius
@@ -270,9 +286,9 @@ if args[-1] == "ttvtetc":
                 twopointcalibrated_d = d + offset
                 twopointcalibrated_ds.append(twopointcalibrated_d)
 
-            
             axs_d_2p.plot(ts, twopointcalibrated_ds, marker="o", label=f"{corner}{Vx}")
 
+            dac_twopointcalibrationlist.append(twopointcalibrated_ds)
 
             #
             # power while in active mode
@@ -315,7 +331,105 @@ if args[-1] == "ttvtetc":
     axs_off_pwr.plot(temperatures, off_pwr, marker="o", label=f"ttVt")
 
     axs_v_0p.plot(ts_ttVt, vs_ttVt, marker="o", label=f"ttVt")
+
+    nocalibrationlist.append(vs_ttVt)
+
+    ts_fit = np.array(temperatures)
+    vs2p = nocalibrationlist
+
+    vs = np.array(vs2p)
+    vs = vs.squeeze()  
+    means = vs.mean(axis=0)
+
+    slope, intercept, r_value, _, _ = stats.linregress(ts_fit, means)
+    linear_fit = slope * ts_fit + intercept
+
+    print(f"means: {means}")
+    print(f"V 0p mean linear fit: slope={slope:.4f} /°C, intercept={intercept:.2f}, R²={r_value**2:.6f}")
+
+    axs_v_0p.plot(ts_fit, means,       marker="o", linestyle="none", label="Mean")
+    axs_v_0p.plot(ts_fit, linear_fit,  linestyle="--",               label=f"Lin. fit")
+
+    residuals = means - linear_fit            # deviation at each x-point
+    max_dev = np.max(np.abs(residuals))       # largest deviation (magnitude)
+    idx = np.argmax(np.abs(residuals))        # which x-point it occurs at
+    print(f"residuals: {residuals}")
+    print(f"Max deviation: {max_dev:.4f} at temp = {ts_fit[idx]} (residual = {residuals[idx]:+.4f})")
+    
+    all_residuals = vs - linear_fit                     # shape (n_curves, 5)
+
+    flat_idx = np.argmax(np.abs(all_residuals))         # index into the flattened array
+    curve_idx, t_idx = np.unravel_index(flat_idx, all_residuals.shape)
+
+    max_dev_v = vs[curve_idx, t_idx]                    # the voltage itself
+    max_dev_t = ts_fit[t_idx]                           # temperature where it happens
+    max_dev = all_residuals[curve_idx, t_idx]           # signed deviation
+
+    print(f"Max deviation from fit: {np.abs(max_dev)*1e3:.2f} mV "
+        f"(voltage = {max_dev_v:.4f} V, curve #{curve_idx}, at {max_dev_t} °C, residual = {max_dev:+.4f})")
+    print()
+
+    # vs = []
+    # for temperature in temperatures:
+    #     v = np.array(df.loc[(df["Temperature (°C)"] == temperature), "Output voltage (V)"])
+    #     v = [x for x in v if x == x]
+    #     vs.append(np.mean(v))
+
+    # means = np.array(vs)
+    # ts_fit = np.array(temperatures)
+
+    # slope, intercept, r_value, _, _ = stats.linregress(ts_fit, vs)
+    # linear_fit = slope * ts_fit + intercept
+
+
+    # print(f"means: {means}")
+    # print(f"V 0p mean linear fit: slope={slope:.4f} /°C, intercept={intercept:.2f}, R²={r_value**2:.6f}")
+
+    # axs_v_0p.plot(ts_fit, means,       marker="o", linestyle="none", label="Mean")
+    # axs_v_0p.plot(ts_fit, linear_fit,  linestyle="--",               label=f"Lin. fit")
+
+    # residuals = means - linear_fit            # deviation at each x-point
+    # max_dev = np.max(np.abs(residuals))       # largest deviation (magnitude)
+    # idx = np.argmax(np.abs(residuals))        # which x-point it occurs at
+
+    # print(f"Max deviation: {max_dev:.4f} at temp = {ts_fit[idx]} (residual = {residuals[idx]:+.4f})")
+
     axs_v_1p.plot(ts_ttVt, vs_ttVt, marker="o", label=f"ttVt")
+
+    onepointcalibrationlist.append(vs_ttVt)
+
+    ts_fit = np.array(temperatures)
+    vs1p = onepointcalibrationlist
+
+    vs = np.array([np.asarray(curve, dtype=float).ravel() for curve in vs1p])
+    means = vs.mean(axis=0)
+
+    slope, intercept, r_value, _, _ = stats.linregress(ts_fit, means)
+    linear_fit = slope * ts_fit + intercept
+
+    print(f"means: {means}")
+    print(f"V 1p mean linear fit: slope={slope:.4f} /°C, intercept={intercept:.2f}, R²={r_value**2:.6f}")
+
+    axs_v_1p.plot(ts_fit, means,       marker="o", linestyle="none", label="Mean")
+    axs_v_1p.plot(ts_fit, linear_fit,  linestyle="--",               label=f"Lin. fit")
+
+    residuals = means - linear_fit            # deviation at each x-point
+    max_dev = np.max(np.abs(residuals))       # largest deviation (magnitude)
+    idx = np.argmax(np.abs(residuals))        # which x-point it occurs at
+
+    print(f"Max deviation: {max_dev:.4f} at temp = {ts_fit[idx]} (residual = {residuals[idx]:+.4f})")
+    all_residuals = vs - linear_fit                     # shape (n_curves, 5)
+
+    flat_idx = np.argmax(np.abs(all_residuals))         # index into the flattened array
+    curve_idx, t_idx = np.unravel_index(flat_idx, all_residuals.shape)
+
+    max_dev_v = vs[curve_idx, t_idx]                    # the voltage itself
+    max_dev_t = ts_fit[t_idx]                           # temperature where it happens
+    max_dev = all_residuals[curve_idx, t_idx]           # signed deviation
+
+    print(f"Max deviation from fit: {np.abs(max_dev)*1e3:.2f} mV "
+        f"(voltage = {max_dev_v:.4f} V, curve #{curve_idx}, at {max_dev_t} °C, residual = {max_dev:+.4f})")
+    print()
 
     calibration_t1 = 0
     calibration_t2 = 80
@@ -347,8 +461,46 @@ if args[-1] == "ttvtetc":
 
     axs_v_2p.plot(ts_ttVt, twopointcalibrated_vs, marker="o", label=f"ttVt")
 
+    twopointcalibrationlist.append(twopointcalibrated_vs)
+
+    ts_fit = np.array(temperatures)
+    vs2p = twopointcalibrationlist
+
+    vs = np.array(vs2p)
+    vs = vs.squeeze()  
+    means = vs.mean(axis=0)
+
+    slope, intercept, r_value, _, _ = stats.linregress(ts_fit, means)
+    linear_fit = slope * ts_fit + intercept
+
+    print(f"means: {means}")
+    print(f"V 2p mean linear fit: slope={slope:.4f} /°C, intercept={intercept:.2f}, R²={r_value**2:.6f}")
+
+    axs_v_2p.plot(ts_fit, means,       marker="o", linestyle="none", label="Mean")
+    axs_v_2p.plot(ts_fit, linear_fit,  linestyle="--",               label=f"Lin. fit")
+
+    residuals = means - linear_fit            # deviation at each x-point
+    max_dev = np.max(np.abs(residuals))       # largest deviation (magnitude)
+    idx = np.argmax(np.abs(residuals))        # which x-point it occurs at
+
+    print(f"Max deviation: {max_dev:.4f} at temp = {ts_fit[idx]} (residual = {residuals[idx]:+.4f})")
+    all_residuals = vs - linear_fit                     # shape (n_curves, 5)
+
+    flat_idx = np.argmax(np.abs(all_residuals))         # index into the flattened array
+    curve_idx, t_idx = np.unravel_index(flat_idx, all_residuals.shape)
+
+    max_dev_v = vs[curve_idx, t_idx]                    # the voltage itself
+    max_dev_t = ts_fit[t_idx]                           # temperature where it happens
+    max_dev = all_residuals[curve_idx, t_idx]           # signed deviation
+
+    print(f"Max deviation from fit: {np.abs(max_dev)*1e3:.2f} mV "
+        f"(voltage = {max_dev_v:.4f} V, curve #{curve_idx}, at {max_dev_t} °C, residual = {max_dev:+.4f})")
+    print()
+
 
     axs_dac.plot(ts_ttVt, dac_code_ttVt, marker="o", label=f"ttVt")
+
+    dac_nocalibrationlist.append(dac_code_ttVt)   # add the ttVt curve like you do for voltages
 
     ds = []
     for temperature in temperatures:
@@ -362,14 +514,36 @@ if args[-1] == "ttvtetc":
 
     ds = np.array(ds)
     ts_fit = np.array(temperatures)
+    means = ds
 
     slope, intercept, r_value, _, _ = stats.linregress(ts_fit, ds)
     linear_fit = slope * ts_fit + intercept
 
-    print(f"DAC mean linear fit: slope={slope:.4f} /°C, intercept={intercept:.2f}, R²={r_value**2:.6f}")
+    print(f"DAC 0p mean linear fit: slope={slope:.4f} /°C, intercept={intercept:.2f}, R²={r_value**2:.6f}")
 
     axs_dac.plot(ts_fit, ds,          marker="o", linestyle="none", label="Mean")
     axs_dac.plot(ts_fit, linear_fit,  linestyle="--",               label=f"Lin. fit")
+
+    residuals = means - linear_fit            # deviation at each x-point
+    max_dev = np.max(np.abs(residuals))       # largest deviation (magnitude)
+    idx = np.argmax(np.abs(residuals))        # which x-point it occurs at
+
+    print(f"Max deviation: {max_dev:.4f} at temp = {ts_fit[idx]} (residual = {residuals[idx]:+.4f})")
+    ds_all = np.array([np.asarray(c, dtype=float).ravel() for c in dac_nocalibrationlist])
+
+    all_residuals = ds_all - linear_fit           # (n_curves, 5) - (5,) → 2D                     # shape (n_curves, 5)
+
+    flat_idx = np.argmax(np.abs(all_residuals))         # index into the flattened array
+    curve_idx, t_idx = np.unravel_index(flat_idx, all_residuals.shape)
+
+    max_dev_v = ds_all[curve_idx, t_idx]
+    max_dev_t = ts_fit[t_idx]                           # temperature where it happens
+    max_dev = all_residuals[curve_idx, t_idx]           # signed deviation
+
+    print(f"Max deviation from fit: {np.abs(max_dev):.2f} codes "
+      f"(dac code = {max_dev_v:.1f}, curve #{curve_idx}, at {max_dev_t} °C, residual = {max_dev:+.2f})")
+    print()
+
 
     # axs_dac_0p.plot(ts_ttVt, coarse_code_ttVt, linestyle="dashed", marker="s")
     # axs_dac_0p.plot(ts_ttVt, fine_code_ttVt, linestyle="dotted", marker="v")
@@ -397,8 +571,45 @@ if args[-1] == "ttvtetc":
     print(f"{process_corner}{Vx} 1pc TC: {tc_onepointcalibrated:.4f} -/°C")
 
     axs_d_1p.plot(ts, onepointcalibrated_ds, marker="o", label=f"ttVt")
-    axs_d_1p.plot(ts_fit, ds,          marker="o", linestyle="none", label="Mean")
+    # axs_d_1p.plot(ts_fit, ds,          marker="o", linestyle="none", label="Mean")
+    # axs_d_1p.plot(ts_fit, linear_fit,  linestyle="--",               label=f"Lin. fit")
+
+    dac_onepointcalibrationlist.append(onepointcalibrated_ds)
+
+    ts_fit = np.array(temperatures)
+    ds = dac_onepointcalibrationlist
+
+    ds = np.array(ds)
+    ds = ds.squeeze()  
+    means = ds.mean(axis=0)
+
+    slope, intercept, r_value, _, _ = stats.linregress(ts_fit, means)
+    linear_fit = slope * ts_fit + intercept
+
+    print(f"means: {means}")
+    print(f"DAC 1p mean linear fit: slope={slope:.4f} /°C, intercept={intercept:.2f}, R²={r_value**2:.6f}")
+
+    axs_d_1p.plot(ts_fit, means,       marker="o", linestyle="none", label="Mean")
     axs_d_1p.plot(ts_fit, linear_fit,  linestyle="--",               label=f"Lin. fit")
+
+    residuals = means - linear_fit            # deviation at each x-point
+    max_dev = np.max(np.abs(residuals))       # largest deviation (magnitude)
+    idx = np.argmax(np.abs(residuals))        # which x-point it occurs at
+
+    print(f"Max deviation: {max_dev:.4f} at temp = {ts_fit[idx]} (residual = {residuals[idx]:+.4f})")
+    all_residuals = ds - linear_fit                     # shape (n_curves, 5)
+
+    flat_idx = np.argmax(np.abs(all_residuals))         # index into the flattened array
+    curve_idx, t_idx = np.unravel_index(flat_idx, all_residuals.shape)
+
+    max_dev_v = ds[curve_idx, t_idx]                    # the voltage itself
+    max_dev_t = ts_fit[t_idx]                           # temperature where it happens
+    max_dev = all_residuals[curve_idx, t_idx]           # signed deviation
+
+    print(f"Max deviation from fit: {np.abs(max_dev):.2f} codes "
+      f"(dac code = {max_dev_v:.1f}, curve #{curve_idx}, at {max_dev_t} °C, residual = {max_dev:+.2f})")
+    print()
+
 
     # axs_d_2p.plot(ts_ttVt, dac_code_ttVt_two_point_calibrated, marker="o", label=f"ttVt")
 
@@ -449,6 +660,41 @@ if args[-1] == "ttvtetc":
     
     axs_d_2p.plot(ts, twopointcalibrated_ds, marker="o", label=f"ttVt")
 
+    dac_twopointcalibrationlist.append(twopointcalibrated_ds)
+
+    ts_fit = np.array(temperatures)
+    ds = dac_twopointcalibrationlist
+
+    ds = np.array(ds)
+    ds = ds.squeeze()  
+    means = ds.mean(axis=0)
+
+    slope, intercept, r_value, _, _ = stats.linregress(ts_fit, means)
+    linear_fit = slope * ts_fit + intercept
+
+    print(f"means: {means}")
+    print(f"DAC 2p mean linear fit: slope={slope:.4f} /°C, intercept={intercept:.2f}, R²={r_value**2:.6f}")
+
+    axs_d_2p.plot(ts_fit, means,       marker="o", linestyle="none", label="Mean")
+    axs_d_2p.plot(ts_fit, linear_fit,  linestyle="--",               label=f"Lin. fit")
+
+    residuals = means - linear_fit            # deviation at each x-point
+    max_dev = np.max(np.abs(residuals))       # largest deviation (magnitude)
+    idx = np.argmax(np.abs(residuals))        # which x-point it occurs at
+
+    print(f"Max deviation: {max_dev:.4f} at temp = {ts_fit[idx]} (residual = {residuals[idx]:+.4f})")
+    all_residuals = ds - linear_fit                     # shape (n_curves, 5)
+
+    flat_idx = np.argmax(np.abs(all_residuals))         # index into the flattened array
+    curve_idx, t_idx = np.unravel_index(flat_idx, all_residuals.shape)
+
+    max_dev_v = ds[curve_idx, t_idx]                    # the voltage itself
+    max_dev_t = ts_fit[t_idx]                           # temperature where it happens
+    max_dev = all_residuals[curve_idx, t_idx]           # signed deviation
+
+    print(f"Max deviation from fit: {np.abs(max_dev):.2f} codes "
+      f"(dac code = {max_dev_v:.1f}, curve #{curve_idx}, at {max_dev_t} °C, residual = {max_dev:+.2f})")
+    print()
 
 
 
@@ -459,7 +705,7 @@ if args[-1] == "ttvtetc":
     axs_v_0p.set_title(f"Temperature sensitivity", fontsize=title_font_size, fontweight='bold')
     axs_v_0p.set_xlabel("Temperature (°C)", fontsize=label_font_size)
     axs_v_0p.set_ylabel("Output voltage (V)", fontsize=label_font_size)
-    axs_v_0p.legend(loc="best", fontsize=legend_font_size)
+    axs_v_0p.legend(loc="best", ncol=2, fontsize=legend_font_size)
     axs_v_0p.tick_params(axis='both', labelsize=ticks_font_size)
     axs_v_0p.grid()
 
@@ -469,7 +715,7 @@ if args[-1] == "ttvtetc":
     axs_v_1p.set_title(f"Temperature sensitivity 1 point calibrated", fontsize=title_font_size, fontweight='bold')
     axs_v_1p.set_xlabel("Temperature (°C)", fontsize=label_font_size)
     axs_v_1p.set_ylabel("Output voltage (V)", fontsize=label_font_size)
-    axs_v_1p.legend(loc="best", fontsize=legend_font_size)
+    axs_v_1p.legend(loc="best", ncol=2, fontsize=legend_font_size)
     axs_v_1p.tick_params(axis='both', labelsize=ticks_font_size)
     axs_v_1p.grid()
 
@@ -479,7 +725,7 @@ if args[-1] == "ttvtetc":
     axs_v_2p.set_title(f"Temperature sensitivity 2 point calibrated", fontsize=title_font_size, fontweight='bold')
     axs_v_2p.set_xlabel("Temperature (°C)", fontsize=label_font_size)
     axs_v_2p.set_ylabel("Output voltage (V)", fontsize=label_font_size)
-    axs_v_2p.legend(loc="best", fontsize=legend_font_size)
+    axs_v_2p.legend(loc="best", ncol=2, fontsize=legend_font_size)
     axs_v_2p.tick_params(axis='both', labelsize=ticks_font_size)
     axs_v_2p.grid()
 
@@ -490,7 +736,7 @@ if args[-1] == "ttvtetc":
     axs_dac.set_title(f"DAC input", fontsize=title_font_size, fontweight='bold')
     axs_dac.set_xlabel("Temperature (°C)", fontsize=label_font_size)
     axs_dac.set_ylabel("DAC code", fontsize=label_font_size)
-    axs_dac.legend(loc="best", fontsize=legend_font_size)
+    axs_dac.legend(loc="best", ncol=2, fontsize=legend_font_size)
     axs_dac.tick_params(axis='both', labelsize=ticks_font_size)
     axs_dac.grid()
 
@@ -500,7 +746,7 @@ if args[-1] == "ttvtetc":
     axs_d_1p.set_title(f"DAC input 1 point calibrated", fontsize=title_font_size, fontweight='bold')
     axs_d_1p.set_xlabel("Temperature (°C)", fontsize=label_font_size)
     axs_d_1p.set_ylabel("DAC code", fontsize=label_font_size)
-    axs_d_1p.legend(loc="best", fontsize=legend_font_size)
+    axs_d_1p.legend(loc="best", ncol=2, fontsize=legend_font_size)
     axs_d_1p.tick_params(axis='both', labelsize=ticks_font_size)
     axs_d_1p.grid()
 
@@ -510,7 +756,7 @@ if args[-1] == "ttvtetc":
     axs_d_2p.set_title(f"DAC input 2 point calibrated", fontsize=title_font_size, fontweight='bold')
     axs_d_2p.set_xlabel("Temperature (°C)", fontsize=label_font_size)
     axs_d_2p.set_ylabel("DAC code", fontsize=label_font_size)
-    axs_d_2p.legend(loc="best", fontsize=legend_font_size)
+    axs_d_2p.legend(loc="best", ncol=2, fontsize=legend_font_size)
     axs_d_2p.tick_params(axis='both', labelsize=ticks_font_size)
     axs_d_2p.grid()
 
@@ -1094,7 +1340,13 @@ if args[-1] == "mc":
 
     fig_mc_dac_errorbar = plt.figure(figsize=(figure_width, figure_height), dpi=300)
     axs_mc_dac_errorbar = fig_mc_dac_errorbar.add_subplot(1, 1, 1)
-    
+
+    fig_mc_errorbar_1p = plt.figure(figsize=(figure_width, figure_height), dpi=300)
+    axs_mc_errorbar_1p = fig_mc_errorbar_1p.add_subplot(1, 1, 1)
+
+    fig_mc_dac_errorbar_1p = plt.figure(figsize=(figure_width, figure_height), dpi=300)
+    axs_mc_dac_errorbar_1p = fig_mc_dac_errorbar_1p.add_subplot(1, 1, 1)
+
 
 
     df = pd.read_csv(f"plotdata/{'_'.join(args)}_stepping_{stepping_direction}.csv")
@@ -1123,7 +1375,7 @@ if args[-1] == "mc":
             Vx = "Vl" if voltage == 1.7 else "Vt" if voltage == 1.8 else "Vh" if voltage == 1.9 else "Oops"
 
             #
-            # Reference voltage on the output
+            # Temperature voltage on the output
             #
 
             ts = np.array(df.loc[(df['Process corner'] == process_corner) & (df["Voltage supply (V)"] == voltage) & (df["monte carlo run"] == run), "Temperature (°C)"])
@@ -1321,7 +1573,10 @@ if args[-1] == "mc":
 
             off_pwr = np.array(df.loc[(df['Process corner'] == process_corner) & (df["Voltage supply (V)"] == voltage) & (df["monte carlo run"] == run), "Sleep power (uW)"])
             
-            axs_off_pwr.plot(temperatures, off_pwr, marker="o", label=f"{run}")
+            if run == 15: 
+                print()
+            else:
+                axs_off_pwr.plot(temperatures, off_pwr, marker="o", label=f"{run}")
 
             #
             # start up time
@@ -1337,6 +1592,42 @@ if args[-1] == "mc":
 
     # Plot the mean voltage, active power, sleep power, and start-up time across the runs for each temperature in the monte carlo simulation and the pluss minus one standard deviation as error bars
 
+    # dac_twopointcalibrationlist.append(twopointcalibrated_ds)
+
+    # ts_fit = np.array(temperatures)
+    # ds = dac_twopointcalibrationlist
+
+    # ds = np.array(ds)
+    # ds = ds.squeeze()  
+    # means = ds.mean(axis=0)
+
+    # slope, intercept, r_value, _, _ = stats.linregress(ts_fit, means)
+    # linear_fit = slope * ts_fit + intercept
+
+    # print(f"means: {means}")
+    # print(f"DAC 2p mean linear fit: slope={slope:.4f} /°C, intercept={intercept:.2f}, R²={r_value**2:.6f}")
+
+    # axs_d_2p.plot(ts_fit, means,       marker="o", linestyle="none", label="Mean")
+    # axs_d_2p.plot(ts_fit, linear_fit,  linestyle="--",               label=f"Lin. fit")
+
+    # residuals = means - linear_fit            # deviation at each x-point
+    # max_dev = np.max(np.abs(residuals))       # largest deviation (magnitude)
+    # idx = np.argmax(np.abs(residuals))        # which x-point it occurs at
+
+    # print(f"Max deviation: {max_dev:.4f} at temp = {ts_fit[idx]} (residual = {residuals[idx]:+.4f})")
+    # all_residuals = ds - linear_fit                     # shape (n_curves, 5)
+
+    # flat_idx = np.argmax(np.abs(all_residuals))         # index into the flattened array
+    # curve_idx, t_idx = np.unravel_index(flat_idx, all_residuals.shape)
+
+    # max_dev_v = ds[curve_idx, t_idx]                    # the voltage itself
+    # max_dev_t = ts_fit[t_idx]                           # temperature where it happens
+    # max_dev = all_residuals[curve_idx, t_idx]           # signed deviation
+
+    # print(f"Max deviation from fit: {np.abs(max_dev):.2f} codes "
+    #   f"(dac code = {max_dev_v:.1f}, curve #{curve_idx}, at {max_dev_t} °C, residual = {max_dev:+.2f})")
+    # print()
+
     mean_v_list = []
     std_v_list = []
     for temperature in temperatures:
@@ -1351,7 +1642,7 @@ if args[-1] == "mc":
     axs_mc_errorbar.plot(temperatures, mean_v_list, marker="o", label=f"Mean voltage (μ)")
     axs_mc_errorbar.fill_between(temperatures, np.array(mean_v_list) - np.array(std_v_list), np.array(mean_v_list) + np.array(std_v_list), alpha=0.2, label=f"standard deviation (±σ)")
 
-    axs_mc_errorbar.set_title(f"Temperature voltage after {nruns} runs", fontsize=title_font_size+2, fontweight='bold')
+    axs_mc_errorbar.set_title(f"Temperature voltage", fontsize=title_font_size+2, fontweight='bold')
     axs_mc_errorbar.set_xlabel("Temperature (°C)", fontsize=label_font_size)
     axs_mc_errorbar.set_ylabel("Output voltage (V)", fontsize=label_font_size)
     axs_mc_errorbar.legend(loc="best", fontsize=legend_font_size+2)
@@ -1382,7 +1673,7 @@ if args[-1] == "mc":
 
     fig_dist = plt.figure(dpi=300, figsize=(figure_width, figure_height))
     ax_dist = fig_dist.add_subplot(1, 1, 1)
-    ax_dist.set_title(f"MC distribution at {distribution_temperature}°C\nafter {nruns} runs")
+    ax_dist.set_title(f"MC distribution at {distribution_temperature}°C")
 
     sns.histplot(v, bins=bin_count, kde=True, color="steelblue", edgecolor="black", ax=ax_dist)
     sns.rugplot(v, height=0.1, color="blue", ax=ax_dist)
@@ -1429,7 +1720,7 @@ if args[-1] == "mc":
     axs_mc_dac_errorbar.plot(temperatures, mean_d_list, marker="o", label=f"Mean DAC code (μ)")
     axs_mc_dac_errorbar.fill_between(temperatures, np.array(mean_d_list) - np.array(std_d_list), np.array(mean_d_list) + np.array(std_d_list), alpha=0.2, label=f"standard deviation (±σ)")
 
-    axs_mc_dac_errorbar.set_title(f"DAC code after {nruns} runs", fontsize=title_font_size+2, fontweight='bold')
+    axs_mc_dac_errorbar.set_title(f"DAC code on the input", fontsize=title_font_size+2, fontweight='bold')
     axs_mc_dac_errorbar.set_xlabel("Temperature (°C)", fontsize=label_font_size)
     axs_mc_dac_errorbar.set_ylabel("DAC code", fontsize=label_font_size)
     axs_mc_dac_errorbar.legend(loc="best", fontsize=legend_font_size+2)
@@ -1438,6 +1729,65 @@ if args[-1] == "mc":
 
     fig_mc_dac_errorbar.tight_layout()
     fig_mc_dac_errorbar.savefig(f"plots/{'_'.join(args)}_tsens_stepping_{stepping_direction}_mean_dac_code_w_error_bars.png", dpi=300, bbox_inches="tight")
+
+
+    mean_d_list = []
+    std_d_list = []
+    for temperature in temperatures:
+        dcoarse = np.array(df.loc[(df['Process corner'] == "ttmm") & (df["Voltage supply (V)"] == 1.8) & (df["Temperature (°C)"] == temperature), "Coarse code"])
+        dfine = np.array(df.loc[(df['Process corner'] == "ttmm") & (df["Voltage supply (V)"] == 1.8) & (df["Temperature (°C)"] == temperature), "Fine code"])
+        dcoarse = dcoarse * 1e3 # in whole numbers
+        dfine = dfine * 1e3 # in whole numbers
+        d = dcoarse * 10 + dfine
+        d = [x for x in d if x == x]
+        mean_d_list.append(np.mean(d))
+        std_d_list.append(np.std(d))
+        print(f"Temperature: {temperature} °C, Mean DAC code: {mean_d_list[-1]:.4f}, Std DAC code: {std_d_list[-1]:.4f}")
+
+    nruns = len(d)
+
+    axs_mc_errorbar_1p.plot(temperatures, mean_d_list, marker="o", label=f"Mean DAC code (μ)")
+    axs_mc_errorbar_1p.fill_between(temperatures, np.array(mean_d_list) - np.array(std_d_list), np.array(mean_d_list) + np.array(std_d_list), alpha=0.2, label=f"standard deviation (±σ)")
+
+    axs_mc_errorbar_1p.set_title(f"Temperature voltage", fontsize=title_font_size+2, fontweight='bold')
+    axs_mc_errorbar_1p.set_xlabel("Temperature (°C)", fontsize=label_font_size)
+    axs_mc_errorbar_1p.set_ylabel("DAC code", fontsize=label_font_size)
+    axs_mc_errorbar_1p.legend(loc="best", fontsize=legend_font_size+2)
+    axs_mc_errorbar_1p.tick_params(axis='both', labelsize=ticks_font_size+2)
+    axs_mc_errorbar_1p.grid()
+
+    fig_mc_errorbar_1p.tight_layout()
+    fig_mc_errorbar_1p.savefig(f"plots/{'_'.join(args)}_tsens_stepping_{stepping_direction}_mean_dac_code_w_error_bars_colt_1p.png", dpi=300, bbox_inches="tight")
+
+
+    mean_d_list = []
+    std_d_list = []
+    for temperature in temperatures:
+        dcoarse = np.array(df.loc[(df['Process corner'] == "ttmm") & (df["Voltage supply (V)"] == 1.8) & (df["Temperature (°C)"] == temperature), "Coarse code"])
+        dfine = np.array(df.loc[(df['Process corner'] == "ttmm") & (df["Voltage supply (V)"] == 1.8) & (df["Temperature (°C)"] == temperature), "Fine code"])
+        dcoarse = dcoarse * 1e3 # in whole numbers
+        dfine = dfine * 1e3 # in whole numbers
+        d = dcoarse * 10 + dfine
+        d = [x for x in d if x == x]
+        mean_d_list.append(np.mean(d))
+        std_d_list.append(np.std(d))
+        print(f"Temperature: {temperature} °C, Mean DAC code: {mean_d_list[-1]:.4f}, Std DAC code: {std_d_list[-1]:.4f}")
+
+    nruns = len(d)
+
+    axs_mc_dac_errorbar_1p.plot(temperatures, mean_d_list, marker="o", label=f"Mean DAC code (μ)")
+    axs_mc_dac_errorbar_1p.fill_between(temperatures, np.array(mean_d_list) - np.array(std_d_list), np.array(mean_d_list) + np.array(std_d_list), alpha=0.2, label=f"standard deviation (±σ)")
+
+    axs_mc_dac_errorbar_1p.set_title(f"DAC code", fontsize=title_font_size+2, fontweight='bold')
+    axs_mc_dac_errorbar_1p.set_xlabel("Temperature (°C)", fontsize=label_font_size)
+    axs_mc_dac_errorbar_1p.set_ylabel("DAC code", fontsize=label_font_size)
+    axs_mc_dac_errorbar_1p.legend(loc="best", fontsize=legend_font_size+2)
+    axs_mc_dac_errorbar_1p.tick_params(axis='both', labelsize=ticks_font_size+2)
+    axs_mc_dac_errorbar_1p.grid()
+
+    fig_mc_dac_errorbar_1p.tight_layout()
+    fig_mc_dac_errorbar_1p.savefig(f"plots/{'_'.join(args)}_tsens_stepping_{stepping_direction}_mean_dac_code_w_error_bars_dac_1p.png", dpi=300, bbox_inches="tight")
+
 
 
 
@@ -1492,38 +1842,38 @@ if args[-1] == "mc":
     axs_v_0p.set_title(f"Temperature voltage", fontsize=title_font_size, fontweight='bold')
     axs_v_0p.set_xlabel("Temperature (°C)", fontsize=label_font_size)
     axs_v_0p.set_ylabel("Output voltage (V)", fontsize=label_font_size)
-    axs_v_0p.legend(loc="best", fontsize=legend_font_size, ncol=2)
+    axs_v_0p.legend(loc="best", fontsize=legend_font_size, ncol=3)
     axs_v_0p.tick_params(axis='both', labelsize=ticks_font_size)
     axs_v_0p.grid()
 
     fig_v_0p.tight_layout()
-    fig_v_0p.savefig(f"plots/{'_'.join(args)}_tsens_stepping_{stepping_direction}_uncalibrated_temperature_vs_reference_voltage_new_resistance_v2.png", dpi=300, bbox_inches="tight")
+    fig_v_0p.savefig(f"plots/{'_'.join(args)}_tsens_stepping_{stepping_direction}_uncalibrated_temperature_vs_temperature_voltage_new_resistance_v2.png", dpi=300, bbox_inches="tight")
 
     axs_v_1p.set_title(f"Temperature voltage 1 point calibrated", fontsize=title_font_size, fontweight='bold')
     axs_v_1p.set_xlabel("Temperature (°C)", fontsize=label_font_size)
     axs_v_1p.set_ylabel("Output voltage (V)", fontsize=label_font_size)
-    axs_v_1p.legend(loc="best", fontsize=legend_font_size, ncol=2)
+    axs_v_1p.legend(loc="best", fontsize=legend_font_size, ncol=3)
     axs_v_1p.tick_params(axis='both', labelsize=ticks_font_size)
     axs_v_1p.grid()
 
     fig_v_1p.tight_layout()
-    fig_v_1p.savefig(f"plots/{'_'.join(args)}_tsens_stepping_{stepping_direction}_onepointcalibrated_temperature_vs_reference_voltage_new_resistance_v2.png", dpi=300, bbox_inches="tight")
+    fig_v_1p.savefig(f"plots/{'_'.join(args)}_tsens_stepping_{stepping_direction}_onepointcalibrated_temperature_vs_temperature_voltage_new_resistance_v2.png", dpi=300, bbox_inches="tight")
 
     axs_v_2p.set_title(f"Temperature voltage 2 point calibrated", fontsize=title_font_size, fontweight='bold')
     axs_v_2p.set_xlabel("Temperature (°C)", fontsize=label_font_size)
     axs_v_2p.set_ylabel("Output voltage (V)", fontsize=label_font_size)
-    axs_v_2p.legend(loc="best", fontsize=legend_font_size, ncol=2)
+    axs_v_2p.legend(loc="best", fontsize=legend_font_size, ncol=3)
     axs_v_2p.tick_params(axis='both', labelsize=ticks_font_size)
     axs_v_2p.grid()
 
     fig_v_2p.tight_layout()
-    fig_v_2p.savefig(f"plots/{'_'.join(args)}_tsens_stepping_{stepping_direction}_twopointcalibrated_temperature_vs_reference_voltage_new_resistance_v2.png", dpi=300, bbox_inches="tight")
+    fig_v_2p.savefig(f"plots/{'_'.join(args)}_tsens_stepping_{stepping_direction}_twopointcalibrated_temperature_vs_temperature_voltage_new_resistance_v2.png", dpi=300, bbox_inches="tight")
 
 
     axs_dac.set_title(f"DAC input", fontsize=title_font_size, fontweight='bold')
     axs_dac.set_xlabel("Temperature (°C)", fontsize=label_font_size)
     axs_dac.set_ylabel("DAC code", fontsize=label_font_size)
-    axs_dac.legend(loc="best", fontsize=legend_font_size, ncol=2)
+    axs_dac.legend(loc="best", fontsize=legend_font_size, ncol=3)
     axs_dac.tick_params(axis='both', labelsize=ticks_font_size)
     axs_dac.grid()
 
@@ -1533,7 +1883,7 @@ if args[-1] == "mc":
     axs_d_1p.set_title(f"DAC input 1 point calibrated", fontsize=title_font_size, fontweight='bold')
     axs_d_1p.set_xlabel("Temperature (°C)", fontsize=label_font_size)
     axs_d_1p.set_ylabel("DAC code", fontsize=label_font_size)
-    axs_d_1p.legend(loc="best", fontsize=legend_font_size, ncol=2)
+    axs_d_1p.legend(loc="best", fontsize=legend_font_size, ncol=3)
     axs_d_1p.tick_params(axis='both', labelsize=ticks_font_size)
     axs_d_1p.grid()
 
@@ -1543,7 +1893,7 @@ if args[-1] == "mc":
     axs_d_2p.set_title(f"DAC input 2 point calibrated", fontsize=title_font_size, fontweight='bold')
     axs_d_2p.set_xlabel("Temperature (°C)", fontsize=label_font_size)
     axs_d_2p.set_ylabel("DAC code", fontsize=label_font_size)
-    axs_d_2p.legend(loc="best", fontsize=legend_font_size, ncol=2)
+    axs_d_2p.legend(loc="best", fontsize=legend_font_size, ncol=3)
     axs_d_2p.tick_params(axis='both', labelsize=ticks_font_size)
     axs_d_2p.grid()
 
@@ -1554,7 +1904,7 @@ if args[-1] == "mc":
     axs_on_pwr.set_title(f"Active power consumption", fontsize=title_font_size, fontweight='bold')
     axs_on_pwr.set_xlabel("Temperature (°C)", fontsize=label_font_size)
     axs_on_pwr.set_ylabel("Power (uW)", fontsize=label_font_size)
-    axs_on_pwr.legend(loc="best", fontsize=legend_font_size, ncol=2)
+    # axs_on_pwr.legend(loc="best", fontsize=legend_font_size, ncol=3)
     axs_on_pwr.tick_params(axis='both', labelsize=ticks_font_size)
     axs_on_pwr.grid()
 
@@ -1565,7 +1915,7 @@ if args[-1] == "mc":
     axs_off_pwr.set_title(f"Sleep power consumption", fontsize=title_font_size, fontweight='bold')
     axs_off_pwr.set_xlabel("Temperature (°C)", fontsize=label_font_size)
     axs_off_pwr.set_ylabel("Power (uW)", fontsize=label_font_size)
-    axs_off_pwr.legend(loc="best", fontsize=legend_font_size, ncol=2)
+    # axs_off_pwr.legend(loc="best", fontsize=legend_font_size, ncol=3)
     axs_off_pwr.tick_params(axis='both', labelsize=ticks_font_size)
     axs_off_pwr.grid()
 
@@ -1575,9 +1925,422 @@ if args[-1] == "mc":
     axs_start_up.set_title(f"Start-up time", fontsize=title_font_size, fontweight='bold')
     axs_start_up.set_xlabel("Temperature (°C)", fontsize=label_font_size)
     axs_start_up.set_ylabel("Time (us)", fontsize=label_font_size)
-    axs_start_up.legend(loc="best", fontsize=legend_font_size, ncol=2)
+    axs_start_up.legend(loc="best", fontsize=legend_font_size, ncol=3)
     axs_start_up.tick_params(axis='both', labelsize=ticks_font_size)
     axs_start_up.grid()
 
     fig_start_up.tight_layout()
     fig_start_up.savefig(f"plots/{'_'.join(args)}_tsens_stepping_{stepping_direction}_temperature_vs_start_up_time_new_resistance_v2.png", dpi=300, bbox_inches="tight")
+
+if "fail" in args:
+
+    df = pd.read_csv(f"plotdata/mc_stepping_{stepping_direction}.csv")
+    print(f"plotdata/mc_stepping_{stepping_direction}.csv")
+
+    process_corner = "ttmm"
+    voltage = 1.8
+
+    fig_count = plt.figure(dpi=300, figsize=(3, 3))
+    ax_count = fig_count.add_subplot(1, 1, 1)
+    ax_count.set_title(f"Problematic runs with mismatch", fontsize=8, fontweight='bold')
+
+    mc2 = np.array(df.loc[(df['Process corner'] == process_corner) & (df["Voltage supply (V)"] == voltage) & (df["monte carlo run"] == 2), "Output voltage (V)"])
+    mc3 = np.array(df.loc[(df['Process corner'] == process_corner) & (df["Voltage supply (V)"] == voltage) & (df["monte carlo run"] == 3), "Output voltage (V)"])
+    mc5 = np.array(df.loc[(df['Process corner'] == process_corner) & (df["Voltage supply (V)"] == voltage) & (df["monte carlo run"] == 5), "Output voltage (V)"])
+    mc12 = np.array(df.loc[(df['Process corner'] == process_corner) & (df["Voltage supply (V)"] == voltage) & (df["monte carlo run"] == 12), "Output voltage (V)"])
+    mc15 = np.array(df.loc[(df['Process corner'] == process_corner) & (df["Voltage supply (V)"] == voltage) & (df["monte carlo run"] == 15), "Output voltage (V)"])
+    mc22 = np.array(df.loc[(df['Process corner'] == process_corner) & (df["Voltage supply (V)"] == voltage) & (df["monte carlo run"] == 22), "Output voltage (V)"])
+    mc25 = np.array(df.loc[(df['Process corner'] == process_corner) & (df["Voltage supply (V)"] == voltage) & (df["monte carlo run"] == 25), "Output voltage (V)"])
+
+    ax_count.plot(temperatures, mc2, linestyle="solid", marker="o", markersize=5, label=f"2")
+    ax_count.plot(temperatures, mc3, linestyle="solid", marker="o", markersize=5, label=f"3")
+    # ax_count.plot(temperatures, mc5, linestyle="solid", marker="o", markersize=5, label=f"5")
+    # ax_count.plot(temperatures, mc12, linestyle="solid", marker="o", markersize=5, label=f"12")
+    ax_count.plot(temperatures, mc15, linestyle="solid", marker="o", markersize=5, label=f"15")
+    ax_count.plot(temperatures, mc22, linestyle="solid", marker="o", markersize=5, label=f"22")
+    # ax_count.plot(temperatures, mc25, linestyle="solid", marker="o", markersize=5, label=f"25")
+
+    # ax_count.set_xlim(45, 82.5)
+    ax_count.set_xlabel("Time (us)", fontsize=8)
+    ax_count.set_ylabel("Voltage (V)", fontsize=8)
+    ax_count.legend(loc="best", fontsize=8)
+    ax_count.tick_params(axis='both', labelsize=8)
+    ax_count.grid(True)
+
+    fig_count.tight_layout()
+    fig_count.savefig(f"plots/mc_failures_volt.png")
+
+    fig_dac = plt.figure(dpi=300, figsize=(3, 3))
+    ax_dac = fig_dac.add_subplot(1, 1, 1)
+    ax_dac.set_title(f"Problematic runs with mismatch", fontsize=8, fontweight='bold')
+
+    c2 = np.array(df.loc[(df['Process corner'] == process_corner) & (df["Voltage supply (V)"] == voltage) & (df["monte carlo run"] == 2), "Coarse code"])
+    c3 = np.array(df.loc[(df['Process corner'] == process_corner) & (df["Voltage supply (V)"] == voltage) & (df["monte carlo run"] == 3), "Coarse code"])
+    c15 = np.array(df.loc[(df['Process corner'] == process_corner) & (df["Voltage supply (V)"] == voltage) & (df["monte carlo run"] == 15), "Coarse code"])
+    c22 = np.array(df.loc[(df['Process corner'] == process_corner) & (df["Voltage supply (V)"] == voltage) & (df["monte carlo run"] == 22), "Coarse code"])
+    f2 = np.array(df.loc[(df['Process corner'] == process_corner) & (df["Voltage supply (V)"] == voltage) & (df["monte carlo run"] == 2), "Fine code"])
+    f3 = np.array(df.loc[(df['Process corner'] == process_corner) & (df["Voltage supply (V)"] == voltage) & (df["monte carlo run"] == 3), "Fine code"])
+    f15 = np.array(df.loc[(df['Process corner'] == process_corner) & (df["Voltage supply (V)"] == voltage) & (df["monte carlo run"] == 15), "Fine code"])
+    f22 = np.array(df.loc[(df['Process corner'] == process_corner) & (df["Voltage supply (V)"] == voltage) & (df["monte carlo run"] == 22), "Fine code"])
+
+    d2 = 10 * c2 + f2
+    d3 = 10 * c3 + f3
+    d15 = 10 * c15 + f15
+    d22 = 10 * c22 + f22
+
+    ax_dac.plot(temperatures, d2, linestyle="solid", marker="o", markersize=5, label=f"2")
+    ax_dac.plot(temperatures, d3, linestyle="solid", marker="o", markersize=5, label=f"2")
+    ax_dac.plot(temperatures, d15, linestyle="solid", marker="o", markersize=5, label=f"15")
+    ax_dac.plot(temperatures, d22, linestyle="solid", marker="o", markersize=5, label=f"22")
+    
+    # ax_count.set_xlim(45, 82.5)
+    ax_dac.set_xlabel("Time (us)", fontsize=8)
+    ax_dac.set_ylabel("DAC code", fontsize=8)
+    ax_dac.legend(loc="best", fontsize=8)
+    ax_dac.tick_params(axis='both', labelsize=8)
+    ax_dac.grid(True)
+
+    fig_dac.tight_layout()
+    fig_dac.savefig(f"plots/mc_failures_dac.png")
+
+
+    fig_mc_errorbar_1p = plt.figure(figsize=(figure_width, figure_height), dpi=300)
+    axs_mc_errorbar_1p = fig_mc_errorbar_1p.add_subplot(1, 1, 1)
+
+    fig_mc_dac_errorbar_1p = plt.figure(figsize=(figure_width, figure_height), dpi=300)
+    axs_mc_dac_errorbar_1p = fig_mc_dac_errorbar_1p.add_subplot(1, 1, 1)
+
+    T_cal = 40 # calibration temperature, pick one that exists in `temperatures`
+
+    # --- Build a (nruns x ntemps) matrix, keeping run identity ---
+    d_matrix = []
+    for temperature in temperatures:
+        sel = (df['Process corner'] == "ttmm") & \
+            (df["Voltage supply (V)"] == 1.8) & \
+            (df["Temperature (°C)"] == temperature)
+        dcoarse = np.array(df.loc[sel, "Coarse code"]) * 1e3
+        dfine   = np.array(df.loc[sel, "Fine code"])   * 1e3
+        d_matrix.append(dcoarse * 10 + dfine)
+
+    d_matrix = np.array(d_matrix).T   # shape: (nruns, ntemps)
+
+    # Drop runs that contain any NaN (so every run has a value at T_cal)
+    valid = ~np.isnan(d_matrix).any(axis=1)
+    d_matrix = d_matrix[valid]
+    nruns = d_matrix.shape[0]
+
+    # --- One-point calibration ---
+    i_cal = list(temperatures).index(T_cal)
+
+    # Per-run offset relative to the mean code at the calibration point
+    offset = d_matrix[:, i_cal] - np.mean(d_matrix[:, i_cal])   # shape: (nruns,)
+
+    d_cal = d_matrix - offset[:, None]   # subtract each run's own offset
+
+    mean_d_list = np.mean(d_cal, axis=0)
+    std_d_list  = np.std(d_cal, axis=0)
+
+    for t, m, s in zip(temperatures, mean_d_list, std_d_list):
+        print(f"Temperature: {t} °C, Mean DAC code: {m:.4f}, Std DAC code: {s:.4f}")
+
+    # --- Plot ---
+    axs_mc_dac_errorbar_1p.plot(temperatures, mean_d_list, marker="o",
+                                label="Mean DAC code (μ)")
+    axs_mc_dac_errorbar_1p.fill_between(temperatures,
+                                        mean_d_list - std_d_list,
+                                        mean_d_list + std_d_list,
+                                        alpha=0.2,
+                                        label="standard deviation (±σ)")
+    axs_mc_dac_errorbar_1p.axvline(T_cal, color="gray", linestyle="--", alpha=0.7,
+                                label=f"Calibration point ({T_cal} °C)")
+
+    axs_mc_dac_errorbar_1p.set_title(f"DAC code after {nruns} runs",
+                                    fontsize=title_font_size+2, fontweight='bold')
+    axs_mc_dac_errorbar_1p.set_xlabel("Temperature (°C)", fontsize=label_font_size)
+    axs_mc_dac_errorbar_1p.set_ylabel("DAC code", fontsize=label_font_size)
+    axs_mc_dac_errorbar_1p.legend(loc="best", fontsize=legend_font_size+2)
+    axs_mc_dac_errorbar_1p.tick_params(axis='both', labelsize=ticks_font_size+2)
+    axs_mc_dac_errorbar_1p.grid()
+
+    fig_mc_dac_errorbar_1p.tight_layout()
+    fig_mc_dac_errorbar_1p.savefig(
+        f"plots/{'_'.join(args)}_tsens_stepping_{stepping_direction}_mean_dac_code_w_error_bars_dac_1p.png",
+        dpi=300, bbox_inches="tight")
+    
+    # --- Build a (nruns x ntemps) matrix for output voltage, keeping run identity ---
+    v_matrix = []
+    for temperature in temperatures:
+        sel = (df['Process corner'] == "ttmm") & \
+            (df["Voltage supply (V)"] == 1.8) & \
+            (df["Temperature (°C)"] == temperature)
+        v_matrix.append(np.array(df.loc[sel, "Output voltage (V)"]))
+
+    v_matrix = np.array(v_matrix).T   # shape: (nruns, ntemps)
+
+    # Drop runs that contain any NaN (so every run has a value at T_cal)
+    valid_v = ~np.isnan(v_matrix).any(axis=1)
+    v_matrix = v_matrix[valid_v]
+    nruns_v = v_matrix.shape[0]
+
+    # --- One-point calibration ---
+    i_cal = list(temperatures).index(T_cal)
+
+    # Per-run offset relative to the mean voltage at the calibration point
+    offset_v = v_matrix[:, i_cal] - np.mean(v_matrix[:, i_cal])   # shape: (nruns,)
+
+    v_cal = v_matrix - offset_v[:, None]   # subtract each run's own offset
+
+    mean_v_list = np.mean(v_cal, axis=0)
+    std_v_list  = np.std(v_cal, axis=0)
+
+    for t, m, s in zip(temperatures, mean_v_list, std_v_list):
+        print(f"Temperature: {t} °C, Mean output voltage: {m:.6f} V, Std: {s*1e3:.4f} mV")
+
+    # --- Plot ---
+    axs_mc_errorbar_1p.plot(temperatures, mean_v_list, marker="o",
+                            label="Mean output voltage (μ)")
+    axs_mc_errorbar_1p.fill_between(temperatures,
+                                    mean_v_list - std_v_list,
+                                    mean_v_list + std_v_list,
+                                    alpha=0.2,
+                                    label="standard deviation (±σ)")
+    axs_mc_errorbar_1p.axvline(T_cal, color="gray", linestyle="--", alpha=0.7,
+                            label=f"Calibration point ({T_cal} °C)")
+
+    axs_mc_errorbar_1p.set_title(f"Output voltage after {nruns_v} runs",
+                                fontsize=title_font_size+2, fontweight='bold')
+    axs_mc_errorbar_1p.set_xlabel("Temperature (°C)", fontsize=label_font_size)
+    axs_mc_errorbar_1p.set_ylabel("Output voltage (V)", fontsize=label_font_size)
+    axs_mc_errorbar_1p.legend(loc="best", fontsize=legend_font_size+2)
+    axs_mc_errorbar_1p.tick_params(axis='both', labelsize=ticks_font_size+2)
+    axs_mc_errorbar_1p.grid()
+
+    fig_mc_errorbar_1p.tight_layout()
+    fig_mc_errorbar_1p.savefig(
+        f"plots/{'_'.join(args)}_tsens_stepping_{stepping_direction}_mean_volt_w_error_bars_volt_1p.png",
+        dpi=300, bbox_inches="tight")
+    
+    # Uncalibrated stats (from the raw matrices, before offset removal)
+    mean_d_raw = np.mean(d_matrix, axis=0)
+    std_d_raw  = np.std(d_matrix, axis=0)
+    mean_v_raw = np.mean(v_matrix, axis=0)
+    std_v_raw  = np.std(v_matrix, axis=0)
+
+    print("=" * 78)
+    print(f"DAC code — uncalibrated vs 1-point cal @ {T_cal} °C ({nruns} runs)")
+    print("-" * 78)
+    print(f"{'T (°C)':>8} | {'mean raw':>10} | {'std raw':>9} | {'mean cal':>10} | {'std cal':>9}")
+    print("-" * 78)
+    for t, mr, sr, mc, sc in zip(temperatures, mean_d_raw, std_d_raw, mean_d_list, std_d_list):
+        print(f"{t:8.1f} | {mr:10.4f} | {sr:9.4f} | {mc:10.4f} | {sc:9.4f}")
+
+    print("=" * 78)
+    print(f"Output voltage — uncalibrated vs 1-point cal @ {T_cal} °C ({nruns_v} runs)")
+    print("-" * 78)
+    print(f"{'T (°C)':>8} | {'mean raw (V)':>12} | {'std raw (mV)':>12} | {'mean cal (V)':>12} | {'std cal (mV)':>12}")
+    print("-" * 78)
+    for t, mr, sr, mc, sc in zip(temperatures, mean_v_raw, std_v_raw, mean_v_list, std_v_list):
+        print(f"{t:8.1f} | {mr:12.6f} | {sr*1e3:12.4f} | {mc:12.6f} | {sc*1e3:12.4f}")
+    print("=" * 78)
+
+    fig_mc_on_pwr = plt.figure(figsize=(3, 3), dpi=300)
+    axs_mc_on_pwr = fig_mc_on_pwr.add_subplot(1, 1, 1)
+
+    fig_mc_off_pwr = plt.figure(figsize=(3, 3), dpi=300)
+    axs_mc_off_pwr = fig_mc_off_pwr.add_subplot(1, 1, 1)
+
+    # --- Build (nruns x ntemps) matrices for active and sleep power ---
+    on_pwr_matrix = []
+    off_pwr_matrix = []
+    for temperature in temperatures:
+        sel = (df['Process corner'] == "ttmm") & \
+            (df["Voltage supply (V)"] == 1.8) & \
+            (df["Temperature (°C)"] == temperature)
+        on_pwr_matrix.append(np.array(df.loc[sel, "Mean active power (uW)"]))
+        off_pwr_matrix.append(np.array(df.loc[sel, "Sleep power (uW)"]))
+
+    on_pwr_matrix  = np.array(on_pwr_matrix).T    # shape: (nruns, ntemps)
+    off_pwr_matrix = np.array(off_pwr_matrix).T
+
+    valid_on  = ~np.isnan(on_pwr_matrix).any(axis=1)
+    valid_off = ~np.isnan(off_pwr_matrix).any(axis=1)
+    on_pwr_matrix  = on_pwr_matrix[valid_on]
+    off_pwr_matrix = off_pwr_matrix[valid_off]
+    nruns_on  = on_pwr_matrix.shape[0]
+    nruns_off = off_pwr_matrix.shape[0]
+
+    mean_on_list = np.mean(on_pwr_matrix, axis=0)
+    std_on_list  = np.std(on_pwr_matrix, axis=0)
+    mean_off_list = np.mean(off_pwr_matrix, axis=0)
+    std_off_list  = np.std(off_pwr_matrix, axis=0)
+
+    print("=" * 70)
+    print(f"Active power")
+    for t, m, s in zip(temperatures, mean_on_list, std_on_list):
+        print(f"Temperature: {t} °C, Mean: {m:.4f} uW, Std: {s:.4f} uW")
+    print("-" * 70)
+    print(f"Sleep power")
+    for t, m, s in zip(temperatures, mean_off_list, std_off_list):
+        print(f"Temperature: {t} °C, Mean: {m:.6f} uW, Std: {s:.6f} uW")
+    print("=" * 70)
+
+    # --- Active power plot ---
+    axs_mc_on_pwr.plot(temperatures, mean_on_list, marker="o",
+                    label="Mean active power (μ)")
+    axs_mc_on_pwr.fill_between(temperatures,
+                            mean_on_list - std_on_list,
+                            mean_on_list + std_on_list,
+                            alpha=0.2,
+                            label="standard deviation (±σ)")
+
+    axs_mc_on_pwr.set_title(f"Active power after {nruns_on} runs",
+                            fontsize=title_font_size+2, fontweight='bold')
+    axs_mc_on_pwr.set_xlabel("Temperature (°C)", fontsize=label_font_size)
+    axs_mc_on_pwr.set_ylabel("Power (uW)", fontsize=label_font_size)
+    axs_mc_on_pwr.legend(loc="best", fontsize=legend_font_size+2)
+    axs_mc_on_pwr.tick_params(axis='both', labelsize=ticks_font_size+2)
+    axs_mc_on_pwr.grid()
+
+    fig_mc_on_pwr.tight_layout()
+    fig_mc_on_pwr.savefig(
+        f"plots/{'_'.join(args)}_tsens_stepping_{stepping_direction}_mean_active_power_w_error_bars.png",
+        dpi=300, bbox_inches="tight")
+
+    # --- Sleep power plot ---
+    axs_mc_off_pwr.plot(temperatures, mean_off_list, marker="o",
+                        label="Mean sleep power (μ)")
+    axs_mc_off_pwr.fill_between(temperatures,
+                                mean_off_list - std_off_list,
+                                mean_off_list + std_off_list,
+                                alpha=0.2,
+                                label="standard deviation (±σ)")
+
+    axs_mc_off_pwr.set_title(f"Sleep power after {nruns_off} runs",
+                            fontsize=title_font_size+2, fontweight='bold')
+    axs_mc_off_pwr.set_xlabel("Temperature (°C)", fontsize=label_font_size)
+    axs_mc_off_pwr.set_ylabel("Power (uW)", fontsize=label_font_size)
+    axs_mc_off_pwr.legend(loc="best", fontsize=legend_font_size+2)
+    axs_mc_off_pwr.tick_params(axis='both', labelsize=ticks_font_size+2)
+    axs_mc_off_pwr.grid()
+
+    fig_mc_off_pwr.tight_layout()
+    fig_mc_off_pwr.savefig(
+        f"plots/{'_'.join(args)}_tsens_stepping_{stepping_direction}_mean_sleep_power_w_error_bars.png",
+        dpi=300, bbox_inches="tight")
+    
+    fig_test= plt.figure(dpi=300, figsize=(3, 3))
+    ax_test = fig_test.add_subplot(1, 1, 1)
+    ax_test.set_title(f"Problematic runs with mismatch", fontsize=8, fontweight='bold')
+
+    mc5 = np.array(df.loc[(df['Process corner'] == process_corner) & (df["Voltage supply (V)"] == voltage) & (df["monte carlo run"] == 5), "Sleep power (uW)"])
+    mc15 = np.array(df.loc[(df['Process corner'] == process_corner) & (df["Voltage supply (V)"] == voltage) & (df["monte carlo run"] == 15), "Sleep power (uW)"])
+    mc25 = np.array(df.loc[(df['Process corner'] == process_corner) & (df["Voltage supply (V)"] == voltage) & (df["monte carlo run"] == 25), "Sleep power (uW)"])
+
+    ax_test.plot(temperatures, mc5, linestyle="solid", marker="o", markersize=5, label=f"5")
+    ax_test.plot(temperatures, mc15, linestyle="solid", marker="o", markersize=5, label=f"15")
+    ax_test.plot(temperatures, mc25, linestyle="solid", marker="o", markersize=5, label=f"25")
+
+    # ax_test.set_xlim(45, 82.5)
+    ax_test.set_xlabel("Time (us)", fontsize=8)
+    ax_test.set_ylabel("Voltage (V)", fontsize=8)
+    ax_test.legend(loc="best", fontsize=8)
+    ax_test.tick_params(axis='both', labelsize=8)
+    ax_test.grid(True)
+
+    fig_test.tight_layout()
+    fig_test.savefig(f"plots/mc_failures_sleep_power_test.png")
+
+if "mc_pwr" in args:
+
+    df = pd.read_csv(f"plotdata/mc_stepping_{stepping_direction}.csv")
+    print(f"plotdata/mc_stepping_{stepping_direction}.csv")
+
+    process_corner = "ttmm"
+    voltage = 1.8
+
+    fig_mc_on_pwr = plt.figure(figsize=(3, 3), dpi=300)
+    axs_mc_on_pwr = fig_mc_on_pwr.add_subplot(1, 1, 1)
+
+    fig_mc_off_pwr = plt.figure(figsize=(3, 3), dpi=300)
+    axs_mc_off_pwr = fig_mc_off_pwr.add_subplot(1, 1, 1)
+
+    # --- Build (nruns x ntemps) matrices with run identity via pivot ---
+    sub = df[(df['Process corner'] == "ttmm") & (df["Voltage supply (V)"] == 1.8)]
+
+    on_pwr_piv  = sub.pivot(index="monte carlo run", columns="Temperature (°C)",
+                            values="Mean active power (uW)")[list(temperatures)]
+    off_pwr_piv = sub.pivot(index="monte carlo run", columns="Temperature (°C)",
+                            values="Sleep power (uW)")[list(temperatures)]
+
+    # --- Mask outlier: run 15 at 125 °C ---
+    outlier_run, outlier_t = 15, 125
+    on_pwr_piv.loc[outlier_run, outlier_t]  = np.nan
+    off_pwr_piv.loc[outlier_run, outlier_t] = np.nan
+
+    on_pwr_matrix  = on_pwr_piv.to_numpy()
+    off_pwr_matrix = off_pwr_piv.to_numpy()
+
+    # Per-temperature stats, ignoring NaNs (keeps the rest of run 15)
+    mean_on_list  = np.nanmean(on_pwr_matrix, axis=0)
+    std_on_list   = np.nanstd(on_pwr_matrix, axis=0)
+    mean_off_list = np.nanmean(off_pwr_matrix, axis=0)
+    std_off_list  = np.nanstd(off_pwr_matrix, axis=0)
+
+    # Number of runs contributing at each temperature (varies where NaNs are)
+    n_on  = np.sum(~np.isnan(on_pwr_matrix), axis=0)
+    n_off = np.sum(~np.isnan(off_pwr_matrix), axis=0)
+    nruns_on, nruns_off = int(np.max(n_on)), int(np.max(n_off))
+
+    print("=" * 70)
+    print(f"Active power ({nruns_on} runs, run {outlier_run} excluded at {outlier_t} °C)")
+    for t, m, s, n in zip(temperatures, mean_on_list, std_on_list, n_on):
+        print(f"Temperature: {t} °C, Mean: {m:.4f} uW, Std: {s:.4f} uW, n={n}")
+    print("-" * 70)
+    print(f"Sleep power ({nruns_off} runs, run {outlier_run} excluded at {outlier_t} °C)")
+    for t, m, s, n in zip(temperatures, mean_off_list, std_off_list, n_off):
+        print(f"Temperature: {t} °C, Mean: {m:.6f} uW, Std: {s:.6f} uW, n={n}")
+    print("=" * 70)
+
+    # --- Active power plot ---
+    axs_mc_on_pwr.plot(temperatures, mean_on_list, marker="o",
+                    label="Mean active power (μ)")
+    axs_mc_on_pwr.fill_between(temperatures,
+                            mean_on_list - std_on_list,
+                            mean_on_list + std_on_list,
+                            alpha=0.2,
+                            label="standard deviation (±σ)")
+
+    axs_mc_on_pwr.set_title(f"Active power",
+                            fontsize=title_font_size+2, fontweight='bold')
+    axs_mc_on_pwr.set_xlabel("Temperature (°C)", fontsize=label_font_size)
+    axs_mc_on_pwr.set_ylabel("Power (uW)", fontsize=label_font_size)
+    axs_mc_on_pwr.legend(loc="best", fontsize=legend_font_size)
+    axs_mc_on_pwr.tick_params(axis='both', labelsize=ticks_font_size+2)
+    axs_mc_on_pwr.grid()
+
+    fig_mc_on_pwr.tight_layout()
+    fig_mc_on_pwr.savefig(
+        f"plots/{'_'.join(args)}_tsens_stepping_{stepping_direction}_mean_active_power_w_error_bars_v2.png",
+        dpi=300, bbox_inches="tight")
+
+    # --- Sleep power plot ---
+    axs_mc_off_pwr.plot(temperatures, mean_off_list, marker="o",
+                        label="Mean sleep power (μ)")
+    axs_mc_off_pwr.fill_between(temperatures,
+                                mean_off_list - std_off_list,
+                                mean_off_list + std_off_list,
+                                alpha=0.2,
+                                label="standard deviation (±σ)")
+
+    axs_mc_off_pwr.set_title(f"Sleep power",
+                            fontsize=title_font_size, fontweight='bold')
+    axs_mc_off_pwr.set_xlabel("Temperature (°C)", fontsize=label_font_size)
+    axs_mc_off_pwr.set_ylabel("Power (uW)", fontsize=label_font_size)
+    axs_mc_off_pwr.legend(loc="best", fontsize=legend_font_size)
+    axs_mc_off_pwr.tick_params(axis='both', labelsize=ticks_font_size)
+    axs_mc_off_pwr.grid()
+
+    fig_mc_off_pwr.tight_layout()
+    fig_mc_off_pwr.savefig(
+        f"plots/{'_'.join(args)}_tsens_stepping_{stepping_direction}_mean_sleep_power_w_error_bars_v2.png",
+        dpi=300, bbox_inches="tight")
